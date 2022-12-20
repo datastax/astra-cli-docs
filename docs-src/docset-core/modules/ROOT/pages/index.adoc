@@ -1,0 +1,92 @@
+= Product Landing Page
+:page-layout: gcx-landing
+:data-uri:
+
+== Getting started with Product
+
+++++
+<div class="landing-row">
+++++
+
+[sidebar.landing-card]
+.Create your first thing
+****
+--
+You can do amazing things with Product.
+
+* Create a thing.
+* Create a more advanced thing.
+--
+[.landing-card-body-icon]
+image::what-is-astra-db.svg[icon description,40]
+****
+
+++++
+</div>
+++++
+
+++++
+<div class="landing-row">
+++++
+
+[sidebar.landing-card]
+.Another thing
+****
+--
+More things to do with Product.
+--
+[.landing-card-body-icon]
+image::create-db-now.svg[icon description,40]
+****
+
+[sidebar.landing-card]
+.Another thing
+****
+--
+More things to do with Product.
+--
+[.landing-card-body-icon]
+image::what-is-astra-streaming.svg[icon description,40]
+****
+
+[sidebar.landing-card]
+.Another thing
+****
+--
+More things to do with Product.
+--
+[.landing-card-body-icon]
+image::what-is-stargate-api.svg[icon description,40]
+****
+
+++++
+</div>
+++++
+
+++++
+<div class="landing-row">
+++++
+
+[sidebar.landing-card]
+.Another thing
+****
+--
+More things to do with Product.
+--
+[.landing-card-body-icon]
+image::what-is-k8ssandra.svg[icon description,40]
+****
+
+[sidebar.landing-card]
+.Another thing
+****
+--
+More things to do with Product.
+--
+[.landing-card-body-icon]
+image::what-is-datastax-luna.svg[Luna card icon,40]
+****
+
+++++
+</div>
+++++

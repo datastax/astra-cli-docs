@@ -1,0 +1,1 @@
+* xref:developing.adoc[This is a page in Develop component]

@@ -1,0 +1,25 @@
+{
+  "name": "docset",
+  "scripts": {
+    "build:prod:docset": "npm run build:publish:docset",
+    "build:dev:docset": "npm run build:local:docset",
+    "build:publish:docset": "antora --log-level error --fetch --clean playbooks/site-publish-docset.yaml",
+    "build:local:docset": "antora --stacktrace --fetch --clean playbooks/site-local-docset.yaml",
+    "build:linkinator:docset": "npx linkinator https://docs.datastax.com/en/docset/docs/ --recurse --skip ' https://localhost?'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+<repo-clone-URL>"
+  },
+  "dependencies": {
+    "@antora/cli": "~3.0.1",
+    "@antora/site-generator-default": "~3.0.1",
+    "linkinator": "~3.0.3",
+    "async": "~3.2.4",
+    "mobx": "~6.0.4",
+    "react": "~16.8.4",
+    "react-dom": "~16.8.4",
+    "rxjs": "~7.0.1",
+    "styled-components": "~5.1.1"
+  }
+}

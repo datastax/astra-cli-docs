@@ -1,0 +1,18 @@
+* xref:index.adoc[Start Page]
+
+////
+The following are the standardized components we have currently identified.
+Use the ones that apply to your doc:
+
+* Getting Started / Quickstarts
+* Concepts
+* Planning
+* Installing
+* Securing
+* Connecting
+* Managing
+* Developing
+* Migrating
+* Tooling
+* API References
+////
