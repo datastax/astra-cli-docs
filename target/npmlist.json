@@ -1,0 +1,1 @@
+{"name":"docset","dependencies":{"@antora/cli":{"version":"3.0.3"},"@antora/site-generator-default":{"version":"3.0.3"},"async":{"version":"3.2.4"},"linkinator":{"version":"3.0.6"},"mobx":{"version":"6.0.5"},"react-dom":{"version":"16.8.6"},"react":{"version":"16.8.6"},"rxjs":{"version":"7.0.1"},"styled-components":{"version":"5.1.1"}}}

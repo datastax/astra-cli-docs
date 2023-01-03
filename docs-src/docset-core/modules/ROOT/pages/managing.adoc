@@ -1,0 +1,850 @@
+= Managing databases with {astra_cli}
+
+Use the following {astra_cli} commands to manage your {astra_db} databases. From the command line in a Terminal, the supported tasks include:
+
+* Create a database
+* List databases
+* List regions
+* Manage users and roles
+* Get database details
+* Delete a database
+* Manage keyspaces
+* Use cqlsh
+* Use DSBulk to load, unload, and count data
+* Download Secure Connect Bundle
+* Create environment variables
+* Resume a hibernated database
+* Create and manage configurations
+
+== Create a database
+
+You can create an {astra_db} Serverless or {astra_db} Classic database with the `astra db create <db-name>` command. 
+
+Example:
+
+[source,bash]
+----
+astra db create demo
+----
+
+[TIP]
+====
+For help on this command, use:
+
+[source,bash]
+----
+astra help db create
+----
+====
+
+By default, the region will be an available free region, and the keyspace name will be the same as the database name. You can change the names with `-r` and `-k` respectively.
+
+=== Using create options
+
+The database name itself does not ensure uniqueness within your {astra_db} organization. (The database id ensures uniqueness.) Consequently, if you issue the `astra db create` command multiple times, you will end up with multiple database instances.
+
+To change this behavior, use the `--if-not-exist` option.
+
+Database creation is asynchronous operation. 
+Still during your CI/CD you want the database to be in an `ACTIVE` state before moving forward.
+Using the option `--wait` will trigger a blocking command until the database is ready.
+
+Example:
+
+[source,bash]
+----
+astra db create demo -k ks2 --if-not-exist --wait
+----
+
+If you are using the Free plan, after a period of inactivity (23 hours) the database moves to a `HIBERNATED` state. 
+You can use the `astra db resume <db-name>` command to reactivate the database.
+
+
+== List databases
+
+To get the list of active databases in your {astra_db} organization, use the command `list` in the group `db`.
+
+[TIP]
+====
+For help on this command, use:
+
+[source,bash]
+----
+astra help db list
+----
+====
+
+
+[source,bash]
+----
+astra db list
+----
+
+Sample output:
+
+[source,bash]
+----
+ +---------------------+--------------------------------------+---------------------+----------------+
+ | Name                | id                                   | Default Region      | Status         |
+ +---------------------+--------------------------------------+---------------------+----------------+
+ | mtg                 | dde308f5-a8b0-474d-afd6-999999999999 | eu-central-1        | ACTIVE         |
+ | workshops           | 3ed83de7-d97f-4fb6-bf9f-999999999999 | eu-west-1           | ACTIVE         |
+ | sdk_tests           | 06a9675a-ca62-4cd0-9b94-999999999999 | us-east-1           | ACTIVE         |
+ | test                | 7677a789-bd57-455d-ab2c-999999999999 | eu-central-1        | ACTIVE         |
+ | demo                | 071d7059-d55b-4cdb-90c6-999999999999 | us-east-1           | ACTIVE         |
+ | ac201               | 48c7178c-58cb-4657-b3d2-999999999999 | us-east-1           | ACTIVE         |
+ +---------------------+--------------------------------------+---------------------+----------------+
+----
+
+You can also change the database list's output type with the `astra db list -o <type>` command, where <type> can be `csv` or `json`. 
+
+Examples:
+
+[source,bash]
+----
+astra db list -o csv
+----
+
+Sample output:
+
+[source,csv]
+----
+ Name,id,Default Region,Status
+ mtg,dde308f5-a8b0-474d-afd6-999999999999,eu-central-1,ACTIVE
+ workshops,3ed83de7-d97f-4fb6-bf9f-999999999999,eu-west-1,ACTIVE
+ sdk_tests,06a9675a-ca62-4cd0-9b94-999999999999,us-east-1,ACTIVE
+ test,7677a789-bd57-455d-ab2c-999999999999,eu-central-1,ACTIVE
+ demo,071d7059-d55b-4cdb-90c6-999999999999,us-east-1,ACTIVE
+ ac201,48c7178c-58cb-4657-b3d2-999999999999,us-east-1,ACTIVE
+----
+
+Or, for JSON output:
+
+[source,bash]
+----
+astra db list -o json
+----
+
+Sample output:
+
+[source,json]
+----
+   {
+     "code" : 0,
+     "message" : "astra db list -o json",
+     "data" : [ {
+       "Status" : "ACTIVE",
+       "Default Region" : "eu-central-1",
+       "id" : "dde308f5-a8b0-474d-afd6-999999999999",
+       "Name" : "mtg"
+     }, {
+       "Status" : "ACTIVE",
+       "Default Region" : "eu-west-1",
+       "id" : "3ed83de7-d97f-4fb6-bf9f-999999999999",
+       "Name" : "workshops"
+     }, {
+       "Status" : "ACTIVE",
+       "Default Region" : "us-east-1",
+       "id" : "06a9675a-ca62-4cd0-9b94-999999999999",
+       "Name" : "sdk_tests"
+     }, {
+       "Status" : "ACTIVE",
+       "Default Region" : "eu-central-1",
+       "id" : "7677a789-bd57-455d-ab2c-999999999999",
+       "Name" : "test"
+     }, {
+       "Status" : "ACTIVE",
+       "Default Region" : "us-east-1",
+       "id" : "071d7059-d55b-4cdb-90c6-999999999999",
+       "Name" : "demo"
+     }, {
+       "Status" : "ACTIVE",
+       "Default Region" : "us-east-1",
+       "id" : "48c7178c-58cb-4657-b3d2-999999999999",
+       "Name" : "ac201"
+     } ]
+   }
+----
+
+
+== List regions
+
+For database creation or regions management, the region name is expected.
+
+With {astra_cli}, you can list every available regions per service.
+
+[TIP]
+====
+For help on this command, use:
+
+[source,bash]
+----
+astra help db list-regions-serverless
+----
+
+Or:
+
+[source,bash]
+----
+astra help db list-regions-classic
+----
+====
+
+=== List Serverless regions
+
+In this example, `aws` is the cloud provider.
+
+[source,bash]
+----
+astra db list-regions-serverless -c aws
+----
+
+Sample output:
+
+[source,bash]
+----
+ +----------------+---------------------+-------------------------------+
+ | Cloud Provider | Region              | Full Name                     |
+ +----------------+---------------------+-------------------------------+
+ | aws            | ap-east-1           | Asia Pacific (Hong Kong)      |
+ | aws            | ap-south-1          | Asia Pacific (Mumbai)         |
+ | aws            | ap-southeast-1      | Asia Pacific (Singapore)      |
+ | aws            | ap-southeast-2      | Asia Pacific (Sydney)         |
+ | aws            | eu-central-1        | Europe (Frankfurt)            |
+ | aws            | eu-west-1           | Europe (Ireland)              |
+ | aws            | sa-east-1           | South America (Sao Paulo)     |
+ | aws            | us-east-1           | US East (N. Virginia)         |
+ | aws            | us-east-2           | US East (Ohio)                |
+ | aws            | us-west-2           | US West (Oregon)              |
+ +----------------+---------------------+-------------------------------+
+----
+
+Notes:
+
+* `-c` or `--cloud` allows you to select the cloud provider - accepted values are `aws`, `gcp` and `azure`
+* `-f` or `--filter` allows you to look for either a location of region, such as `-f France` or `-f us`
+* `-o` or `--output` can change output from the default table output to `csv` or `json`
+* `-v` for verbose mode
+* `-t` to provide token of organization if not default selected
+
+=== List Classic regions
+
+[source,bash]
+----
+astra db list-regions-classic
+----
+
+
+== Manage users and roles
+
+For your {astra_db} organization, you can use {astra_cli} commands to:
+
+* List current users
+* Invite new users
+* Delete users
+* List roles
+* Get specific role information
+
+=== List users
+
+[source,bash]
+----
+astra user list
+----
+
+Sample output:
+
+[source,bash]
+----
+ +--------------------------------------+-----------------------------+---------------------+
+ | User Id                              | User Email                  | Status              |
+ +--------------------------------------+-----------------------------+---------------------+
+ | b665658a-ae6a-4f30-a740-999999999999 | mr.wonderful@mycompany.com  | active              |
+ +--------------------------------------+-----------------------------+---------------------+
+----
+
+=== Invite a new user
+
+[source,bash]
+----
+astra user invite mydevfriend99a9@gmail.com
+----
+
+Check the list of users and notice that the new user was invited.
+
+[source,bash]
+----
+astra user list
+----
+
+Sample output:
+
+[source,bash]
+----
+ +--------------------------------------+-----------------------------+---------------------+
+ | User Id                              | User Email                  | Status              |
+ +--------------------------------------+-----------------------------+---------------------+
+ | 825bd3d3-82ae-404b-9aad-999999999999 | mydevfriend99a9@gmail.com   | invited             |
+ | b665658a-ae6a-4f30-a740-999999999999 | mr.wonderful@mycompany.com  | active              |
+ +--------------------------------------+-----------------------------+---------------------+
+----
+
+=== Delete a user
+
+[source,bash]
+----
+astra user delete mydevfriend99a9@gmail.com
+----
+
+=== List roles
+
+[source,bash]
+----
+astra role list
+----
+
+=== Get information about a specific role
+
+[source,bash]
+----
+astra role get "Database Administrator"
+----
+
+
+== Get database details
+
+To get general information or details on an entity, use the command `astra db get <db-name>`.
+
+Example:
+
+[source,bash]
+----
+astra db get demo
+----
+
+[TIP]
+====
+For help on this command, use:
+
+[source,bash]
+----
+astra help db get
+----
+====
+
+The output includes specific information about the list of keyspaces available and the different regions.
+
+Sample output:
+
+[source,bash]
+----
+ +------------------------+-----------------------------------------+
+ | Attribute              | Value                                   |
+ +------------------------+-----------------------------------------+
+ | Name                   | demo                                    |
+ | id                     | 071d7059-d55b-4cdb-90c6-999999999999    |
+ | Status                 | ACTIVE                                  |
+ | Default Cloud Provider | AWS                                     |
+ | Default Region         | us-east-1                               |
+ | Default Keyspace       | demo                                    |
+ | Creation Time          | 2022-11-26T15:41:18Z                    |
+ |                        |                                         |
+ | Keyspaces              | [0] demo                                |
+ |                        |                                         |
+ | Regions                | [0] us-east-1                           |
+ +------------------------+-----------------------------------------+
+----
+
+To get a special property, add the option `--key` and its type.
+
+Multiple key types are available: `id`, `status`, `cloud`, `keyspace`, `keyspaces`, `region`, `regions`.
+
+Notice that the output is raw. This command is expected to be used in scripts. 
+
+Example:
+
+[source,bash]
+----
+astra db get demo --key id
+----
+
+Sample output:
+
+[source,bash]
+----
+ dde308f5-a8b0-474d-afd6-999999999999
+----
+
+To get the database status in a human readable result, use the `astra db status` command.
+
+Example:
+
+
+[source,bash]
+----
+astra db status demo
+----
+
+Sample output:
+
+[source,bash]
+----
+ [ INFO ] - Database 'demo' has status 'ACTIVE'
+----
+
+
+== Delete a database
+
+To delete an {astra_db} database, use the command `astra db delete <db-name>`.
+
+Example:
+
+[source,bash]
+----
+astra db delete demo2
+----
+
+
+== Manage keyspaces
+
+A keyspace is created when you create the database. A keyspace is essentially a handle that you can use to identify database resources such as its tables and  indexes.
+
+By default, {astra_cli} provides values for the keyspace and database names. Optionally, you can define a custom keyspace name by using the flag `-k`.
+
+[TIP]
+====
+For help on this command, use:
+
+[source,bash]
+----
+astra help db create-keyspaces
+
+or:
+
+astra help db list-keyspaces
+----
+====
+
+
+=== Create a new keyspace
+
+To add a keyspace named `ks2` to an existing database named `demo`, use the following command. 
+The option `--if-not-exist` is optional but could help you provide idempotent scripts. Example:
+
+[source,bash]
+----
+astra db create-keyspace demo -k ks2 --if-not-exist
+----
+
+If the database is not found, {astra_db} returns a warning message and a dedicated code.
+To see your new keyspace, you can display your database details.
+
+[source,bash]
+----
+astra db list-keyspaces demo
+----
+
+
+== Use cqlsh
+
+https://cassandra.apache.org/doc/latest/cassandra/tools/cqlsh.html[cqlsh^] is a standalone shell to work with Apache Cassandra&reg;. 
+It is compliant with {astra_cli} but requires a few extra steps of configuration.
+The purpose of {astra_cli} is to integrate with `cqlsh` and do the integration for you.
+
+{astra_cli} will *download*, *install*, *setup* and *wrap* `cqlsh` for you to interact with {astra_db}.
+
+=== Interactive mode
+
+If no options are provided, by default you'll enter `cqlsh` interactive mode.
+
+Example:
+
+
+[source,bash]
+----
+astra db cqlsh demo
+----
+
+[source,cqlsh]
+----
+ Cqlsh is starting please wait for connection establishment...
+ Connected to cndb at 127.0.0.1:9042.
+ [cqlsh 6.8.0 | Cassandra 4.0.0.6816 | CQL spec 3.4.5 | Native protocol v4]
+ Use HELP for help.
+ token@cqlsh>
+----
+
+=== Execute CQL
+
+To execute a CQL statement with `cqlsh` use the flag `-e`.
+
+Example:
+
+[source,bash]
+----
+astra db cqlsh demo -e "describe keyspaces;"
+----
+
+=== Execute CQL files
+
+To execute CQL files with `cqlsh` use the flag `-f`.
+You could also use the CQL syntax SOURCE.
+
+Example:
+
+[source,bash]
+----
+astra db cqlsh demo -f sample.cql
+----
+
+
+== Use DSBulk with {astra_cli} to load, unload, and count data
+
+https://github.com/datastax/dsbulk[DataStax Bulk Loader^] (`dsbulk`) allows you to you load, unload, and count data from Cassandra-based database tables, such as those in Apache Cassandra, DataStax Enterprise, and Astra DB. {astra_cli} commands can invoke dsbulk. 
+
+As for `cqlsh`, {astra_cli} will *download*, *install*, *setup* and *wrap* the `dsbulk` command for you.
+All options are available.
+
+=== Set up the demo
+
+To give you an idea, let's walk through a simple example, where we have a database named `demo` with a keyspace named `demo`. If you haven't already, here is the preliminary step:
+
+[source,bash]
+----
+astra db create demo
+----
+
+Let's look at a dataset of cities around the world. We'll use this CSV file from the Awesome Astra site:
+
+https://raw.githubusercontent.com/awesome-astra/docs/main/docs/assets/cities.csv[cities.csv, window="_blank"]
+
+For example, here are the first lines of the CSV:
+
+[source,csv]
+----
+id,name,state_id,state_code,state_name,country_id,country_code,country_name,latitude,longitude,wikiDataId 52,Ashkāsham,3901,BDS,Badakhshan,1,AF,Afghanistan,36.68333000,71.53333000,Q4805192 68,Fayzabad,3901,BDS,Badakhshan,1,AF,Afghanistan,37.11664000,70.58002000,Q156558
+----
+
+Let's create a table to store those values.
+
+Connect to CQHSH with this {astra_cli} command:
+
+[source,bash]
+----
+astra db cqlsh demo -k demo
+----
+
+Create the table in cqlsh:
+
+[source,cqlsh]
+----
+CREATE TABLE cities_by_country ( country_name text, name text, id int, state_id text, state_code text, state_name text, country_id text, country_code text, latitude double, longitude double, wikiDataId text, PRIMARY KEY ((country_name), name) );
+
+describe table cities_by_country;
+
+quit
+----
+
+
+=== Load data
+
+{astra_cli} will get cities.csv sample data from https://raw.githubusercontent.com/awesome-astra/docs/main/docs/assets/cities.csv[this file^].
+
+[source,bash]
+----
+astra db load demo \   
+ -url https://raw.githubusercontent.com/awesome-astra/docs/main/docs/assets/cities.csv \   
+ -k demo \   
+ -t cities_by_country \   
+ --schema.allowMissingFields true
+---- 
+
+The first time you run the `astra db load` command, the message -- `DSBulk is starting please wait` -- may take a few seconds to appear because  
+{astra_cli} is downloading `dsbulk` (if it wasn't downloaded previously).
+
+Sample output:
+
+[source,bash]
+----
+ DSBulk is starting please wait ...
+ Username and password provided but auth provider not specified, inferring PlainTextAuthProvider
+ A cloud secure connect bundle was provided: ignoring all explicit contact points.
+ A cloud secure connect bundle was provided and selected operation performs writes: changing default consistency level to LOCAL_QUORUM.
+ Operation directory: /Users/awesome.user/Downloads/logs/LOAD_20220823-182343-074618
+ Setting executor.maxPerSecond not set when connecting to DataStax Astra: applying a limit of 9,000 ops/second based on the number of coordinators (3).
+ If your Astra database has higher limits, please define executor.maxPerSecond explicitly.
+   total | failed | rows/s |  p50ms |  p99ms | p999ms | batches
+ 148,266 |      0 |  8,361 | 663.86 | 767.56 | 817.89 |   30.91
+ Operation LOAD_20221123-182343-074618 completed successfully in 17 seconds.
+ Last processed positions can be found in positions.txt
+----
+
+=== Count table row data
+
+Check than the data has been imported with cqlsh:
+
+[source,bash]
+----
+astra db cqlsh demo -e "select * from demo.cities_by_country LIMIT 20;"
+----
+
+Sample output:
+
+[source,cqlsh]
+----
+Cqlsh is starting please wait for connection establishment...
+
+country_name | name                | country_code | country_id | id   | latitude | longitude | state_code | state_id | state_name          | wikidataid
+--------------+---------------------+--------------+------------+------+----------+-----------+------------+----------+---------------------+------------
+  Bangladesh |             Azimpur |           BD |         19 | 8454 |  23.7298 |   90.3854 |         13 |      771 |      Dhaka District |       null
+  Bangladesh |           Badarganj |           BD |         19 | 8455 | 25.67419 |  89.05377 |         55 |      759 |    Rangpur District |       null
+  Bangladesh |            Bagerhat |           BD |         19 | 8456 |     22.4 |     89.75 |         27 |      811 |     Khulna District |       null
+  Bangladesh |           Bandarban |           BD |         19 | 8457 |       22 |  92.33333 |          B |      803 | Chittagong Division |       null
+  Bangladesh |          Baniachang |           BD |         19 | 8458 | 24.51863 |  91.35787 |         60 |      767 |     Sylhet District |       null
+  Bangladesh |             Barguna |           BD |         19 | 8459 | 22.13333 |  90.13333 |         06 |      818 |    Barisal District |       null
+  Bangladesh |             Barisal |           BD |         19 | 8460 |     22.8 |      90.5 |         06 |      818 |    Barisal District |       null
+  Bangladesh |                Bera |           BD |         19 | 8462 | 24.07821 |  89.63262 |         54 |      813 |   Rajshahi District |       null
+  Bangladesh |       Bhairab Bāzār |           BD |         19 | 8463 |  24.0524 |   90.9764 |         13 |      771 |      Dhaka District |       null
+  Bangladesh |           Bherāmāra |           BD |         19 | 8464 | 24.02452 |  88.99234 |         27 |      811 |     Khulna District |       null
+  Bangladesh |               Bhola |           BD |         19 | 8465 | 22.36667 |  90.81667 |         06 |      818 |    Barisal District |       null
+  Bangladesh |           Bhāndāria |           BD |         19 | 8466 | 22.48898 |  90.06273 |         06 |      818 |    Barisal District |       null
+  Bangladesh | Bhātpāra Abhaynagar |           BD |         19 | 8467 | 23.01472 |  89.43936 |         27 |      811 |     Khulna District |       null
+  Bangladesh |           Bibir Hat |           BD |         19 | 8468 | 22.68347 |  91.79058 |          B |      803 | Chittagong Division |       null
+  Bangladesh |               Bogra |           BD |         19 | 8469 | 24.78333 |     89.35 |         54 |      813 |   Rajshahi District |       null
+  Bangladesh |        Brahmanbaria |           BD |         19 | 8470 | 23.98333 |  91.16667 |          B |      803 | Chittagong Division |       null
+  Bangladesh |         Burhānuddin |           BD |         19 | 8471 | 22.49518 |  90.72391 |         06 |      818 |    Barisal District |       null
+  Bangladesh |            Bājitpur |           BD |         19 | 8472 | 24.21623 |  90.95002 |         13 |      771 |      Dhaka District |       null
+  Bangladesh |            Chandpur |           BD |         19 | 8474 |    23.25 |  90.83333 |          B |      803 | Chittagong Division |       null
+  Bangladesh |    Chapai Nababganj |           BD |         19 | 8475 | 24.68333 |     88.25 |         54 |      813 |   Rajshahi District |       null
+----
+
+Count the loaded data:
+
+[source,bash]
+----
+astra db count demo -k demo -t cities_by_country
+----
+
+Sample output:
+
+[source,bash]
+----
+ DSBulk is starting please wait ...
+ [INFO ] - RUNNING: /Users/awesome.user/.astra/dsbulk-1.9.1/bin/dsbulk count -k demo -t cities_by_country -u token -p AstraCS:gdZaqzmFZsza999999999999:edd25600df1c01506f5388340f138f277cece2c93cb70f999999999999 -b /Users/awesome.user/.astra/scb/scb_071d7059-d55b-4cdb-90c6-999999999999_us-east-1.zip
+ Username and password provided but auth provider not specified, inferring PlainTextAuthProvider
+ A cloud secure connect bundle was provided: ignoring all explicit contact points.
+ Operation directory: /Users/awesome.user/Downloads/logs/COUNT_20221123-182833-197954
+   total | failed | rows/s |  p50ms |  p99ms | p999ms
+ 134,574 |      0 | 43,307 | 315.71 | 457.18 | 457.18
+----
+
+=== Unload data
+
+[source,bash]
+----
+astra db unload demo -k demo -t cities_by_country -url /tmp/unload
+----
+
+Sample output:
+
+[source,bash]
+----
+ DSBulk is starting please wait ...
+ Username and password provided but auth provider not specified, inferring PlainTextAuthProvider
+ A cloud secure connect bundle was provided: ignoring all explicit contact points.
+ Operation directory: /Users/awesome.user/Downloads/logs/UNLOAD_20221123-183054-208353
+   total | failed | rows/s |  p50ms |    p99ms |   p999ms
+ 134,574 |      0 | 14,103 | 927.51 | 1,853.88 | 1,853.88
+ Operation UNLOAD_20221123-183054-208353 completed successfully in 9 seconds.
+----
+
+
+== Download Secure Connect Bundle for Astra DB connections
+
+=== Default values
+
+Use the `astra db download-scb` command to download the different secure connect bundles (one per region) with the pattern `+scb_${dbid}-${dbregion}.zip+` in the current folder.
+
+[source,bash]
+----
+mkdir db-demo cd db-demo astra db download-scb demo ls
+----
+
+=== Download to a specific target folder
+
+Use the `astra db download-scb` command with the `-d` (`--output-directory`) option to download the different secure connect bundles (one per region) with the pattern `+scb_${dbid}-${dbregion}.zip+`. Example of downloading to a `/tmp` folder:
+
+[source,bash]
+----
+astra db download-scb demo -d /tmp
+----
+
+=== Download an SCB and provide output zip filename
+
+Provide the target filename with `-f` (`--output-file`). This command flag works only if you have a **single region** for your database (or you will have to use the flag `-d`).
+
+[source,bash]
+----
+astra db download-scb demo -f /tmp/demo.zip
+----
+
+
+== Create environment variables
+
+When working with Astra DB, it's handy to generate a set of relevant environment variables such as database name, database region, API call URLs, and so on.
+
+This {astra_cli} command creates an `.env` file based on your environment. For example:
+
+[source,bash]
+----
+astra db create-dotenv -f /tmp/.env
+----
+
+Sample output:
+
+[source,bash]
+----
+ ASTRA_DB_APPLICATION_TOKEN="AstraCS:QeUmROP..."
+ ASTRA_DB_GRAPHQL_URL="https://a6b5cb4c-3267-4414-8bba-999999999999-us-east-1.apps.astra.datastax.com/api/graphql/order_management_data"
+ ASTRA_DB_GRAPHQL_URL_ADMIN="https://a6b5cb4c-3267-4414-8bba-999999999999-us-east-1.apps.astra.datastax.com/api/graphql-admin"
+ ASTRA_DB_GRAPHQL_URL_PLAYGROUND="https://a6b5cb4c-3267-4414-8bba-999999999999-us-east-1.apps.astra.datastax.com/api/playground"
+ ASTRA_DB_GRAPHQL_URL_SCHEMA="https://a6b5cb4c-3267-4414-8bba-999999999999-us-east-1.apps.astra.datastax.com/api/graphql-schema"
+ ASTRA_DB_ID="a6b5cb4c-3267-4414-8bba-999999999999"
+ ASTRA_DB_KEYSPACE="order_management_data"
+ ASTRA_DB_REGION="us-east-1"
+ ASTRA_DB_REST_URL="https://a6b5cb4c-3267-4414-8bba-999999999999-us-east-1.apps.astra.datastax.com/api/rest"
+ ASTRA_DB_REST_URL_SWAGGER="https://a6b5cb4c-3267-4414-8bba-999999999999-us-east-1.apps.astra.datastax.com/api/rest/swagger-ui/"
+ ASTRA_DB_SECURE_BUNDLE_PATH="/Users/awesome.user/.astra/scb/scb_a6b5cb4c-3267-4414-8bba-999999999999-east-1.zip"
+ ASTRA_DB_SECURE_BUNDLE_URL="https://datastax-cluster-config-prod.s3.us-east-2.amazonaws.com/a6b5cb4c-3267-4414-8bba-999999999999....X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA2AI....."
+ ASTRA_ORG_ID="f9460f14-9879-...."
+ ASTRA_ORG_NAME="awe..."
+ ASTRA_ORG_TOKEN="AstraCS:QeUmROPLeNbd..."
+----
+
+
+== Resume a hibernated database
+
+If you are using the {astra_db} Free plan, your database will be hibernated (inactive) after 23 hours of inactivity. (This behavior does not occur when you upgrade to a paid {astra_db} plan.) 
+
+To wake up the database, you can use the `astra db resume` command.
+
+Assume you have a hibernating database. Example:
+
+[source,bash]
+----
+astra db list
+----
+
+Sample output:
+
+[source,bash]
+----
++---------------------+--------------------------------------+---------------------+----------------+
+| Name                | id                                   | Default Region      | Status         | 
++---------------------+--------------------------------------+---------------------+----------------+ 
+| mydatabase          | 643c6bb8-2336-4649-97d5-999999999999 | eu-central-1        | HIBERNATED     | 
++---------------------+--------------------------------------+---------------------+----------------+
+----
+
+Trigger an explicit resuming state with:
+
+
+[source,bash]
+----
+astra db resume mydatabase
+----
+
+Sample output:
+
+[source,bash]
+----
++---------------------+--------------------------------------+---------------------+----------------+
+| Name                | id                                   | Default Region      | Status         |
++---------------------+--------------------------------------+---------------------+----------------+
+| mydatabase          | 643c6bb8-2336-4649-97d5-999999999999 | eu-central-1        | RESUMING       |
++---------------------+--------------------------------------+---------------------+----------------+
+----
+
+After some time:
+
+[source,bash]
+----
++---------------------+--------------------------------------+---------------------+----------------+
+| Name                | id                                   | Default Region      | Status         |
++---------------------+--------------------------------------+---------------------+----------------+
+| mydatabase          | 643c6bb8-2336-4649-97d5-999999999999 | eu-central-1        | ACTIVE         |
++---------------------+--------------------------------------+---------------------+----------------+
+----
+
+
+== Create and manage configurations
+
+If you work with multiple {astra_db} organizations, it can be useful to switch from one configuration to another, and from one auth token to another.
+
+{astra_cli} provides a configuration management solution to handle these use cases.
+
+=== List available configurations
+
+[source,bash]
+----
+astra config list
+----
+
+=== Create a new section
+
+Here we'll name a configuration `dev` and identify the auth token of a separate organization:
+
+[source,bash]
+----
+astra config create dev --token <token_of_org_2>
+----
+
+=== Use your section configuration 
+
+You can use an organization configuration anytime by qualifying the `astra` command with the `--config <config_name>` option.
+
+Example:
+
+[source,bash]
+----
+astra user list --config dev
+----
+
+=== Select a section as the default
+
+Change the current organization:
+
+[source,bash]
+----
+astra config use dev
+----
+
+See your new list:
+
+[source,bash]
+----
+astra config list
+----
+
+=== Delete a section
+
+You can delete any organization. 
+If you delete the selected organization, you will have to pick a new one.
+
+Delete your config:
+
+[source,bash]
+----
+astra config delete dev
+----
+
+See the new list:
+
+[source,bash]
+----
+astra config list
+----
+
+
+// == What's next?
+// See the CLI commands that you can use with DataStax {astra_stream} Pulsar tenants. ( TODO: link ) 

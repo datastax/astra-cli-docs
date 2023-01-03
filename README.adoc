@@ -1,12 +1,12 @@
 = DataStax {product} Documentation
 :toc: macro
-:product: <insert product name>
-:product-repo-name: <insert repo name>
-:product-repo-name-long: <insert GitHub org name>/<insert repo name>
-:product-repo-link: <insert repo clone URL>
-:product-branch-name: <insert branch name>
-:docset-name: <insert doc short name>
-:product-branch-link: <insert link to doc branch>
+:product: astra-cli
+:product-repo-name: astra-cli-docs
+:product-repo-name-long: datastax/astra-cli-docs
+:product-repo-link: https://github.com/datastax/astra-cli-docs.git
+:product-branch-name: main
+:docset-name: astra-do
+:product-branch-link: main
 :install-git-link: https://github.com/git-guides/install-git
 :create-pr-link: https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request
 :nvm-link: https://github.com/nvm-sh/nvm
@@ -15,30 +15,6 @@
 :antora-link: https://docs.antora.org/antora/latest/
 :contributor-docs-link: https://docs.google.com/presentation/d/10RjxURHpJ8gwac0dCZ02pKo31nGhem29Z8-xERApyWU/edit?usp=sharing
 :web-server-link: https://www.npmjs.com/package/serve
-
-[NOTE]
-====
-This is a repo template meant to be used when creating a new documentation repo.
-It contains a basic set of infrastructure components that can be modified to get documentation building quickly with Antora.
-Click the *Use this template* button to create a new repository from this template.
-
-.Don't forget to modify this README
-. Insert the necessary information into the following attributes in the README header:
-+
-[source,asciidoc]
-----
-:product: <insert product name>
-:product-repo-name: <insert repo name>
-:product-repo-name-long: <insert GitHub org name>/<insert repo name>
-:product-repo-link: <insert repo clone URL>
-:product-branch-name: <insert branch name>
-:docset-name: <insert bsys build name>
-:product-branch-link: <insert link to doc branch>
-----
-+
-These attributes will populate the necessary information throughout the README, saving you lots of time and effort.
-. Delete this NOTE.
-====
 
 This repo contains the documentation source files for the DataStax {product} documentation.
 

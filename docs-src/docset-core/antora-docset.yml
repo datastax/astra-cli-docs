@@ -1,5 +1,5 @@
-name: docs
-title: DataStax <product-name>
+name: astra-cli
+title: DataStax Astra CLI Documentation
 version: ~
 start_page: index.adoc
 

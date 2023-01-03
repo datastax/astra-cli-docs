@@ -54,6 +54,8 @@ asciidoc:
     classic_cap: 'Classic'
     serverless: 'serverless'
     serverless_cap: 'Serverless'
+    astra_ui: "Astra Portal"
+    astra_cli: 'Astra CLI'
     astra_stream: 'Astra Streaming'
     advanced: 'no'
 
