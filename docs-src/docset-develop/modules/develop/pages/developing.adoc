@@ -1,3 +1,0 @@
-= Developing with Product
-
-This is a page in another component (in this case, the `Develop` component).

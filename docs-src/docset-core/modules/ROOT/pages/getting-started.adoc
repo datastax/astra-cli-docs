@@ -1,0 +1,203 @@
+= Getting Started with {astra_cli}
+
+Read this topic to learn how to get started with {astra_cli}.
+
+== Setup
+
+Before issuing CLI `astra` commands, initialize the configuration file `~/.astrarc`. 
+Run the following command. 
+You will be asked to provide your token, which begins with `AstraCS:\...`. 
+The token will be saved so that you're authorized to run the CLI commands.
+
+[source,bash]
+----
+astra setup
+----
+
+Output:
+
+[source,bash]
+----
+    _____            __
+   /  _  \   _______/  |_____________
+  /  /_\  \ /  ___/\   __\_  __ \__  \
+/    |    \\___ \  |  |  |  | \// __ \_
+\____|__  /____  > |__|  |__|  (____  /
+         \/     \/                   \/
+
+        ------------------------
+        ---       SETUP      ---
+        ------------------------
+
+🔑 Enter token (starting with AstraCS...):
+----
+
+You are all set.
+The configuration (mainly your token) is stored in file `~/.astrarc`.
+
+== First commands
+
+* Display current version of the cli, validating setup is complete.
+
+[source,bash]
+----
+astra --version
+----
+
+* Display your configuration list.
+
+[source,bash]
+----
+bash astra config list
+----
+
+Output:
+
+[source,bash]
+----
+ +-----------------------------------------+
+ | configuration                           |
+ +-----------------------------------------+
+ | default (cedrick.lunven@datastax.com)   |
+ | cedrick.lunven@datastax.com             |
+ +-----------------------------------------+
+----
+
+== Get Help
+
+Once installed, {astra_cli} provides extensive documentation for any command.
+
+It also provides some bash autocompletion, use the `TAB` key twice to get a list of propositions.
+
+*Autocompletion*
+
+[source,bash]
+----
+astra <TAB> <TAB>
+----
+
+Output:
+
+[source,bash]
+----
+ --no-color  config      db          help        role        setup       shell       user
+----
+
+* Command-line documentation*
+
+Groups of command will get you the different command avalable.
+
+* Display main help
+
+[source,bash]
+----
+astra help
+----
+
+Output:
+
+[source,bash]
+----
+usage: astra <command> [ <args> ]
+
+Commands are:
+    help     View help for any command
+    setup    Initialize configuration file
+    shell    Interactive mode (default if no command provided)
+    config   Manage configuration file
+    db       Manage databases
+    role     Manage roles (RBAC)
+    user     Manage users
+
+See 'astra help <command>' for more information on a specific command.
+----
+
+* Display help for a command group, such as: `astra db`
+
+[source,bash]
+----
+astra help db
+----
+
+Output:
+
+[source,bash]
+----
+NAME
+        astra db - Manage databases
+
+SYNOPSIS
+        astra db { cqlsh | create | create-keyspace | delete | dsbulk | get |
+                list } [--] [ --token <AUTH_TOKEN> ]
+                [ --config-file <CONFIG_FILE> ] [ --no-color ]
+                [ {-v | --verbose} ] [ {-conf | --config} <CONFIG_SECTION> ]
+                [ --log <LOG_FILE> ] [ {-o | --output} <FORMAT> ] [cmd-options]
+                <cmd-args>
+
+        Where command-specific options [cmd-options] are:
+            cqlsh: [ --debug ] [ {-f | --file} <FILE> ] [ {-k | --keyspace} <KEYSPACE> ]
+                    [ --version ] [ {-e | --execute} <STATEMENT> ] [ --encoding <ENCODING> ]
+            create: [ {-k | --keyspace} <KEYSPACE> ] [ --if-not-exist ] [ {-r | --region} <DB_REGION> ]
+            create-keyspace: {-k | --keyspace} <KEYSPACE> [ --if-not-exist ]
+            delete:
+            dsbulk:
+            get:
+            list:
+
+        Where command-specific arguments <cmd-args> are:
+            cqlsh: <DB>
+            create: <DB_NAME>
+            create-keyspace: <DB>
+            delete: <DB>
+            dsbulk: [ <dsbulkArguments>... ]
+            get: <DB>
+            list:
+
+        See 'astra help db <command>' for more information on a specific command.
+----
+
+* Display help for a specific command, such as: `astra db list`
+
+For unitary commands all options details are provided.
+
+[source,bash]
+----
+astra help db list
+----
+
+Output:
+
+[source,bash]
+----
+NAME
+        astra db list - Display the list of Databases in an organization
+
+SYNOPSIS
+        astra db list [ {-conf | --config} <CONFIG_SECTION> ]
+                [ --config-file <CONFIG_FILE> ] [ --log <LOG_FILE> ]
+                [ --no-color ] [ {-o | --output} <FORMAT> ]
+                [ --token <AUTH_TOKEN> ] [ {-v | --verbose} ]
+
+OPTIONS
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        --log <LOG_FILE>
+            Logs will go in the file plus on console
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+----
+

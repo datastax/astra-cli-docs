@@ -1,0 +1,420 @@
+= {astra_cli} for {astra_stream}
+
+Use the following {astra_cli} commands to manage your {astra_stream} operations.
+
+From the command line in a Terminal, the supported tasks include:
+
+* <<Create a tenant>>
+* <<List tenants>>
+* <<Get tenant details>>
+* <<Delete a tenant>>
+* <<Use Pulsar-Shell>>
+* <<Use Pulsar-Client and Admin>>
+* <<List regions>>
+* <<Create environment variables>>
+
+[NOTE]
+====
+The following pulsar-admin commands don’t work with {astra_stream}, either because they’re not applicable in a cloud environment or they would cause issues with privacy or data integrity:
+
+brokers
+
+broker-stats
+
+clusters
+
+ns-isolation-policies
+
+resource-quotas
+
+tenants
+====
+
+== List regions
+
+List available regions for hosting your {astra_stream} tenant.
++
+[tabs]
+====
+Astra CLI::
++
+--
+[source,bash]
+----
+astra streaming list-regions
+----
+--
++
+Result::
++
+--
+[source,bash]
+----
++----------------+---------------------+-------------------------------+
+| Cloud Provider | Region              | Full Name                     |
++----------------+---------------------+-------------------------------+
+| aws            | useast1             |                               |
+| aws            | useast2             |                               |
+| aws            | uswest2             |                               |
+| azure          | australiaeast       |                               |
+| azure          | eastus              |                               |
+| azure          | westus2             |                               |
+| gcp            | australiase1        |                               |
+| gcp            | europewest1         |                               |
+| gcp            | uscentral1          |                               |
+| gcp            | useast1             |                               |
+| gcp            | useast4             |                               |
++----------------+---------------------+-------------------------------+
+----
+--
+====
+
+== List tenants
+
+List {astra_stream} tenants.
++
+[tabs]
+====
+Astra CLI::
++
+--
+[source,bash]
+----
+astra streaming list
+----
+--
++
+Result::
++
+--
+[source,bash]
+----
++---------------------+-----------+----------------+----------------+
+| name                | cloud     | region         | Status         |
++---------------------+-----------+----------------+----------------+
+| cdc-aws-useast1     | aws       | useast1        | active         |
+| new_tenant          | aws       | useast2        | active         |
+| new-tenant-from-cli | aws       | useast2        | active         |
++---------------------+-----------+----------------+----------------+
+----
+--
+====
+
+=== List tenants as csv or json
+
+Output tenant list as csv:
++
+[tabs]
+====
+Astra CLI::
++
+--
+[source,bash]
+----
+astra streaming list -o csv
+----
+--
++
+Result::
++
+--
+[source,csv]
+----
+name,cloud,region,Status
+cdc-aws-useast1,aws,useast1,active
+new_tenant,aws,useast2,active
+new-tenant-from-cli,aws,useast2,active
+----
+--
+====
+
+Output tenant list as json:
++
+[tabs]
+====
+Astra CLI::
++
+--
+[source,bash]
+----
+astra streaming list -o json
+----
+--
++
+Result::
++
+--
+[source,json]
+----
+{
+  "code" : 0,
+  "message" : "[streaming, list, -o, json]",
+  "data" : [ {
+    "cloud" : "aws",
+    "Status" : "active",
+    "name" : "cdc-aws-useast1",
+    "region" : "useast1"
+  }, {
+    "cloud" : "aws",
+    "Status" : "active",
+    "name" : "new_tenant",
+    "region" : "useast2"
+  }, {
+    "cloud" : "aws",
+    "Status" : "active",
+    "name" : "new-tenant-from-cli",
+    "region" : "useast2"
+  } ]
+}
+----
+--
+====
+
+== Create a tenant
+
+Create an {astra_stream} tenant. +
+If no values are passed in `--cloud`, `--region`, `--plan`, and `--namespace`, the default values for tenant creation are `aws`, `useast2`, `free`, and `default`.
++
+[tabs]
+====
+Astra CLI::
++
+--
+[source,bash]
+----
+astra streaming create new-tenant-from-cli
+----
+--
++
+Result::
++
+--
+[source,bash]
+----
+[OK]    Tenant 'new-tenant-from-cli' has being created.
+----
+--
+====
+
+== Get tenant details
+
+Get details on your new {astra_stream} tenant.
++
+[tabs]
+====
+Astra CLI::
++
+--
+[source,bash]
+----
+astra streaming get new-tenant-from-cli
+----
+--
++
+Result::
++
+--
+[source,bash]
+----
++------------------+-------------------------------------------------------------+
+| Attribute        | Value                                                       |
++------------------+-------------------------------------------------------------+
+| Name             | new-tenant-from-cli
+| Status           | active                                                      |
+| Cloud Provider   | aws                                                         |
+| Cloud region     | useast2                                                     |
+| Cluster Name     | pulsar-aws-useast2                                          |
+| Pulsar Version   | 2.10                                                        |
+| Jvm Version      | JDK11                                                       |
+| Plan             | payg                                                        |
+| WebServiceUrl    | https://pulsar-aws-useast2.api.streaming.datastax.com       |
+| BrokerServiceUrl | pulsar+ssl://pulsar-aws-useast2.streaming.datastax.com:6651 |
+| WebSocketUrl     | wss://pulsar-aws-useast2.streaming.datastax.com:8001/ws/v2  |
++------------------+-------------------------------------------------------------+
+----
+--
+====
+
+== Delete a tenant
+
+Delete an {astra_stream} tenant.
++
+[tabs]
+====
+Astra CLI::
++
+--
+[source,bash]
+----
+astra streaming delete new-tenant-from-cli
+----
+--
++
+Result::
++
+--
+[source,bash]
+----
+
+----
+--
+====
+
+== Use Pulsar-Shell
+
+Pulsar Shell is a standalone shell for managing Apache Pulsar resources. +
+It is compatible with Astra, but requires a few extra steps of configuration, which {astra_cli} does for you. +
+When called, {astra_cli} downloads, installs, configures, and wraps pulsar-shell, and starts the shell within the selected tenant. +
++
+[tabs]
+====
+Astra CLI::
++
+--
+[source,bash]
+----
+astra streaming pulsar-shell new-tenant-from-cli
+----
+--
++
+Result::
++
+--
+[source,bash]
+----
+➜  ~ astra streaming pulsar-shell new-tenant-from-cli
+[INFO]  Downloading PulsarShell, please wait...
+[INFO]  Installing  archive, please wait...
+[INFO]  Pulsar client.conf has been generated.
+Pulsar-shell is starting please wait for connection establishment...
+[INFO]  RUNNING: /Users/mendonk/.astra/lunastreaming-shell-2.10.1.1/bin/pulsar-shell --config /Users/mendonk/.astra/lunastreaming-shell-2.10.1.1/conf/client-aws-useast2-new-tenant-from-cli.conf
+Using directory: /Users/mendonk/.pulsar-shell
+Welcome to Pulsar shell!
+  Service URL: pulsar+ssl://pulsar-aws-useast2.streaming.datastax.com:6651
+  Admin URL: https://pulsar-aws-useast2.api.streaming.datastax.com
+
+Type help to get started or try the autocompletion (TAB button).
+Type exit or quit to end the shell session.
+
+default(pulsar-aws-useast2.streaming.datastax.com)>
+----
+--
+====
+
+=== List namespaces
+
+Use Pulsar Shell to list the current namespaces in your {astra_stream} tenant.
++
+[tabs]
+====
+Astra CLI::
++
+--
+[source,bash]
+----
+default(pulsar-aws-useast2.streaming.datastax.com)> admin namespaces list new-tenant-from-cli
+----
+--
++
+Result::
++
+--
+[source,bash]
+----
+new-tenant-from-cli/default
+----
+--
+====
+
+=== Create and list topics
+
+Use Pulsar Shell to create a topic and list topics in the `/default` namespace.
++
+[tabs]
+====
+Astra CLI::
++
+--
+[source,bash]
+----
+default(pulsar-aws-useast2.streaming.datastax.com)> admin topics create persistent://new-tenant-from-cli/default/demo
+default(pulsar-aws-useast2.streaming.datastax.com)> admin topics list new-tenant-from-cli/default
+----
+--
++
+Result::
++
+--
+[source,bash]
+----
+persistent://new-tenant-from-cli/default/demo
+----
+--
+====
+
+=== Produce and consume messages 
+
+Start a consumer in one tab, a producer in another tab, and send 20 messages.
+[tabs]
+====
+Astra CLI Consumer::
++
+--
+[source,bash]
+----
+default(pulsar-aws-useast2.streaming.datastax.com)> client consume persistent://new-tenant-from-cli/default/demo -s astra_cli_tutorial -n 0
+----
+--
++
+Astra CLI Consumer::
++
+--
+[source,bash]
+----
+default(pulsar-aws-useast2.streaming.datastax.com)> client produce persistent://new-tenant-from-cli/default/demo -m "hello world" -n 20
+----
+--
++
+Result::
++
+--
+[source,bash]
+----
+----- got message -----
+key:[null], properties:[], content:hello world
+----- got message -----
+key:[null], properties:[], content:hello world
+----- got message -----
+key:[null], properties:[], content:hello world
+2022-12-15T16:26:21,241-0500 [pulsar-timer-29-1] INFO  org.apache.pulsar.client.impl.ConsumerStatsRecorderImpl - [persistent://new-tenant-from-cli/default/demo] [astra_cli_tutorial] [80bff] Prefetched messages: 0 --- Consume throughput received: 0.33 msgs/s --- 0.00 Mbit/s --- Ack sent rate: 0.33 ack/s --- Failed messages: 0 --- batch messages: 0 ---Failed acks: 0
+
+----
+--
+====
+== Create environmental variables
+
+Create an {astra_stream} tenant.
++
+[tabs]
+====
+Astra CLI::
++
+--
+[source,bash]
+----
+astra streaming create-dot-env new-tenant-from-cli
+----
+--
++
+Result::
++
+--
+[source,bash]
+----
+
+----
+--
+====
+
+== What's next?
+Learn how to manage your {astra_db} databases with the {astra_cli}: xref:managing.adoc[].

@@ -1,0 +1,78 @@
+= Installing {astra_cli}
+
+You can install {astra_cli} on Windows, macOS, and Linux environments.
+
+The GitHub repo for {astra_cli} is https://github.com/datastax/astra-cli[here^].
+
+* For information about the latest release, see https://github.com/datastax/astra-cli/releases[this page].
+
+* If installed previously, run `astra --version` to find your installed version and see if you need to update. 
+
+== Install {astra_cli} on macOS
+
+You can install via Homebrew or manually.
+
+=== Using Homebrew
+
+Homebrew is the easiest way to manage your {astra_cli} install. 
+Homebrew provides convenient ways to install, update, and uninstall. 
+If you don't have Homebrew available on your system, install https://brew.sh/[Homebrew^] before continuing. 
+
+You can install {astra_cli} on macOS by updating your brew repository information, and then running the install command:
+
+[source,bash]
+----
+brew install datastax/astra-cli/astra-cli
+----
+
+The Homebrew formula of {astra_cli} installs a completion file named `astra` in the Homebrew-managed completions directory. 
+By default, the location is `/usr/local/etc/bash_completion.d/`.
+
+To enable completion, please follow Homebrew's instructions https://docs.brew.sh/Shell-Completion[here^].
+
+=== Manual Installation on macOS
+
+To install or reinstall {astra_cli}:
+
+[source,bash]
+----
+curl -Ls "https://dtsx.io/get-astra-cli" | bash
+----
+
+=== Installed location on your macOS machine
+
+{astra_cli} is installed in `~/.astra/cli`. This folder is deleted and recreated during installation.
+
+Your configuration is saved in the `~/.astrarc` file. It is not deleted during reinstallations.
+
+
+== Install {astra_cli} on Linux
+
+=== Manual Installation on Linux
+
+To install or reinstall {astra_cli}:
+
+[source,bash]
+----
+curl -Ls "https://dtsx.io/get-astra-cli" | bash
+----
+
+=== Installed location on your Linux machine
+
+{astra_cli} is installed in `~/.astra/cli`. This folder is deleted and recreated during installation.
+
+Your configuration is saved in the `~/.astrarc` file. It is not deleted during reinstallations.
+
+// === Using sdkman
+// Installation with SDK MAN is not available yet but is high in the roadmap.
+
+// Using a package Manager
+// Installation with package managers (yum, apt) is not available yet but is high in the roadmap.
+
+
+== Install {astra_cli} on Windows
+
+. Download the https://github.com/datastax/astra-cli/releases/download/0.1/astra-cli-0.1-windows.zip[astra-cli-$\{version}-windows.zip] Windows archive.
+. Unzip the archive in your preferred folder, such as: `C:/Programs/astra-cli`
+. Add `C:/Programs/astra-cli/astra.exe` to your PATH. For information, see https://www.howtogeek.com/118594/how-to-edit-your-system-path-for-easy-command-line-access/[this tutorial^].
+
