@@ -1,11 +1,11 @@
 = DataStax {product} Documentation
 :toc: macro
-:product: astra-cli
+:product: astra-cli-docs
 :product-repo-name: astra-cli-docs
 :product-repo-name-long: datastax/astra-cli-docs
 :product-repo-link: https://github.com/datastax/astra-cli-docs.git
 :product-branch-name: main
-:docset-name: astra-do
+:docset-name: astra-cli-docs
 :product-branch-link: main
 :install-git-link: https://github.com/git-guides/install-git
 :create-pr-link: https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request
