@@ -1,4 +1,0 @@
-* xref:introduction.adoc[Astra CLI]
-** xref:installation.adoc[Installing Astra CLI]
-** xref:getting-started.adoc[Getting started with Astra CLI]
-** xref:managing.adoc[Managing databases with Astra CLI]

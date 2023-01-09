@@ -5,4 +5,3 @@ start_page: index.adoc
 
 nav:
 - modules/ROOT/nav.adoc
-- modules/develop/dnav.adoc

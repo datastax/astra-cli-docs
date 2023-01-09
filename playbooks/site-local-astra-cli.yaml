@@ -1,27 +1,20 @@
 site:
-  title: DataStax <product-name>
-  url: https://docs.datastax.com/en/docset
-  # The keys.segmentIo site key must be in the site-publish playbook of each
-  # docset. This loads Segment into the docset build, and is a requirement for
-  # collecting site analytics.
-  keys:
-    segmentIo: d24gQtyKIUu5mLdkp11xjfiXLhRqx0HH
+  title: DataStax Astra CLI
+  url: https://docs.datastax.com/en/astra-cli
 
 output:
-  # Bsys requires the output.dir in the site-publish playbook to be specifically
-  # set to "~/work/<repo-name>/build/site". This is because bsys clones the
-  # content source repo into "/work", and then looks for the Antora-generated
-  # site in "build/site" within the repo directory when deploying/syncing.
-  dir: '~/work/<repo-name>/build/site'
+  # The output.dir in the site-local playbook should take the form
+  # "./../build/<docset-name>". The reason for this is because DataStax docs are
+  # often stored on separate branches of the same repo. Using the docset name
+  # for the output directory ensures that different docset builds within the
+  # same repo don't overwrite each other
+  dir: ./../build/astra-cli
 
 content:
   sources:
-  - url: '~/work/<repo-name>'
+  - url: ./..
     branches: HEAD
-    start_path: docs-src/docset-core
-  - url: '~/work/<repo-name>'
-    branches: HEAD
-    start_path: docs-src/docset-develop
+    start_path: docs-src/astra-cli-core
 
 ui:
   bundle:
@@ -31,7 +24,7 @@ ui:
   # change the banner logo to something other than the default logo provided by
   # the UI bundle. NOTE: The non-default logo must be named "logo.svg" and be
   # located @ "playbooks/supplemental-ui/img/logo.svg".
-  #supplemental_files: ~/work/<repo-name>/playbooks/supplemental-ui
+  #supplemental_files: ./supplemental-ui
   output_dir: assets
 
 asciidoc:
@@ -47,6 +40,7 @@ asciidoc:
     product: 'Product'
     product_name: 'Product'
     evalproduct: 'DB Classic'
+    shortproduct: 'classic'
     database: 'Astra DB'
     astra_db: 'Astra DB'
     astra_generic: 'Astra'
@@ -54,7 +48,7 @@ asciidoc:
     classic_cap: 'Classic'
     serverless: 'serverless'
     serverless_cap: 'Serverless'
-    astra_ui: "Astra Portal"
+    astra_ui: 'Astra Portal'
     astra_cli: 'Astra CLI'
     astra_stream: 'Astra Streaming'
     advanced: 'no'
@@ -127,10 +121,5 @@ asciidoc:
     # page for "agent": {glossary-url}agent[agent,window="_blank"]
     glossary-url: 'https://docs.datastax.com/en/glossary/docs/index.html#'
 
-    # Bsys requires the URLs of the content source repos of the current docset
-    # to be listed as attributes in the site-publish playbook in the form
-    # "<repo-name>: 'ssh://github.com/<org-name>/<repo-name>.git'".
-    <repo-name>: 'ssh://github.com/<org-name>/<repo-name>.git'
-
   extensions:
-  - ~/work/<repo-name>/playbooks/lib/tabs-block.js
+  - ./lib/tabs-block.js

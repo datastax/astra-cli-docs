@@ -1,11 +1,11 @@
 {
-  "name": "docset",
+  "name": "astra-cli",
   "scripts": {
-    "build:prod:docset": "npm run build:publish:docset",
-    "build:dev:docset": "npm run build:local:docset",
-    "build:publish:docset": "antora --log-level error --fetch --clean playbooks/site-publish-docset.yaml",
-    "build:local:docset": "antora --stacktrace --fetch --clean playbooks/site-local-docset.yaml",
-    "build:linkinator:docset": "npx linkinator https://docs.datastax.com/en/docset/docs/ --recurse --skip ' https://localhost?'"
+    "build:prod:astra-cli": "npm run build:publish:astra-cli",
+    "build:dev:astra-cli": "npm run build:local:astra-cli",
+    "build:publish:astra-cli": "antora --log-level error --fetch --clean playbooks/site-publish-astra-cli.yaml",
+    "build:local:astra-cli": "antora --stacktrace --fetch --clean playbooks/site-local-astra-cli.yaml",
+    "build:linkinator:astra-cli": "npx linkinator https://docs.datastax.com/en/astra-cli/docs/ --recurse --skip ' https://localhost?'"
   },
   "repository": {
     "type": "git",

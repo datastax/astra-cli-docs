@@ -1,0 +1,5 @@
+* xref:introduction.adoc[]
+** xref:installation.adoc[]
+** xref:getting-started.adoc[]
+** xref:managing.adoc[]
+** xref:astra-streaming-cli.adoc[]

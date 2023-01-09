@@ -3,8 +3,8 @@
 # get the product docset that is going to be run
 
 case $1 in
-  ( 'docset' ) echo "product: $1";;
-  (*) echo "pick docset" && exit;;
+  ( 'astra-cli' ) echo "product: $1";;
+  (*) echo "pick astra-cli" && exit;;
 esac
 
 echo "checking prerequisites"
@@ -60,16 +60,16 @@ fi
 
 case $1 in
 
-  docset)
-    echo "product is docset"
+  astra-cli)
+    echo "product is astra-cli"
     echo "make antora.yml links"
-    cd docs-src/docset-core
-    rm antora.yml; ln -s antora-docset.yml antora.yml
-    cd ../docset-develop
-    rm antora.yml; ln -s antora-docset.yml antora.yml
+    cd docs-src/astra-cli-core
+    rm antora.yml; ln -s antora-astra-cli.yml antora.yml
+ #   cd ../astra-cli-core
+ #   rm antora.yml; ln -s antora-astra-cli.yml antora.yml
     cd ../..
     echo "run the build"
-    npm run build:local:docset
+    npm run build:local:astra-cli
     ;;
 
 esac
