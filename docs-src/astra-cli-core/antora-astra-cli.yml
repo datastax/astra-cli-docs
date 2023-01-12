@@ -1,1 +1,7 @@
-antora-astra-cli.yml
+name: astra-cli
+title: DataStax Astra CLI Documentation
+version: ~
+start_page: index.adoc
+
+nav:
+- modules/ROOT/nav.adoc
