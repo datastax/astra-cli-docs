@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+<repo-clone-URL>"
+    "url": "git+https://github.com/datastax/astra-cli-docs.git"
   },
   "dependencies": {
     "@antora/cli": "~3.0.1",
