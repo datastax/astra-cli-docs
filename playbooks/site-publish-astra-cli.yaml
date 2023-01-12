@@ -133,4 +133,4 @@ asciidoc:
     astra-cli-docs: 'ssh://github.com/datastax/astra-cli-docs.git'
 
   extensions:
-  - ~/work/<repo-name>/playbooks/lib/tabs-block.js
+  - ~/work/astra-cli-docs/playbooks/lib/tabs-block.js
