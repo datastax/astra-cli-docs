@@ -19,9 +19,6 @@ content:
   - url: '~/work/astra-cli-docs'
     branches: HEAD
     start_path: docs-src/astra-cli-core
-  - url: '~/work/astra-cli-docs'
-    branches: HEAD
-    start_path: docs-src/astra-cli-core
 
 ui:
   bundle:
