@@ -1,8 +1,8 @@
-= Product Landing Page
+= Astra CLI
 :page-layout: gcx-landing
 :data-uri:
 
-== Getting started with Product
+== Getting started with {astra_cli}
 
 ++++
 <div class="landing-row">
@@ -12,7 +12,7 @@
 .Create your first thing
 ****
 --
-You can do amazing things with Product.
+You can do amazing things with {astra_cli}.
 
 * Create a thing.
 * Create a more advanced thing.
@@ -33,7 +33,7 @@ image::what-is-astra-db.svg[icon description,40]
 .Another thing
 ****
 --
-More things to do with Product.
+More things to do with {astra_cli}.
 --
 [.landing-card-body-icon]
 image::create-db-now.svg[icon description,40]
@@ -43,7 +43,7 @@ image::create-db-now.svg[icon description,40]
 .Another thing
 ****
 --
-More things to do with Product.
+More things to do with {astra_cli}.
 --
 [.landing-card-body-icon]
 image::what-is-astra-streaming.svg[icon description,40]
@@ -53,7 +53,7 @@ image::what-is-astra-streaming.svg[icon description,40]
 .Another thing
 ****
 --
-More things to do with Product.
+More things to do with {astra_cli}.
 --
 [.landing-card-body-icon]
 image::what-is-stargate-api.svg[icon description,40]
@@ -71,7 +71,7 @@ image::what-is-stargate-api.svg[icon description,40]
 .Another thing
 ****
 --
-More things to do with Product.
+More things to do with {astra_cli}.
 --
 [.landing-card-body-icon]
 image::what-is-k8ssandra.svg[icon description,40]
@@ -81,7 +81,7 @@ image::what-is-k8ssandra.svg[icon description,40]
 .Another thing
 ****
 --
-More things to do with Product.
+More things to do with {astra_cli}.
 --
 [.landing-card-body-icon]
 image::what-is-datastax-luna.svg[Luna card icon,40]
