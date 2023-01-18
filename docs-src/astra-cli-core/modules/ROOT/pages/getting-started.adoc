@@ -4,9 +4,9 @@ Read this topic to learn how to get started with {astra_cli}.
 
 == Setup
 
-Before issuing CLI `astra` commands, initialize the configuration file `~/.astrarc`. 
-Run the following command. 
-You will be asked to provide your token, which begins with `AstraCS:\...`. 
+Before issuing CLI `astra` commands, initialize the configuration file `~/.astrarc`.
+Run the following command.
+You will be asked to provide your token, which begins with `AstraCS:\...`.
 The token will be saved so that you're authorized to run the CLI commands.
 
 [source,bash]

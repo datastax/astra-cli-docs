@@ -18,7 +18,7 @@ Use the following {astra_cli} commands to manage your {astra_db} databases. From
 
 == Create a database
 
-You can create an {astra_db} Serverless or {astra_db} Classic database with the `astra db create <db-name>` command. 
+You can create an {astra_db} Serverless or {astra_db} Classic database with the `astra db create <db-name>` command.
 
 Example:
 
@@ -45,7 +45,7 @@ The database name itself does not ensure uniqueness within your {astra_db} organ
 
 To change this behavior, use the `--if-not-exist` option.
 
-Database creation is asynchronous operation. 
+Database creation is asynchronous operation.
 Still during your CI/CD you want the database to be in an `ACTIVE` state before moving forward.
 Using the option `--wait` will trigger a blocking command until the database is ready.
 
@@ -56,7 +56,7 @@ Example:
 astra db create demo -k ks2 --if-not-exist --wait
 ----
 
-If you are using the Free plan, after a period of inactivity (23 hours) the database moves to a `HIBERNATED` state. 
+If you are using the Free plan, after a period of inactivity (23 hours) the database moves to a `HIBERNATED` state.
 You can use the `astra db resume <db-name>` command to reactivate the database.
 
 
@@ -96,7 +96,7 @@ Sample output:
  +---------------------+--------------------------------------+---------------------+----------------+
 ----
 
-You can also change the database list's output type with the `astra db list -o <type>` command, where <type> can be `csv` or `json`. 
+You can also change the database list's output type with the `astra db list -o <type>` command, where <type> can be `csv` or `json`.
 
 Examples:
 
@@ -359,7 +359,7 @@ To get a special property, add the option `--key` and its type.
 
 Multiple key types are available: `id`, `status`, `cloud`, `keyspace`, `keyspaces`, `region`, `regions`.
 
-Notice that the output is raw. This command is expected to be used in scripts. 
+Notice that the output is raw. This command is expected to be used in scripts.
 
 Example:
 
@@ -428,7 +428,7 @@ astra help db list-keyspaces
 
 === Create a new keyspace
 
-To add a keyspace named `ks2` to an existing database named `demo`, use the following command. 
+To add a keyspace named `ks2` to an existing database named `demo`, use the following command.
 The option `--if-not-exist` is optional but could help you provide idempotent scripts. Example:
 
 [source,bash]
@@ -447,7 +447,7 @@ astra db list-keyspaces demo
 
 == Use cqlsh
 
-https://cassandra.apache.org/doc/latest/cassandra/tools/cqlsh.html[cqlsh^] is a standalone shell to work with Apache Cassandra&reg;. 
+https://cassandra.apache.org/doc/latest/cassandra/tools/cqlsh.html[cqlsh^] is a standalone shell to work with Apache Cassandra&reg;.
 It is compliant with {astra_cli} but requires a few extra steps of configuration.
 The purpose of {astra_cli} is to integrate with `cqlsh` and do the integration for you.
 
@@ -500,7 +500,7 @@ astra db cqlsh demo -f sample.cql
 
 == Use DSBulk with {astra_cli} to load, unload, and count data
 
-https://github.com/datastax/dsbulk[DataStax Bulk Loader^] (`dsbulk`) allows you to you load, unload, and count data from Cassandra-based database tables, such as those in Apache Cassandra, DataStax Enterprise, and Astra DB. {astra_cli} commands can invoke dsbulk. 
+https://github.com/datastax/dsbulk[DataStax Bulk Loader^] (`dsbulk`) allows you to you load, unload, and count data from Cassandra-based database tables, such as those in Apache Cassandra, DataStax Enterprise, and Astra DB. {astra_cli} commands can invoke dsbulk.
 
 As for `cqlsh`, {astra_cli} will *download*, *install*, *setup* and *wrap* the `dsbulk` command for you.
 All options are available.
@@ -552,14 +552,14 @@ quit
 
 [source,bash]
 ----
-astra db load demo \   
- -url https://raw.githubusercontent.com/awesome-astra/docs/main/docs/assets/cities.csv \   
- -k demo \   
- -t cities_by_country \   
+astra db load demo \
+ -url https://raw.githubusercontent.com/awesome-astra/docs/main/docs/assets/cities.csv \
+ -k demo \
+ -t cities_by_country \
  --schema.allowMissingFields true
----- 
+----
 
-The first time you run the `astra db load` command, the message -- `DSBulk is starting please wait` -- may take a few seconds to appear because  
+The first time you run the `astra db load` command, the message -- `DSBulk is starting please wait` -- may take a few seconds to appear because
 {astra_cli} is downloading `dsbulk` (if it wasn't downloaded previously).
 
 Sample output:
@@ -724,7 +724,7 @@ Sample output:
 
 == Resume a hibernated database
 
-If you are using the {astra_db} Free plan, your database will be hibernated (inactive) after 23 hours of inactivity. (This behavior does not occur when you upgrade to a paid {astra_db} plan.) 
+If you are using the {astra_db} Free plan, your database will be hibernated (inactive) after 23 hours of inactivity. (This behavior does not occur when you upgrade to a paid {astra_db} plan.)
 
 To wake up the database, you can use the `astra db resume` command.
 
@@ -740,9 +740,9 @@ Sample output:
 [source,bash]
 ----
 +---------------------+--------------------------------------+---------------------+----------------+
-| Name                | id                                   | Default Region      | Status         | 
-+---------------------+--------------------------------------+---------------------+----------------+ 
-| mydatabase          | 643c6bb8-2336-4649-97d5-999999999999 | eu-central-1        | HIBERNATED     | 
+| Name                | id                                   | Default Region      | Status         |
++---------------------+--------------------------------------+---------------------+----------------+
+| mydatabase          | 643c6bb8-2336-4649-97d5-999999999999 | eu-central-1        | HIBERNATED     |
 +---------------------+--------------------------------------+---------------------+----------------+
 ----
 
@@ -799,7 +799,7 @@ Here we'll name a configuration `dev` and identify the auth token of a separate 
 astra config create dev --token <token_of_org_2>
 ----
 
-=== Use your section configuration 
+=== Use your section configuration
 
 You can use an organization configuration anytime by qualifying the `astra` command with the `--config <config_name>` option.
 
@@ -828,7 +828,7 @@ astra config list
 
 === Delete a section
 
-You can delete any organization. 
+You can delete any organization.
 If you delete the selected organization, you will have to pick a new one.
 
 Delete your config:
@@ -847,4 +847,4 @@ astra config list
 
 
 // == What's next?
-// See the CLI commands that you can use with DataStax {astra_stream} Pulsar tenants. ( TODO: link ) 
+// See the CLI commands that you can use with DataStax {astra_stream} Pulsar tenants. ( TODO: link )
