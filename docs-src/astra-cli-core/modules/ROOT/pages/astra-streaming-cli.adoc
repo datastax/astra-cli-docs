@@ -4,13 +4,13 @@ Use the following {astra_cli} commands to manage your {astra_stream} operations.
 
 From the command line in a Terminal, the supported tasks include:
 
-* <<Create a tenant>>
+* <<List regions>>
 * <<List tenants>>
+* <<Create a tenant>>
 * <<Get tenant details>>
 * <<Delete a tenant>>
 * <<Use Pulsar-Shell>>
-* <<Use Pulsar-Client and Admin>>
-* <<List regions>>
+* <<Produce and consume messages>>
 * <<Create environment variables>>
 
 [NOTE]
@@ -33,7 +33,6 @@ tenants
 == List regions
 
 List available regions for hosting your {astra_stream} tenant.
-+
 [tabs]
 ====
 Astra CLI::
@@ -72,7 +71,6 @@ Result::
 == List tenants
 
 List {astra_stream} tenants.
-+
 [tabs]
 ====
 Astra CLI::
@@ -103,7 +101,6 @@ Result::
 === List tenants as csv or json
 
 Output tenant list as csv:
-+
 [tabs]
 ====
 Astra CLI::
@@ -129,7 +126,6 @@ new-tenant-from-cli,aws,useast2,active
 ====
 
 Output tenant list as json:
-+
 [tabs]
 ====
 Astra CLI::
@@ -174,7 +170,6 @@ Result::
 
 Create an {astra_stream} tenant. +
 If no values are passed in `--cloud`, `--region`, `--plan`, and `--namespace`, the default values for tenant creation are `aws`, `useast2`, `free`, and `default`.
-+
 [tabs]
 ====
 Astra CLI::
@@ -199,7 +194,6 @@ Result::
 == Get tenant details
 
 Get details on your new {astra_stream} tenant.
-+
 [tabs]
 ====
 Astra CLI::
@@ -238,7 +232,6 @@ Result::
 == Delete a tenant
 
 Delete an {astra_stream} tenant.
-+
 [tabs]
 ====
 Astra CLI::
@@ -262,10 +255,9 @@ Result::
 
 == Use Pulsar-Shell
 
-Pulsar Shell is a standalone shell for managing Apache Pulsar resources. +
-It is compatible with Astra, but requires a few extra steps of configuration, which {astra_cli} does for you. +
-When called, {astra_cli} downloads, installs, configures, and wraps pulsar-shell, and starts the shell within the selected tenant. +
-+
+Pulsar Shell is a standalone shell for managing Apache Pulsar resources.
+It is compatible with Astra, but requires a few extra steps of configuration, which {astra_cli} does for you.
+When called, {astra_cli} downloads, installs, configures, and wraps pulsar-shell, and starts the shell within the selected tenant.
 [tabs]
 ====
 Astra CLI::
@@ -304,7 +296,6 @@ default(pulsar-aws-useast2.streaming.datastax.com)>
 === List namespaces
 
 Use Pulsar Shell to list the current namespaces in your {astra_stream} tenant.
-+
 [tabs]
 ====
 Astra CLI::
@@ -329,7 +320,6 @@ new-tenant-from-cli/default
 === Create and list topics
 
 Use Pulsar Shell to create a topic and list topics in the `/default` namespace.
-+
 [tabs]
 ====
 Astra CLI::
@@ -352,7 +342,7 @@ persistent://new-tenant-from-cli/default/demo
 --
 ====
 
-=== Produce and consume messages 
+=== Produce and consume messages
 
 Start a consumer in one tab, a producer in another tab, and send 20 messages.
 [tabs]
@@ -391,10 +381,9 @@ key:[null], properties:[], content:hello world
 ----
 --
 ====
-== Create environmental variables
+== Create environment variables
 
 Create an {astra_stream} tenant.
-+
 [tabs]
 ====
 Astra CLI::
