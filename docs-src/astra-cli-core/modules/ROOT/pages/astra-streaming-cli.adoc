@@ -1,4 +1,4 @@
-= {astra_cli} for {astra_stream}
+= {astra_stream} with {astra_cli}
 
 Use the following {astra_cli} commands to manage your {astra_stream} operations.
 

@@ -1,4 +1,4 @@
-= {astra_cli} Landing Page
+= {astra_cli}
 :page-layout: gcx-landing
 :data-uri:
 
@@ -25,7 +25,7 @@ Get started with the links below.
 ++++
 
 [sidebar.landing-card]
-.Install and get started
+.Installing and getting started
 ****
 --
 * xref:installation.adoc[Install {astra_cli}]
@@ -36,18 +36,17 @@ image::create-db-now.svg[icon description,40]
 ****
 
 [sidebar.landing-card]
-.Manage {astra_db}
+.Managing {astra_db}
 ****
 --
 * xref:managing.adoc[]
-*
 --
 [.landing-card-body-icon]
 image::what-is-astra-streaming.svg[icon description,40]
 ****
 
 [sidebar.landing-card]
-.Manage {astra_stream}
+.Managing {astra_stream}
 ****
 --
 * xref:astra-streaming-cli.adoc[]
