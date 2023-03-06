@@ -15,6 +15,7 @@ output:
   dir: '~/work/astra-cli-docs/build/site'
 
 content:
+  edit_url: false
   sources:
   - url: '~/work/astra-cli-docs'
     branches: HEAD

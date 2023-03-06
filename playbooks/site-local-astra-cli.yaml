@@ -11,6 +11,7 @@ output:
   dir: ./../build/astra-cli
 
 content:
+  edit_url: false
   sources:
   - url: ./..
     branches: HEAD
