@@ -20,6 +20,17 @@ From the command line in a Terminal, the supported tasks are:
 == List databases
 
 To get the list of active databases in your {astra_db} organization, use the command `astra db list`. 
+
+[TIP]
+====
+For help on this command, use:
+
+[source,bash]
+----
+astra help db list
+----
+====
+
 Example:
 
 [tabs]
@@ -50,16 +61,6 @@ Sample result::
  +---------------------+--------------------------------------+---------------------+----------------+
 ----
 --
-====
-
-[TIP]
-====
-For help on this command, use:
-
-[source,bash]
-----
-astra help db list
-----
 ====
 
 You can also change the database list's output type with the `astra db list -o <type>` command, where <type> can be `csv` or `json`.
@@ -154,17 +155,10 @@ Sample result::
 
 You can create an {astra_db} *Serverless* database with the `astra db create <db-name>` command.
 
-[TIP]
+[NOTE]
 ====
 While you cannot create {astra_db} *Classic* databases with the `astra db create <db-name>` command, you can use other {astra_cli} commands to return information about existing {astra_db} Classic databases.
 ====
-
-Example:
-
-[source,bash]
-----
-astra db create demo
-----
 
 [TIP]
 ====
@@ -175,6 +169,13 @@ For help on this command, use:
 astra help db create
 ----
 ====
+
+Example:
+
+[source,bash]
+----
+astra db create demo
+----
 
 By default, the region will be an available free region, and the keyspace name will be the same as the database name. You can change the names with `-r` and `-k` respectively.
 
@@ -409,7 +410,6 @@ astra role get "Database Administrator"
 
 To get general information or details on an entity, use the command `astra db get <db-name>`. 
 The output includes specific information about the list of keyspaces available and the different regions.
-
 
 [TIP]
 ====
@@ -658,7 +658,7 @@ id,name,state_id,state_code,state_name,country_id,country_code,country_name,lati
 
 Let's create a table to store those values.
 
-Connect to CQHSH with this {astra_cli} command:
+Connect to CQLSH with this {astra_cli} command:
 
 [source,bash]
 ----
@@ -715,7 +715,7 @@ Sample result::
  Operation directory: /Users/awesome.user/Downloads/logs/LOAD_20220823-182343-074618
  Setting executor.maxPerSecond not set when connecting to DataStax Astra: applying a limit of 9,000 ops/second based on the number of coordinators (3).
  If your Astra database has higher limits, please define executor.maxPerSecond explicitly.
-   total | failed | rows/s |  p50ms |  p99ms | p99ms | batches
+   total | failed | rows/s |  p50ms |  p99ms | p999ms | batches
  148,266 |      0 |  8,361 | 663.86 | 767.56 | 817.89 |   30.91
  Operation LOAD_20221123-182343-074618 completed successfully in 17 seconds.
  Last processed positions can be found in positions.txt
