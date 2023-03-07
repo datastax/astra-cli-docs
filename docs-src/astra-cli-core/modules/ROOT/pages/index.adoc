@@ -42,7 +42,7 @@ image::create-db-now.svg[icon description,40]
 * xref:managing.adoc[]
 --
 [.landing-card-body-icon]
-image::what-is-astra-streaming.svg[icon description,40]
+image::what-is-astra-db.svg[icon description,40]
 ****
 
 [sidebar.landing-card]
@@ -52,7 +52,7 @@ image::what-is-astra-streaming.svg[icon description,40]
 * xref:astra-streaming-cli.adoc[]
 --
 [.landing-card-body-icon]
-image::what-is-stargate-api.svg[icon description,40]
+image::what-is-astra-streaming.svg[icon description,40]
 ****
 
 ++++
