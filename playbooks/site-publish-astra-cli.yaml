@@ -38,8 +38,8 @@ asciidoc:
     page-pagination: ''
     sectanchors: ''
     sectlinks: ''
-    id-prefix: ''
-    id-separator: '-'
+    idprefix: ''
+    idseparator: '-'
 
     company: 'DataStax'
     product: 'Product'
@@ -131,4 +131,4 @@ asciidoc:
     astra-cli-docs: 'ssh://github.com/datastax/astra-cli-docs.git'
 
   extensions:
-  - ~/work/astra-cli-docs/playbooks/lib/tabs-block.js
+  - '@asciidoctor/tabs'
