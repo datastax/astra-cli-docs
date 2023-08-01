@@ -1,6 +1,6 @@
 = DataStax {product} Documentation
 :toc: macro
-:product: astra-cli-docs
+:product: Astra CLI
 :product-repo-name: astra-cli-docs
 :product-repo-name-long: datastax/astra-cli-docs
 :product-repo-link: https://github.com/datastax/astra-cli-docs.git
