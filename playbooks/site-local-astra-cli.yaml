@@ -31,7 +31,6 @@ ui:
 
 asciidoc:
   attributes:
-    source-highlighter: highlightjs
     page-pagination: ''
     sectanchors: ''
     sectlinks: ''
