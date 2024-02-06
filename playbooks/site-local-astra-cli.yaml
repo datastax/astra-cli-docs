@@ -1,6 +1,7 @@
 site:
-  title: DataStax Astra CLI
+  title: Astra CLI
   url: https://docs.datastax.com/en/astra-cli
+  start_page: docs::index.adoc
 
 output:
   # The output.dir in the site-local playbook should take the form
@@ -30,7 +31,6 @@ ui:
 
 asciidoc:
   attributes:
-    source-highlighter: highlightjs
     page-pagination: ''
     sectanchors: ''
     sectlinks: ''

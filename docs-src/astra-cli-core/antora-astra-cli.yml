@@ -1,6 +1,6 @@
 name: docs
-title: DataStax Astra CLI Documentation
-version: 0.2
+title: Astra CLI
+version: '0.2'
 start_page: index.adoc
 
 nav:
