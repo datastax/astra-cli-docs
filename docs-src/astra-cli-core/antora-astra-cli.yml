@@ -1,6 +1,6 @@
 name: docs
 title: Astra CLI
-version: 0.2
+version: '0.2'
 start_page: index.adoc
 
 nav:
