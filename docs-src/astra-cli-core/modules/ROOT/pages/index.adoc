@@ -1,5 +1,4 @@
 = {astra_cli}
-:page-layout: gcx-landing
 :data-uri:
 
 The DataStax Astra Command-Line Interface ({astra_cli}) is a set of commands used to create and manage Astra resources.
