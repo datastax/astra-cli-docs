@@ -1,4 +1,5 @@
 = {astra_cli}
+:page-layout: landing
 :data-uri:
 
 The DataStax Astra Command-Line Interface ({astra_cli}) is a set of commands used to create and manage Astra resources.
@@ -19,41 +20,51 @@ Any user with the **Organization Administrator** role may use {astra_cli} comman
 
 Get started with the links below.
 
+[subs="macros,attributes"]
 ++++
-<div class="landing-row">
-++++
 
-[sidebar.landing-card]
-.Installing and getting started
-****
---
-* xref:installation.adoc[Install {astra_cli}]
-* xref:getting-started.adoc[Get started]
---
-[.landing-card-body-icon]
-image::create-db-now.svg[icon description,40]
-****
+<div class="grid lg:grid-rows-1 lg:grid-cols-3 gap-6 mt-6">
 
-[sidebar.landing-card]
-.Managing {astra_db}
-****
---
-* xref:managing.adoc[]
---
-[.landing-card-body-icon]
-image::what-is-astra-db.svg[icon description,40]
-****
+  <!-- Installing and getting started Card -->
+  <div class="flex flex-col items-start gap-4 rounded border p-4">
+    <div class="rounded bg-level1 p-2">
+      svg:ROOT:create-db-now.svg[role="mx-auto my-auto w-8 h-8"]
+    </div>
 
-[sidebar.landing-card]
-.Managing {astra_stream}
-****
---
-* xref:astra-streaming-cli.adoc[]
---
-[.landing-card-body-icon]
-image::what-is-astra-streaming.svg[icon description,40]
-****
+    <div><h3 class="discrete !text-h2 !m-0">Installing and getting started</h3></div>
 
-++++
+    <ul class="!m-0 [&>li]:my-2">
+      <li>xref:installation.adoc[Install {astra_cli}]</li>
+      <li>xref:getting-started.adoc[Get started]</li>
+    </ul>
+  </div>
+
+  <!-- Managing AstraDB Card -->
+  <div class="flex flex-col items-start gap-4 rounded border p-4">
+    <div class="rounded bg-level1 p-2">
+      svg:ROOT:what-is-astra-db.svg[role="mx-auto my-auto w-8 h-8"]
+    </div>
+
+    <div><h3 class="discrete !text-h2 !m-0">Managing {astra_db}</h3></div>
+
+    <ul class="!m-0 [&>li]:my-2">
+      <li>xref:managing.adoc[]</li>
+    </ul>
+  </div>
+
+  <!-- Managing Streaming Card -->
+  <div class="flex flex-col items-start gap-4 rounded border p-4">
+    <div class="rounded bg-level1 p-2">
+      svg:ROOT:what-is-astra-streaming.svg[role="mx-auto my-auto w-8 h-8"]
+    </div>
+
+    <div><h3 class="discrete !text-h2 !m-0">Managing {astra_stream}</h3></div>
+
+    <ul class="!m-0 [&>li]:my-2">
+      <li>xref:astra-streaming-cli.adoc[]</li>
+    </ul>
+  </div>
+
 </div>
+
 ++++
