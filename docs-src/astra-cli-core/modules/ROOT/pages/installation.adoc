@@ -73,7 +73,7 @@ Your configuration is saved in the `~/.astrarc` file. It is not deleted during r
 == Install {astra_cli} on Windows
 
 . Install https://learn.microsoft.com/en-us/windows/wsl/install[Windows Subsystem for Linux].
-. Install {astra-cli}:
+. Install {astra_cli}:
 [source,bash]
 ----
 curl -Ls "https://dtsx.io/get-astra-cli" | bash
