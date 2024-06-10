@@ -1,6 +1,6 @@
 = Installing {astra_cli}
 
-You can install {astra_cli} on Windows, macOS, and Linux environments.
+You can install {astra_cli} on macOS, Linux, and Windows (with WSL) environments.
 
 The GitHub repo for {astra_cli} is https://github.com/datastax/astra-cli[here^].
 
@@ -72,7 +72,11 @@ Your configuration is saved in the `~/.astrarc` file. It is not deleted during r
 
 == Install {astra_cli} on Windows
 
-. Download the https://github.com/datastax/astra-cli/releases/download/0.1/astra-cli-0.1-windows.zip[astra-cli-$\{version}-windows.zip] Windows archive.
-. Unzip the archive in your preferred folder, such as: `C:/Programs/astra-cli`
-. Add `C:/Programs/astra-cli/astra.exe` to your PATH. For information, see https://www.howtogeek.com/118594/how-to-edit-your-system-path-for-easy-command-line-access/[this tutorial^].
+. Install https://learn.microsoft.com/en-us/windows/wsl/install[Windows Subsystem for Linux].
+. Install {astra-cli}:
+[source,bash]
+----
+curl -Ls "https://dtsx.io/get-astra-cli" | bash
+----
 
+For more information, see https://awesome-astra.github.io/docs/pages/astra/astra-cli/#14-installation-on-windows[Awesome Astra].
