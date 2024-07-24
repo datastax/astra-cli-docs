@@ -20,7 +20,7 @@ Any user with the **Organization Administrator** role may use {astra_cli} comman
 
 Get started with the links below.
 
-[subs="macros,attributes"]
+[subs="macros,attributes+"]
 ++++
 
 <div class="grid lg:grid-rows-1 lg:grid-cols-3 gap-6 mt-6">

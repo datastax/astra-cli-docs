@@ -1,11 +1,7 @@
-name: astra-cli
-title: Astra CLI
+name: 'astra-cli'
+title: 'Astra CLI'
 version: '0.2'
-start_page: index.adoc
+start_page: 'index.adoc'
 
 nav:
 - modules/ROOT/nav.adoc
-
-asciidoc:
-  attributes:
-    astra_cli: 'Astra CLI'
