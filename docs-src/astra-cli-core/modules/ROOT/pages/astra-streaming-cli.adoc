@@ -356,7 +356,7 @@ default(pulsar-aws-useast2.streaming.datastax.com)> client consume persistent://
 ----
 --
 +
-Astra CLI Consumer::
+Astra CLI Producer::
 +
 --
 [source,bash]
