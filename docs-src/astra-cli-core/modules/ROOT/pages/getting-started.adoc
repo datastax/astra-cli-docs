@@ -1,54 +1,58 @@
-= Getting Started with {astra_cli}
+= Getting started with {astra_cli}
 
-Read this topic to learn how to get started with {astra_cli}.
+Initialize the Astra CLI and run your first commands.
 
-== Setup
+[#get-credentials]
+== Retrieve your application token
 
-Before issuing CLI `astra` commands, initialize the configuration file `~/.astrarc`.
-Run the following command.
-You will be asked to provide your token, which begins with `AstraCS:\...`.
-The token will be saved so that you're authorized to run the CLI commands.
+The Astra CLI requires an _application token_ to authenticate with Astra.
+For instructions on how to create an application token, see xref:astra-db-serverless:administration:manage-application-tokens.adoc[].
 
+To increase the security of your Astra account, DataStax recommends that you grant your application token only the bare minimum xref:astra-db-serverless:administration:manage-database-access.adoc[permissions] required to perform the tasks you'll be running in Astra.
+
+== Set up a new configuration
+
+Use the `astra setup` command to initialize the Astra CLI:
+
+[source,bash,subs="verbatim,quotes"]
+----
+astra setup --token *APPLICATION_TOKEN*
+----
+
+Replace `*APPLICATION_TOKEN*` with your <<get-credentials,application token>>.
+The token format is `AstraCS:` followed by a unique token string.
+
+.Result
+[%collapsible]
+====
 [source,bash]
 ----
-astra setup
+[OK]    Configuration has been saved.
+[OK]    Setup completed.
+[INFO]  Enter 'astra help' to list available commands.
 ----
+====
 
-Output:
+The Astra CLI is now initialized and ready to use.
 
-[source,bash]
-----
-    _____            __
-   /  _  \   _______/  |_____________
-  /  /_\  \ /  ___/\   __\_  __ \__  \
-/    |    \\___ \  |  |  |  | \// __ \_
-\____|__  /____  > |__|  |__|  (____  /
-         \/     \/                   \/
+The Astra CLI configuration, including your application token, is stored in `~/.astrarc`.
+The information in this file is used whenever you run the `astra` command.
 
-        ------------------------
-        ---       SETUP      ---
-        ------------------------
-
-🔑 Enter token (starting with AstraCS...):
-----
-
-You are all set.
-The configuration (mainly your token) is stored in file `~/.astrarc`.
-
+[#first-commands]
 == First commands
 
-* Display current version of the cli, validating setup is complete.
+* Display the current version of the CLI.
 
 [source,bash]
 ----
 astra --version
 ----
 
-* Display your configuration list.
+* Display your configuration list, validating setup is complete.
 
 [source,bash]
 ----
-bash astra config list
+astra config list
 ----
 
 Output:
@@ -58,8 +62,7 @@ Output:
  +-----------------------------------------+
  | configuration                           |
  +-----------------------------------------+
- | default (cedrick.lunven@datastax.com)   |
- | cedrick.lunven@datastax.com             |
+ | alex@altostrat.com                      |
  +-----------------------------------------+
 ----
 
