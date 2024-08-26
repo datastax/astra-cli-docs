@@ -1,33 +1,47 @@
-= Getting Started with {astra_cli}
+= Getting started with {astra_cli}
 
-Read this topic to learn how to get started with {astra_cli}.
+Initialize the Astra CLI and run your first commands.
 
-== Setup
+[#get-credentials]
+== Retrieve your application token
 
-Before issuing CLI `astra` commands, initialize the configuration file `~/.astrarc` by running the
-`setup` command with your application token which begins with `AstraCS:...`.
-The token will be saved so that you're authorized to run the CLI commands.
+The Astra CLI requires an _application token_ to authenticate with Astra.
+For instructions on how to create an application token, see xref:astra-db-serverless:administration:manage-application-tokens.adoc[].
 
-[source,bash]
+To increase the security of your Astra account, DataStax recommends that you grant your application token only the bare minimum xref:astra-db-serverless:administration:manage-database-access.adoc[permissions] required to perform the tasks you'll be running in Astra.
+
+== Set up a new configuration
+
+Use the `astra setup` command to initialize the Astra CLI:
+
+[source,bash,subs="verbatim,quotes"]
 ----
-astra setup --token <your_app_token>
+astra setup --token *APPLICATION_TOKEN*
 ----
 
-Output:
+Replace `*APPLICATION_TOKEN*` with your <<get-credentials,application token>>.
+The token format is `AstraCS:` followed by a unique token string.
 
+.Result
+[%collapsible]
+====
 [source,bash]
 ----
 [OK]    Configuration has been saved.
 [OK]    Setup completed.
 [INFO]  Enter 'astra help' to list available commands.
 ----
+====
 
-You are all set.
-The configuration (mainly your token) is stored in file `~/.astrarc`.
+The Astra CLI is now initialized and ready to use.
 
+The Astra CLI configuration, including your application token, is stored in `~/.astrarc`.
+The information in this file is used whenever you run the `astra` command.
+
+[#first-commands]
 == First commands
 
-* Display current version of the CLI.
+* Display the current version of the CLI.
 
 [source,bash]
 ----
@@ -48,7 +62,7 @@ Output:
  +-----------------------------------------+
  | configuration                           |
  +-----------------------------------------+
- | your_email@domain.tld                   |
+ | alex@altostrat.com                      |
  +-----------------------------------------+
 ----
 
