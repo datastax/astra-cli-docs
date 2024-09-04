@@ -1,70 +1,62 @@
 = {product}
 :page-layout: landing
-:data-uri:
 
-The DataStax Astra Command-Line Interface ({product}) is a set of commands used to create and manage Astra resources.
+The DataStax Astra Command-Line Interface ({product}) is a free utility that you can use to create and manage Astra resources.
 {product} is available across Astra services and is designed to get you working quickly with {astra_db} and {astra_stream}, with an emphasis on automation.
 
-{product} makes it possible to submit commands instead of *or in addition to* using {astra_ui} and DataStax API calls.
+With {product}, you can manage Astra resources from the command line instead of (or in addition to) the {astra_ui} and Astra DevOps API calls.
 
 {product} features are for operators, Site Reliability Engineers (SREs), and developers who want the option of using commands when working with {astra_db} databases and {astra_stream} tenants.
 The tools should be complementary and not restrictive, so choose what tool works best for you.
 
-{product} is free.
+[.[&>h2]:!hidden]
+== {empty}
 
-Any user with the **Organization Administrator** role may use {product} commands with:
-
-* {astra_db} Serverless databases
-* {astra_db} Classic databases
-* {astra_stream} tenants
-
-Get started with the links below.
-
-[subs="macros,attributes+"]
+[subs="macros,attributes"]
 ++++
+<div class="grid gap-6 lg:grid-cols-3">
+  <div class="grid gap-4">
 
-<div class="grid lg:grid-rows-1 lg:grid-cols-3 gap-6 mt-6">
+    svg:ROOT:create-db-now.svg[role="mx-auto max-w-xs md:mx-0 lg:max-w-none"]
 
-  <!-- Installing and getting started Card -->
-  <div class="flex flex-col items-start gap-4 rounded border p-4">
-    <div class="rounded bg-level1 p-2">
-      svg:ROOT:create-db-now.svg[role="mx-auto my-auto w-8 h-8"]
+    <h3 class="discrete !text-h2 !m-0">Installing and getting started</h3>
+
+    <!-- <p>Placeholder text.</p> -->
+
+    <div class="landing-a">
+        xref:installation.adoc[]
     </div>
 
-    <div><h3 class="discrete !text-h2 !m-0">Installing and getting started</h3></div>
-
-    <ul class="!m-0 [&>li]:my-2">
-      <li>xref:installation.adoc[Install {product}]</li>
-      <li>xref:getting-started.adoc[Get started]</li>
-    </ul>
-  </div>
-
-  <!-- Managing AstraDB Card -->
-  <div class="flex flex-col items-start gap-4 rounded border p-4">
-    <div class="rounded bg-level1 p-2">
-      svg:ROOT:what-is-astra-db.svg[role="mx-auto my-auto w-8 h-8"]
+    <div class="landing-a">
+        xref:getting-started.adoc[]
     </div>
 
-    <div><h3 class="discrete !text-h2 !m-0">Managing {astra_db}</h3></div>
-
-    <ul class="!m-0 [&>li]:my-2">
-      <li>xref:managing.adoc[]</li>
-    </ul>
   </div>
+  <div class="grid gap-4">
 
-  <!-- Managing Streaming Card -->
-  <div class="flex flex-col items-start gap-4 rounded border p-4">
-    <div class="rounded bg-level1 p-2">
-      svg:ROOT:what-is-astra-streaming.svg[role="mx-auto my-auto w-8 h-8"]
+    svg:ROOT:what-is-astra-db.svg[role="mx-auto max-w-xs md:mx-0 lg:max-w-none"]
+
+    <h3 class="discrete !text-h2 !m-0">Load data</h3>
+
+    <!-- <p>Placeholder text.</p> -->
+
+    <div class="landing-a">
+        xref:managing.adoc[]
     </div>
 
-    <div><h3 class="discrete !text-h2 !m-0">Managing {astra_stream}</h3></div>
-
-    <ul class="!m-0 [&>li]:my-2">
-      <li>xref:astra-streaming-cli.adoc[]</li>
-    </ul>
   </div>
+  <div class="grid gap-4">
 
+    svg:ROOT:what-is-astra-streaming.svg[role="mx-auto max-w-xs md:mx-0 lg:max-w-none"]
+
+    <h3 class="discrete !text-h2 !m-0">Explore your data</h3>
+
+    <!-- <p>Placeholder text.</p> -->
+
+    <div class="landing-a">
+        xref:astra-streaming-cli.adoc[]
+    </div>
+
+  </div>
 </div>
-
 ++++
