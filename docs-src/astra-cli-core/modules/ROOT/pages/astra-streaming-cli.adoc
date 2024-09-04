@@ -1,6 +1,6 @@
-= {astra_stream} with {astra_cli}
+= {astra_stream} with {product}
 
-Use the following {astra_cli} commands to manage your {astra_stream} operations.
+Use the following {product} commands to manage your {astra_stream} operations.
 
 From the command line in a Terminal, the supported tasks include:
 
@@ -256,8 +256,8 @@ Result::
 == Use Pulsar-Shell
 
 Pulsar Shell is a standalone shell for managing Apache Pulsar resources.
-It is compatible with Astra, but requires a few extra steps of configuration, which {astra_cli} does for you.
-When called, {astra_cli} downloads, installs, configures, and wraps pulsar-shell, and starts the shell within the selected tenant.
+It is compatible with Astra, but requires a few extra steps of configuration, which {product} does for you.
+When called, {product} downloads, installs, configures, and wraps pulsar-shell, and starts the shell within the selected tenant.
 [tabs]
 ====
 Astra CLI::
@@ -406,4 +406,4 @@ Result::
 ====
 
 == What's next?
-Learn how to manage your {astra_db} databases with the {astra_cli}: xref:managing.adoc[].
+Learn how to manage your {astra_db} databases with the {product}: xref:managing.adoc[].

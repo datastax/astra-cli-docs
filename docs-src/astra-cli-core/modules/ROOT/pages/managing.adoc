@@ -1,6 +1,6 @@
-= Managing {astra_db} databases with {astra_cli}
+= Managing {astra_db} databases with {product}
 
-Use the following {astra_cli} commands to manage your {astra_db} databases.
+Use the following {product} commands to manage your {astra_db} databases.
 From the command line in a Terminal, the supported tasks are:
 
 * <<List databases>>
@@ -157,7 +157,7 @@ You can create an {astra_db} *Serverless* database with the `astra db create <db
 
 [NOTE]
 ====
-While you cannot create {astra_db} *Classic* databases with the `astra db create <db-name>` command, you can use other {astra_cli} commands to return information about existing {astra_db} Classic databases.
+While you cannot create {astra_db} *Classic* databases with the `astra db create <db-name>` command, you can use other {product} commands to return information about existing {astra_db} Classic databases.
 ====
 
 [TIP]
@@ -204,7 +204,7 @@ You can use the `astra db resume <db-name>` command to reactivate the database.
 
 For database creation or regions management, the region name is expected.
 
-With {astra_cli}, you can list every available regions per service.
+With {product}, you can list every available regions per service.
 
 [TIP]
 ====
@@ -319,7 +319,7 @@ Supported regions are subject to change and may be different from the sample out
 
 == Manage users and roles
 
-For your {astra_db} organization, you can use {astra_cli} commands to:
+For your {astra_db} organization, you can use {product} commands to:
 
 * <<List users>>
 * <<Invite a new user>>
@@ -530,7 +530,7 @@ astra db delete demo2
 
 A keyspace is created when you create the database. A keyspace is essentially a handle that you can use to identify database resources such as its tables and indexes.
 
-By default, {astra_cli} provides values for the keyspace and database names. Optionally, you can define a custom keyspace name by using the flag `-k`.
+By default, {product} provides values for the keyspace and database names. Optionally, you can define a custom keyspace name by using the flag `-k`.
 
 [TIP]
 ====
@@ -570,10 +570,10 @@ astra db list-keyspaces demo
 == Use cqlsh
 
 https://cassandra.apache.org/doc/latest/cassandra/tools/cqlsh.html[cqlsh^] is a standalone shell to work with Apache Cassandra&reg;.
-It is compliant with {astra_cli} but requires a few extra steps of configuration.
-The purpose of {astra_cli} is to integrate with `cqlsh` and to perform the integration for you.
+It is compliant with {product} but requires a few extra steps of configuration.
+The purpose of {product} is to integrate with `cqlsh` and to perform the integration for you.
 
-{astra_cli} will *download*, *install*, *setup* and *wrap* `cqlsh` for you to interact with {astra_db}.
+{product} will *download*, *install*, *setup* and *wrap* `cqlsh` for you to interact with {astra_db}.
 
 === Interactive mode
 
@@ -631,9 +631,9 @@ astra db cqlsh demo -f sample.cql
 
 == Use DSBulk with Astra CLI
 
-https://github.com/datastax/dsbulk[DataStax Bulk Loader^] (`dsbulk`) allows you to you load, unload, and count data from Cassandra-based database tables, such as those in Apache Cassandra, DataStax Enterprise, and Astra DB. {astra_cli} commands can invoke dsbulk.
+https://github.com/datastax/dsbulk[DataStax Bulk Loader^] (`dsbulk`) allows you to you load, unload, and count data from Cassandra-based database tables, such as those in Apache Cassandra, DataStax Enterprise, and Astra DB. {product} commands can invoke dsbulk.
 
-As for `cqlsh`, {astra_cli} will *download*, *install*, *setup* and *wrap* the `dsbulk` command for you.
+As for `cqlsh`, {product} will *download*, *install*, *setup* and *wrap* the `dsbulk` command for you.
 All options are available.
 
 === Set up the demo
@@ -658,7 +658,7 @@ id,name,state_id,state_code,state_name,country_id,country_code,country_name,lati
 
 Let's create a table to store those values.
 
-Connect to CQLSH with this {astra_cli} command:
+Connect to CQLSH with this {product} command:
 
 [source,bash]
 ----
@@ -679,11 +679,11 @@ quit
 
 === Load data
 
-{astra_cli} will get cities.csv sample data from https://raw.githubusercontent.com/awesome-astra/docs/main/docs/assets/cities.csv[this file^].
+{product} will get cities.csv sample data from https://raw.githubusercontent.com/awesome-astra/docs/main/docs/assets/cities.csv[this file^].
 
 [TIP]
 ====
-The first time you run the `astra db load` command, the message -- `DSBulk is starting please wait` -- may take a few seconds to appear because {astra_cli} is downloading `dsbulk` (if it wasn't downloaded previously).
+The first time you run the `astra db load` command, the message -- `DSBulk is starting please wait` -- may take a few seconds to appear because {product} is downloading `dsbulk` (if it wasn't downloaded previously).
 ====
 
 Example:
@@ -874,7 +874,7 @@ astra db download-scb demo -f /tmp/demo.zip
 
 When working with Astra DB, it's handy to generate a set of relevant environment variables such as database name, database region, API call URLs, and so on.
 
-This {astra_cli} command creates an `.env` file based on your environment.
+This {product} command creates an `.env` file based on your environment.
 Example:
 
 [tabs]
@@ -991,7 +991,7 @@ After some time:
 
 If you work with multiple {astra_db} organizations, it can be useful to switch from one configuration to another, and from one auth token to another.
 
-{astra_cli} provides a configuration management solution to handle these use cases.
+{product} provides a configuration management solution to handle these use cases.
 
 === List available configurations
 

@@ -1,4 +1,4 @@
-= Getting started with {astra_cli}
+= Getting started with {product}
 
 Initialize the Astra CLI and run your first commands.
 
@@ -68,7 +68,7 @@ Output:
 
 == Get Help
 
-Once installed, {astra_cli} provides extensive documentation for any command.
+Once installed, {product} provides extensive documentation for any command.
 
 It also provides some bash autocompletion, use the `TAB` key twice to get a list of propositions.
 

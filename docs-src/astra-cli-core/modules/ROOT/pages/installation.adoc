@@ -1,38 +1,38 @@
-= Installing {astra_cli}
+= Installing {product}
 
-You can install {astra_cli} on macOS, Linux, and Windows (with WSL) environments.
+You can install {product} on macOS, Linux, and Windows (with WSL) environments.
 
-The GitHub repo for {astra_cli} is https://github.com/datastax/astra-cli[here^].
+The GitHub repo for {product} is https://github.com/datastax/astra-cli[here^].
 
 * For information about the latest release, see https://github.com/datastax/astra-cli/releases[this page].
 
 * If installed previously, run `astra --version` to find your installed version and see if you need to update.
 
-== Install {astra_cli} on macOS
+== Install {product} on macOS
 
 You can install via Homebrew or manually.
 
 === Using Homebrew
 
-Homebrew is the easiest way to manage your {astra_cli} install.
+Homebrew is the easiest way to manage your {product} install.
 Homebrew provides convenient ways to install, update, and uninstall.
 If you don't have Homebrew available on your system, install https://brew.sh/[Homebrew^] before continuing.
 
-You can install {astra_cli} on macOS by updating your brew repository information, and then running the install command:
+You can install {product} on macOS by updating your brew repository information, and then running the install command:
 
 [source,bash]
 ----
 brew install datastax/astra-cli/astra-cli
 ----
 
-The Homebrew formula of {astra_cli} installs a completion file named `astra` in the Homebrew-managed completions directory.
+The Homebrew formula of {product} installs a completion file named `astra` in the Homebrew-managed completions directory.
 By default, the location is `/usr/local/etc/bash_completion.d/`.
 
 To enable completion, please follow Homebrew's instructions https://docs.brew.sh/Shell-Completion[here^].
 
 === Manual Installation on macOS
 
-To install or reinstall {astra_cli}:
+To install or reinstall {product}:
 
 [source,bash]
 ----
@@ -41,16 +41,16 @@ curl -Ls "https://dtsx.io/get-astra-cli" | bash
 
 === Installed location on your macOS machine
 
-{astra_cli} is installed in `~/.astra/cli`. This folder is deleted and recreated during installation.
+{product} is installed in `~/.astra/cli`. This folder is deleted and recreated during installation.
 
 Your configuration is saved in the `~/.astrarc` file. It is not deleted during reinstallations.
 
 
-== Install {astra_cli} on Linux
+== Install {product} on Linux
 
 === Manual Installation on Linux
 
-To install or reinstall {astra_cli}:
+To install or reinstall {product}:
 
 [source,bash]
 ----
@@ -59,7 +59,7 @@ curl -Ls "https://dtsx.io/get-astra-cli" | bash
 
 === Installed location on your Linux machine
 
-{astra_cli} is installed in `~/.astra/cli`. This folder is deleted and recreated during installation.
+{product} is installed in `~/.astra/cli`. This folder is deleted and recreated during installation.
 
 Your configuration is saved in the `~/.astrarc` file. It is not deleted during reinstallations.
 
@@ -70,10 +70,10 @@ Your configuration is saved in the `~/.astrarc` file. It is not deleted during r
 // Installation with package managers (yum, apt) is not available yet but is high in the roadmap.
 
 
-== Install {astra_cli} on Windows
+== Install {product} on Windows
 
 . Install https://learn.microsoft.com/en-us/windows/wsl/install[Windows Subsystem for Linux].
-. Install {astra_cli}:
+. Install {product}:
 [source,bash]
 ----
 curl -Ls "https://dtsx.io/get-astra-cli" | bash
