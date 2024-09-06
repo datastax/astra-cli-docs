@@ -1,82 +1,227 @@
-= Installing {product}
+= Install or update the {product}
 
-You can install {product} on macOS, Linux, and Windows (with WSL) environments.
+You can install the {product} on macOS, Linux, and Windows Subsystem for Linux.
 
-The GitHub repo for {product} is https://github.com/datastax/astra-cli[here^].
+== Install the {product}
 
-* For information about the latest release, see https://github.com/datastax/astra-cli/releases[this page].
+Install the {product} using your preferred method:
 
-* If installed previously, run `astra --version` to find your installed version and see if you need to update.
+[tabs]
+======
+Homebrew::
++
+--
+Homebrew is the recommended installation method for macOS.
+To use this installation method, you must have https://brew.sh/[Homebrew] installed.
 
-== Install {product} on macOS
+. Open a new terminal.
 
-You can install via Homebrew or manually.
+. Make sure Homebrew is up to date.
++
+[source,bash]
+----
+brew update
+----
 
-=== Using Homebrew
-
-Homebrew is the easiest way to manage your {product} install.
-Homebrew provides convenient ways to install, update, and uninstall.
-If you don't have Homebrew available on your system, install https://brew.sh/[Homebrew^] before continuing.
-
-You can install {product} on macOS by updating your brew repository information, and then running the install command:
-
+. Install the {product}.
++
 [source,bash]
 ----
 brew install datastax/astra-cli/astra-cli
 ----
 
-The Homebrew formula of {product} installs a completion file named `astra` in the Homebrew-managed completions directory.
-By default, the location is `/usr/local/etc/bash_completion.d/`.
-
-To enable completion, please follow Homebrew's instructions https://docs.brew.sh/Shell-Completion[here^].
-
-=== Manual Installation on macOS
-
-To install or reinstall {product}:
-
+. Confirm that the {product} is installed:
++
 [source,bash]
+----
+astra --version
+----
++
+The command returns the {product} version that is installed.
++
+.Result
+[%collapsible]
+====
+[source,console,subs="+attributes"]
+----
+{product-version}
+----
+====
++
+[TIP]
+====
+On macOS, the operating system might display the following system prompt: `"astra" can't be opened because Apple cannot check it for malicious software`.
+If the option is presented, click *Open* to allow the {product} to run.
+If the *Open* button is not present, go to *System Settings > Privacy & Security*, scroll down, and click *Open Anyway*.
+For more information, see the https://support.apple.com/en-us/102445[Apple support documentation].
+====
+
+. (Optional) If you haven't done so already, enable https://docs.brew.sh/Shell-Completion[`brew` shell completion].
++
+The {product} Homebrew formula installs a completion file named `astra` in the Homebrew-managed completions directory.
+If you have shell completion enabled in Homebrew, your terminal will automatically suggest and complete {product} commands and options as you type them.
+--
+
+cURL::
++
+--
+Curl is the recommended installation method for Linux and https://learn.microsoft.com/en-us/windows/wsl/install[Windows Subsystem for Linux].
+
+. Open a new terminal.
+
+. Install the {product}.
++
+[source,curl]
+----
+curl -Ls "https://dtsx.io/get-astra-cli" | bash
+----
++
+.Result
+[%collapsible]
+====
+[source,console,subs="+attributes"]
+----
+
+    _____            __
+   /  _  \   _______/  |_____________
+  /  /_\  \ /  ___/\   __\_  __ \__  \
+ /    |    \___ \  |  |  |  | \// __ \_
+ \____|__  /____  > |__|  |__|  (____  /
+         \/     \/                   \/
+
+Installing Astra Cli {product-version}  please wait...
+
+Checking prerequisites:
+[OK] - Ready to install.
+[OK] - unzip command is available
+[OK] - curl command is available
+
+Preparing directories:
+[OK] - Created /home/parallels/.astra/tmp
+[OK] - Created /home/parallels/.astra/cli
+[OK] - Created /home/parallels/.astra/scb
+
+Downloading archive:
+######################################################################## 100.0%
+[OK] - File downloaded
+[OK] - Integrity of the archive checked
+
+Extracting and installation:
+[OK] - Extraction is successful
+[OK] - File moved to /home/parallels/.astra/cli
+[OK] - Installation cleaned up
+[OK] - astra added to /home/parallels/.bashrc
+[OK] - astra added to /home/parallels/.zshrc
+[OK] - Installation Successful
+
+Open A NEW TERMINAL and run: astra setup
+
+You can close this window.
+----
+====
+
+. Restart your terminal or open a new one.
+
+. Confirm that the {product} is installed:
++
+[source,bash]
+----
+astra --version
+----
++
+.Result
+[%collapsible]
+====
+[source,console,subs="+attributes"]
+----
+{product-version}
+----
+====
+
+The {product} and its configuration are stored in the following locations:
+
+* Executable: `~/.astra/cli`
++
+This folder is deleted and recreated whenever you update or re-install the {product}.
+
+* Configuration file: `~/.astrarc`
++
+The configuration file is _not_ deleted during updates and reinstallations.
+--
+======
+
+== Update the {product}
+
+To update the {product}, follow the procedure for the method you used to originally install the {product}:
+
+[tabs]
+======
+Homebrew::
++
+--
+. Open a new terminal.
+
+. Make sure Homebrew is up to date.
++
+[source,bash]
+----
+brew update
+----
+
+. Update the {product}.
++
+[source,bash]
+----
+brew upgrade datastax/astra-cli/astra-cli
+----
+
+. Confirm that the latest version of the {product} is installed:
++
+[source,bash]
+----
+astra --version
+----
++
+.Result
+[%collapsible]
+====
+[source,console,subs="+attributes"]
+----
+{product-version}
+----
+====
+--
+
+cURL::
++
+--
+. Open a new terminal.
+
+. Update the {product}.
++
+[source,curl]
 ----
 curl -Ls "https://dtsx.io/get-astra-cli" | bash
 ----
 
-=== Installed location on your macOS machine
-
-{product} is installed in `~/.astra/cli`. This folder is deleted and recreated during installation.
-
-Your configuration is saved in the `~/.astrarc` file. It is not deleted during reinstallations.
-
-
-== Install {product} on Linux
-
-=== Manual Installation on Linux
-
-To install or reinstall {product}:
-
+. Confirm that the latest version of the {product} is installed:
++
 [source,bash]
 ----
-curl -Ls "https://dtsx.io/get-astra-cli" | bash
+astra --version
 ----
-
-=== Installed location on your Linux machine
-
-{product} is installed in `~/.astra/cli`. This folder is deleted and recreated during installation.
-
-Your configuration is saved in the `~/.astrarc` file. It is not deleted during reinstallations.
-
-// === Using sdkman
-// Installation with SDK MAN is not available yet but is high in the roadmap.
-
-// Using a package Manager
-// Installation with package managers (yum, apt) is not available yet but is high in the roadmap.
-
-
-== Install {product} on Windows
-
-. Install https://learn.microsoft.com/en-us/windows/wsl/install[Windows Subsystem for Linux].
-. Install {product}:
-[source,bash]
++
+.Result
+[%collapsible]
+====
+[source,console,subs="+attributes"]
 ----
-curl -Ls "https://dtsx.io/get-astra-cli" | bash
+{product-version}
 ----
+====
+--
+======
 
-For more information, see https://awesome-astra.github.io/docs/pages/astra/astra-cli/#14-installation-on-windows[Awesome Astra].
+== Next steps
+
+See xref:getting-started.adoc[] for information on setting up a new configuration and running your first commands.
