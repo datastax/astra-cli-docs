@@ -1,12 +1,22 @@
 = Install or update the {product}
+:description: {product} makes it easier to integrate Astra into your applications and workflows by letting you perform common platform tasks for {astra_db} and {astra_stream} from the command line.
+
+Use the {product} to create and manage {astra_db} databases and {astra_stream} tenants from the command line.
 
 You can install the {product} on macOS, Linux, and Windows Subsystem for Linux.
+
+== Prerequisites
+
+Before installing the {product} on macOS:
+
+* Update your app security settings to https://support.apple.com/en-us/102445[allow apps downloaded from App Store and identified developers].
+* If installing with Homebrew, you must have https://brew.sh/[Homebrew] installed.
 
 == Install the {product}
 
 Install the {product} using your preferred method:
 
-[tabs]
+[tabs,id=install]
 ======
 Homebrew::
 +
@@ -14,21 +24,47 @@ Homebrew::
 Homebrew is the recommended installation method for macOS.
 To use this installation method, you must have https://brew.sh/[Homebrew] installed.
 
-. Open a new terminal.
+.Homebrew on Linux is not supported
+[NOTE]
+====
+The Homebrew formula installs a native executable for macOS that is not compatible with https://docs.brew.sh/Homebrew-on-Linux[Homebrew on Linux].
+Use the <<install-curl,curl installation procedure>> to install the {product} on Linux-based systems.
+====
 
-. Make sure Homebrew is up to date.
+. Make sure Homebrew is up to date:
 +
 [source,bash]
 ----
 brew update
 ----
 
-. Install the {product}.
+. Install the {product}:
 +
 [source,bash]
 ----
 brew install datastax/astra-cli/astra-cli
 ----
++
+.Result
+[%collapsible]
+====
+[source,console,subs="+attributes"]
+----
+==> Fetching datastax/astra-cli/astra-cli
+==> Downloading https://github.com/datastax/astra-cli/releases/download/...
+==> Downloading from https://objects.githubusercontent.com/...
+######################################################################### 100.0%
+==> Installing astra-cli from datastax/astra-cli
+==> Pouring astra-cli-{product-version}.arm64_sonoma.bottle.tar.gz
+==> Caveats
+You must have python 3.7+ to use cqlsh and java11+ to use dsbulk
+==> Summary
+🍺  /opt/homebrew/Cellar/astra-cli/{product-version}: 4 files, 61.7MB
+==> Running `brew cleanup astra-cli`...
+Disable this behaviour by setting HOMEBREW_NO_INSTALL_CLEANUP.
+Hide these hints with HOMEBREW_NO_ENV_HINTS (see `man brew`).
+----
+====
 
 . Confirm that the {product} is installed:
 +
@@ -36,8 +72,6 @@ brew install datastax/astra-cli/astra-cli
 ----
 astra --version
 ----
-+
-The command returns the {product} version that is installed.
 +
 .Result
 [%collapsible]
@@ -48,13 +82,9 @@ The command returns the {product} version that is installed.
 ----
 ====
 +
-[TIP]
-====
-On macOS, the operating system might display the following system prompt: `"astra" can't be opened because Apple cannot check it for malicious software`.
-If the option is presented, click *Open* to allow the {product} to run.
-If the *Open* button is not present, go to *System Settings > Privacy & Security*, scroll down, and click *Open Anyway*.
-For more information, see the https://support.apple.com/en-us/102445[Apple support documentation].
-====
+The command returns the {product} version that is installed.
++
+include::ROOT:partial$macos-security-notice.adoc[]
 
 . (Optional) If you haven't done so already, enable https://docs.brew.sh/Shell-Completion[`brew` shell completion].
 +
@@ -62,14 +92,13 @@ The {product} Homebrew formula installs a completion file named `astra` in the H
 If you have shell completion enabled in Homebrew, your terminal will automatically suggest and complete {product} commands and options as you type them.
 --
 
-cURL::
+Curl::
 +
 --
-Curl is the recommended installation method for Linux and https://learn.microsoft.com/en-us/windows/wsl/install[Windows Subsystem for Linux].
+Use this installation method for Linux and https://learn.microsoft.com/en-us/windows/wsl/install[Windows Subsystem for Linux].
+You can also use this installation method for macOS if you prefer not to use Homebrew.
 
-. Open a new terminal.
-
-. Install the {product}.
+. Install the {product}:
 +
 [source,curl]
 ----
@@ -119,8 +148,11 @@ Open A NEW TERMINAL and run: astra setup
 You can close this window.
 ----
 ====
++
+The `~/.astra/cli` folder is added to the `PATH` environment variable.
+See <<file-locations>> for more information.
 
-. Restart your terminal or open a new one.
+. Open a new terminal or restart your existing terminal.
 
 . Confirm that the {product} is installed:
 +
@@ -137,18 +169,42 @@ astra --version
 {product-version}
 ----
 ====
-
-The {product} and its configuration are stored in the following locations:
-
-* Executable: `~/.astra/cli`
 +
-This folder is deleted and recreated whenever you update or re-install the {product}.
-
-* Configuration file: `~/.astrarc`
+The command returns the {product} version that is installed.
 +
-The configuration file is _not_ deleted during updates and reinstallations.
+include::ROOT:partial$macos-security-notice.adoc[]
 --
 ======
+
+See xref:getting-started.adoc[] for information on setting up a new configuration and running your first commands.
+
+[#file-locations]
+=== Installation file locations
+
+The {product} and its configuration are installed in the following locations:
+
+
+[cols="1,2"]
+|===
+|File location |Description
+
+|`~/.astra`
+a|The {product} installation directory.
+
+For <<install-curl,curl-based installations>>, the `astra` executable and `astra-init.sh` auto-completion script are located in `~/.astra/cli`.
+The `~/.astra/cli` folder is added to the `PATH` environment variable.
+_This folder is deleted and recreated when you update or re-install the {product}._
+
+For <<install-homebrew,Homebrew-based installations>>, the `astra` executable and auto-completion script are located in https://docs.brew.sh/FAQ#why-should-i-install-homebrew-in-the-default-location[Homebrew's default prefix] at the following locations:
+
+* Executable: `HOMEBREW_PREFIX/Cellar/astra-cli/VERSION/bin/astra`
+* Auto-completion script: `HOMEBREW_PREFIX/Cellar/astra-cli/VERSION/etc/bash_completion.d/astra`
+
+|`~/.astrarc`
+|The {product} configuration file.
+
+_This file is *not* deleted when you update or re-install the {product}._
+|===
 
 == Update the {product}
 
@@ -159,16 +215,14 @@ To update the {product}, follow the procedure for the method you used to origina
 Homebrew::
 +
 --
-. Open a new terminal.
-
-. Make sure Homebrew is up to date.
+. Make sure Homebrew is up to date:
 +
 [source,bash]
 ----
 brew update
 ----
 
-. Update the {product}.
+. Update the {product}:
 +
 [source,bash]
 ----
@@ -192,12 +246,10 @@ astra --version
 ====
 --
 
-cURL::
+Curl::
 +
 --
-. Open a new terminal.
-
-. Update the {product}.
+. Update the {product}:
 +
 [source,curl]
 ----
@@ -222,6 +274,83 @@ astra --version
 --
 ======
 
-== Next steps
+== Uninstall the {product}
 
-See xref:getting-started.adoc[] for information on setting up a new configuration and running your first commands.
+To uninstall the {product}, follow the procedure for the method you used to originally install the {product}:
+
+[tabs]
+======
+Homebrew::
++
+--
+. Uninstall the {product}:
++
+[source,bash]
+----
+brew uninstall datastax/astra-cli/astra-cli
+----
++
+.Result
+[%collapsible]
+====
+[source,console,subs="+attributes"]
+----
+Uninstalling /opt/homebrew/Cellar/astra-cli/{product-version}... (4 files, 61.7MB)
+----
+====
+
+. Delete the {product} and its associated installation files:
++
+[source,bash]
+----
+rm -R ~/.astra
+----
+
+. (Optional) Delete the {product} configuration file:
++
+[source,bash]
+----
+rm ~/.astrarc
+----
+--
+
+Curl::
++
+--
+. Delete the {product} and its associated installation files:
++
+[source,bash]
+----
+rm -R ~/.astra
+----
+
+. (Optional) Delete the {product} configuration file:
++
+[source,bash]
+----
+rm ~/.astrarc
+----
+
+. (Optional) Remove the {product} from your shell configuration file (for example, `.zshrc` or `.bashrc`).
+
+.. Open your shell configuration file in a text editor.
+For example:
++
+[source,bash]
+----
+nano ~/.zshrc
+----
+
+.. Remove any lines that reference the {product}.
+For example:
++
+[source,bash]
+----
+#THIS MUST BE AT THE END OF THE FILE FOR ASTRA_CLI TO WORK!!!
+export ASTRADIR="/Users/USERNAME/.astra/cli"
+[[ -s "/Users/USERNAME/.astra/cli/astra-init.sh" ]] && source "/Users/USERNAME/.astra/cli/astra-init.sh"
+----
+
+.. Save and close the file.
+--
+======
