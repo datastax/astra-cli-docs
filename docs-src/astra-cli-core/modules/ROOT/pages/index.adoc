@@ -2,7 +2,7 @@
 :page-layout: landing
 
 The {product} is a free utility that you can use to create and manage Astra resources.
-Use the {product} to perform common platform tasks for {astra_db} and {astra_stream} from the command line or with automation to control your Astra resources at scale.
+You can use the {product} to perform common platform tasks for {astra_db} and {astra_stream} from the command line or with automation to control your Astra resources at scale.
 
 To make it even easier to integrate Astra into your applications and workflows, the {product} provides seamless integration with the following external tools:
 

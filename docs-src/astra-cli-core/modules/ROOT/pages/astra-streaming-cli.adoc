@@ -1,4 +1,5 @@
-= {astra_stream} with {product}
+= Manage {astra_stream} with the {product}
+:navtitle: Manage {astra_stream}
 
 Use the following {product} commands to manage your {astra_stream} operations.
 

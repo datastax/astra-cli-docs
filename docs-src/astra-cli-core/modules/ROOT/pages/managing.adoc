@@ -1,4 +1,5 @@
-= Managing {astra_db} databases with {product}
+= Manage {astra_db} databases with the {product}
+:navtitle: Manage {astra_db} databases
 
 Use the following {product} commands to manage your {astra_db} databases.
 From the command line in a Terminal, the supported tasks are:
