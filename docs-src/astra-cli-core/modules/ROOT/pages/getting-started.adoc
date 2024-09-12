@@ -1,7 +1,7 @@
 = Connect the {product} to your Astra account
 :navtitle: Connect to your Astra account
-include::astra-db-serverless:ROOT:partial$astra-role-attributes.adoc[]
-include::astra-db-serverless:ROOT:partial$astra-permission-attributes.adoc[]
+// include::astra-db-serverless:ROOT:partial$astra-role-attributes.adoc[]
+// include::astra-db-serverless:ROOT:partial$astra-permission-attributes.adoc[]
 
 Initialize the Astra CLI and run your first commands.
 
@@ -23,7 +23,7 @@ The Astra CLI requires an _application token_ to authenticate with Astra.
 For instructions on how to create an application token, see xref:astra-db-serverless:administration:manage-application-tokens.adoc[].
 
 Non-production environments::
-To try out all the {product} features, grant your application token the {organization-administrator-role} role.
+To try out all the {product} features, grant your application token the `Organization Administrator` role.
 
 Production environments::
 If you're using Astra in production, {company} recommends that you use a xref:astra-db-serverless:administration:manage-database-access.adoc#custom-roles[custom role] to grant your application token the bare minimum xref:astra-db-serverless:administration:manage-database-access.adoc#about-permissions[permissions] required to perform the tasks you'll be doing with the {product}.
