@@ -1,6 +1,20 @@
-= Getting started with {product}
+= Connect the {product} to your Astra account
+:navtitle: Connect to your Astra account
+include::astra-db-serverless:ROOT:partial$astra-role-attributes.adoc[]
+include::astra-db-serverless:ROOT:partial$astra-permission-attributes.adoc[]
 
 Initialize the Astra CLI and run your first commands.
+
+== Prerequisites
+
+To configure the {product}:
+
+* You must have an active {url-astra}[Astra account^].
+
+* You must have an xref:astra-db-serverless:administration:manage-application-tokens.adoc[application token] that is assigned a _role_ with adequate _permissions_ to perform the tasks you'd like to accomplish with the {product}.
+For more information, see <<get-credentials>>.
+
+* If you plan to manage an {astra_db} database that has restricted public access, then you must xref:astra-db-serverless:administration:manage-database-ip-access-list.adoc#add-ip-access-list-entries[add your IP address to the database's access list].
 
 [#get-credentials]
 == Retrieve your application token
@@ -8,19 +22,29 @@ Initialize the Astra CLI and run your first commands.
 The Astra CLI requires an _application token_ to authenticate with Astra.
 For instructions on how to create an application token, see xref:astra-db-serverless:administration:manage-application-tokens.adoc[].
 
-To increase the security of your Astra account, DataStax recommends that you grant your application token only the bare minimum xref:astra-db-serverless:administration:manage-database-access.adoc[permissions] required to perform the tasks you'll be running in Astra.
+Non-production environments::
+To try out all the {product} features, grant your application token the {organization-administrator-role} role.
+
+Production environments::
+If you're using Astra in production, {company} recommends that you use a xref:astra-db-serverless:administration:manage-database-access.adoc#custom-roles[custom role] to grant your application token the bare minimum xref:astra-db-serverless:administration:manage-database-access.adoc#about-permissions[permissions] required to perform the tasks you'll be doing with the {product}.
 
 == Set up a new configuration
 
-Use the `astra setup` command to initialize the Astra CLI:
+To initialize the {product} and connect to an existing Astra account, pass your <<get-credentials,application token>> with the `astra setup` command:
 
 [source,bash,subs="verbatim,quotes"]
 ----
 astra setup --token *APPLICATION_TOKEN*
 ----
 
-Replace `*APPLICATION_TOKEN*` with your <<get-credentials,application token>>.
+Replace `*APPLICATION_TOKEN*` with your application token.
 The token format is `AstraCS:` followed by a unique token string.
+For example:
+
+[source,bash]
+----
+astra setup --token AstraCS:ozgLKiotAPSgFvBylkUEdPzB:3d061eaa636a6a032f352588f5ba2b777fefdd80f201640063576a9732c4a54d
+----
 
 .Result
 [%collapsible]
@@ -33,10 +57,35 @@ The token format is `AstraCS:` followed by a unique token string.
 ----
 ====
 
-The Astra CLI is now initialized and ready to use.
+Display the current {product} configuration to confirm that setup is complete:
 
-The Astra CLI configuration, including your application token, is stored in `~/.astrarc`.
+[source,bash]
+----
+astra config list
+----
+
+.Result
+[%collapsible]
+====
+[source,bash]
+----
++--------------------------------+
+| configuration                  |
++--------------------------------+
+| alex@altostrat.com (in use)    |
++--------------------------------+
+----
+====
+
+The {product} is now initialized and connected to your Astra account.
+The {product} configuration, including your application token, is stored in the `~/.astrarc` file.
 The information in this file is used whenever you run the `astra` command.
+
+[IMPORTANT]
+====
+Application tokens are stored in plaintext in the {product} configuration file.
+Your application tokens are like passwords, and you should take precautions to secure the configuration file.
+====
 
 [#first-commands]
 == First commands
@@ -66,9 +115,9 @@ Output:
  +-----------------------------------------+
 ----
 
-== Get Help
+== Get help
 
-Once installed, {product} provides extensive documentation for any command.
+Once installed, the {product} provides extensive documentation for any command.
 
 It also provides some bash autocompletion, use the `TAB` key twice to get a list of propositions.
 
