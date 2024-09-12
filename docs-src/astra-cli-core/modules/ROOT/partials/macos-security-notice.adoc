@@ -3,8 +3,6 @@
 ====
 The first time you run an `astra` command on macOS, the operating system may display an alert that is similar to the following: `“astra” can't be opened because Apple cannot check it for malicious software`.
 
-image::ROOT:install-macos-security-alert.png[]
-
 If you encounter an alert like this, then you must override your Mac security settings before you can run {product} commands.
 
 .Override your Mac security settings
@@ -15,6 +13,8 @@ For other versions of macOS, the steps might vary slightly.
 See the https://support.apple.com/en-us/102445[Apple support documentation] for more information.
 
 . In the alert dialog, click *Show in Finder*.
++
+image::ROOT:install-macos-security-alert.png[]
 +
 A new finder window opens and displays the {product} executable.
 
