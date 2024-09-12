@@ -3,14 +3,25 @@
 
 Use the {product} to create and manage {astra_db} databases and {astra_stream} tenants from the command line.
 
-You can install the {product} on macOS, Linux, and Windows Subsystem for Linux.
+== Platform compatibility
 
-== Prerequisites
+The {product} supports the following operating systems:
 
-Before installing the {product} on macOS:
+[cols="1,2"]
+|===
+|Operating System |Architecture
 
-* Update your app security settings to https://support.apple.com/en-us/102445[allow apps downloaded from App Store and identified developers].
-* If installing with Homebrew, you must have https://brew.sh/[Homebrew] installed.
+|Linux
+|x86-64, ARM
+
+|macOS
+|x86-64, ARM
+
+|Microsoft Windows
+
+_Requires https://learn.microsoft.com/en-us/windows/wsl/install[Windows Subsystem for Linux (WSL)]_
+|x86-64, ARM
+|===
 
 == Install the {product}
 
@@ -21,15 +32,13 @@ Install the {product} using your preferred method:
 Homebrew::
 +
 --
-Homebrew is the recommended installation method for macOS.
-To use this installation method, you must have https://brew.sh/[Homebrew] installed.
+You can use Homebrew to install the {product} on macOS.
 
-.Homebrew on Linux is not supported
-[NOTE]
-====
-The Homebrew formula installs a native executable for macOS that is not compatible with https://docs.brew.sh/Homebrew-on-Linux[Homebrew on Linux].
-Use the <<install-curl,curl installation procedure>> to install the {product} on Linux-based systems.
-====
+.Prerequisites
+* You must have https://brew.sh/[Homebrew] installed.
+** The Homebrew formula installs a native executable for macOS that is not compatible with https://docs.brew.sh/Homebrew-on-Linux[Homebrew on Linux].
+To install {product} on Linux-based systems, use <<install-curl,curl>> or one of the other installation methods.
+* You must set your macOS app security settings to https://support.apple.com/en-us/102445[allow apps downloaded from App Store and identified developers].
 
 . Make sure Homebrew is up to date:
 +
@@ -95,12 +104,11 @@ If you have shell completion enabled in Homebrew, your terminal will automatical
 Curl::
 +
 --
-Use this installation method for Linux and https://learn.microsoft.com/en-us/windows/wsl/install[Windows Subsystem for Linux].
-You can also use this installation method for macOS if you prefer not to use Homebrew.
+You can use `curl` to install the {product} on Linux, macOS, and Windows Subsystem for Linux (WSL).
 
 . Install the {product}:
 +
-[source,curl]
+[source,bash]
 ----
 curl -Ls "https://dtsx.io/get-astra-cli" | bash
 ----
@@ -174,6 +182,184 @@ The command returns the {product} version that is installed.
 +
 include::ROOT:partial$macos-security-notice.adoc[]
 --
+
+JVM::
++
+--
+The {product} is available as a packaged Java application that you can use on any machine running a JVM.
+
+.Prerequisites
+To run the {product} in a JVM, you must have Java 17+ installed.
+You can install Java by downloading and installing the latest https://www.oracle.com/java/technologies/downloads/[Oracle JDK]
+
+. Verify that Java is version 17 or higher:
++
+[source,bash]
+----
+java --version
+----
+
+. Download the latest release from the https://github.com/datastax/astra-cli/releases[{product} GitHub repository]:
++
+[source,bash,subs="+attributes"]
+----
+curl -L -o astra-cli-{product-version}.zip https://github.com/datastax/astra-cli/releases/download/{product-version}/astra-cli-{product-version}.zip
+----
+
+. Unzip the archive:
++
+[source,bash,subs="+attributes"]
+----
+unzip astra-cli-{product-version}.zip -d ./astra-cli-{product-version} && cd astra-cli-{product-version}
+----
+
+. Confirm that you can successfully run the {product}:
++
+[source,bash]
+----
+java -jar astra-cli.jar --version
+----
++
+.Result
+[%collapsible]
+====
+[source,console,subs="+attributes"]
+----
+{product-version}
+----
+====
++
+The command returns the {product} version that is installed.
+
+You can use all options and suffixes on this command when running the JAR file.
+For example:
+
+[source,bash]
+----
+java -jar ./astra-cli.jar db list --token AstraCS:...
+----
+--
+
+Docker::
++
+--
+The {product} is available as an https://hub.docker.com/r/datastax/astra-cli[official Docker image] that you can run in a container.
+
+.Prerequisites
+To install the {product} using Docker, you must have the https://docs.docker.com/engine/install/[Docker engine] or https://www.docker.com/products/docker-desktop[Docker desktop] installed.
+
+. Confirm that Docker is installed and running:
++
+[source,bash]
+----
+docker --version
+----
++
+.Result
+[%collapsible]
+====
+[source,console]
+----
+Docker version 27.1.1, build 6312585
+----
+====
+
+. Pull the latest {product} Docker image:
++
+[source,bash,subs="+attributes"]
+----
+docker pull datastax/astra-cli
+----
++
+.Result
+[%collapsible]
+====
+[source,console]
+----
+Using default tag: latest
+latest: Pulling from datastax/astra-cli
+7890eb226106: Pull complete
+f4455e290156: Pull complete
+e6c3f5cd9c43: Pull complete
+322cfd5270ff: Pull complete
+Digest: sha256:8dcba8115cbae7bcabfc579341611f30860239ee5edbca3938edea4542ca06fb
+Status: Downloaded newer image for datastax/astra-cli:latest
+docker.io/datastax/astra-cli:latest
+
+What's next:
+    View a summary of image vulnerabilities and recommendations → docker scout quickview datastax/astra-cli
+----
+====
++
+[NOTE]
+====
+When you run `docker pull datastax/astra-cli`, Docker automatically pulls the latest version of the Docker image (`datastax/astra-cli:latest`).
+
+To pull a specific version of the Docker image, run the following command:
+
+[source,bash,subs="+quotes"]
+----
+docker pull datastax/astra-cli:**TAG**
+----
+
+Replace `**TAG**` with the version tag of the Docker image you want to pull.
+====
+
+. Confirm that you can successfully run the {product} in a Docker container:
++
+[source,bash]
+----
+docker run -rm datastax/astra-cli --version
+----
++
+.Result
+[%collapsible]
+====
+[source,console,subs="+attributes"]
+----
+{product-version}
+----
+====
++
+The command returns the {product} version that is installed.
+
+. (Optional) Run the {product} with a configuration file:
++
+[source,bash,subs="+quotes"]
+----
+docker run -rm -v **CONFIG_FILE**:/work/.astrarc datastax/astra-cli --version
+----
++
+Replace `**CONFIG_FILE**`with the path to your {product} configuration file.
+For example:
++
+[source,bash]
+----
+docker run -rm -v ~/.astrarc:/work/.astrarc datastax/astra-cli --version
+----
++
+This command mounts the `~/.astrarc` file from your local machine to the `/work/.astrarc` file in the Docker container.
+This lets you use your local configuration file when running the {product} in a Docker container.
+
+. (Optional) Create a shell alias for running the {product} in a Docker container.
++
+You can create a shell alias to eliminate the need to include the `docker run` command whenever you want to run the {product} in a Docker container.
+For example, the following command creates an alias named `astra`:
++
+[source,bash]
+----
+alias astra='docker run -rm -v ~/.astrarc:/work/.astrarc datastax/astra-cli'
+----
++
+You can run this command in your terminal to create a temporary alias for the current session, or you can add it to your shell configuration file so that the alias is available in every new terminal session.
++
+After you add the alias, you can use it to run {product} commands in a Docker container using the same syntax as the `astra` binary:
++
+[source,bash]
+----
+astra --version
+----
+--
 ======
 
 See xref:getting-started.adoc[] for information on setting up a new configuration and running your first commands.
@@ -205,6 +391,21 @@ For <<install-homebrew,Homebrew-based installations>>, the `astra` executable an
 
 _This file is *not* deleted when you update or re-install the {product}._
 |===
+
+////
+== Install additional components
+
+Some {product} commands require you to install additional external components.
+
+=== Install CQL shell (`cqlsh`)
+
+
+=== Install DataStax Bulk Loader (`dsbulk`)
+
+
+=== Install Pulsar shell (`pulsar-shell`)
+////
+
 
 == Update the {product}
 
@@ -251,7 +452,7 @@ Curl::
 --
 . Update the {product}:
 +
-[source,curl]
+[source,bash]
 ----
 curl -Ls "https://dtsx.io/get-astra-cli" | bash
 ----
