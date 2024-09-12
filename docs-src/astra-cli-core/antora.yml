@@ -1,6 +1,6 @@
 name: 'astra-cli'
 title: 'Astra CLI'
-version: '0.2'
+version: ~
 start_page: 'index.adoc'
 
 nav:
