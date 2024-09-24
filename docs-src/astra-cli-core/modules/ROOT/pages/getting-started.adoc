@@ -9,47 +9,43 @@ Initialize the Astra CLI and run your first commands.
 
 To configure the {product}:
 
+*  xref:ROOT:installation.adoc[Install the {product}].
+
 * You must have an active {url-astra}[Astra account^].
 
-* You must have an xref:astra-db-serverless:administration:manage-application-tokens.adoc[application token] that is assigned a _role_ with adequate _permissions_ to perform the tasks you'd like to accomplish with the {product}.
-For more information, see <<get-credentials>>.
+* [[get-credentials]]You must have an xref:astra-db-serverless:administration:manage-application-tokens.adoc[application token] that is assigned a _role_ with adequate _permissions_ to perform the tasks you'd like to accomplish with the {product}.
+
+** *Non-production organizations*: If your Astra organization has no production databases or streaming tenants, you can grant your application token the `Organization Administrator` role to try out all of the {product} features.
+
+** *Production organizations*: If you're using Astra in production, {company} recommends that you use a xref:astra-db-serverless:administration:manage-database-access.adoc#custom-roles[custom role] to grant your application token the bare minimum xref:astra-db-serverless:administration:manage-database-access.adoc#about-permissions[permissions] required to perform the tasks you'll be doing with the {product}.
 
 * If you plan to manage an {astra_db} database that has restricted public access, then you must xref:astra-db-serverless:administration:manage-database-ip-access-list.adoc#add-ip-access-list-entries[add your IP address to the database's access list].
 
-[#get-credentials]
-== Retrieve your application token
+== Initialize the {product}
 
-The Astra CLI requires an _application token_ to authenticate with Astra.
-For instructions on how to create an application token, see xref:astra-db-serverless:administration:manage-application-tokens.adoc[].
+After installation, initialize the {product} and connect it to an existing Astra account.
 
-Non-production environments::
-To try out all the {product} features, grant your application token the `Organization Administrator` role.
-
-Production environments::
-If you're using Astra in production, {company} recommends that you use a xref:astra-db-serverless:administration:manage-database-access.adoc#custom-roles[custom role] to grant your application token the bare minimum xref:astra-db-serverless:administration:manage-database-access.adoc#about-permissions[permissions] required to perform the tasks you'll be doing with the {product}.
-
-== Set up a new configuration
-
-To initialize the {product} and connect to an existing Astra account, pass your <<get-credentials,application token>> with the `astra setup` command:
-
-[source,bash,subs="verbatim,quotes"]
+. Use the `astra setup` command to initialize the {product} with your xref:astra-db-serverless:administration:manage-application-tokens.adoc[application token]:
++
+[source,bash,subs="+quotes"]
 ----
 astra setup --token *APPLICATION_TOKEN*
 ----
-
++
 Replace `*APPLICATION_TOKEN*` with your application token.
 The token format is `AstraCS:` followed by a unique token string.
++
 For example:
-
++
 [source,bash]
 ----
 astra setup --token AstraCS:ozgLKiotAPSgFvBylkUEdPzB:3d061eaa636a6a032f352588f5ba2b777fefdd80f201640063576a9732c4a54d
 ----
-
++
 .Result
 [%collapsible]
 ====
-[source,bash]
+[source,console]
 ----
 [OK]    Configuration has been saved.
 [OK]    Setup completed.
@@ -57,17 +53,17 @@ astra setup --token AstraCS:ozgLKiotAPSgFvBylkUEdPzB:3d061eaa636a6a032f352588f5b
 ----
 ====
 
-Display the current {product} configuration to confirm that setup is complete:
-
+. List the {product} configuration to confirm that your connection profile is present:
++
 [source,bash]
 ----
 astra config list
 ----
-
++
 .Result
 [%collapsible]
 ====
-[source,bash]
+[source,console]
 ----
 +--------------------------------+
 | configuration                  |
@@ -77,168 +73,398 @@ astra config list
 ----
 ====
 
-The {product} is now initialized and connected to your Astra account.
-The {product} configuration, including your application token, is stored in the `~/.astrarc` file.
-The information in this file is used whenever you run the `astra` command.
+The {product} is initialized and your application token is set as the default connection profile.
+The {product} uses the default connection profile whenever you run a command without specifying a profile.
+
+The {product} stores connection profiles and their associated application tokens in the `~/.astrarc` file.
+To configure additional connection profiles, see <<connection-profiles>>.
 
 [IMPORTANT]
 ====
-Application tokens are stored in plaintext in the {product} configuration file.
+Application tokens are stored in plain text in the `~/.astrarc` file.
 Your application tokens are like passwords, and you should take precautions to secure the configuration file.
 ====
 
-[#first-commands]
-== First commands
+[#connection-profiles]
+== Set up connection profiles
 
-* Display the current version of the CLI.
+A _connection profile_ consists of a name and an application token.
+When you run the `astra setup` command during initialization, the {product} stores your application token as the default connection profile in the `~/.astrarc` configuration file.
 
+You can create additional connection profiles to make it easier to manage resources and organizations with different application tokens.
+
+=== Create a new connection profile
+
+Create a new connection profile with a different application token.
+
+. Use the `astra config create` command to create a new connection profile:
++
+[source,bash,subs="+quotes"]
+----
+astra config create *PROFILE_NAME* --token *APPLICATION_TOKEN*
+----
++
+Replace the following:
++
+--
+* `*PROFILE_NAME*`: The name you want to give the new connection profile.
+* `*APPLICATION_TOKEN*`: Your application token.
+The application token can be for the same or different Astra organization than the one you used to initially set up the {product}.
+--
++
+For example:
++
 [source,bash]
 ----
-astra --version
+astra config create dev --token AstraCS:ozgLKiotATXgFvBylkUEdPzB:3d061eaa636a6a032f352588f5ba2b777fefdd80f201640063576a9732c4a54d
 ----
++
+.Result
+[%collapsible]
+====
+[source,console]
+----
+[OK]    Configuration has been saved.
+----
+====
 
-* Display your configuration list, validating setup is complete.
-
+. List the {product} configuration to confirm that the new profile is created:
++
 [source,bash]
 ----
 astra config list
 ----
++
+.Result
+[%collapsible]
+====
+[source,console]
+----
++--------------------------------+
+| configuration                  |
++--------------------------------+
+| alex@altostrat.com (in use)    |
+| dev                            |
++--------------------------------+
+----
+====
 
-Output:
+[#switch-profiles]
+=== Switch between connection profiles
 
+Switch to a different connection profile to connect to Astra with a different application token.
+
+. Use the `astra config use` command to switch to a different connection profile:
++
+[source,bash,subs="+quotes"]
+----
+astra config use *PROFILE_NAME*
+----
++
+Replace `*PROFILE_NAME*` with the name of the connection profile you want to switch to.
++
+For example:
++
 [source,bash]
 ----
- +-----------------------------------------+
- | configuration                           |
- +-----------------------------------------+
- | alex@altostrat.com                      |
- +-----------------------------------------+
+astra config use dev
 ----
++
+.Result
+[%collapsible]
+====
+[source,console]
+----
+[OK]    Section 'dev' is set as default.
+----
+====
 
-== Get help
-
-Once installed, the {product} provides extensive documentation for any command.
-
-It also provides some bash autocompletion, use the `TAB` key twice to get a list of propositions.
-
-*Autocompletion*
-
+. List the {product} configuration to confirm that you successfully switched profiles:
++
 [source,bash]
 ----
-astra <TAB> <TAB>
+astra config list
+----
++
+.Result
+[%collapsible]
+====
+[source,console]
+----
++--------------------------------+
+| configuration                  |
++--------------------------------+
+| dev (in use)                   |
+| alex@altostrat.com             |
++--------------------------------+
+----
+====
+
+=== Delete a connection profile
+
+Delete a connection profile that you no longer need.
+
+. Use the `astra config delete` command to delete a connection profile:
++
+[source,bash,subs="+quotes"]
+----
+astra config delete *PROFILE_NAME*
+----
++
+Replace `*PROFILE_NAME*` with the name of the connection profile you want to delete.
++
+For example:
++
+[source,bash]
+----
+astra config delete dev
+----
++
+.Result
+[%collapsible]
+====
+[source,console]
+----
+[OK]    Section 'dev' has been deleted.
+----
+====
++
+The connection profile and its associated application token are deleted from the `~/.astrarc` configuration file.
++
+[NOTE]
+====
+If you delete the connection profile that is currently in use, you must <<switch-profiles,switch to a different profile>> before you can run {product} commands that connect to Astra.
+====
+
+. List the {product} configuration to confirm that the connection profile is deleted:
++
+[source,bash]
+----
+astra config list
+----
++
+.Result
+[%collapsible]
+====
+[source,console]
+----
++--------------------------------+
+| configuration                  |
++--------------------------------+
+| alex@altostrat.com (in use)    |
++--------------------------------+
+----
+====
+
+== Set up auto-completion
+
+The {product} provides Bash auto-completion for `bash` and `zsh` shells.
+
+To use auto-completion, type the `astra` command and then press kbd:[Tab] twice to get a list of available options.
+
+[source,bash,subs="macros"]
+----
+astra kbd:[Tab] kbd:[Tab]
 ----
 
-Output:
-
-[source,bash]
+.Result
+[%collapsible%open]
+====
+[source,console]
 ----
  --no-color  config      db          help        role        setup       shell       user
 ----
+====
 
-* Command-line documentation*
+== Get help
 
-Groups of command will get you the different command avalable.
-
-* Display main help
+To display the main help:
 
 [source,bash]
 ----
 astra help
 ----
 
-Output:
-
-[source,bash]
+.Result
+[%collapsible%open]
+====
+[source,console]
 ----
 usage: astra <command> [ <args> ]
 
 Commands are:
-    help     View help for any command
-    setup    Initialize configuration file
-    shell    Interactive mode (default if no command provided)
-    config   Manage configuration file
-    db       Manage databases
-    role     Manage roles (RBAC)
-    user     Manage users
+    ?           Display this help version
+    help        Display help information
+    login       Authenticate against Astra.
+    setup       Initialize configuration file
+    config      Manage configuration file
+    db          Manage databases
+    org         Display Organization Info
+    role        Manage roles
+    streaming   Manage Streaming tenants
+    token       Manage tokens
+    user        Manage users
 
 See 'astra help <command>' for more information on a specific command.
 ----
+====
 
-* Display help for a command group, such as: `astra db`
+To display help for a command group, for example `db`:
 
 [source,bash]
 ----
 astra help db
 ----
 
-Output:
-
-[source,bash]
+.Result
+[%collapsible]
+====
+[source,console]
 ----
 NAME
         astra db - Manage databases
 
 SYNOPSIS
-        astra db { cqlsh | create | create-keyspace | delete | dsbulk | get |
-                list } [--] [ --token <AUTH_TOKEN> ]
-                [ --config-file <CONFIG_FILE> ] [ --no-color ]
-                [ {-v | --verbose} ] [ {-conf | --config} <CONFIG_SECTION> ]
-                [ --log <LOG_FILE> ] [ {-o | --output} <FORMAT> ] [cmd-options]
-                <cmd-args>
+        astra db { count | cqlsh | create | create-cdc | create-collection |
+                create-dotenv | create-keyspace | create-region | delete |
+                delete-cdc | delete-collection | delete-keyspace |
+                delete-region | describe | download-scb | get |
+                get-endpoint-api | get-endpoint-playground |
+                get-endpoint-swagger | list* | list-cdc | list-clouds |
+                list-collections | list-keyspaces | list-regions |
+                list-regions-classic | list-regions-serverless |
+                list-regions-vector | load | resume | status | unload } [--]
+                [ --token <AUTH_TOKEN> ] [ --no-color ] [ {-v | --verbose} ]
+                [ {-conf | --config} <CONFIG_SECTION> ]
+                [ {-cf | --config-file} <CONFIG_FILE> ] [ --env <Environment> ]
+                [ {-o | --output} <FORMAT> ] [cmd-options] <cmd-args>
 
         Where command-specific options [cmd-options] are:
+            count: [ {-k | --keyspace} <KEYSPACE> ] [ -encoding <ENCODING> ] [ {-t | --table} <TABLE> ]
+                    [ {-query | --schema.query} <QUERY> ] [ --dsbulk-config <DSBULK_CONF_FILE> ]
+                    [ -maxConcurrentQueries <maxConcurrentQueries> ] [ -logDir <log directory> ]
             cqlsh: [ --debug ] [ {-f | --file} <FILE> ] [ {-k | --keyspace} <KEYSPACE> ]
-                    [ --version ] [ {-e | --execute} <STATEMENT> ] [ --encoding <ENCODING> ]
-            create: [ {-k | --keyspace} <KEYSPACE> ] [ --if-not-exist ] [ {-r | --region} <DB_REGION> ]
-            create-keyspace: {-k | --keyspace} <KEYSPACE> [ --if-not-exist ]
-            delete:
-            dsbulk:
-            get:
-            list:
+                    [ --version ] [ --connect-timeout <TIMEOUT> ] [ {-e | --execute} <STATEMENT> ]
+                    [ --request-timeout <TIMEOUT> ] [ --encoding <ENCODING> ]
+            create: [ {-c | --cloud} <cloud> ] [ {-k | --keyspace} <KEYSPACE> ]
+                    [ --vector ] [ --timeout <timeout> ] [ {-r | --region} <DB_REGION> ]
+                    [ {--if-not-exist | --if-not-exists} ] [ --async ] [ --tier <TIER> ]
+                    [ --capacity-units <CAPACITY UNITS> ]
+            create-cdc: [ {-k | --keyspace} <KEYSPACE> ] [ --tenant <TENANT> ]
+                    [ -p, --partition <PARTITION TOKEN> ] [ --table <TABLE> ]
+            create-collection: [ {-m | --metric} <METRIC> ] {-c | --collection}
+                    <COLLECTION> [ {-d | --dimension} <DIMENSION> ]
+            create-dotenv: [ {-k | --keyspace} <KEYSPACE> ] [ {-d | --directory} <DIRECTORY> ]
+                    [ {-r | --region} <DB_REGION> ]
+            create-keyspace: {-k | --keyspace} <KEYSPACE> [ --if-not-exist ] [ --wait ]
+            create-region: [ {-c | --cloud} <CLOUD> ] [ --timeout <timeout> ]
+                    {-r | --region} <REGION> [ --wait ] [ {-t | --tier} <CLOUD> ]
+                    [ --async ] [ --if-not-exist ]
+            delete: [ --async ] [ --timeout <timeout> ] [ --wait ]
+            delete-cdc: [ {-k | --keyspace} <KEYSPACE> ] [ -id <CDC_ID> ] [ --tenant <TENANT> ]
+                    [ --table <TABLE> ]
+            delete-collection: {-c | --collection} <COLLECTION>
+            delete-keyspace: {-k | --keyspace} <KEYSPACE>
+            delete-region: [ --async ] [ --timeout <timeout> ] {-r | --region}
+                    <REGION> [ --wait ]
+            describe: [ {-k | --key} <Key> ]
+            download-scb: [ {-f | --output-file} <DEST> ] [ {-r | --region} <DB_REGION> ]
+            get: [ {-k | --key} <Key> ]
+            get-endpoint-api: [ {-r | --region} <DB_REGION> ]
+            get-endpoint-playground: [ {-r | --region} <DB_REGION> ]
+            get-endpoint-swagger: [ {-r | --region} <DB_REGION> ]
+            list: [ --vector ]
+            list-cdc:
+            list-clouds:
+            list-collections:
+            list-keyspaces:
+            list-regions:
+            list-regions-classic: [ {-c | --cloud} <CLOUD> ] [ {-f | --filter} <filter> ]
+            list-regions-serverless: [ {-c | --cloud} <CLOUD> ] [ {-f | --filter} <filter> ]
+            list-regions-vector: [ {-c | --cloud} <CLOUD> ] [ {-f | --filter} <filter> ]
+            load: [ {-k | --keyspace} <KEYSPACE> ] [ -maxErrors <maxErrors> ] [ -encoding <ENCODING> ]
+                    [ {-t | --table} <TABLE> ] [ {-query | --schema.query} <QUERY> ]
+                    [ -skipRecords <skipRecords> ] [ --schema.allowMissingFields <allowMissingFields> ]
+                    -url <url> [ --dsbulk-config <DSBULK_CONF_FILE> ] [ -dryRun ]
+                    [ -header <header> ] [ -delim <delim> ] [ -maxConcurrentQueries <maxConcurrentQueries> ]
+                    [ -logDir <log directory> ] [ {-m | --schema.mapping} <mapping> ]
+            resume: [ --async ] [ --timeout <timeout> ] [ --wait ]
+            status:
+            unload: [ {-k | --keyspace} <KEYSPACE> ] [ -maxErrors <maxErrors> ]
+                    [ -encoding <ENCODING> ] [ {-t | --table} <TABLE> ] [ {-query | --schema.query} <QUERY> ]
+                    [ -skipRecords <skipRecords> ] [ -url <url> ] [ --dsbulk-config <DSBULK_CONF_FILE> ]
+                    [ -header <header> ] [ -delim <delim> ] [ -maxConcurrentQueries <maxConcurrentQueries> ]
+                    [ -logDir <log directory> ] [ {-m | --schema.mapping} <mapping> ]
 
         Where command-specific arguments <cmd-args> are:
+            count: <DB>
             cqlsh: <DB>
-            create: <DB_NAME>
+            create: <DB>
+            create-cdc: <DB>
+            create-collection: <DB>
+            create-dotenv: <DB>
             create-keyspace: <DB>
+            create-region: <DB>
             delete: <DB>
-            dsbulk: [ <dsbulkArguments>... ]
+            delete-cdc: <DB>
+            delete-collection: <DB>
+            delete-keyspace: <DB>
+            delete-region: <DB>
+            describe: <DB>
+            download-scb: <DB>
             get: <DB>
+            get-endpoint-api: <DB>
+            get-endpoint-playground: <DB>
+            get-endpoint-swagger: <DB>
             list:
+            list-cdc: <DB>
+            list-clouds:
+            list-collections: <DB>
+            list-keyspaces: <DB>
+            list-regions: <DB>
+            list-regions-classic:
+            list-regions-serverless:
+            list-regions-vector:
+            load: <DB>
+            resume: <DB>
+            status: <DB>
+            unload: <DB>
 
+        Where * indicates the default command(s)
         See 'astra help db <command>' for more information on a specific command.
 ----
+====
 
-* Display help for a specific command, such as: `astra db list`
-
-For unitary commands all options details are provided.
+To display help for a specific command, for example `db list`:
 
 [source,bash]
 ----
 astra help db list
 ----
 
-Output:
-
-[source,bash]
+.Result
+[%collapsible]
+====
+[source,console]
 ----
 NAME
         astra db list - Display the list of Databases in an organization
 
 SYNOPSIS
-        astra db list [ {-conf | --config} <CONFIG_SECTION> ]
-                [ --config-file <CONFIG_FILE> ] [ --log <LOG_FILE> ]
+        astra db list [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
                 [ --no-color ] [ {-o | --output} <FORMAT> ]
-                [ --token <AUTH_TOKEN> ] [ {-v | --verbose} ]
+                [ --token <AUTH_TOKEN> ] [ {-v | --verbose} ] [ --vector ]
 
 OPTIONS
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
         -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
             Section in configuration file (default = ~/.astrarc)
 
-        --config-file <CONFIG_FILE>
-            Configuration file (default = ~/.astrarc)
-
-        --log <LOG_FILE>
-            Logs will go in the file plus on console
+        --env <Environment>
+            Astra Environment to use
 
         --no-color
             Remove all colors in output
@@ -251,5 +477,8 @@ OPTIONS
 
         -v, --verbose
             Verbose mode with log in console
-----
 
+        --vector
+            Create a database with vector search enabled
+----
+====
