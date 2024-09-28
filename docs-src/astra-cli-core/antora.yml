@@ -1,7 +1,21 @@
 name: 'astra-cli'
 title: 'Astra CLI'
-version: '0.2'
+version: ~
 start_page: 'index.adoc'
 
 nav:
 - modules/ROOT/nav.adoc
+
+asciidoc:
+  attributes:
+    product: 'Astra CLI'
+    product-version: '0.5'
+    db-serverless: 'Serverless (Non-Vector)'
+    db-serverless-vector: 'Serverless (Vector)'
+    db-classic: 'Classic'
+    astra-api: 'Data API'
+    url-astra: 'https://astra.datastax.com'
+    link-astra-portal: '{url-astra}[{astra_ui}^]'
+    py-client-api-ref-url: 'xref:astra-api-docs:ROOT:attachment$python-client/astrapy'
+    ts-client-api-ref-url: 'xref:astra-api-docs:ROOT:attachment$typescript-client'
+    java-client-api-ref-url: 'xref:astra-api-docs:ROOT:attachment$java-client'
