@@ -1,205 +1,448 @@
 = Manage {astra_db} databases with the {product}
 :navtitle: Manage {astra_db} databases
+:toc: macro
+:toc-title:
+:toclevels: 1
 
 Use the following {product} commands to manage your {astra_db} databases.
 From the command line in a Terminal, the supported tasks are:
 
-* <<List databases>>
-* <<Create a database>>
-* <<List regions>>
-* <<Manage users and roles>>
-* <<Get database details>>
-* <<Delete a database>>
-* <<Manage keyspaces>>
-* <<Use cqlsh>>
-* <<Use DSBulk with Astra CLI>>
-* <<Download Secure Connect Bundle>>
-* <<Create environment variables>>
-* <<Resume a hibernated database>>
-* <<Create and manage configurations>>
+toc::[]
 
 == List databases
 
-To get the list of active databases in your {astra_db} organization, use the command `astra db list`.
+Use `astra db list` to get a list of all databases in your organization:
 
-[TIP]
-====
-For help on this command, use:
-
-[source,bash]
-----
-astra help db list
-----
-====
-
-Example:
-
-[tabs]
-====
-Astra CLI::
-+
---
 [source,bash]
 ----
 astra db list
 ----
---
-+
-Sample result::
-+
---
-[source,bash]
+
+.Result
+[%collapsible]
+====
+[source,console]
 ----
- +---------------------+--------------------------------------+---------------------+----------------+
- | Name                | id                                   | Default Region      | Status         |
- +---------------------+--------------------------------------+---------------------+----------------+
- | mtg                 | dde308f5-a8b0-474d-afd6-999999999999 | eu-central-1        | ACTIVE         |
- | workshops           | 3ed83de7-d97f-4fb6-bf9f-999999999999 | eu-west-1           | ACTIVE         |
- | sdk_tests           | 06a9675a-ca62-4cd0-9b94-999999999999 | us-east-1           | ACTIVE         |
- | test                | 7677a789-bd57-455d-ab2c-999999999999 | eu-central-1        | ACTIVE         |
- | demo                | 071d7059-d55b-4cdb-90c6-999999999999 | us-east-1           | ACTIVE         |
- | ac201               | 48c7178c-58cb-4657-b3d2-999999999999 | us-east-1           | ACTIVE         |
- +---------------------+--------------------------------------+---------------------+----------------+
++---------------------+--------------------------------------+-----------+-------+---+-----------+
+| Name                | id                                   | Regions   | Cloud | V | Status    |
++---------------------+--------------------------------------+-----------+-------+---+-----------+
+| vector_db           | 600d564e-2f2f-44d8-9818-6fdb8ca7eb94 | us-east-2 | aws   | ■ | ACTIVE    |
+| non_vector_db       | c136ff74-1b6e-4501-a996-686ead1151f1 | us-east-2 | aws   |   | ACTIVE    |
+| demo                | 01c0c118-ebce-4a99-a619-369a4cf5d8ff | us-east1  | gcp   |   | ACTIVE    |
++---------------------+--------------------------------------+-----------+-------+---+-----------+
 ----
---
 ====
 
-You can also change the database list's output type with the `astra db list -o <type>` command, where <type> can be `csv` or `json`.
+Use the `-o` option to output the result in `csv` or `json` format:
 
-Examples:
-
-[tabs]
-====
-Astra CLI::
-+
---
 [source,bash]
 ----
 astra db list -o csv
 ----
---
-+
-Sample result::
-+
---
+
+.Result
+[%collapsible]
+====
 [source,csv]
 ----
- Name,id,Default Region,Status
- mtg,dde308f5-a8b0-474d-afd6-999999999999,eu-central-1,ACTIVE
- workshops,3ed83de7-d97f-4fb6-bf9f-999999999999,eu-west-1,ACTIVE
- sdk_tests,06a9675a-ca62-4cd0-9b94-999999999999,us-east-1,ACTIVE
- test,7677a789-bd57-455d-ab2c-999999999999,eu-central-1,ACTIVE
- demo,071d7059-d55b-4cdb-90c6-999999999999,us-east-1,ACTIVE
- ac201,48c7178c-58cb-4657-b3d2-999999999999,us-east-1,ACTIVE
+Name,id,Regions,Cloud,V,Status
+vector_db,600d564e-2f2f-44d8-9818-6fdb8ca7eb94,us-east-2,aws,■,ACTIVE
+non_vector_db,c136ff74-1b6e-4501-a996-686ead1151f1,us-east-2,aws,,ACTIVE
+demo,01c0c118-ebce-4a99-a619-369a4cf5d8ff,us-east1,gcp,,ACTIVE
 ----
---
 ====
 
-Or, for JSON output:
-
-[tabs]
-====
-Astra CLI::
-+
---
 [source,bash]
 ----
 astra db list -o json
 ----
---
-+
-Sample result::
-+
---
+
+.Result
+[%collapsible]
+====
 [source,json]
 ----
-   {
-     "code" : 0,
-     "message" : "astra db list -o json",
-     "data" : [ {
-       "Status" : "ACTIVE",
-       "Default Region" : "eu-central-1",
-       "id" : "dde308f5-a8b0-474d-afd6-999999999999",
-       "Name" : "mtg"
-     }, {
-       "Status" : "ACTIVE",
-       "Default Region" : "eu-west-1",
-       "id" : "3ed83de7-d97f-4fb6-bf9f-999999999999",
-       "Name" : "workshops"
-     }, {
-       "Status" : "ACTIVE",
-       "Default Region" : "us-east-1",
-       "id" : "06a9675a-ca62-4cd0-9b94-999999999999",
-       "Name" : "sdk_tests"
-     }, {
-       "Status" : "ACTIVE",
-       "Default Region" : "eu-central-1",
-       "id" : "7677a789-bd57-455d-ab2c-999999999999",
-       "Name" : "test"
-     }, {
-       "Status" : "ACTIVE",
-       "Default Region" : "us-east-1",
-       "id" : "071d7059-d55b-4cdb-90c6-999999999999",
-       "Name" : "demo"
-     }, {
-       "Status" : "ACTIVE",
-       "Default Region" : "us-east-1",
-       "id" : "48c7178c-58cb-4657-b3d2-999999999999",
-       "Name" : "ac201"
-     } ]
-   }
+{
+  "code" : 0,
+  "message" : "[db, list, -o, json]",
+  "data" : [ {
+    "Status" : "ACTIVE",
+    "V" : "■",
+    "Cloud" : "aws",
+    "Regions" : "us-east-2",
+    "id" : "600d564e-2f2f-44d8-9818-6fdb8ca7eb94",
+    "us-east-2" : "us-east-2",
+    "Name" : "vector_db"
+  }, {
+    "Status" : "ACTIVE",
+    "V" : "",
+    "Cloud" : "aws",
+    "Regions" : "us-east-2",
+    "id" : "c136ff74-1b6e-4501-a996-686ead1151f1",
+    "us-east-2" : "us-east-2",
+    "Name" : "non_vector_db"
+  }, {
+    "Status" : "ACTIVE",
+    "V" : "",
+    "Cloud" : "gcp",
+    "us-east1" : "us-east1",
+    "Regions" : "us-east1",
+    "id" : "01c0c118-ebce-4a99-a619-369a4cf5d8ff",
+    "Name" : "demo"
+  } ]
+}
 ----
---
 ====
 
 == Create a database
 
-You can create an {astra_db} *Serverless* database with the `astra db create <db-name>` command.
+Use `astra db create` to create a new {db-serverless} database:
 
+[source,bash,subs="+quotes"]
+----
+astra db create **DATABASE_NAME**
+----
+
+.Result
+[%collapsible]
+====
+[source,console,subs="+quotes"]
+----
+REGION OK
+[INFO]  Database '**DATABASE_NAME**' does not exist. Creating database '**DATABASE_NAME**' with keyspace 'default_keyspace'
+get CLoud provider
+[INFO]  Database '**DATABASE_NAME**' and keyspace 'default_keyspace' are being created.
+[INFO]  Database '**DATABASE_NAME**' has status 'PENDING' waiting to be 'ACTIVE' ...
+[INFO]  Database '**DATABASE_NAME**' has status 'ACTIVE' (took 153147 millis)
+[OK]    Database '**DATABASE_NAME**' is ready.
+----
+====
+
+[TIP]
+=====
+By default, `astra db create` runs synchronously and doesn't return the command prompt until the database reaches `ACTIVE` or `ERROR` status.
+To run the command _asynchronously_, use the `--async` option:
+
+[source,bash,subs="+quotes"]
+----
+astra db create **DATABASE_NAME** --async
+----
+
+.Result
+[%collapsible]
+====
+[source,console,subs="+quotes"]
+----
+REGION OK
+[INFO]  Database '**DATABASE_NAME**' does not exist. Creating database '**DATABASE_NAME**' with keyspace 'default_keyspace'
+get CLoud provider
+[INFO]  Database '**DATABASE_NAME**' and keyspace 'default_keyspace' are being created.
+----
+====
+
+The {product} returns the command prompt before the database finishes creating.
+Use `astra db list` to monitor the status of the database.
+=====
+
+// TODO: Confirm if this still applies.
+////
+[NOTE]
+====
+If the database already exists with status `HIBERNATED`, the `astra db create` command <<resume-database,resumes>> the database.
+====
+////
+
+// TODO: Determine how to address Classic in CLI docs.
+////
 [NOTE]
 ====
 While you cannot create {astra_db} *Classic* databases with the `astra db create <db-name>` command, you can use other {product} commands to return information about existing {astra_db} Classic databases.
 ====
+////
+
+=== `db create` options
+
+Running `astra db create` without any options deploys the database in an available *Free* region and uses `default_keyspace` as the name for the default keyspace.
+
+For example, you can use the `-c`, `-r`, and `-k` options to define the cloud provider, region, and keyspace name when creating a database:
+
+[source,bash,subs="+quotes"]
+----
+astra db create **DATABASE_NAME** -c aws -r us-east-1 -k keyspace1
+----
+
+.Result
+[%collapsible]
+====
+[source,console,subs="+quotes"]
+----
+REGION OK
+[INFO]  Database '**DATABASE_NAME**' does not exist. Creating database '**DATABASE_NAME**' with keyspace 'keyspace1'
+get CLoud provider
+[INFO]  Database '**DATABASE_NAME**' and keyspace 'keyspace1' are being created.
+[INFO]  Database '**DATABASE_NAME**' has status 'PENDING' waiting to be 'ACTIVE' ...
+[INFO]  Database '**DATABASE_NAME**' has status 'ACTIVE' (took 150067 millis)
+[OK]    Database '**DATABASE_NAME**' is ready.
+----
+====
+
+//TODO: Confirm that this no longer applies.
+////
+The database ID, not the database name, ensures uniqueness within your {astra_db} organization.
+Consequently, if you issue the `astra db create` command multiple times, you will create multiple database instances.
+To ensure that you don't create a database with the same name as another existing database, use the `--if-not-exist` option:
+
+[source,bash]
+----
+astra db create demo -r us-east-1 -k keyspace1 --if-not-exist
+----
+////
+
+[#resume-database]
+== Resume a database
+
+Use `astra db resume` to resume a xref:astra-db-serverless:databases:database-statuses.adoc[hibernated] database:
+
+[source,bash,subs="+quotes"]
+----
+astra db resume **DATABASE_NAME**
+----
+
+Resuming the database may take a few minutes.
 
 [TIP]
 ====
-For help on this command, use:
+By default, `astra db resume` runs synchronously and doesn't return the command prompt until the database reaches `ACTIVE` or `ERROR` status.
+To run the command _asynchronously_, use the `--async` option:
 
-[source,bash]
+[source,bash,subs="+quotes"]
 ----
-astra help db create
+astra db resume **DATABASE_NAME** --async
+----
+
+The {product} returns the command prompt before the database finishes resuming.
+Use `astra db list` to monitor the status of the database.
+====
+
+== Get database details
+
+Use `astra db get` to get information about a database:
+
+[source,bash,subs="+quotes"]
+----
+astra db get **DATABASE_NAME**
+----
+
+.Result
+[%collapsible]
+====
+// The extra four spaces after **DATABASE_NAME** ensures proper alignment in the rendered output.
+[source,console,subs="+quotes"]
+----
++------------------+-----------------------------------------+
+| Attribute        | Value                                   |
++------------------+-----------------------------------------+
+| Name             | **DATABASE_NAME**                           |
+| id               | 01c0c118-ebce-4a99-a619-369a4cf5d8ff    |
+| Cloud            | GCP                                     |
+| Regions          | us-east1                                |
+| Status           | ACTIVE                                  |
+| Vector           | Disabled                                |
+| Default Keyspace | default_keyspace                        |
+| Creation Time    | 2024-09-24T21:08:19Z                    |
+|                  |                                         |
+| Keyspaces        | [0] default_keyspace                    |
+|                  |                                         |
+|                  |                                         |
+| Regions          | [0] us-east1                            |
+|                  |                                         |
++------------------+-----------------------------------------+
 ----
 ====
 
-Example:
+Use the `-o` option to output the result in `csv` or `json` format:
 
-[source,bash]
+[source,bash,subs="+quotes"]
 ----
-astra db create demo
-----
-
-By default, the region will be an available free region, and the keyspace name will be the same as the database name. You can change the names with `-r` and `-k` respectively.
-
-=== Using create options
-
-The database name itself does not ensure uniqueness within your {astra_db} organization. (The database id ensures uniqueness.) Consequently, if you issue the `astra db create` command multiple times, you will end up with multiple database instances.
-
-To change this behavior, use the `--if-not-exist` option.
-
-Database creation is asynchronous operation.
-Still during your CI/CD you want the database to be in an `ACTIVE` state before moving forward.
-Using the option `--wait` will trigger a blocking command until the database is ready.
-
-Example:
-
-[source,bash]
-----
-astra db create demo -k ks2 --if-not-exist --wait
+astra db get **DATABASE_NAME** -o csv
 ----
 
-If you are using the Free plan, after a period of inactivity (23 hours) the database moves to a `HIBERNATED` state.
-You can use the `astra db resume <db-name>` command to reactivate the database.
+.Result
+[%collapsible]
+====
+[source,csv,subs="+quotes"]
+----
+Attribute,Value
+Name,**DATABASE_NAME**
+id,01c0c118-ebce-4a99-a619-369a4cf5d8ff
+Cloud,GCP
+Regions,us-east1
+Status,ACTIVE
+Vector,Disabled
+Default Keyspace,default_keyspace
+Creation Time,2024-09-24T21:08:19Z
+Regions,[us-east1]
+Keyspaces,[default_keyspace]
+----
+====
 
+[source,bash,subs="+quotes"]
+----
+astra db get **DATABASE_NAME** -o json
+----
+
+.Result
+[%collapsible]
+====
+[source,json,subs="+quotes"]
+----
+{
+  "code" : 0,
+  "message" : "db get **DATABASE_NAME**",
+  "data" : {
+    "id" : "01c0c118-ebce-4a99-a619-369a4cf5d8ff",
+    "orgId" : "2dbd3c55-6a68-4b5b-9155-5be9d41823d8",
+    "ownerId" : "FZmCtRdyzJkYidnmlzwcwJWc",
+    "creationTime" : "2024-09-24T21:08:19Z",
+    "terminationTime" : "0001-01-01T00:00:00Z",
+    "lastUsageTime" : "2024-09-24T21:08:19Z",
+    "info" : {
+      "name" : "**DATABASE_NAME**",
+      "keyspace" : "default_keyspace",
+      "dbType" : null,
+      "keyspaces" : [ "default_keyspace" ],
+      "datacenters" : [ {
+        "id" : "01c0c118-ebce-4a99-a619-369a4cf5d8ff-1",
+        "name" : "dc-1",
+        "tier" : "serverless",
+        "status" : "",
+        "dateCreated" : "2024-09-24T21:08:19Z",
+        "cloudProvider" : "GCP",
+        "region" : "us-east1",
+        "regionZone" : "na",
+        "regionClassification" : "standard",
+        "capacityUnits" : 1,
+        "secureBundleUrl" : "https://datastax-cluster-config-prod.s3.us-east-2.amazonaws.com/01c0c118-ebce-4a99-a619-369a4cf5d8ff-1/secure-connect-**DATABASE_NAME**.zip?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA2AIQRQ76XML7FLD6%2F20240924%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20240924T231816Z&X-Amz-Expires=300&X-Amz-SignedHeaders=host&X-Amz-Signature=91e0009b6f7bcfe837c919a133a5ba25a62fa49e073001f04917455f4134438a",
+        "secureBundleInternalUrl" : "https://datastax-cluster-config-prod.s3.us-east-2.amazonaws.com/01c0c118-ebce-4a99-a619-369a4cf5d8ff-1/secure-connect-internal-**DATABASE_NAME**.zip?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA2AIQRQ76XML7FLD6%2F20240924%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20240924T231816Z&X-Amz-Expires=300&X-Amz-SignedHeaders=host&X-Amz-Signature=79a0d583c791efa8a7d5677e90b69d20d14d8847fdffed12ee38551676296ff3",
+        "secureBundleMigrationProxyUrl" : "https://datastax-cluster-config-prod.s3.us-east-2.amazonaws.com/01c0c118-ebce-4a99-a619-369a4cf5d8ff-1/secure-connect-proxy-**DATABASE_NAME**.zip?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA2AIQRQ76XML7FLD6%2F20240924%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20240924T231816Z&X-Amz-Expires=300&X-Amz-SignedHeaders=host&X-Amz-Signature=008a1c248b3aa4bc83a7ed6e0d0dd65f670e71568ef2a7a0117ef003429c58c9",
+        "secureBundleMigrationProxyInternalUrl" : "https://datastax-cluster-config-prod.s3.us-east-2.amazonaws.com/01c0c118-ebce-4a99-a619-369a4cf5d8ff-1/secure-connect-proxy-internal-**DATABASE_NAME**.zip?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA2AIQRQ76XML7FLD6%2F20240924%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20240924T231816Z&X-Amz-Expires=300&X-Amz-SignedHeaders=host&X-Amz-Signature=bc02762cda92d4cfe77fb231f63c83e7fd3ef1dcf4cddd4701dd4510a5f9a424"
+      } ],
+      "cloudProvider" : "GCP",
+      "tier" : "serverless",
+      "capacityUnits" : 1,
+      "region" : "us-east1",
+      "engineType" : null,
+      "additionalKeyspaces" : null
+    },
+    "status" : "ACTIVE",
+    "observedStatus" : "ACTIVE",
+    "storage" : {
+      "nodeCount" : 3,
+      "replicationFactor" : 1,
+      "totalStorage" : 5,
+      "usedStorage" : 0
+    },
+    "cost" : {
+      "costPerMinCents" : 0.0,
+      "costPerHourCents" : 0.0,
+      "costPerDayCents" : 0.0,
+      "costPerMonthCents" : 0.0,
+      "costPerMinMRCents" : 0.0,
+      "costPerHourMRCents" : 0.0,
+      "costPerDayMRCents" : 0.0,
+      "costPerMonthMRCents" : 0.0,
+      "costPerMinParkedCents" : 0.0,
+      "costPerHourParkedCents" : 0.0,
+      "costPerDayParkedCents" : 0.0,
+      "costPerMonthParkedCents" : 0.0,
+      "costPerNetworkGbCents" : 0.0,
+      "costPerWrittenGbCents" : 0.1,
+      "costPerReadGbCents" : 0.1
+    },
+    "metrics" : {
+      "writeRequestsTotalCount" : 0,
+      "readRequestsTotalCount" : 0,
+      "liveDataSizeBytes" : 0,
+      "errorsTotalCount" : 0
+    },
+    "availableActions" : [ "suspend", "removeKeyspace", "getVectorAgentConfig", "removeServerlessMigrationProxy", "getCreds", "migrateServerlessTenant", "addKeyspace", "updateVectorAgent", "hibernate", "cloneDatabaseFromSnapshot", "terminateDatacenter", "createServerlessMigrationProxy", "addDatacenters", "terminate" ],
+    "studioUrl" : null,
+    "grafanaUrl" : "https://01c0c118-ebce-4a99-a619-369a4cf5d8ff-us-east1.dashboard.astra.datastax.com/d/cloud/dse-cluster-condensed?refresh=30s&orgId=1&kiosk=tv",
+    "cqlshUrl" : "https://01c0c118-ebce-4a99-a619-369a4cf5d8ff-us-east1.apps.astra.datastax.com/cqlsh",
+    "graphqlUrl" : "https://01c0c118-ebce-4a99-a619-369a4cf5d8ff-us-east1.apps.astra.datastax.com/api/graphql",
+    "dataEndpointUrl" : "https://01c0c118-ebce-4a99-a619-369a4cf5d8ff-us-east1.apps.astra.datastax.com/api/rest"
+  }
+}
+----
+====
+
+[NOTE]
+====
+The `json` output returns more information about the database than the default and `csv` options.
+====
+
+=== `db get` options
+
+Use the `--key` option to get information about a specific property of the database:
+
+[source,bash,subs="+quotes"]
+----
+astra db get **DATABASE_NAME** --key **PROPERTY**
+----
+
+Replace **`PROPERTY`** with one of the supported properties: `id`, `status`, `cloud`, `keyspace`, `keyspaces`, `region`, or `regions`.
+
+For example, to get the database ID:
+
+[source,bash,subs="+quotes"]
+----
+astra db get **DATABASE_NAME** --key id
+----
+
+The `--key` option returns the value of the specified property in a raw format.
+It is intended for use in scripts.
+
+.Result
+[%collapsible]
+====
+[source,console,subs="+quotes"]
+----
+c310bdb0-93dd-4c61-aafb-dae981bb7691
+----
+====
+
+== Delete a database
+
+Use `astra db delete` to delete an {astra_db} Serverless database:
+
+[source,bash,subs="+quotes"]
+----
+astra db delete **DATABASE_NAME**
+----
+
+.Result
+[%collapsible]
+====
+[source,console,subs="+quotes"]
+----
+[INFO]  Deleting Database '**DATABASE_NAME**'
+[OK]    Database **DATABASE_NAME** has been deleted
+----
+====
+
+[TIP]
+====
+By default, `astra db delete` runs synchronously and doesn't return the command prompt until the database reaches `TERMINATED` or `ERROR` status.
+To run the command _asynchronously_, use the `--async` option:
+
+[source,bash,subs="+quotes"]
+----
+astra db delete **DATABASE_NAME** --async
+----
+
+The {product} returns the command prompt before the database finishes deleting.
+Use `astra db list` to monitor the status of the database.
+====
 
 == List regions
 
@@ -228,20 +471,15 @@ astra help db list-regions-classic
 
 In this example, `aws` is the cloud provider.
 
-[tabs]
-====
-Astra CLI::
-+
---
+
 [source,bash]
 ----
 astra db list-regions-serverless -c aws
 ----
---
-+
-Sample result::
-+
---
+
+.Result
+[%collapsible]
+====
 [source,csv]
 ----
  +----------------+---------------------+-------------------------------+
@@ -259,7 +497,6 @@ Sample result::
  | aws            | us-west-2           | US West (Oregon)              |
  +----------------+---------------------+-------------------------------+
 ----
---
 ====
 
 Command parameters:
@@ -277,20 +514,15 @@ Supported regions are subject to change and may be different from the sample out
 
 === List Classic regions
 
-[tabs]
-====
-Astra CLI::
-+
---
+
 [source,bash]
 ----
 astra db list-regions-classic
 ----
---
-+
-Sample result::
-+
---
+
+.Result
+[%collapsible]
+====
 [source,csv]
 ----
  +----------------+---------------------+-------------------------------+
@@ -309,7 +541,6 @@ Sample result::
  | aws            | us-west-2           | US West (Oregon)              |
  +----------------+---------------------+-------------------------------+
 ----
---
 ====
 
 [NOTE]
@@ -330,20 +561,15 @@ For your {astra_db} organization, you can use {product} commands to:
 
 === List users
 
-[tabs]
-====
-Astra CLI::
-+
---
+
 [source,bash]
 ----
 astra user list
 ----
---
-+
-Sample result::
-+
---
+
+.Result
+[%collapsible]
+====
 [source,csv]
 ----
  +--------------------------------------+-----------------------------+---------------------+
@@ -352,26 +578,20 @@ Sample result::
  | b665658a-ae6a-4f30-a740-999999999999 | mr.wonderful@mycompany.com  | active              |
  +--------------------------------------+-----------------------------+---------------------+
 ----
---
 ====
 
 
 === Invite a new user
 
-[tabs]
-====
-Astra CLI::
-+
---
+
 [source,bash]
 ----
 astra user invite mydevfriend99a9@gmail.com
 ----
---
-+
-Sample result::
-+
---
+
+.Result
+[%collapsible]
+====
 [source,csv]
 ----
  +--------------------------------------+-----------------------------+---------------------+
@@ -381,7 +601,6 @@ Sample result::
  | b665658a-ae6a-4f30-a740-999999999999 | mr.wonderful@mycompany.com  | active              |
  +--------------------------------------+-----------------------------+---------------------+
 ----
---
 ====
 
 
@@ -407,124 +626,7 @@ astra role get "Database Administrator"
 ----
 
 
-== Get database details
 
-To get general information or details on an entity, use the command `astra db get <db-name>`.
-The output includes specific information about the list of keyspaces available and the different regions.
-
-[TIP]
-====
-For help on this command, use:
-
-[source,bash]
-----
-astra help db get
-----
-====
-
-
-Example:
-
-[tabs]
-====
-Astra CLI::
-+
---
-[source,bash]
-----
-astra db get demo
-----
---
-+
-Sample result::
-+
---
-[source,csv]
-----
- +------------------------+-----------------------------------------+
- | Attribute              | Value                                   |
- +------------------------+-----------------------------------------+
- | Name                   | demo                                    |
- | id                     | 071d7059-d55b-4cdb-90c6-999999999999    |
- | Status                 | ACTIVE                                  |
- | Default Cloud Provider | AWS                                     |
- | Default Region         | us-east-1                               |
- | Default Keyspace       | demo                                    |
- | Creation Time          | 2022-11-26T15:41:18Z                    |
- |                        |                                         |
- | Keyspaces              | [0] demo                                |
- |                        |                                         |
- | Regions                | [0] us-east-1                           |
- +------------------------+-----------------------------------------+
-----
---
-====
-
-
-To get a special property, add the option `--key` and its type.
-
-Multiple key types are available: `id`, `status`, `cloud`, `keyspace`, `keyspaces`, `region`, `regions`.
-
-Notice that the output is raw.
-
-This command is expected to be used in scripts.
-Example:
-
-[tabs]
-====
-Astra CLI::
-+
---
-[source,bash]
-----
-astra db get demo --key id
-----
---
-+
-Sample result::
-+
---
-[source,csv]
-----
- dde308f5-a8b0-474d-afd6-999999999999
-----
---
-====
-
-To get the database status in a human readable result, use the `astra db status` command.
-Example:
-
-[tabs]
-====
-Astra CLI::
-+
---
-[source,bash]
-----
-astra db status demo
-----
---
-+
-Sample result::
-+
---
-[source,csv]
-----
- [ INFO ] - Database 'demo' has status 'ACTIVE'
-----
---
-====
-
-
-== Delete a database
-
-To delete an {astra_db} database, use the command `astra db delete <db-name>`.
-Example:
-
-[source,bash]
-----
-astra db delete demo2
-----
 
 
 == Manage keyspaces
@@ -581,20 +683,15 @@ The purpose of {product} is to integrate with `cqlsh` and to perform the integra
 If no options are provided, by default you'll enter `cqlsh` interactive mode.
 Example:
 
-[tabs]
-====
-Astra CLI::
-+
---
+
 [source,bash]
 ----
 astra db cqlsh demo
 ----
---
-+
-Sample result::
-+
---
+
+.Result
+[%collapsible]
+====
 [source,csv]
 ----
  Cqlsh is starting please wait for connection establishment...
@@ -604,7 +701,6 @@ Sample result::
  token@cqlsh>
 
 ----
---
 ====
 
 
@@ -689,11 +785,7 @@ The first time you run the `astra db load` command, the message -- `DSBulk is st
 
 Example:
 
-[tabs]
-====
-Astra CLI::
-+
---
+
 [source,bash]
 ----
 astra db load demo \
@@ -702,11 +794,10 @@ astra db load demo \
  -t cities_by_country \
  --schema.allowMissingFields true
 ----
---
-+
-Sample result::
-+
---
+
+.Result
+[%collapsible]
+====
 [source,csv]
 ----
  DSBulk is starting please wait ...
@@ -721,7 +812,6 @@ Sample result::
  Operation LOAD_20221123-182343-074618 completed successfully in 17 seconds.
  Last processed positions can be found in positions.txt
 ----
---
 ====
 
 
@@ -730,20 +820,15 @@ Sample result::
 Check than the data has been imported with cqlsh.
 Example:
 
-[tabs]
-====
-Astra CLI::
-+
---
+
 [source,bash]
 ----
 astra db cqlsh demo -e "select * from demo.cities_by_country LIMIT 20;"
 ----
---
-+
-Sample result::
-+
---
+
+.Result
+[%collapsible]
+====
 [source,csv]
 ----
 Cqlsh is starting please wait for connection establishment...
@@ -771,26 +856,20 @@ country_name | name                | country_code | country_id | id   | latitude
   Bangladesh |            Chandpur |           BD |         19 | 8474 |    23.25 |  90.83333 |          B |      803 | Chittagong Division |       null
   Bangladesh |    Chapai Nababganj |           BD |         19 | 8475 | 24.68333 |     88.25 |         54 |      813 |   Rajshahi District |       null
 ----
---
 ====
 
 
 This next example shows how to count the loaded data:
 
-[tabs]
-====
-Astra CLI::
-+
---
+
 [source,bash]
 ----
 astra db count demo -k demo -t cities_by_country
 ----
---
-+
-Sample result::
-+
---
+
+.Result
+[%collapsible]
+====
 [source,csv]
 ----
  DSBulk is starting please wait ...
@@ -801,7 +880,6 @@ Sample result::
    total | failed | rows/s |  p50ms |  p99ms | p999ms
  134,574 |      0 | 43,307 | 315.71 | 457.18 | 457.18
 ----
---
 ====
 
 
@@ -810,20 +888,15 @@ Sample result::
 You can also unload data.
 Example:
 
-[tabs]
-====
-Astra CLI::
-+
---
+
 [source,bash]
 ----
 astra db unload demo -k demo -t cities_by_country -url /tmp/unload
 ----
---
-+
-Sample result::
-+
---
+
+.Result
+[%collapsible]
+====
 [source,csv]
 ----
  DSBulk is starting please wait ...
@@ -834,7 +907,6 @@ Sample result::
  134,574 |      0 | 14,103 | 927.51 | 1,853.88 | 1,853.88
  Operation UNLOAD_20221123-183054-208353 completed successfully in 9 seconds.
 ----
---
 ====
 
 
@@ -878,20 +950,15 @@ When working with Astra DB, it's handy to generate a set of relevant environment
 This {product} command creates an `.env` file based on your environment.
 Example:
 
-[tabs]
-====
-Astra CLI::
-+
---
+
 [source,bash]
 ----
 astra db create-dotenv -f /tmp/.env
 ----
---
-+
-Sample result::
-+
---
+
+.Result
+[%collapsible]
+====
 [source,bash]
 ----
  ASTRA_DB_APPLICATION_TOKEN="AstraCS:QeUmROP..."
@@ -910,82 +977,9 @@ Sample result::
  ASTRA_ORG_NAME="awe..."
  ASTRA_ORG_TOKEN="AstraCS:QeUmROPLeNbd..."
 ----
---
 ====
 
 
-== Resume a hibernated database
-
-If you are using the {astra_db} Free plan, your database will be hibernated (made inactive) after 23 hours of inactivity.
-(This behavior does not occur when you upgrade to a paid {astra_db} plan.)
-
-To wake up the database, you can use the `astra db resume` command.
-
-Assume you have a hibernating database.
-Example:
-
-[tabs]
-====
-Astra CLI::
-+
---
-[source,bash]
-----
-astra db list
-----
---
-+
-Sample result::
-+
---
-[source,bash]
-----
- +---------------------+--------------------------------------+---------------------+----------------+
- | Name                | id                                   | Default Region      | Status         |
- +---------------------+--------------------------------------+---------------------+----------------+
- | mydatabase          | 643c6bb8-2336-4649-97d5-999999999999 | eu-central-1        | HIBERNATED     |
- +---------------------+--------------------------------------+---------------------+----------------+
-----
---
-====
-
-Trigger an explicit resuming state with:
-
-[tabs]
-====
-Astra CLI::
-+
---
-[source,bash]
-----
-astra db resume mydatabase
-----
---
-+
-Sample result::
-+
---
-[source,bash]
-----
- +---------------------+--------------------------------------+---------------------+----------------+
- | Name                | id                                   | Default Region      | Status         |
- +---------------------+--------------------------------------+---------------------+----------------+
- | mydatabase          | 643c6bb8-2336-4649-97d5-999999999999 | eu-central-1        | RESUMING       |
- +---------------------+--------------------------------------+---------------------+----------------+
-----
-
-After some time:
-
-[source,bash]
-----
- +---------------------+--------------------------------------+---------------------+----------------+
- | Name                | id                                   | Default Region      | Status         |
- +---------------------+--------------------------------------+---------------------+----------------+
- | mydatabase          | 643c6bb8-2336-4649-97d5-999999999999 | eu-central-1        | ACTIVE         |
- +---------------------+--------------------------------------+---------------------+----------------+
-----
---
-====
 
 
 == Create and manage configurations
