@@ -19,3 +19,7 @@ asciidoc:
     py-client-api-ref-url: 'xref:astra-api-docs:ROOT:attachment$python-client/astrapy'
     ts-client-api-ref-url: 'xref:astra-api-docs:ROOT:attachment$typescript-client'
     java-client-api-ref-url: 'xref:astra-api-docs:ROOT:attachment$java-client'
+    cass-short: 'Cassandra'
+    scb-long: Secure Connect Bundle (SCB)
+    scb-cap: Secure Connect Bundle
+    scb: SCB

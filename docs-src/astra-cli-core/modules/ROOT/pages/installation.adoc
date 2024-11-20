@@ -136,9 +136,9 @@ Checking prerequisites:
 [OK] - curl command is available
 
 Preparing directories:
-[OK] - Created /home/parallels/.astra/tmp
-[OK] - Created /home/parallels/.astra/cli
-[OK] - Created /home/parallels/.astra/scb
+[OK] - Created /home/USERNAME/.astra/tmp
+[OK] - Created /home/USERNAME/.astra/cli
+[OK] - Created /home/USERNAME/.astra/scb
 
 Downloading archive:
 ######################################################################## 100.0%
@@ -147,10 +147,10 @@ Downloading archive:
 
 Extracting and installation:
 [OK] - Extraction is successful
-[OK] - File moved to /home/parallels/.astra/cli
+[OK] - File moved to /home/USERNAME/.astra/cli
 [OK] - Installation cleaned up
-[OK] - astra added to /home/parallels/.bashrc
-[OK] - astra added to /home/parallels/.zshrc
+[OK] - astra added to /home/USERNAME/.bashrc
+[OK] - astra added to /home/USERNAME/.zshrc
 [OK] - Installation Successful
 
 Open A NEW TERMINAL and run: astra setup
