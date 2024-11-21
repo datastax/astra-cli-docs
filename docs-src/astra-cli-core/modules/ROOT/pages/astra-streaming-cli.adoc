@@ -392,7 +392,7 @@ Astra CLI::
 --
 [source,bash]
 ----
-astra streaming create-dot-env new-tenant-from-cli
+astra streaming create-dotenv new-tenant-from-cli
 ----
 --
 +
