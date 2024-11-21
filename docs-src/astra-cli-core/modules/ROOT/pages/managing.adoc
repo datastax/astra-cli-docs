@@ -1,13 +1,7 @@
 = Manage {astra_db} databases with the {product}
 :navtitle: Manage {astra_db} databases
-:toc: macro
-:toc-title:
-:toclevels: 1
 
-Use the following {product} commands to manage your {astra_db} databases.
-From the command line in a Terminal, the supported tasks are:
-
-toc::[]
+Use the {product} to manage your {astra_db} databases.
 
 [#list-databases]
 == List databases
