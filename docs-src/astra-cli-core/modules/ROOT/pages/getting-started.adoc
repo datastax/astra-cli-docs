@@ -656,3 +656,8 @@ OPTIONS
             Section in configuration file to as as default.
 ----
 ====
+
+== Next steps
+
+*  xref:ROOT:managing.adoc[]
+*  xref:ROOT:astra-streaming-cli.adoc[]
