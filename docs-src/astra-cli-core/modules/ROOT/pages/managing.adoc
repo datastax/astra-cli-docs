@@ -2800,7 +2800,7 @@ SYNOPSIS
         See 'astra help user <command>' for more information on a specific command.
 ----
 
-== Manage roles
+== Manage organization roles
 
 Use `astra role list` to list all roles in your Astra organization:
 
