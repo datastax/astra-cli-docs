@@ -9,6 +9,7 @@ From the command line in a Terminal, the supported tasks are:
 
 toc::[]
 
+[#list-databases]
 == List databases
 
 Use `astra db list` to get a list of all databases in your organization:
@@ -133,6 +134,26 @@ astra db list -o json
 ----
 ====
 
+Use the `--vector` option to list only {db-serverless-vector} databases:
+
+[source,bash]
+----
+astra db list --vector
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
++---------------------+--------------------------------------+-----------+-------+---+-----------+
+| Name                | id                                   | Regions   | Cloud | V | Status    |
++---------------------+--------------------------------------+-----------+-------+---+-----------+
+| my_vector_db        | 9291a1fb-2dd2-4e0b-bdfd-5a036d866730 | us-east1  | gcp   | ■ | ACTIVE    |
++---------------------+--------------------------------------+-----------+-------+---+-----------+
+----
+====
+
 == Create a database
 
 Use `astra db create` to create a new {db-serverless} database:
@@ -159,6 +180,8 @@ get CLoud provider
 
 Running `astra db create` without any options deploys the database in an available *Free* region and uses `default_keyspace` as the name for the default keyspace.
 
+If the database already exists but is currently xref:astra-db-serverless:databases:database-statuses.adoc[hibernated], the `astra db create` command <<resume-database,resumes>> the database.
+
 [TIP]
 =====
 By default, `astra db create` runs synchronously and doesn't return the command prompt until the database reaches `ACTIVE` or `ERROR` status.
@@ -184,22 +207,6 @@ get CLoud provider
 The {product} returns the command prompt before the database finishes creating.
 Use `astra db list` to monitor the status of the database.
 =====
-
-// TODO: Confirm if this still applies.
-////
-[NOTE]
-====
-If the database already exists with status `HIBERNATED`, the `astra db create` command <<resume-database,resumes>> the database.
-====
-////
-
-// TODO: Determine how to address Classic in CLI docs.
-////
-[NOTE]
-====
-While you cannot create {astra_db} *Classic* databases with the `astra db create <db-name>` command, you can use other {product} commands to return information about existing {astra_db} Classic databases.
-====
-////
 
 === `db create` options
 
@@ -298,6 +305,35 @@ get CLoud provider
 [INFO]  Database '**DATABASE_NAME**' has status 'ACTIVE' (took 150067 millis)
 [OK]    Database '**DATABASE_NAME**' is ready.
 ----
+====
+
+Use the `--vector` option to create a {db-serverless-vector} database:
+
+[source,bash,subs="+quotes"]
+----
+astra db create **DATABASE_NAME** --vector
+----
+
+.Result
+[%collapsible]
+====
+[source,console,subs="+quotes"]
+----
+REGION OK
+[INFO]  Database '**DATABASE_NAME**' does not exist. Creating database '**DATABASE_NAME**' with keyspace 'default_keyspace'
+get CLoud provider
+[INFO]  Enabling vector search for database **DATABASE_NAME**
+[INFO]  Database '**DATABASE_NAME**' and keyspace 'default_keyspace' are being created.
+[INFO]  Database '**DATABASE_NAME**' has status 'PENDING' waiting to be 'ACTIVE' ...
+[INFO]  Database '**DATABASE_NAME**' has status 'ACTIVE' (took 142541 millis)
+[OK]    Database '**DATABASE_NAME**' is ready.
+----
+====
+
+[NOTE]
+====
+You cannot create {db-classic} databases with the {product}.
+However, you can use other commands, such as `<<list-databases,astra db list>>`, to return information about existing {db-classic} databases.
 ====
 
 //TODO: Confirm that this no longer applies.
@@ -1035,7 +1071,7 @@ Running `astra db list-regions-serverless` without any options lists all support
 include::ROOT:partial$regions-change-admonition.adoc[]
 ======
 
-=== `list-regions-serverless` options
+=== `db list-regions-serverless` options
 
 [source,console]
 ----
@@ -1235,7 +1271,7 @@ Running `astra db list-regions-vector` without any options lists all supported r
 include::ROOT:partial$regions-change-admonition.adoc[]
 ======
 
-=== `list-regions-vector` options
+=== `db list-regions-vector` options
 
 [source,console]
 ----
@@ -1420,7 +1456,7 @@ Running `astra db list-regions-classic` without any options lists all supported 
 include::ROOT:partial$regions-change-admonition.adoc[]
 ======
 
-=== `list-regions-classic` options
+=== `db list-regions-classic` options
 
 [source,console]
 ----
@@ -1633,7 +1669,7 @@ Python 3.11.10
 ====
 ======
 
-=== `cqlsh` options
+=== `db cqlsh` options
 
 [source,console]
 ----
@@ -1881,7 +1917,7 @@ astra db cqlsh **DATABASE_NAME** -e "select * from **KEYSPACE_NAME**.**TABLE_NAM
 ====
 ======
 
-Use the `astra db unload` command to unload database table rows to a file:
+Use `astra db unload` to unload database table rows to a file:
 
 [source,bash,subs="+quotes"]
 ----
@@ -1907,7 +1943,7 @@ To resume the current operation, re-run it with the same settings, and add the f
 ----
 ====
 
-Use the `astra db count` command to get information about loaded data:
+Use `astra db count` to get information about loaded data:
 
 [source,bash,subs="+quotes"]
 ----
@@ -2434,24 +2470,592 @@ To resume the current operation, re-run it with the same settings, and add the f
 +
 This command unloads row data from the `cities_by_country` table, and stores it as CSV files within a subsirectory names `unloaded_data` in the same directory where you ran the command.
 
+== Download the {scb-cap}
 
+The xref:astra-db-serverless:drivers:secure-connect-bundle.adoc[] is a zip file containing security credentials and certificates required for secure mutual TLS (mTLS) connection to your {astra_db} database.
 
+Use `astra db download-scb` to download the {scb-long} for an {astra_db} database:
 
+[source,bash,subs="+quotes"]
+----
+astra db download-scb **DATABASE_NAME**
+----
 
+.Result
+[%collapsible]
+====
+[source,console]
+----
+[INFO]  Bundle downloaded in ./scb_a53003fe-ba42-4c3c-85d0-6b345622c2dc_dc-1.zip
+----
+====
 
+By default, the {product} downloads the {scb} to the directory where you run the command using the following naming pattern: `scb_**DATABASE-ID**_**REGION-NAME**.zip`.
+For multi-region databases, the {product} downloads a different SCB for each region.
 
-== Manage users and roles
+[WARNING]
+====
+Treat the {scb} the same way you would any other sensitive values, such as passwords or tokens.
 
-For your {astra_db} organization, you can use {product} commands to:
+The {scb} contains sensitive information that establishes a connection to your database, including key pairs and certificates.
+====
 
-* <<List users>>
-* <<Invite a new user>>
-* <<Delete a user>>
-* <<List roles>>
-* <<Get specific role information>>
+=== `db download-scb` options
 
-=== List users
+[source,console]
+----
+NAME
+        astra db download-scb - Download secure connect bundle archive for a
+        region
 
+SYNOPSIS
+        astra db download-scb [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
+                [ {-f | --output-file} <DEST> ] [ --no-color ]
+                [ {-o | --output} <FORMAT> ] [ {-r | --region} <DB_REGION> ]
+                [ --token <AUTH_TOKEN> ] [ {-v | --verbose} ] [--] <DB>
+
+OPTIONS
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        --env <Environment>
+            Astra Environment to use
+
+        -f <DEST>, --output-file <DEST>
+            Destination file
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        -r <DB_REGION>, --region <DB_REGION>
+            Cloud provider region
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <DB>
+            Database name (if unique) or Database identifier
+----
+
+Use the `-r`/`--region` option to download the {scb} for a specific region:
+
+[source,bash,subs="+quotes"]
+----
+astra db download-scb **DATABASE_NAME** -r **REGION_NAME**
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
+[INFO]  Bundle downloaded in ./scb_a53003fe-ba42-4c3c-85d0-6b345622c2dc_dc-1.zip
+----
+====
+
+Use the `-f`/`--output-file` option to download the {scb} to a specific location and filename:
+
+[source,bash,subs="+quotes"]
+----
+astra db download-scb **DATABASE_NAME** -f **DESTINATION_FILE**.zip
+----
+
+.Result
+[%collapsible]
+====
+[source,console,subs="+quotes"]
+----
+[INFO]  Bundle downloaded in **DESTINATION_FILE**.zip
+----
+====
+
+== Create environment variables
+
+When developing applications with {astra_db} APIs, you will notice common values that are frequently reused, such as application tokens, database API endpoints, database IDs, and keyspace names.
+It's a good practice to store these values in environment variables to facilitate reuse in your scripts, simplify token rotation, and increase security by keeping sensitive information separate from your core application code.
+
+The {product} can automatically generate a set of relevant variables for an {astra_db} database that you can use in your applications.
+
+Use `astra db create-dotenv` to generate a `.env` file containing relevant environment variables for a specific {astra_db} database:
+
+[source,bash,subs="+quotes"]
+----
+astra db create-dotenv **DATABASE_NAME**
+----
+
+By default, the {product} saves the `.env` file to the directory where you run the command.
+
+.Result
+[%collapsible%open]
+====
+.env
+[source,bash]
+----
+ASTRA_DB_API_ENDPOINT="https://a53003fe-ba42-4c3c-85d0-6b345622c2dc-us-east1.apps.astra.datastax.com/api/json"
+ASTRA_DB_APPLICATION_TOKEN="AstraCS:FZmCtRdyzJkYidnmlzwcwJWc:f51d3ee8fce90b28a7681a1e1bc3fa0d69cb770b0219aa98b96deb61df5f7a36"
+ASTRA_DB_GRAPHQL_URL="https://a53003fe-ba42-4c3c-85d0-6b345622c2dc-us-east1.apps.astra.datastax.com/api/graphql/demo"
+ASTRA_DB_GRAPHQL_URL_ADMIN="https://a53003fe-ba42-4c3c-85d0-6b345622c2dc-us-east1.apps.astra.datastax.com/api/graphql-admin"
+ASTRA_DB_GRAPHQL_URL_PLAYGROUND="https://a53003fe-ba42-4c3c-85d0-6b345622c2dc-us-east1.apps.astra.datastax.com/api/playground"
+ASTRA_DB_GRAPHQL_URL_SCHEMA="https://a53003fe-ba42-4c3c-85d0-6b345622c2dc-us-east1.apps.astra.datastax.com/api/graphql-schema"
+ASTRA_DB_ID="a53003fe-ba42-4c3c-85d0-6b345622c2dc"
+ASTRA_DB_KEYSPACE="demo"
+ASTRA_DB_REGION="us-east1"
+ASTRA_DB_REST_URL="https://a53003fe-ba42-4c3c-85d0-6b345622c2dc-us-east1.apps.astra.datastax.com/api/rest"
+ASTRA_DB_REST_URL_SWAGGER="https://a53003fe-ba42-4c3c-85d0-6b345622c2dc-us-east1.apps.astra.datastax.com/api/rest/swagger-ui/"
+ASTRA_DB_SECURE_BUNDLE_PATH="/Users/ericschneider/.astra/scb/scb_a53003fe-ba42-4c3c-85d0-6b345622c2dc_us-east1.zip"
+ASTRA_DB_SECURE_BUNDLE_URL="https://datastax-cluster-config-prod.s3.us-east-2.amazonaws.com/a53003fe-ba42-4c3c-85d0-6b345622c2dc-1/secure-connect-demo.zip?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA2AIQRQ76XML7FLD6%2F20241120%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20241120T233147Z&X-Amz-Expires=300&X-Amz-SignedHeaders=host&X-Amz-Signature=46d8704e382458c82d7da02db1ca79657e003de327f0123a0189ec1a50171cb0"
+ASTRA_ORG_ID="2dbd3c55-6a68-4b5b-9155-5be9d41823d8"
+ASTRA_ORG_NAME="eric.schneider@datastax.com"
+ASTRA_ORG_TOKEN="AstraCS:FZmCtRdyzJkYidnmlzwcwJWc:f51d3ee8fce90b28a7681a1e1bc3fa0d69cb770b0219aa98b96deb61df5f7a36"
+----
+====
+
+[WARNING]
+====
+The generated `.env` files contains sensitive information, including the application token that the {product} uses to connect to the .
+
+The {scb} contains sensitive information that establishes a connection to your database, including key pairs and certificates.
+====
+
+=== `db create-dotenv` options
+
+[source,console]
+----
+NAME
+        astra db create-dotenv - Generate an .env configuration file associate
+        with the db
+
+SYNOPSIS
+        astra db create-dotenv [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ]
+                [ {-d | --directory} <DIRECTORY> ] [ --env <Environment> ]
+                [ {-k | --keyspace} <KEYSPACE> ] [ --no-color ]
+                [ {-o | --output} <FORMAT> ] [ {-r | --region} <DB_REGION> ]
+                [ --token <AUTH_TOKEN> ] [ {-v | --verbose} ] [--] <DB>
+
+OPTIONS
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        -d <DIRECTORY>, --directory <DIRECTORY>
+            Destination for the config file
+
+        --env <Environment>
+            Astra Environment to use
+
+        -k <KEYSPACE>, --keyspace <KEYSPACE>
+            Default keyspace created with the Db
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        -r <DB_REGION>, --region <DB_REGION>
+            Cloud provider region
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <DB>
+            Database name (if unique) or Database identifier
+----
+
+Use the `-d`/`--directory` option to save the `.env` file to a specified directory:
+
+[source,bash,subs="+quotes"]
+----
+astra db create-dotenv **DATABASE_NAME** -f ~/tmp
+----
+
+[IMPORTANT]
+====
+The directory must already exist before you run the command.
+If the directory doesn't exist, the {product} will report the following error: `INVALID_ARGUMENT: Destination folder has not been found`.
+====
+
+== Manage the {product} configuration
+
+The {product} lets you manage multiple Astra organizations.
+To facilitate this, the {product} lets you create multiple configurations within the `~/.astrarc` file.
+Each configuration is associated with an application token, enabling you to manage multiple organizations, or manage one organization using multiple application tokens.
+
+Use `astra config list` to list all current configurations:
+
+[source,bash]
+----
+astra config list
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
++----------------------------+
+| configuration              |
++----------------------------+
+| Organization 1 (in use)    |
+| Organization 2             |
++----------------------------+
+====
+
+Use `astra config create` to create a new configuration:
+
+[source,bash,subs="+quotes"]
+----
+astra config create "**CONFIG_NAME**" --token **APPLICATION_TOKEN**
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
+[OK]    Configuration has been saved.
+----
+====
+
+Use `astra config use` to change the default configuration that {product} uses when executing commands:
+
+[source,bash,subs="+quotes"]
+----
+astra config use "**CONFIG_NAME**"
+----
+
+.Result
+[%collapsible]
+====
+[source,console,subs="+quotes"]
+----
+[OK]    Section '**CONFIG_NAME**' is set as default.
+----
+
+Use `astra config list` to confirm that the selected configuration is now the default.
+====
+
+[TIP]
+====
+Every {product} command supports the `--config` option, which lets you specify a configuration to use for that command.
+This lets you use different configurations for different commands without changing the default configuration.
+
+For example:
+
+[source,bash,subs="+quotes"]
+----
+astra user list --config "**CONFIG_NAME**"
+----
+====
+
+Use `astra config delete` to delete a configuration:
+
+[source,bash,subs="+quotes"]
+----
+astra config delete "**CONFIG_NAME**"
+----
+
+.Result
+[%collapsible]
+====
+[source,console,subs="+quotes"]
+----
+[OK]    Section '**CONFIG_NAME**' has been deleted.
+----
+
+Use `astra config list` to confirm that the selected configuration is now the default.
+====
+
+[NOTE]
+====
+If you delete the default configuration, the {product} does _not_ automatically select a new default configuration.
+Use the `astra config use` command to select a new default configuration.
+====
+
+=== `config` options
+
+[source,console]
+----
+NAME
+        astra config - Manage configuration file
+
+SYNOPSIS
+        astra config { create | delete | describe | get | list* | use } [--]
+                [ {-cf | --config-file} <CONFIG_FILE> ] [ --no-color ]
+                [ {-v | --verbose} ] [ {-o | --output} <FORMAT> ] [cmd-options]
+                <cmd-args>
+
+        Where command-specific options [cmd-options] are:
+            create: [ {-e | --env} <Environment> ] [ {-t | --token} <AuthToken> ]
+            delete:
+            describe: [ {-k | --key} <Key in the section> ]
+            get: [ {-k | --key} <Key in the section> ]
+            list:
+            use:
+
+        Where command-specific arguments <cmd-args> are:
+            create: [ <sectionName> ]
+            delete: <sectionName>
+            describe: <sectionName>
+            get: <sectionName>
+            list:
+            use: <sectionName>
+
+        Where * indicates the default command(s)
+        See 'astra help config <command>' for more information on a specific command.
+----
+
+.`config create` options
+[%collapsible]
+====
+[source,console]
+----
+NAME
+        astra config create - Create a new section in configuration
+
+SYNOPSIS
+        astra config create [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-e | --env} <Environment> ] [ --no-color ]
+                [ {-o | --output} <FORMAT> ] [ {-t | --token} <AuthToken> ]
+                [ {-v | --verbose} ] [--] [ <sectionName> ]
+
+OPTIONS
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -e <Environment>, --env <Environment>
+            Environment to use for this section.
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        -t <AuthToken>, --token <AuthToken>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <sectionName>
+            Section in configuration file to as as default.
+----
+====
+
+.`config delete` options
+[%collapsible]
+====
+[source,console]
+----
+NAME
+        astra config delete - Delete section in configuration
+
+SYNOPSIS
+        astra config delete [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ --no-color ] [ {-o | --output} <FORMAT> ]
+                [ {-v | --verbose} ] [--] <sectionName>
+
+OPTIONS
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <sectionName>
+            Section in configuration file to as as default.
+----
+====
+
+.`config describe` options
+[%collapsible]
+====
+[source,console]
+----
+NAME
+        astra config describe - Show details for a configuration.
+
+SYNOPSIS
+        astra config describe [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-k | --key} <Key in the section> ] [ --no-color ]
+                [ {-o | --output} <FORMAT> ] [ {-v | --verbose} ] [--]
+                <sectionName>
+
+OPTIONS
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -k <Key in the section>, --key <Key in the section>
+            If provided return only value for a key.
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <sectionName>
+            Section in configuration file to as as default.
+----
+====
+
+.`config get` options
+[%collapsible]
+====
+[source,console]
+----
+NAME
+        astra config get - Show details for a configuration.
+
+SYNOPSIS
+        astra config get [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-k | --key} <Key in the section> ] [ --no-color ]
+                [ {-o | --output} <FORMAT> ] [ {-v | --verbose} ] [--]
+                <sectionName>
+
+OPTIONS
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -k <Key in the section>, --key <Key in the section>
+            If provided return only value for a key.
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <sectionName>
+            Section in configuration file to as as default.
+----
+====
+
+.`config list` options
+[%collapsible]
+====
+[source,console]
+----
+NAME
+        astra config list - Show the list of available configurations.
+
+SYNOPSIS
+        astra config list [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ --no-color ] [ {-o | --output} <FORMAT> ]
+                [ {-v | --verbose} ]
+
+OPTIONS
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        -v, --verbose
+            Verbose mode with log in console
+----
+====
+
+.`config use` options
+[%collapsible]
+====
+[source,console]
+----
+NAME
+        astra config use - Make a section the one used by default
+
+SYNOPSIS
+        astra config use [ {-cf | --config-file} <CONFIG_FILE> ] [ --no-color ]
+                [ {-o | --output} <FORMAT> ] [ {-v | --verbose} ] [--]
+                <sectionName>
+
+OPTIONS
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <sectionName>
+            Section in configuration file to as as default.
+----
+====
+
+== Manage users
+
+Use `astra user list` to list all users in your Astra organization:
 
 [source,bash]
 ----
@@ -2463,210 +3067,217 @@ astra user list
 ====
 [source,csv]
 ----
- +--------------------------------------+-----------------------------+---------------------+
- | User Id                              | User Email                  | Status              |
- +--------------------------------------+-----------------------------+---------------------+
- | b665658a-ae6a-4f30-a740-999999999999 | mr.wonderful@mycompany.com  | active              |
- +--------------------------------------+-----------------------------+---------------------+
++--------------------------------------+--------------------+---------+
+| User Id                              | User Email         | Status  |
++--------------------------------------+--------------------+---------+
+| 9b01f7bb-ce9b-4de7-8685-beb5a869c1f0 | alice@example.com  | active  |
+| ba5533ab-769a-4ec6-aa5e-7f2c26943c57 | bob@example.com    | active  |
+| 20e0a061-c9d2-42a5-9d00-352f3b2adedc | taylor@example.com | invited |
++--------------------------------------+--------------------+---------+
 ----
 ====
 
+Use `astra user invite` to invite a new user to your Astra organization:
 
-=== Invite a new user
-
-
-[source,bash]
+[source,bash,subs="+quotes"]
 ----
-astra user invite mydevfriend99a9@gmail.com
+astra user invite **USER_EMAIL**
 ----
 
 .Result
 [%collapsible]
 ====
-[source,csv]
+[source,console]
 ----
- +--------------------------------------+-----------------------------+---------------------+
- | User Id                              | User Email                  | Status              |
- +--------------------------------------+-----------------------------+---------------------+
- | 825bd3d3-82ae-404b-9aad-999999999999 | mydevfriend99a9@gmail.com   | invited             |
- | b665658a-ae6a-4f30-a740-999999999999 | mr.wonderful@mycompany.com  | active              |
- +--------------------------------------+-----------------------------+---------------------+
+[OK]    Database Administrator
 ----
 ====
 
+Use `astra user delete` to remove a user or revoke their invitation to your Astra organization:
 
-=== Delete a user
-
-[source,bash]
+[source,bash,subs="+quotes"]
 ----
-astra user delete mydevfriend99a9@gmail.com
+astra user delete **USER_EMAIL**
 ----
 
-=== List roles
+.Result
+[%collapsible]
+====
+[source,console,subs="+quotes"]
+----
+[OK]    Deleting user '**USER_EMAIL**' (async operation)
+----
+====
+
+[IMPORTANT]
+====
+Removing a user removes their access to your organization, but it doesn't delete their account.
+
+The user retains their personal {astra_db} account under their associated email address, including access to their default (personal) organization and any other organizations they belong to.
+The user can still access their personal {astra_db} account, if they have access to the associated xref:astra-db-serverless:administration:invite-users-to-organization.adoc#accept-the-invite[authentication method].
+
+If your organization uses SSO, make sure that you also remove the user from your IdP, if necessary.
+====
+
+=== `user` options
+
+[source,console]
+----
+NAME
+        astra user - Manage users
+
+SYNOPSIS
+        astra user { delete | describe | get | invite | list* } [--]
+                [ --token <AUTH_TOKEN> ]
+                [ {-cf | --config-file} <CONFIG_FILE> ] [ --no-color ]
+                [ {-v | --verbose} ] [ {-conf | --config} <CONFIG_SECTION> ]
+                [ --env <Environment> ] [ {-o | --output} <FORMAT> ]
+                [cmd-options] <cmd-args>
+
+        Where command-specific options [cmd-options] are:
+            delete:
+            describe:
+            get:
+            invite: [ {-r | --role} <ROLE> ]
+            list:
+
+        Where command-specific arguments <cmd-args> are:
+            delete: <EMAIL>
+            describe: <EMAIL>
+            get: <EMAIL>
+            invite: <EMAIL>
+            list:
+
+        Where * indicates the default command(s)
+        See 'astra help user <command>' for more information on a specific command.
+----
+
+== Manage roles
+
+Use `astra role list` to list all roles in your Astra organization:
 
 [source,bash]
 ----
 astra role list
 ----
 
-=== Get specific role information
+.Result
+[%collapsible]
+====
+[source,console]
+----
++--------------------------------------+----------------------------+----------------------------+
+| Role Id                              | Role Name                  | Description                |
++--------------------------------------+----------------------------+----------------------------+
+| b4ed0e9e-67e8-47b6-8b58-c6629be961a9 | R/W Svc Acct               | R/W Svc Acct               |
+| 43745b73-ad46-46e4-b826-c15d06d2cea0 | Admin User                 | Admin User                 |
+| 67c4b5dc-dd3f-4b2d-be51-09be12836d57 | API Admin User             | API Admin User             |
+| ad0566b5-2a67-49de-89e8-92258c2f2c98 | Organization Administrator | Organization Administrator |
+| 16a4b1d7-a615-41f8-95ca-52b0280f4d77 | RO Svc Acct                | RO Svc Acct                |
+| 74b7d8b1-ecf1-48e5-a35f-0f999d369889 | API RO Svc Acct            | API RO Svc Acct            |
+| 946cfbde-24cc-4953-9355-d57bfd61bf39 | API R/W User               | API R/W User               |
+| dde8a0e9-f4ae-4b42-b642-9f257436c8da | API Admin Svc Acct         | API Admin Svc Acct         |
+| efdfd41f-6184-4891-8400-b5779a0551d9 | API R/W Svc Acct           | API R/W Svc Acct           |
+| c5fabb3c-1ae1-4648-898f-d3b98167d62e | Billing Admin              | Billing Admin              |
+| 5dc84d0d-4fdd-4ec2-a223-71341b6d7685 | API RO User                | API RO User                |
+| 1faa93f2-b889-4190-9585-4bc6e3c3595a | Database Administrator     | Database Administrator     |
+| b73e44b2-b9e9-43b8-a7c1-c6a2fe2dab50 | R/W User                   | R/W User                   |
+| d2cfcd63-055c-4a58-b957-8916d4a007a5 | RO User                    | RO User                    |
+| a25baf86-1bde-43d2-86ac-647e3d884bac | UI View Only               | UI View Only               |
+| 892c45bb-d395-488c-9428-8a50f7013e2b | Admin Svc Acct             | Admin Svc Acct             |
++--------------------------------------+----------------------------+----------------------------+
+----
+====
+
+Use `astra role get` to get information about a specific role in your Astra organization:
 
 [source,bash]
 ----
 astra role get "Database Administrator"
 ----
 
-
-
-
-
-
-
-
-
-
-
-
-== Download Secure Connect Bundle
-
-=== Default values
-
-Use the `astra db download-scb` command to download the different secure connect bundles (one per region) with the pattern `+scb_${dbid}-${dbregion}.zip+` in the current folder.
-
-[source,bash]
-----
-mkdir db-demo
-cd db-demo
-astra db download-scb demo
-ls
-----
-
-=== Download to a specific target folder
-
-Use the `astra db download-scb` command with the `-d` (`--output-directory`) option to download the different secure connect bundles (one per region) with the pattern `+scb_${dbid}-${dbregion}.zip+`. Example of downloading to a `/tmp` folder:
-
-[source,bash]
-----
-astra db download-scb demo -d /tmp
-----
-
-=== Download an SCB and provide output zip filename
-
-Provide the target filename with `-f` (`--output-file`). This command flag works only if you have a **single region** for your database (or you will have to use the flag `-d`).
-
-[source,bash]
-----
-astra db download-scb demo -f /tmp/demo.zip
-----
-
-
-== Create environment variables
-
-When working with Astra DB, it's handy to generate a set of relevant environment variables such as database name, database region, API call URLs, and so on.
-
-This {product} command creates an `.env` file based on your environment.
-Example:
-
-
-[source,bash]
-----
-astra db create-dotenv -f /tmp/.env
-----
-
 .Result
 [%collapsible]
 ====
-[source,bash]
+[source,console]
 ----
- ASTRA_DB_APPLICATION_TOKEN="AstraCS:QeUmROP..."
- ASTRA_DB_GRAPHQL_URL="https://a6b5cb4c-3267-4414-8bba-999999999999-us-east-1.apps.astra.datastax.com/api/graphql/order_management_data"
- ASTRA_DB_GRAPHQL_URL_ADMIN="https://a6b5cb4c-3267-4414-8bba-999999999999-us-east-1.apps.astra.datastax.com/api/graphql-admin"
- ASTRA_DB_GRAPHQL_URL_PLAYGROUND="https://a6b5cb4c-3267-4414-8bba-999999999999-us-east-1.apps.astra.datastax.com/api/playground"
- ASTRA_DB_GRAPHQL_URL_SCHEMA="https://a6b5cb4c-3267-4414-8bba-999999999999-us-east-1.apps.astra.datastax.com/api/graphql-schema"
- ASTRA_DB_ID="a6b5cb4c-3267-4414-8bba-999999999999"
- ASTRA_DB_KEYSPACE="order_management_data"
- ASTRA_DB_REGION="us-east-1"
- ASTRA_DB_REST_URL="https://a6b5cb4c-3267-4414-8bba-999999999999-us-east-1.apps.astra.datastax.com/api/rest"
- ASTRA_DB_REST_URL_SWAGGER="https://a6b5cb4c-3267-4414-8bba-999999999999-us-east-1.apps.astra.datastax.com/api/rest/swagger-ui/"
- ASTRA_DB_SECURE_BUNDLE_PATH="/Users/awesome.user/.astra/scb/scb_a6b5cb4c-3267-4414-8bba-999999999999-east-1.zip"
- ASTRA_DB_SECURE_BUNDLE_URL="https://datastax-cluster-config-prod.s3.us-east-2.amazonaws.com/a6b5cb4c-3267-4414-8bba-999999999999....X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA2AI....."
- ASTRA_ORG_ID="f9460f14-9879-...."
- ASTRA_ORG_NAME="awe..."
- ASTRA_ORG_TOKEN="AstraCS:QeUmROPLeNbd..."
++----------------+------------------------------------------------------+
+| Attribute      | Value                                                |
++----------------+------------------------------------------------------+
+| Identifier     | 1faa93f2-b889-4190-9585-4bc6e3c3595a                 |
+| Name           | Database Administrator                               |
+| Description    | Database Administrator                               |
+| Effect         | allow                                                |
+|                |                                                      |
+| Resources      | [0] drn:astra:org:__ORG_ID__                         |
+|                | [1] drn:astra:org:__ORG_ID__:db:*                    |
+|                | [2] drn:astra:org:__ORG_ID__:db:*:keyspace:*         |
+|                | [3] drn:astra:org:__ORG_ID__:db:*:keyspace:*:table:* |
+|                |                                                      |
+|                |                                                      |
+| Actions        | [0] accesslist-read                                  |
+|                | [1] accesslist-write                                 |
+|                | [2] org-cmk-read                                     |
+|                | [3] org-cmk-write                                    |
+|                | [4] org-db-create                                    |
+|                | [5] org-db-passwordreset                             |
+|                | [6] org-db-terminate                                 |
+|                | [7] org-db-suspend                                   |
+|                | [8] org-db-addpeering                                |
+|                | [9] org-db-managemigratorproxy                       |
+|                | [10] org-db-expand                                   |
+|                | [11] org-db-view                                     |
+|                | [12] org-role-read                                   |
+|                | [13] org-token-read                                  |
+|                | [14] org-token-write                                 |
+|                | [15] org-user-read                                   |
+|                | [16] db-manage-privateendpoint                       |
+|                | [17] db-all-keyspace-create                          |
+|                | [18] db-all-keyspace-describe                        |
+|                | [19] db-keyspace-grant                               |
+|                | [20] db-keyspace-modify                              |
+|                | [21] db-keyspace-describe                            |
+|                | [22] db-keyspace-create                              |
+|                | [23] db-keyspace-authorize                           |
+|                | [24] db-keyspace-alter                               |
+|                | [25] db-keyspace-drop                                |
+|                | [26] db-manage-region                                |
+|                | [27] db-table-select                                 |
+|                | [28] db-table-grant                                  |
+|                | [29] db-table-modify                                 |
+|                | [30] db-table-describe                               |
+|                | [31] db-table-create                                 |
+|                | [32] db-table-authorize                              |
+|                | [33] db-table-alter                                  |
+|                | [34] db-table-drop                                   |
+|                | [35] db-graphql                                      |
+|                | [36] db-rest                                         |
+|                | [37] db-cql                                          |
+|                | [38] db-data-import                                  |
+|                | [39] db-manage-thirdpartymetrics                     |
+|                |                                                      |
++----------------+------------------------------------------------------+
 ----
 ====
 
+=== `role` options
 
-
-
-== Create and manage configurations
-
-If you work with multiple {astra_db} organizations, it can be useful to switch from one configuration to another, and from one auth token to another.
-
-{product} provides a configuration management solution to handle these use cases.
-
-=== List available configurations
-
-[source,bash]
+[source,console]
 ----
-astra config list
+NAME
+        astra role - Manage roles
+
+SYNOPSIS
+        astra role { describe | get | list* } [--] [ --token <AUTH_TOKEN> ]
+                [ {-cf | --config-file} <CONFIG_FILE> ] [ --no-color ]
+                [ {-v | --verbose} ] [ {-conf | --config} <CONFIG_SECTION> ]
+                [ --env <Environment> ] [ {-o | --output} <FORMAT> ] <cmd-args>
+
+        Where command-specific arguments <cmd-args> are:
+            describe: <ROLE>
+            get: <ROLE>
+            list:
+
+        Where * indicates the default command(s)
+        See 'astra help role <command>' for more information on a specific command.
 ----
-
-=== Create a new section
-
-Here we'll name a configuration `dev` and identify the auth token of a separate organization:
-
-[source,bash]
-----
-astra config create dev --token <token_of_org_2>
-----
-
-=== Use your section configuration
-
-You can use an organization configuration anytime by qualifying the `astra` command with the `--config <config_name>` option.
-Example:
-
-[source,bash]
-----
-astra user list --config dev
-----
-
-=== Select a section as the default
-
-Change the current organization:
-
-[source,bash]
-----
-astra config use dev
-----
-
-See your new list:
-
-[source,bash]
-----
-astra config list
-----
-
-=== Delete a section
-
-You can delete any organization.
-If you delete the selected organization, you will have to pick a new one.
-
-Delete your config:
-
-[source,bash]
-----
-astra config delete dev
-----
-
-See the new list:
-
-[source,bash]
-----
-astra config list
-----
-
-
-== What's next?
-
-See the CLI commands that you can use to manage your {company} {astra_stream} xref:astra-streaming-cli.adoc[operations].
