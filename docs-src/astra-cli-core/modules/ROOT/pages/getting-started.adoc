@@ -1,9 +1,9 @@
-= Connect the {product} to your Astra account
-:navtitle: Connect to your Astra account
+= Get started with the {product}
+:navtitle: Get started
 // include::astra-db-serverless:ROOT:partial$astra-role-attributes.adoc[]
 // include::astra-db-serverless:ROOT:partial$astra-permission-attributes.adoc[]
 
-Initialize the Astra CLI and run your first commands.
+Initialize the {product} and run your first commands.
 
 == Prerequisites
 
@@ -82,7 +82,7 @@ To configure additional connection profiles, see <<connection-profiles>>.
 [IMPORTANT]
 ====
 Application tokens are stored in plain text in the `~/.astrarc` file.
-Your application tokens are like passwords, and you should take precautions to secure the configuration file.
+Your application tokens are like passwords, therefore you should take precautions to secure the configuration file.
 ====
 
 [#connection-profiles]
