@@ -21,6 +21,7 @@ To configure the {product}:
 
 * If you plan to manage an {astra_db} database that has restricted public access, then you must xref:astra-db-serverless:administration:manage-database-ip-access-list.adoc#add-ip-access-list-entries[add your IP address to the database's access list].
 
+[#initialize]
 == Initialize the {product}
 
 After installation, initialize the {product} and connect it to an existing Astra account.
@@ -35,13 +36,6 @@ astra setup --token *APPLICATION_TOKEN*
 Replace `*APPLICATION_TOKEN*` with your application token.
 The token format is `AstraCS:` followed by a unique token string.
 +
-For example:
-+
-[source,bash]
-----
-astra setup --token AstraCS:ozgLKiotAPSgFvBylkUEdPzB:3d061eaa636a6a032f352588f5ba2b777fefdd80f201640063576a9732c4a54d
-----
-+
 .Result
 [%collapsible]
 ====
@@ -53,7 +47,7 @@ astra setup --token AstraCS:ozgLKiotAPSgFvBylkUEdPzB:3d061eaa636a6a032f352588f5b
 ----
 ====
 
-. List the {product} configuration to confirm that your connection profile is present:
+. List the {product} configuration to confirm that your token is in use:
 +
 [source,bash]
 ----
@@ -73,11 +67,11 @@ astra config list
 ----
 ====
 
-The {product} is initialized and your application token is set as the default connection profile.
-The {product} uses the default connection profile whenever you run a command without specifying a profile.
+The {product} is initialized and your application token is set as the default configuration.
+The {product} uses the default configuration whenever you run a command without the `--config` option.
 
-The {product} stores connection profiles and their associated application tokens in the `~/.astrarc` file.
-To configure additional connection profiles, see <<connection-profiles>>.
+The {product} stores configurations and their associated application tokens in the `~/.astrarc` file.
+To create additional configurations, see <<manage-configuration>>.
 
 [IMPORTANT]
 ====
@@ -85,200 +79,9 @@ Application tokens are stored in plain text in the `~/.astrarc` file.
 Your application tokens are like passwords, therefore you should take precautions to secure the configuration file.
 ====
 
-[#connection-profiles]
-== Set up connection profiles
+== Display help information
 
-A _connection profile_ consists of a name and an application token.
-When you run the `astra setup` command during initialization, the {product} stores your application token as the default connection profile in the `~/.astrarc` configuration file.
-
-You can create additional connection profiles to make it easier to manage resources and organizations with different application tokens.
-
-=== Create a new connection profile
-
-Create a new connection profile with a different application token.
-
-. Use the `astra config create` command to create a new connection profile:
-+
-[source,bash,subs="+quotes"]
-----
-astra config create *PROFILE_NAME* --token *APPLICATION_TOKEN*
-----
-+
-Replace the following:
-+
---
-* `*PROFILE_NAME*`: The name you want to give the new connection profile.
-* `*APPLICATION_TOKEN*`: Your application token.
-The application token can be for the same or different Astra organization than the one you used to initially set up the {product}.
---
-+
-For example:
-+
-[source,bash]
-----
-astra config create dev --token AstraCS:ozgLKiotATXgFvBylkUEdPzB:3d061eaa636a6a032f352588f5ba2b777fefdd80f201640063576a9732c4a54d
-----
-+
-.Result
-[%collapsible]
-====
-[source,console]
-----
-[OK]    Configuration has been saved.
-----
-====
-
-. List the {product} configuration to confirm that the new profile is created:
-+
-[source,bash]
-----
-astra config list
-----
-+
-.Result
-[%collapsible]
-====
-[source,console]
-----
-+--------------------------------+
-| configuration                  |
-+--------------------------------+
-| alex@altostrat.com (in use)    |
-| dev                            |
-+--------------------------------+
-----
-====
-
-[#switch-profiles]
-=== Switch between connection profiles
-
-Switch to a different connection profile to connect to Astra with a different application token.
-
-. Use the `astra config use` command to switch to a different connection profile:
-+
-[source,bash,subs="+quotes"]
-----
-astra config use *PROFILE_NAME*
-----
-+
-Replace `*PROFILE_NAME*` with the name of the connection profile you want to switch to.
-+
-For example:
-+
-[source,bash]
-----
-astra config use dev
-----
-+
-.Result
-[%collapsible]
-====
-[source,console]
-----
-[OK]    Section 'dev' is set as default.
-----
-====
-
-. List the {product} configuration to confirm that you successfully switched profiles:
-+
-[source,bash]
-----
-astra config list
-----
-+
-.Result
-[%collapsible]
-====
-[source,console]
-----
-+--------------------------------+
-| configuration                  |
-+--------------------------------+
-| dev (in use)                   |
-| alex@altostrat.com             |
-+--------------------------------+
-----
-====
-
-=== Delete a connection profile
-
-Delete a connection profile that you no longer need.
-
-. Use the `astra config delete` command to delete a connection profile:
-+
-[source,bash,subs="+quotes"]
-----
-astra config delete *PROFILE_NAME*
-----
-+
-Replace `*PROFILE_NAME*` with the name of the connection profile you want to delete.
-+
-For example:
-+
-[source,bash]
-----
-astra config delete dev
-----
-+
-.Result
-[%collapsible]
-====
-[source,console]
-----
-[OK]    Section 'dev' has been deleted.
-----
-====
-+
-The connection profile and its associated application token are deleted from the `~/.astrarc` configuration file.
-+
-[NOTE]
-====
-If you delete the connection profile that is currently in use, you must <<switch-profiles,switch to a different profile>> before you can run {product} commands that connect to Astra.
-====
-
-. List the {product} configuration to confirm that the connection profile is deleted:
-+
-[source,bash]
-----
-astra config list
-----
-+
-.Result
-[%collapsible]
-====
-[source,console]
-----
-+--------------------------------+
-| configuration                  |
-+--------------------------------+
-| alex@altostrat.com (in use)    |
-+--------------------------------+
-----
-====
-
-== Set up auto-completion
-
-The {product} provides Bash auto-completion for `bash` and `zsh` shells.
-
-To use auto-completion, type the `astra` command and then press kbd:[Tab] twice to get a list of available options.
-
-[source,bash,subs="macros"]
-----
-astra kbd:[Tab] kbd:[Tab]
-----
-
-.Result
-[%collapsible%open]
-====
-[source,console]
-----
- --no-color  config      db          help        role        setup       shell       user
-----
-====
-
-== Get help
-
-To display the main help:
+Use `astra help` to display the main help information:
 
 [source,bash]
 ----
@@ -309,7 +112,8 @@ See 'astra help <command>' for more information on a specific command.
 ----
 ====
 
-To display help for a command group, for example `db`:
+Append a command name to display help information about an individual command.
+For example:
 
 [source,bash]
 ----
@@ -435,8 +239,6 @@ SYNOPSIS
 ----
 ====
 
-To display help for a specific command, for example `db list`:
-
 [source,bash]
 ----
 astra help db list
@@ -480,5 +282,377 @@ OPTIONS
 
         --vector
             Create a database with vector search enabled
+----
+====
+
+== Set up auto-completion
+
+The {product} provides Bash auto-completion for `bash` and `zsh` shells.
+
+To use auto-completion, type the `astra` command and then press kbd:[Tab] twice to get a list of available options.
+
+[source,bash,subs="macros"]
+----
+astra kbd:[Tab] kbd:[Tab]
+----
+
+.Result
+[%collapsible%open]
+====
+[source,console]
+----
+ --no-color  config      db          help        role        setup       shell       user
+----
+====
+
+[#manage-configuration]
+== Manage the {product} configuration
+
+When you run the `astra setup` command during <<initialize,initialization>>, the {product} stores your application token as the default configuration in the `~/.astrarc` configuration file.
+You can create additional configurations, each with their own application token, to make it easier to manage different types of resources across one or more organizations.
+
+Use `astra config list` to list all current configurations:
+
+[source,bash]
+----
+astra config list
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
++----------------------------+
+| configuration              |
++----------------------------+
+| Organization 1 (in use)    |
+| Organization 2             |
++----------------------------+
+====
+
+Use `astra config create` to create a new configuration:
+
+[source,bash,subs="+quotes"]
+----
+astra config create "**CONFIG_NAME**" --token **APPLICATION_TOKEN**
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
+[OK]    Configuration has been saved.
+----
+====
+
+Use `astra config use` to change the default configuration that {product} uses when executing commands:
+
+[source,bash,subs="+quotes"]
+----
+astra config use "**CONFIG_NAME**"
+----
+
+.Result
+[%collapsible]
+====
+[source,console,subs="+quotes"]
+----
+[OK]    Section '**CONFIG_NAME**' is set as default.
+----
+
+Use `astra config list` to confirm that the selected configuration is now the default.
+====
+
+[TIP]
+====
+Every {product} command supports the `--config` option, which lets you specify a configuration to use for that command.
+This lets you use different configurations for different commands without changing the default configuration.
+
+For example:
+
+[source,bash,subs="+quotes"]
+----
+astra user list --config "**CONFIG_NAME**"
+----
+====
+
+Use `astra config delete` to delete a configuration:
+
+[source,bash,subs="+quotes"]
+----
+astra config delete "**CONFIG_NAME**"
+----
+
+.Result
+[%collapsible]
+====
+[source,console,subs="+quotes"]
+----
+[OK]    Section '**CONFIG_NAME**' has been deleted.
+----
+
+Use `astra config list` to confirm that the selected configuration is now the default.
+====
+
+[NOTE]
+====
+If you delete the default configuration, the {product} does _not_ automatically select a new default configuration.
+Use the `astra config use` command to select a new default configuration.
+====
+
+=== `config` options
+
+[source,console]
+----
+NAME
+        astra config - Manage configuration file
+
+SYNOPSIS
+        astra config { create | delete | describe | get | list* | use } [--]
+                [ {-cf | --config-file} <CONFIG_FILE> ] [ --no-color ]
+                [ {-v | --verbose} ] [ {-o | --output} <FORMAT> ] [cmd-options]
+                <cmd-args>
+
+        Where command-specific options [cmd-options] are:
+            create: [ {-e | --env} <Environment> ] [ {-t | --token} <AuthToken> ]
+            delete:
+            describe: [ {-k | --key} <Key in the section> ]
+            get: [ {-k | --key} <Key in the section> ]
+            list:
+            use:
+
+        Where command-specific arguments <cmd-args> are:
+            create: [ <sectionName> ]
+            delete: <sectionName>
+            describe: <sectionName>
+            get: <sectionName>
+            list:
+            use: <sectionName>
+
+        Where * indicates the default command(s)
+        See 'astra help config <command>' for more information on a specific command.
+----
+
+.`config create` options
+[%collapsible]
+====
+[source,console]
+----
+NAME
+        astra config create - Create a new section in configuration
+
+SYNOPSIS
+        astra config create [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-e | --env} <Environment> ] [ --no-color ]
+                [ {-o | --output} <FORMAT> ] [ {-t | --token} <AuthToken> ]
+                [ {-v | --verbose} ] [--] [ <sectionName> ]
+
+OPTIONS
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -e <Environment>, --env <Environment>
+            Environment to use for this section.
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        -t <AuthToken>, --token <AuthToken>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <sectionName>
+            Section in configuration file to as as default.
+----
+====
+
+.`config delete` options
+[%collapsible]
+====
+[source,console]
+----
+NAME
+        astra config delete - Delete section in configuration
+
+SYNOPSIS
+        astra config delete [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ --no-color ] [ {-o | --output} <FORMAT> ]
+                [ {-v | --verbose} ] [--] <sectionName>
+
+OPTIONS
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <sectionName>
+            Section in configuration file to as as default.
+----
+====
+
+.`config describe` options
+[%collapsible]
+====
+[source,console]
+----
+NAME
+        astra config describe - Show details for a configuration.
+
+SYNOPSIS
+        astra config describe [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-k | --key} <Key in the section> ] [ --no-color ]
+                [ {-o | --output} <FORMAT> ] [ {-v | --verbose} ] [--]
+                <sectionName>
+
+OPTIONS
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -k <Key in the section>, --key <Key in the section>
+            If provided return only value for a key.
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <sectionName>
+            Section in configuration file to as as default.
+----
+====
+
+.`config get` options
+[%collapsible]
+====
+[source,console]
+----
+NAME
+        astra config get - Show details for a configuration.
+
+SYNOPSIS
+        astra config get [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-k | --key} <Key in the section> ] [ --no-color ]
+                [ {-o | --output} <FORMAT> ] [ {-v | --verbose} ] [--]
+                <sectionName>
+
+OPTIONS
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -k <Key in the section>, --key <Key in the section>
+            If provided return only value for a key.
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <sectionName>
+            Section in configuration file to as as default.
+----
+====
+
+.`config list` options
+[%collapsible]
+====
+[source,console]
+----
+NAME
+        astra config list - Show the list of available configurations.
+
+SYNOPSIS
+        astra config list [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ --no-color ] [ {-o | --output} <FORMAT> ]
+                [ {-v | --verbose} ]
+
+OPTIONS
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        -v, --verbose
+            Verbose mode with log in console
+----
+====
+
+.`config use` options
+[%collapsible]
+====
+[source,console]
+----
+NAME
+        astra config use - Make a section the one used by default
+
+SYNOPSIS
+        astra config use [ {-cf | --config-file} <CONFIG_FILE> ] [ --no-color ]
+                [ {-o | --output} <FORMAT> ] [ {-v | --verbose} ] [--]
+                <sectionName>
+
+OPTIONS
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <sectionName>
+            Section in configuration file to as as default.
 ----
 ====
