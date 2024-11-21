@@ -2603,7 +2603,7 @@ By default, the {product} saves the `.env` file to the directory where you run t
 .Result
 [%collapsible%open]
 ====
-.env
+..env
 [source,bash]
 ----
 ASTRA_DB_API_ENDPOINT="https://a53003fe-ba42-4c3c-85d0-6b345622c2dc-us-east1.apps.astra.datastax.com/api/json"
@@ -2627,7 +2627,7 @@ ASTRA_ORG_TOKEN="AstraCS:FZmCtRdyzJkYidnmlzwcwJWc:f51d3ee8fce90b28a7681a1e1bc3fa
 
 [WARNING]
 ====
-The generated `.env` files contains sensitive information, including the application token that the {product} uses to connect to the .
+The generated `.env` files contains sensitive information, including the application token that the {product} uses to connect to Astra.
 
 The {scb} contains sensitive information that establishes a connection to your database, including key pairs and certificates.
 ====
