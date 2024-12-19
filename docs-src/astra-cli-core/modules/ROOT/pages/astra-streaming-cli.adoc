@@ -1,146 +1,91 @@
-= Manage {astra_stream} with the {product}
-:navtitle: Manage {astra_stream}
+= Manage {astra_stream} tenants with the {product}
+:navtitle: Manage {astra_stream} tenants
 
-Use the following {product} commands to manage your {astra_stream} operations.
-
-From the command line in a Terminal, the supported tasks include:
-
-* <<List regions>>
-* <<List tenants>>
-* <<Create a tenant>>
-* <<Get tenant details>>
-* <<Delete a tenant>>
-* <<Use Pulsar-Shell>>
-* <<Produce and consume messages>>
-* <<Create environment variables>>
-
-[NOTE]
-====
-The following pulsar-admin commands don’t work with {astra_stream}, either because they’re not applicable in a cloud environment or they would cause issues with privacy or data integrity:
-
-brokers
-
-broker-stats
-
-clusters
-
-ns-isolation-policies
-
-resource-quotas
-
-tenants
-====
-
-== List regions
-
-List available regions for hosting your {astra_stream} tenant.
-[tabs]
-====
-Astra CLI::
-+
---
-[source,bash]
-----
-astra streaming list-regions
-----
---
-+
-Result::
-+
---
-[source,bash]
-----
-+----------------+---------------------+-------------------------------+
-| Cloud Provider | Region              | Full Name                     |
-+----------------+---------------------+-------------------------------+
-| aws            | useast1             |                               |
-| aws            | useast2             |                               |
-| aws            | uswest2             |                               |
-| azure          | australiaeast       |                               |
-| azure          | eastus              |                               |
-| azure          | westus2             |                               |
-| gcp            | australiase1        |                               |
-| gcp            | europewest1         |                               |
-| gcp            | uscentral1          |                               |
-| gcp            | useast1             |                               |
-| gcp            | useast4             |                               |
-+----------------+---------------------+-------------------------------+
-----
---
-====
+Use the {product} to manage your {astra_stream} tenants.
 
 == List tenants
 
-List {astra_stream} tenants.
-[tabs]
-====
-Astra CLI::
-+
---
+Use `astra streaming list` to get a list of all tenants in your organization:
+
 [source,bash]
 ----
 astra streaming list
 ----
---
-+
-Result::
-+
---
-[source,bash]
+
+.Result
+[%collapsible]
+====
+[source,console]
 ----
 +---------------------+-----------+----------------+----------------+
-| name                | cloud     | region         | Status         |
+| name                | cloud     | region         | status         |
 +---------------------+-----------+----------------+----------------+
-| cdc-aws-useast1     | aws       | useast1        | active         |
-| new_tenant          | aws       | useast2        | active         |
-| new-tenant-from-cli | aws       | useast2        | active         |
+| my-streaming-tenant | aws       | useast1        | active         |
 +---------------------+-----------+----------------+----------------+
 ----
---
 ====
 
-=== List tenants as csv or json
+=== `streaming list` options
 
-Output tenant list as csv:
-[tabs]
-====
-Astra CLI::
-+
---
+[source,console]
+----
+NAME
+        astra streaming list - Display the list of Tenant in an organization
+
+SYNOPSIS
+        astra streaming list [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
+                [ --no-color ] [ {-o | --output} <FORMAT> ]
+                [ --token <AUTH_TOKEN> ] [ {-v | --verbose} ]
+
+OPTIONS
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        --env <Environment>
+            Astra Environment to use
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+----
+
+Use the `-o` option to output the result in `csv` or `json` format:
+
 [source,bash]
 ----
 astra streaming list -o csv
 ----
---
-+
-Result::
-+
---
+
+.Result
+[%collapsible]
+====
 [source,csv]
 ----
-name,cloud,region,Status
-cdc-aws-useast1,aws,useast1,active
-new_tenant,aws,useast2,active
-new-tenant-from-cli,aws,useast2,active
+name,cloud,region,status
+my-streaming-tenant,aws,useast1,active
 ----
---
 ====
 
-Output tenant list as json:
-[tabs]
-====
-Astra CLI::
-+
---
 [source,bash]
 ----
 astra streaming list -o json
 ----
---
-+
-Result::
-+
---
+
+.Result
+[%collapsible]
+====
 [source,json]
 ----
 {
@@ -148,140 +93,538 @@ Result::
   "message" : "[streaming, list, -o, json]",
   "data" : [ {
     "cloud" : "aws",
-    "Status" : "active",
-    "name" : "cdc-aws-useast1",
-    "region" : "useast1"
-  }, {
-    "cloud" : "aws",
-    "Status" : "active",
-    "name" : "new_tenant",
-    "region" : "useast2"
-  }, {
-    "cloud" : "aws",
-    "Status" : "active",
-    "name" : "new-tenant-from-cli",
-    "region" : "useast2"
+    "name" : "my-streaming-tenant",
+    "region" : "useast1",
+    "status" : "active"
   } ]
 }
 ----
---
 ====
 
 == Create a tenant
 
-Create an {astra_stream} tenant. +
-If no values are passed in `--cloud`, `--region`, `--plan`, and `--namespace`, the default values for tenant creation are `aws`, `useast2`, `free`, and `default`.
-[tabs]
+Use `astra streaming create` to create a new tenant:
+
+[source,bash,subs="+quotes"]
+----
+astra streaming create **TENANT_NAME**
+----
+
+.Result
+[%collapsible]
 ====
-Astra CLI::
-+
---
+[source,console]
+----
+https://api.astra.datastax.com/v2/streaming/tenants/my-streaming-tenant
+[OK]    Tenant 'my-streaming-tenant' has being created.
+----
+====
+
+Running `astra streaming create` without any options deploys the tenant in the default cloud provider (`aws`), region (`useast2`), plan (`free`) and namespace (`default`).
+
+[TIP]
+======
+The tenant name needs to be unique for the cluster (Cloud provider / region).
+It may be useful to check if the name is already in use by somebody else.
+
 [source,bash]
 ----
-astra streaming create new-tenant-from-cli
+astra streaming exist my-streaming-tenant
 ----
---
-+
-Result::
-+
---
-[source,bash]
+
+.Result
+[%collapsible]
+====
+[source,console]
 ----
-[OK]    Tenant 'new-tenant-from-cli' has being created.
+https://api.astra.datastax.com/v2/streaming/tenants/my-streaming-tenant
+[OK]    Tenant 'my-streaming-tenant' does not exist.
 ----
---
+====
+======
+
+=== `streaming create` options
+
+[source,console]
+----
+NAME
+        astra streaming create - Create a tenant in streaming with cli
+
+SYNOPSIS
+        astra streaming create [ {-c | --cloud} <cloudProvider> ]
+                [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-cl | --cluster} <cluster> ]
+                [ {-conf | --config} <CONFIG_SECTION> ]
+                [ {-e | --email} <email> ] [ --env <Environment> ]
+                [ {--if-not-exist | --if-not-exists} ] [ --no-color ]
+                [ {-o | --output} <FORMAT> ] [ {-p | --plan} <plan> ]
+                [ {-r | --region} <cloudRegion> ] [ --token <AUTH_TOKEN> ]
+                [ {-v | --verbose} ] [--] <TENANT>
+
+OPTIONS
+        -c <cloudProvider>, --cloud <cloudProvider>
+            Cloud Provider to create a tenant
+
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -cl <cluster>, --cluster <cluster>
+            Dedicated cluster, replacement for cloud/region
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        -e <email>, --email <email>
+            User Email
+
+        --env <Environment>
+            Astra Environment to use
+
+        --if-not-exist, --if-not-exists
+            will create a new DB only if none with same name
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        -p <plan>, --plan <plan>
+            Plan for the tenant
+
+        -r <cloudRegion>, --region <cloudRegion>
+            Cloud Region for the tenant
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <TENANT>
+            Tenant identifier
+----
+
+You can use the `-c`, `-r`, and `-p`  options to define the cloud provider, region, and plan when creating a tenant:
+
+[source,bash,subs="+quotes"]
+----
+astra streaming create **TENANT_NAME** -c aws -r useast1 -p payg
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
+https://api.astra.datastax.com/v2/streaming/tenants/my-streaming-tenant
+[OK]    Tenant 'my-streaming-tenant' has being created.
+----
 ====
 
 == Get tenant details
 
-Get details on your new {astra_stream} tenant.
-[tabs]
+Use `astra streaming get` to get information about a tenant:
+
+[source,bash,subs="+quotes"]
+----
+astra streaming get **TENANT_NAME**
+----
+
+.Result
+[%collapsible]
 ====
-Astra CLI::
-+
---
-[source,bash]
-----
-astra streaming get new-tenant-from-cli
-----
---
-+
-Result::
-+
---
-[source,bash]
+[source,console]
 ----
 +------------------+-------------------------------------------------------------+
 | Attribute        | Value                                                       |
 +------------------+-------------------------------------------------------------+
-| Name             | new-tenant-from-cli
-| Status           | active                                                      |
+| Name             | my-streaming-tenant                                         |
+| status           | active                                                      |
 | Cloud Provider   | aws                                                         |
-| Cloud region     | useast2                                                     |
-| Cluster Name     | pulsar-aws-useast2                                          |
-| Pulsar Version   | 2.10                                                        |
+| Cloud region     | useast1                                                     |
+| Cluster Name     | pulsar-aws-useast1                                          |
+| Pulsar Version   | 2.10.2                                                      |
 | Jvm Version      | JDK11                                                       |
 | Plan             | payg                                                        |
-| WebServiceUrl    | https://pulsar-aws-useast2.api.streaming.datastax.com       |
-| BrokerServiceUrl | pulsar+ssl://pulsar-aws-useast2.streaming.datastax.com:6651 |
-| WebSocketUrl     | wss://pulsar-aws-useast2.streaming.datastax.com:8001/ws/v2  |
+| WebServiceUrl    | https://pulsar-aws-useast1.api.streaming.datastax.com       |
+| BrokerServiceUrl | pulsar+ssl://pulsar-aws-useast1.streaming.datastax.com:6651 |
+| WebSocketUrl     | wss://pulsar-aws-useast1.streaming.datastax.com:8001/ws/v2  |
 +------------------+-------------------------------------------------------------+
 ----
---
+====
+
+=== `streaming get` options
+
+[source,console]
+----
+NAME
+        astra streaming get - Show details of a tenant
+
+SYNOPSIS
+        astra streaming get [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
+                [ {-k | --key} <Key> ] [ --no-color ]
+                [ {-o | --output} <FORMAT> ] [ --token <AUTH_TOKEN> ]
+                [ {-v | --verbose} ] [--] <TENANT>
+
+OPTIONS
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        --env <Environment>
+            Astra Environment to use
+
+        -k <Key>, --key <Key>
+            Show value for a property among: 'status', 'cloud', 'pulsar_token',
+            'region'
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <TENANT>
+            Tenant identifier
+----
+
+Use the `-o` option to output the result in `csv` or `json` format:
+
+[source,bash]
+----
+astra streaming get **TENANT_NAME** -o csv
+----
+
+.Result
+[%collapsible]
+====
+[source,csv]
+----
+Attribute,Value
+Name,my-streaming-tenant
+status,active
+Cloud Provider,aws
+Cloud region,useast1
+Cluster Name,pulsar-aws-useast1
+Pulsar Version,2.10.2
+Jvm Version,JDK11
+Plan,payg
+WebServiceUrl,https://pulsar-aws-useast1.api.streaming.datastax.com
+BrokerServiceUrl,pulsar+ssl://pulsar-aws-useast1.streaming.datastax.com:6651
+WebSocketUrl,wss://pulsar-aws-useast1.streaming.datastax.com:8001/ws/v2
+----
+====
+
+Use the `--key` option to get information about a specific property of the database:
+
+[source,bash,subs="+quotes"]
+----
+astra streaming get **TENANT_NAME** --key **PROPERTY**
+----
+
+Replace **`PROPERTY`** with one of the supported properties: `status`, `cloud`, `pulsar_token`, or `region`.
+
+For example, to get the Pulsar token for a tenant:
+
+[source,bash,subs="+quotes"]
+----
+astra streaming get **TENANT_NAME** --key pulsar_token
+----
+
+astra streaming get my-streaming-tenant --key pulsar_token -o csv
+
+The `--key` option returns the value of the specified property in a raw format.
+It is intended for use in scripts.
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
+eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MzQ2MjY4MjAsImlzcyI6ImRhdGFzdGF4Iiwic3ViIjoiY2xpZW50OzJkYmQzYzU1LTZhNjgtNGI1Yi05MTU1LTViZTlkNDE4MjNkODtiWGt0YzNSeVpXRnRhVzVuTFhSbGJtRnVkQT09OzIzYTYzOBTmM2EiLCJ0b2tlbmlkIjoiMjNhNjM5MGYzYSJ9.YofpP8uQt6Vt3TwY7HIMCntly8CAUM4gIY-m8V2Thw3axahKlShdF3Km3l0CpEa6gTL52UIKvf5xJZvK5bvlT8LaTSZOj-BoxSgN98VwyNAYhByd4e3UcivjqUBxMKz2FbKT8kpOWAuliT5e3NfEGKhn_3L2TcW49pGWSjgSiljH6fKT7CMD7bsKD8QD5LfLgq6yXtNuuqOuFNMRV-cAnFw7nslewPtymGAPlfQE4LbmM1y27ZlWeIiAd1x7m0XlACq-cbe_-NlnMnKlmp8BNS-121JPdAUXlxbWmmrQ2p8OaMxT_LDwMzksX9BXhmT5uP_xdTjeDY_1YZqlVJd13w
+----
 ====
 
 == Delete a tenant
 
-Delete an {astra_stream} tenant.
-[tabs]
-====
-Astra CLI::
-+
---
-[source,bash]
+Use `astra streaming delete` to delete a tenant:
+
+
+[source,bash,subs="+quotes"]
 ----
-astra streaming delete new-tenant-from-cli
-----
---
-+
-Result::
-+
---
-[source,bash]
+astra streaming delete **TENANT_NAME**
 ----
 
+.Result
+[%collapsible]
+====
+[source,console,subs="+quotes"]
 ----
---
+[OK]    Deleting Tenant 'my-streaming-tenant'
+----
 ====
 
-== Use Pulsar-Shell
+=== `streaming delete` options
 
-Pulsar Shell is a standalone shell for managing Apache Pulsar resources.
-It is compatible with Astra, but requires a few extra steps of configuration, which {product} does for you.
-When called, {product} downloads, installs, configures, and wraps pulsar-shell, and starts the shell within the selected tenant.
-[tabs]
+[source,console]
+----
+NAME
+        astra streaming delete - Delete an existing tenant
+
+SYNOPSIS
+        astra streaming delete [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
+                [ --no-color ] [ {-o | --output} <FORMAT> ]
+                [ --token <AUTH_TOKEN> ] [ {-v | --verbose} ] [--] <TENANT>
+
+OPTIONS
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        --env <Environment>
+            Astra Environment to use
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <TENANT>
+            Tenant identifier
+----
+
+== List regions
+
+Use `astra streaming list-regions` to list the cloud provider regions that currently support {astra_stream}:
+
+[source,bash]
+----
+astra streaming list-regions
+----
+
+Running `astra streaming list-regions` without any options lists all supported regions in all available cloud providers.
+
+.Result
+[%collapsible]
+======
+[source,console]
+----
++-----------------+---------------------+-------------------------------+
+| Cloud Provider  | Region              | Full Name                     |
++-----------------+---------------------+-------------------------------+
+| aws             | apsouth1            |                               |
+| aws             | apsoutheast1        |                               |
+| aws             | apsoutheast2        |                               |
+| aws             | eucentral1          |                               |
+| aws             | euwest1             |                               |
+| aws             | useast1             |                               |
+| aws             | useast2             |                               |
+| aws             | uswest2             |                               |
+| azure           | australiaeast       |                               |
+| azure           | eastus              |                               |
+| azure           | westeurope          |                               |
+| azure           | westus2             |                               |
+| gcp             | australiase1        |                               |
+| gcp             | europewest1         |                               |
+| gcp             | uscentral1          |                               |
+| gcp             | useast1             |                               |
+| gcp             | useast4             |                               |
++-----------------+---------------------+-------------------------------+
+----
+
+include::ROOT:partial$regions-change-admonition.adoc[]
+======
+
+=== `streaming list-regions` options
+
+[source,console]
+----
+NAME
+        astra streaming list-regions - Display the list of Tenant in an
+        organization
+
+SYNOPSIS
+        astra streaming list-regions [ {-c | --cloud} <CLOUD> ]
+                [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
+                [ {-f | --filter} <filter> ] [ --no-color ]
+                [ {-o | --output} <FORMAT> ] [ --token <AUTH_TOKEN> ]
+                [ {-v | --verbose} ]
+
+OPTIONS
+        -c <CLOUD>, --cloud <CLOUD>
+            Filter on Cloud provider
+
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        --env <Environment>
+            Astra Environment to use
+
+        -f <filter>, --filter <filter>
+            Filter on names
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+----
+
+Use the `-c`/`--cloud` option to filter available regions by cloud provider (`aws`, `gcp`, or `azure`):
+
+[source,bash]
+----
+astra streaming list-regions -c aws
+----
+
+.Result
+[%collapsible]
+======
+[source,console]
+----
++-----------------+---------------------+-------------------------------+
+| Cloud Provider  | Region              | Full Name                     |
++-----------------+---------------------+-------------------------------+
+| aws             | apsouth1            |                               |
+| aws             | apsoutheast1        |                               |
+| aws             | apsoutheast2        |                               |
+| aws             | eucentral1          |                               |
+| aws             | euwest1             |                               |
+| aws             | useast1             |                               |
+| aws             | useast2             |                               |
+| aws             | uswest2             |                               |
++-----------------+---------------------+-------------------------------+
+----
+
+include::ROOT:partial$regions-change-admonition.adoc[]
+======
+
+Use the `-o` option to output the result in `csv` or `json` format:
+
+[source,bash]
+----
+astra streaming list-regions -o csv
+----
+
+.Result
+[%collapsible]
+======
+[source,csv]
+----
+Cloud Provider,Region,Full Name
+aws,apsouth1,
+aws,apsoutheast1,
+aws,apsoutheast2,
+aws,eucentral1,
+aws,euwest1,
+aws,useast1,
+aws,useast2,
+aws,uswest2,
+azure,australiaeast,
+azure,eastus,
+azure,westeurope,
+azure,westus2,
+gcp,australiase1,
+gcp,europewest1,
+gcp,uscentral1,
+gcp,useast1,
+gcp,useast4,
+----
+
+include::ROOT:partial$regions-change-admonition.adoc[]
+======
+
+Use the `-f`/`--filter` option to filter based on an arbitrary string in Region and Full Name:
+
+[source,bash]
+----
+astra streaming list-regions -f australia
+----
+
+.Result
+[%collapsible]
+======
+[source,console]
+----
++-----------------+---------------------+-------------------------------+
+| Cloud Provider  | Region              | Full Name                     |
++-----------------+---------------------+-------------------------------+
+| azure           | australiaeast       |                               |
+| gcp             | australiase1        |                               |
++-----------------+---------------------+-------------------------------+
+----
+
+include::ROOT:partial$regions-change-admonition.adoc[]
+======
+
+== Pulsar-Shell
+
+The https://pulsar.apache.org/docs/next/administration-pulsar-shell/[Pulsar shell] is an interactive command-line interface tool for managing and interacting with Pulsar clusters.
+It is designed to allow developers and administrators to execute Pulsar commands interactively or in a script-like fashion, facilitating tasks such as creating topics, producing and consuming messages, managing schemas, and more.
+
+The {product} provides built-in Pulsar shell support by downloading, installing, configuring, and wapping the `pulsar-shell` utility.
+
+Use `astra streaming pulsar-shell` to start the Pulsar shell in interactive mode:
+
+[source,bash,subs="+quotes"]
+----
+astra streaming pulsar-shell **TENANT_NAME**
+----
+
+.Result
+[%collapsible]
 ====
-Astra CLI::
-+
---
-[source,bash]
+[source,console]
 ----
-astra streaming pulsar-shell new-tenant-from-cli
-----
---
-+
-Result::
-+
---
-[source,bash]
-----
-➜  ~ astra streaming pulsar-shell new-tenant-from-cli
 [INFO]  Downloading PulsarShell, please wait...
 [INFO]  Installing  archive, please wait...
-[INFO]  Pulsar client.conf has been generated.
-Pulsar-shell is starting please wait for connection establishment...
-[INFO]  RUNNING: /Users/mendonk/.astra/lunastreaming-shell-2.10.1.1/bin/pulsar-shell --config /Users/mendonk/.astra/lunastreaming-shell-2.10.1.1/conf/client-aws-useast2-new-tenant-from-cli.conf
-Using directory: /Users/mendonk/.pulsar-shell
+[INFO]  Pulsar-shell is starting please wait for connection establishment...
+Using directory: /Users/USERNAME/.pulsar-shell
 Welcome to Pulsar shell!
   Service URL: pulsar+ssl://pulsar-aws-useast2.streaming.datastax.com:6651
   Admin URL: https://pulsar-aws-useast2.api.streaming.datastax.com
@@ -291,120 +634,457 @@ Type exit or quit to end the shell session.
 
 default(pulsar-aws-useast2.streaming.datastax.com)>
 ----
---
 ====
 
-=== List namespaces
+Type `exit` and press kbd:[Return] to exit the Pulsar shell.
 
-Use Pulsar Shell to list the current namespaces in your {astra_stream} tenant.
-[tabs]
+[NOTE]
 ====
-Astra CLI::
-+
---
-[source,bash]
-----
-default(pulsar-aws-useast2.streaming.datastax.com)> admin namespaces list new-tenant-from-cli
-----
---
-+
-Result::
-+
---
-[source,bash]
-----
-new-tenant-from-cli/default
-----
---
+The first time you use the `astra streaming pulsar-shell` commands, the {product} downloads and installs the `pulsar-shell` utility to the {product} installation directory (`~/.astra/lunastreaming-shell-*`).
 ====
 
-=== Create and list topics
+=== `streaming pulsar-shell` options
 
-Use Pulsar Shell to create a topic and list topics in the `/default` namespace.
-[tabs]
+[source,console]
+----
+NAME
+        astra streaming pulsar-shell - Start pulsar admin against your tenant
+
+SYNOPSIS
+        astra streaming pulsar-shell [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ]
+                [ {-e | --execute-command} <command> ] [ --env <Environment> ]
+                [ {-f | --filename} <FILE> ] [ --fail-on-error ] [ --no-color ]
+                [ {-np | --no-progress} ] [ {-o | --output} <FORMAT> ]
+                [ --token <AUTH_TOKEN> ] [ {-v | --verbose} ] [--] <TENANT>
+
+OPTIONS
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        -e <command>, --execute-command <command>
+            Execute the statement and quit.
+
+        --env <Environment>
+            Astra Environment to use
+
+        -f <FILE>, --filename <FILE>
+            Input filename with a list of commands to be executed. Each command
+            must be separated by a newline.
+
+        --fail-on-error
+            If true, the shell will be interrupted if a command throws an
+            exception.
+
+        --no-color
+            Remove all colors in output
+
+        -np, --no-progress
+            Display raw output of the commands without the fancy progress
+            visualization.
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <TENANT>
+            Tenant unique name
+----
+
+Use the `-e`/`--execute` option to execute a Pulsar shell command:
+
+[source,bash,subs="+quotes"]
+----
+astra streaming pulsar-shell **TENANT_NAME** -e "admin namespaces list **TENANT_NAME**"
+----
+
+// TODO: Add the output of the command. The command reported a Java-related error. Determine if more java prerequisites are needed.
+
+Use the `-f`/`--file` option to execute Pulsar shell commands from a file:
+
+[source,bash,subs="+quotes"]
+----
+astra streaming pulsar-shell **TENANT_NAME** -f sample.txt
+----
+
+// TODO: Add sample.txt content and the output of the command.
+
+=== Pulsar-client and Admin
+
+Pulsar client and admin are provided within `pulsar-shell`.
+
+[NOTE]
 ====
-Astra CLI::
-+
---
-[source,bash]
-----
-default(pulsar-aws-useast2.streaming.datastax.com)> admin topics create persistent://new-tenant-from-cli/default/demo
-default(pulsar-aws-useast2.streaming.datastax.com)> admin topics list new-tenant-from-cli/default
-----
---
-+
-Result::
-+
---
-[source,bash]
-----
-persistent://new-tenant-from-cli/default/demo
-----
---
+The following pulsar-admin commands don't work with {astra_stream}, either because they're not applicable in a cloud environment or they would cause issues with privacy or data integrity:
+
+* `brokers`
+* `broker-stats`
+* `clusters`
+* `ns-isolation-policies`
+* `resource-quotas`
+* `tenants`
 ====
 
-=== Produce and consume messages
+The following procedure provides some examples of how to use the {product}'s built-in Pulsar shell support to write and read in a topic with a client:
 
-Start a consumer in one tab, a producer in another tab, and send 20 messages.
-[tabs]
+. Open two different terminals and then run the `astra streaming pulsar-shell` command in each terminal:
++
+[source,bash,subs="+quotes"]
+----
+astra streaming pulsar-shell **TENANT_NAME**
+----
++
+.Result
+[%collapsible]
 ====
-Astra CLI Consumer::
-+
---
-[source,bash]
+[source,console]
 ----
-default(pulsar-aws-useast2.streaming.datastax.com)> client consume persistent://new-tenant-from-cli/default/demo -s astra_cli_tutorial -n 0
+[INFO]  Pulsar-shell is starting please wait for connection establishment...
+Using directory: /Users/USERNAME/.pulsar-shell
+Welcome to Pulsar shell!
+  Service URL: pulsar+ssl://pulsar-aws-useast2.streaming.datastax.com:6651
+  Admin URL: https://pulsar-aws-useast2.api.streaming.datastax.com
+
+Type help to get started or try the autocompletion (TAB button).
+Type exit or quit to end the shell session.
 ----
---
+====
+
+. In the first terminal, create a topic named `demo` in the `default` namespace.
 +
-Astra CLI Producer::
-+
---
-[source,bash]
+[source,bash,subs="+quotes"]
 ----
-default(pulsar-aws-useast2.streaming.datastax.com)> client produce persistent://new-tenant-from-cli/default/demo -m "hello world" -n 20
+admin topics create persistent://**TENANT_NAME**/default/demo
 ----
---
+// TODO: Add the output of the command. The command reported a Java-related error. Determine if more java prerequisites are needed.
+
+. Confirm that the topic was successfully created in the `default` namespace:
 +
-Result::
-+
---
-[source,bash]
+[source,bash,subs="+quotes"]
 ----
+admin topics list **TENANT_NAME**/default
+----
++
+.Result
+[%collapsible]
+====
+[source,console,subs="+quotes"]
+----
+persistent://**TENANT_NAME**/default/demo
+----
+====
+// TODO: Confirm the output of the command.
+
+. Start a consumer on the `demo` topic.
++
+[source,bash,subs="+quotes"]
+----
+client consume persistent://**TENANT_NAME**/default/demo -s astra_cli_tuto -n 0
+----
++
+.Result
+[%collapsible]
+====
+[source,console]
+----
+.. init ...
+83 - R:pulsar-aws-useast2.streaming.datastax.com/3.16.119.226:6651]] Connected to server
+2022-09-12T12:28:34,869+0200 [pulsar-client-io-1-1] INFO  org.apache.pulsar.client.impl.ClientCnx - [id: 0xc5ce3ec4, L:/192.168.82.1:53683 - R:pulsar-aws-useast2.streaming.datastax.com/3.16.119.226:6651] Connected through proxy to target broker at 192.168.7.141:6650
+2022-09-12T12:28:35,460+0200 [pulsar-client-io-1-1] INFO  org.apache.pulsar.client.impl.ConsumerImpl - [persistent://trollsquad-2022/default/demo][astra_cli_tuto] Subscribing to topic on cnx [id: 0xc5ce3ec4, L:/192.168.82.1:53683 - R:pulsar-aws-useast2.streaming.datastax.com/3.16.119.226:6651], consumerId 0
+2022-09-12T12:28:35,645+0200 [pulsar-client-io-1-1] INFO  org.apache.pulsar.client.impl.ConsumerImpl - [persistent://trollsquad-2022/default/demo][astra_cli_tuto] Subscribed to topic on pulsar-aws-useast2.streaming.datastax.com/3.16.119.226:6651 -- consumer: 0
+----
+====
+// TODO: Confirm the output of the command.
+
+
+. In the second terminal, start a producer.
++
+[source,bash,subs="+quotes"]
+----
+client produce persistent://**TENANT_NAME**/default/demo -m "hello world" -n 20
+----
++
+.Result
+[%collapsible]
+====
+[source,console]
+----
+2022-09-12T12:36:28,684+0200 [pulsar-client-io-14-1] INFO  org.apache.pulsar.client.impl.ClientCnx - [id: 0x682890b5, L:/192.168.1.106:53796 ! R:pulsar-aws-useast2.streaming.datastax.com/3.138.177.230:6651] Disconnected
+2022-09-12T12:36:30,756+0200 [main] INFO  org.apache.pulsar.client.cli.PulsarClientTool - 40 messages successfully produced
+
+
+And on the client side
+key:[null], properties:[], content:world
 ----- got message -----
-key:[null], properties:[], content:hello world
------ got message -----
-key:[null], properties:[], content:hello world
------ got message -----
-key:[null], properties:[], content:hello world
-2022-12-15T16:26:21,241-0500 [pulsar-timer-29-1] INFO  org.apache.pulsar.client.impl.ConsumerStatsRecorderImpl - [persistent://new-tenant-from-cli/default/demo] [astra_cli_tutorial] [80bff] Prefetched messages: 0 --- Consume throughput received: 0.33 msgs/s --- 0.00 Mbit/s --- Ack sent rate: 0.33 ack/s --- Failed messages: 0 --- batch messages: 0 ---Failed acks: 0
+key:[null], properties:[], content:hello
 
 ----
---
 ====
+// TODO: Confirm the output of the command.
+
 == Create environment variables
 
-Create an {astra_stream} tenant.
-[tabs]
+When developing applications with {astra_stream} APIs, you will notice common values that are frequently reused, such as Pulsar tokens, broker URLs, and web service URLs.
+It's a good practice to store these values in environment variables to facilitate reuse in your scripts, simplify token rotation, and increase security by keeping sensitive information separate from your core application code.
+
+The {product} can automatically generate a set of relevant variables for an {astra_stream} tenant that you can use in your applications.
+
+Use `astra streaming create-dotenv` to generate a `.env` file containing relevant environment variables for a specific {astra_stream} tenant:
+
+[source,bash,subs="+quotes"]
+----
+astra streaming create-dotenv **TENANT_NAME**
+----
+
+By default, the {product} saves the `.env` file to the directory where you run the command.
+
+If a `.env` file already exists in the directory, the {product} appends the new environment variables to the existing file.
+
+.Result
+[%collapsible%open]
 ====
-Astra CLI::
+..env
+[source,console]
+----
+ASTRA_STREAMING_BROKER_URL="pulsar+ssl://pulsar-aws-useast2.streaming.datastax.com:6651"
+ASTRA_STREAMING_CLOUD="aws"
+ASTRA_STREAMING_NAME="my-streaming-tenant"
+ASTRA_STREAMING_PULSAR_TOKEN="eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9..."
+ASTRA_STREAMING_REGION="useast2"
+ASTRA_STREAMING_WEBSERVICE_URL="https://pulsar-aws-useast2.api.streaming.datastax.com"
+ASTRA_STREAMING_WEBSOCKET_URL="wss://pulsar-aws-useast2.streaming.datastax.com:8001/ws/v2"
+----
+====
+
+[WARNING]
+====
+The generated `.env` files contains sensitive information, including the application token that the {product} uses to connect to Astra.
+
+The {scb} contains sensitive information that establishes a connection to your database, including key pairs and certificates.
+====
+
+=== `streaming create-dotenv` options
+
+[source,console]
+----
+NAME
+        astra streaming create-dotenv - Generate an .env configuration file
+        associate with the tenant
+
+SYNOPSIS
+        astra streaming create-dotenv [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ]
+                [ {-d | --directory} <DIRECTORY> ] [ --env <Environment> ]
+                [ --no-color ] [ {-o | --output} <FORMAT> ]
+                [ --token <AUTH_TOKEN> ] [ {-v | --verbose} ] [--] <TENANT>
+
+OPTIONS
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        -d <DIRECTORY>, --directory <DIRECTORY>
+            Destination for the config file
+
+        --env <Environment>
+            Astra Environment to use
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <TENANT>
+            Tenant identifier
+----
+
+Use the `-d`/`--directory` option to save the `.env` file to a specified directory:
+
+[source,bash,subs="+quotes"]
+----
+astra streaming create-dotenv **TENANT_NAME** -d ~/tmp
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
+[OK]    File '/Users/USERNAME/tmp/.env' has been created/amended
+----
+====
+
+[IMPORTANT]
+====
+The directory must already exist before you run the command.
+If the directory doesn't exist, the {product} will report the following error: `INVALID_ARGUMENT: Destination folder has not been found`.
+====
+
+== Change Data Capture
+
+[IMPORTANT]
+====
+CDC for {astra_db} incurs billed charges based on your {astra_stream} usage.
+For more information, see https://www.datastax.com/pricing/astra-streaming[{astra_stream} pricing] and https://www.datastax.com/products/datastax-astra/cdc-for-astra-db[CDC metering rates].
+====
+
+CDC for {astra_db} automatically captures changes in real time, de-duplicates the changes, and then streams the clean set of changed data into xref:astra-streaming:ROOT:index.adoc[{astra_stream}] where it can be processed by client applications or sent to downstream systems.
+
+The following procedure provides some examples of how to use the {product} to configure and use CDC for {astra_db}:
+
+. Create an {astra_db} {db-serverless} database:
 +
---
 [source,bash]
 ----
-astra streaming create-dotenv new-tenant-from-cli
+astra db create demo_cdc
 ----
---
 +
-Result::
-+
---
-[source,bash]
+.Result
+[%collapsible]
+====
+[source,console]
 ----
 
 ----
---
 ====
 
-== What's next?
-Learn how to manage your {astra_db} databases with the {product}: xref:managing.adoc[].
+. Create a tenant in same region as your database:
++
+[source,bash]
+----
+astra streaming create demo-cdc -c gcp -r useast1
+----
++
+.Result
+[%collapsible]
+====
+[source,console]
+----
+https://api.astra.datastax.com/v2/streaming/tenants/demo-cdc
+[OK]    Tenant 'demo-cdc' has being created.
+----
+====
+
+. Start the CQL shell in interactive mode:
++
+[source,bash]
+----
+astra db cqlsh demo_cdc -k default_keyspace
+----
++
+.Result
+[%collapsible]
+====
+[source,console]
+----
+[INFO]  Cqlsh is starting, please wait for connection establishment...
+Connected to cndb at 127.0.0.1:9042.
+[cqlsh 6.8.0 | Cassandra 4.0.0.6816 | CQL spec 3.4.5 | Native protocol v4]
+Use HELP for help.
+token@cqlsh:default_keyspace>
+----
+====
+
+. Create a table.
++
+[source,cql]
+----
+CREATE TABLE IF NOT EXISTS demo (foo text PRIMARY KEY, bar text);
+CREATE TABLE IF NOT EXISTS table2 (foo text PRIMARY KEY, bar text);
+INSERT INTO demo(foo,bar) VALUES('1','item1');
+INSERT INTO demo(foo,bar) VALUES('1','item2');
+quit;
+----
++
+.Result
+[%collapsible]
+====
+[source,console]
+----
+token@cqlsh:default_keyspace> CREATE TABLE IF NOT EXISTS demo (foo text PRIMARY KEY, bar text);
+token@cqlsh:default_keyspace> CREATE TABLE IF NOT EXISTS table2 (foo text PRIMARY KEY, bar text);
+token@cqlsh:default_keyspace> INSERT INTO demo(foo,bar) VALUES('1','item1');
+token@cqlsh:default_keyspace> INSERT INTO demo(foo,bar) VALUES('1','item2');
+token@cqlsh:default_keyspace> quit;
+----
+====
+
+. Create CDC.
++
+[source,bash]
+----
+astra db create-cdc demo_cdc \
+  -k demo_cdc \
+  --table demo \
+  --tenant demo-cdc
+
+astra db cdc create demo_cdc --table demo_cdc.test
+----
++
+.Result
+[%collapsible]
+====
+[source,console]
+----
+
+----
+====
+
+. List CDC (from Streaming)
++
+[source,bash]
+----
+astra streaming list-cdc demo-cdc
+----
++
+.Result
+[%collapsible]
+====
+[source,console]
+----
+
+----
+====
+
+. List CDC (from DB)
++
+[source,bash]
+----
+astra db list-cdc demo_cdc
+----
++
+.Result
+[%collapsible]
+====
+[source,console]
+----
+
+----
+====
