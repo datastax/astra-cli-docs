@@ -507,34 +507,6 @@ OPTIONS
             Database name (if unique) or Database identifier
 ----
 
-Use the `--key` option to get information about a specific property of the database:
-
-[source,bash,subs="+quotes"]
-----
-astra db get **DATABASE_NAME** --key **PROPERTY**
-----
-
-Replace **`PROPERTY`** with one of the supported properties: `id`, `status`, `cloud`, `keyspace`, `keyspaces`, `region`, or `regions`.
-
-For example, to get the database ID:
-
-[source,bash,subs="+quotes"]
-----
-astra db get **DATABASE_NAME** --key id
-----
-
-The `--key` option returns the value of the specified property in a raw format.
-It is intended for use in scripts.
-
-.Result
-[%collapsible]
-====
-[source,console,subs="+quotes"]
-----
-c310bdb0-93dd-4c61-aafb-dae981bb7691
-----
-====
-
 Use the `-o` option to output the result in `csv` or `json` format:
 
 [source,bash,subs="+quotes"]
@@ -654,6 +626,34 @@ astra db get **DATABASE_NAME** -o json
 [NOTE]
 ====
 The `json` output returns more information about the database than the default and `csv` options.
+====
+
+Use the `--key` option to get information about a specific property of the database:
+
+[source,bash,subs="+quotes"]
+----
+astra db get **DATABASE_NAME** --key **PROPERTY**
+----
+
+Replace **`PROPERTY`** with one of the supported properties: `id`, `status`, `cloud`, `keyspace`, `keyspaces`, `region`, or `regions`.
+
+For example, to get the database ID:
+
+[source,bash,subs="+quotes"]
+----
+astra db get **DATABASE_NAME** --key id
+----
+
+The `--key` option returns the value of the specified property in a raw format.
+It is intended for use in scripts.
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
+c310bdb0-93dd-4c61-aafb-dae981bb7691
+----
 ====
 
 == Create a keyspace
@@ -1109,41 +1109,6 @@ OPTIONS
             Verbose mode with log in console
 ----
 
-Use the `-c`/`--cloud` option to filter available regions by cloud provider (`aws`, `gcp`, or `azure`):
-
-[source,bash,subs="+quotes"]
-----
-astra db list-regions-serverless -c aws
-----
-
-.Result
-[%collapsible]
-======
-[source,console]
-----
-+-----------------+---------------------+-------------------------------+
-| Cloud Provider  | Region              | Full Name                     |
-+-----------------+---------------------+-------------------------------+
-| aws             | ap-east-1           | Asia Pacific (Hong Kong)      |
-| aws             | ap-south-1          | Asia Pacific (Mumbai)         |
-| aws             | ap-southeast-1      | Asia Pacific (Singapore)      |
-| aws             | ap-southeast-2      | Asia Pacific (Sydney)         |
-| aws             | ca-central-1        | Canada (Central)              |
-| aws             | ca-west-1           | Canada West (Calgary)         |
-| aws             | eu-central-1        | Europe (Frankfurt)            |
-| aws             | eu-west-1           | Europe (Ireland)              |
-| aws             | eu-west-2           | Europe (London)               |
-| aws             | me-central-1        | Middle East (UAE)             |
-| aws             | sa-east-1           | South America (Sao Paulo)     |
-| aws             | us-east-1           | US East (N. Virginia)         |
-| aws             | us-east-2           | US East (Ohio)                |
-| aws             | us-west-2           | US West (Oregon)              |
-+-----------------+---------------------+-------------------------------+
-----
-
-include::ROOT:partial$regions-change-admonition.adoc[]
-======
-
 Use the `-o` option to output the result in `csv` or `json` format:
 
 [source,bash,subs="+quotes"]
@@ -1197,6 +1162,41 @@ gcp (free-tier),us-east1,"Moncks Corner, South Carolina"
 gcp,us-east4,"Ashburn, Virginia"
 gcp,us-west1,"The Dalles, Oregon"
 gcp,us-west4,"US West (Las Vegas, USA)"
+----
+
+include::ROOT:partial$regions-change-admonition.adoc[]
+======
+
+Use the `-c`/`--cloud` option to filter available regions by cloud provider (`aws`, `gcp`, or `azure`):
+
+[source,bash,subs="+quotes"]
+----
+astra db list-regions-serverless -c aws
+----
+
+.Result
+[%collapsible]
+======
+[source,console]
+----
++-----------------+---------------------+-------------------------------+
+| Cloud Provider  | Region              | Full Name                     |
++-----------------+---------------------+-------------------------------+
+| aws             | ap-east-1           | Asia Pacific (Hong Kong)      |
+| aws             | ap-south-1          | Asia Pacific (Mumbai)         |
+| aws             | ap-southeast-1      | Asia Pacific (Singapore)      |
+| aws             | ap-southeast-2      | Asia Pacific (Sydney)         |
+| aws             | ca-central-1        | Canada (Central)              |
+| aws             | ca-west-1           | Canada West (Calgary)         |
+| aws             | eu-central-1        | Europe (Frankfurt)            |
+| aws             | eu-west-1           | Europe (Ireland)              |
+| aws             | eu-west-2           | Europe (London)               |
+| aws             | me-central-1        | Middle East (UAE)             |
+| aws             | sa-east-1           | South America (Sao Paulo)     |
+| aws             | us-east-1           | US East (N. Virginia)         |
+| aws             | us-east-2           | US East (Ohio)                |
+| aws             | us-west-2           | US West (Oregon)              |
++-----------------+---------------------+-------------------------------+
 ----
 
 include::ROOT:partial$regions-change-admonition.adoc[]
@@ -1607,11 +1607,11 @@ include::ROOT:partial$regions-change-admonition.adoc[]
 
 // TODO: Add examples for `-cf`/`--config-file`, `-conf/`--config`, `--env`, `--token`, and `-v`/`--verbose` options.
 
-== CQL shell (cqlsh)
+== Use CQL shell (cqlsh)
 
 The CQL shell (`cqlsh`) is an interface that you can use to issue xref:astra@cql:ROOT:index.adoc[{cass-short} Query Language (CQL)] commands to your {astra_db} database.
 The {product} provides built-in CQL shell support by downloading, installing, configuring, and wapping the `cqlsh` utility.
-This can act as a convenient alternative to installaing and configuring a xref:astra-db-serverless:cql:connect-cql-shell.adoc#standalone-cql-shell[standalone CQL shell].
+This can act as a convenient alternative to installing and configuring a xref:astra-db-serverless:cql:develop-with-cql.adoc#connect-to-the-cql-shell[standalone CQL shell].
 
 To use `cqlsh` commands, you must have a supported version of Python installed on your system.
 The underlying `cqlsh` utility requires Python 2.7 (with TLS support) or Python 3.6--3.11.
@@ -1826,7 +1826,7 @@ astra db cqlsh **DATABASE_NAME** -e "SOURCE 'sample.cql'"
 ====
 ======
 
-== DataStax Bulk Loader (DSBulk)
+== Use DataStax Bulk Loader (DSBulk)
 
 The xref:dsbulk:overview:dsbulk-about.adoc[DataStax Bulk Loader] (DSBulk) lets you load, unload, and count data in your {astra_db} database tables.
 The {product} provides built-in DSBulk support by downloading, installing, configuring, and wapping the `dsbulk` utility.
@@ -2254,7 +2254,7 @@ OPTIONS
 
 === End-to-end example
 
-The following procedure provides an end-to-end example of how to use the the {product}'s built-in DSBulk support to load data into an {astra_db} database, get information about the data, and unload the data into CSV files:
+The following procedure provides an end-to-end example of how to use the {product}'s built-in DSBulk support to load data into an {astra_db} database, get information about the data, and unload the data into CSV files:
 
 . (Optional) This procedure assumes that you have a database and keyspace both named `demo`:
 +
@@ -2594,11 +2594,13 @@ astra db create-dotenv **DATABASE_NAME**
 
 By default, the {product} saves the `.env` file to the directory where you run the command.
 
+If a `.env` file already exists in the directory, the {product} appends the new environment variables to the existing file.
+
 .Result
 [%collapsible%open]
 ====
 ..env
-[source,bash]
+[source,console]
 ----
 ASTRA_DB_API_ENDPOINT="https://a53003fe-ba42-4c3c-85d0-6b345622c2dc-us-east1.apps.astra.datastax.com/api/json"
 ASTRA_DB_APPLICATION_TOKEN="AstraCS:FZmCtRdyzJkYidnmlzwcwJWc:f51d3ee8fce90b28a7681a1e1bc3fa0d69cb770b0219aa98b96deb61df5f7a36"
@@ -2686,8 +2688,17 @@ Use the `-d`/`--directory` option to save the `.env` file to a specified directo
 
 [source,bash,subs="+quotes"]
 ----
-astra db create-dotenv **DATABASE_NAME** -f ~/tmp
+astra db create-dotenv **DATABASE_NAME** -d ~/tmp
 ----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
+[OK]    File '/Users/USERNAME/tmp/.env' has been created/amended
+----
+====
 
 [IMPORTANT]
 ====
