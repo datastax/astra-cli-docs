@@ -638,10 +638,7 @@ default(pulsar-aws-useast2.streaming.datastax.com)>
 
 Type `exit` and press kbd:[Return] to exit the Pulsar shell.
 
-[NOTE]
-====
 The first time you use the `astra streaming pulsar-shell` commands, the {product} downloads and installs the `pulsar-shell` utility to the {product} installation directory (`~/.astra/lunastreaming-shell-*`).
-====
 
 === `streaming pulsar-shell` options
 
@@ -947,144 +944,8 @@ The directory must already exist before you run the command.
 If the directory doesn't exist, the {product} will report the following error: `INVALID_ARGUMENT: Destination folder has not been found`.
 ====
 
-== Change Data Capture
-
-[IMPORTANT]
-====
-CDC for {astra_db} incurs billed charges based on your {astra_stream} usage.
-For more information, see https://www.datastax.com/pricing/astra-streaming[{astra_stream} pricing] and https://www.datastax.com/products/datastax-astra/cdc-for-astra-db[CDC metering rates].
-====
+== Change Data Capture (CDC)
 
 CDC for {astra_db} automatically captures changes in real time, de-duplicates the changes, and then streams the clean set of changed data into xref:astra-streaming:ROOT:index.adoc[{astra_stream}] where it can be processed by client applications or sent to downstream systems.
 
-The following procedure provides some examples of how to use the {product} to configure and use CDC for {astra_db}:
-
-. Create an {astra_db} {db-serverless} database:
-+
-[source,bash]
-----
-astra db create demo_cdc
-----
-+
-.Result
-[%collapsible]
-====
-[source,console]
-----
-
-----
-====
-
-. Create a tenant in same region as your database:
-+
-[source,bash]
-----
-astra streaming create demo-cdc -c gcp -r useast1
-----
-+
-.Result
-[%collapsible]
-====
-[source,console]
-----
-https://api.astra.datastax.com/v2/streaming/tenants/demo-cdc
-[OK]    Tenant 'demo-cdc' has being created.
-----
-====
-
-. Start the CQL shell in interactive mode:
-+
-[source,bash]
-----
-astra db cqlsh demo_cdc -k default_keyspace
-----
-+
-.Result
-[%collapsible]
-====
-[source,console]
-----
-[INFO]  Cqlsh is starting, please wait for connection establishment...
-Connected to cndb at 127.0.0.1:9042.
-[cqlsh 6.8.0 | Cassandra 4.0.0.6816 | CQL spec 3.4.5 | Native protocol v4]
-Use HELP for help.
-token@cqlsh:default_keyspace>
-----
-====
-
-. Create a table.
-+
-[source,cql]
-----
-CREATE TABLE IF NOT EXISTS demo (foo text PRIMARY KEY, bar text);
-CREATE TABLE IF NOT EXISTS table2 (foo text PRIMARY KEY, bar text);
-INSERT INTO demo(foo,bar) VALUES('1','item1');
-INSERT INTO demo(foo,bar) VALUES('1','item2');
-quit;
-----
-+
-.Result
-[%collapsible]
-====
-[source,console]
-----
-token@cqlsh:default_keyspace> CREATE TABLE IF NOT EXISTS demo (foo text PRIMARY KEY, bar text);
-token@cqlsh:default_keyspace> CREATE TABLE IF NOT EXISTS table2 (foo text PRIMARY KEY, bar text);
-token@cqlsh:default_keyspace> INSERT INTO demo(foo,bar) VALUES('1','item1');
-token@cqlsh:default_keyspace> INSERT INTO demo(foo,bar) VALUES('1','item2');
-token@cqlsh:default_keyspace> quit;
-----
-====
-
-. Create CDC.
-+
-[source,bash]
-----
-astra db create-cdc demo_cdc \
-  -k demo_cdc \
-  --table demo \
-  --tenant demo-cdc
-
-astra db cdc create demo_cdc --table demo_cdc.test
-----
-+
-.Result
-[%collapsible]
-====
-[source,console]
-----
-
-----
-====
-
-. List CDC (from Streaming)
-+
-[source,bash]
-----
-astra streaming list-cdc demo-cdc
-----
-+
-.Result
-[%collapsible]
-====
-[source,console]
-----
-
-----
-====
-
-. List CDC (from DB)
-+
-[source,bash]
-----
-astra db list-cdc demo_cdc
-----
-+
-.Result
-[%collapsible]
-====
-[source,console]
-----
-
-----
-====
+For more information about using the {product} to configure CDC, see xref:ROOT:managing.adoc#cdc[Configure Change Data Capture].

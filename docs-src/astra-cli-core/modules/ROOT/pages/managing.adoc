@@ -1607,6 +1607,7 @@ include::ROOT:partial$regions-change-admonition.adoc[]
 
 // TODO: Add examples for `-cf`/`--config-file`, `-conf/`--config`, `--env`, `--token`, and `-v`/`--verbose` options.
 
+[#cqlsh]
 == Use CQL shell (cqlsh)
 
 The CQL shell (`cqlsh`) is an interface that you can use to issue xref:astra@cql:ROOT:index.adoc[{cass-short} Query Language (CQL)] commands to your {astra_db} database.
@@ -1641,12 +1642,12 @@ Use HELP for help.
 
 Type `exit` and press kbd:[Return] to exit the CQL shell.
 
-[NOTE]
-======
 The first time you use `astra db cqlsh`, the {product} downloads and installs the `cqlsh` utility to the {product} installation directory (`~/.astra/cqlsh-astra`).
 The {product} also downloads the {scb-long} for each database you connect to and stores the {scb} zip files in the `~/.astra/scb` directory.
 
-If you encounter a `ModuleNotFoundError` error, check that you have a supported version of Python available in your terminal:
+[NOTE]
+======
+If the {product} reports `ModuleNotFoundError`, check that you have a supported version of Python available in your terminal:
 
 [source,bash]
 ----
@@ -2934,3 +2935,149 @@ SYNOPSIS
         Where * indicates the default command(s)
         See 'astra help role <command>' for more information on a specific command.
 ----
+
+[#cdc]
+== Configure Change Data Capture (CDC)
+
+[IMPORTANT]
+====
+CDC for {astra_db} incurs billed charges based on your {astra_stream} usage.
+For more information, see https://www.datastax.com/pricing/astra-streaming[{astra_stream} pricing] and https://www.datastax.com/products/datastax-astra/cdc-for-astra-db[CDC metering rates].
+====
+
+CDC for {astra_db} automatically captures changes in real time, de-duplicates the changes, and then streams the clean set of changed data into xref:astra-streaming:ROOT:index.adoc[{astra_stream}] where it can be processed by client applications or sent to downstream systems.
+
+The following procedure describes how to use the {product} to enable CDC on a {db-serverless} database:
+
+. Create an {astra_db} {db-serverless} database:
++
+[source,bash]
+----
+astra db create cdc_demo_db -c aws -r us-east-1 -k cdc_demo_keyspace
+----
++
+.Result
+[%collapsible]
+====
+[source,console]
+----
+REGION OK
+[INFO]  Database 'cdc_demo_db' does not exist. Creating database 'cdc_demo_db' with keyspace 'cdc_demo_keyspace'
+get CLoud provider
+[INFO]  Database 'cdc_demo_db' and keyspace 'cdc_demo_keyspace' are being created.
+[INFO]  Database 'cdc_demo_db' has status 'PENDING' waiting to be 'ACTIVE' ...
+[INFO]  Database 'cdc_demo_db' has status 'ACTIVE' (took 112117 millis)
+[OK]    Database 'cdc_demo_db' is ready.
+----
+====
+
+. Create an {astra_stream} tenant in the same region as your database:
++
+[source,bash]
+----
+astra streaming create cdc-demo-tenant -c aws -r useast1
+----
++
+.Result
+[%collapsible]
+====
+[source,console]
+----
+https://api.astra.datastax.com/v2/streaming/tenants/cdc-demo-tenant
+[OK]    Tenant 'cdc-demo-tenant' has being created.
+----
+====
+
+. Use the xref:ROOT:managing.adoc#cqlsh[CQL shell] to create a table with a primary key column in your database.
++
+[source,bash]
+----
+astra db cqlsh cdc_demo_db -e "CREATE TABLE IF NOT EXISTS cdc_demo_keyspace.cdc_demo_table (key text PRIMARY KEY, c1 text);"
+----
++
+.Result
+[%collapsible]
+====
+[source,console]
+----
+[INFO]  Cqlsh is starting, please wait for connection establishment...
+----
+====
+
+. Confirm table creation:
++
+[source,bash]
+----
+astra db cqlsh cdc_demo_db -e "SELECT * FROM cdc_demo_keyspace.cdc_demo_table"
+----
++
+.Result
+[%collapsible]
+====
+[source,console]
+----
+[INFO]  Cqlsh is starting, please wait for connection establishment...
+
+ key | c1
+-----+----
+
+(0 rows)
+----
+====
+
+. Create a CDC connector.
++
+[source,bash]
+----
+astra db create-cdc cdc_demo_db -k cdc_demo_keyspace --table cdc_demo_table --tenant cdc-demo-tenant
+----
++
+.Result
+[%collapsible]
+====
+[source,console]
+----
+
+----
+====
+// TODO: The command is not worrking as expected. Must investigate and figure out why it is reporting the following error: [ERROR] INVALID_ARGUMENT: Error Code=422(422) Invalid information provided to create DB: 422 Unprocessable Entity: databaseId, keyspace, tableName, and orgId are mandatory fields
+
+. Confirm CDC details for the database and tenant.
++
+[source,bash]
+----
+astra db list-cdc cdc_demo_db
+----
++
+.Result
+[%collapsible]
+====
+[source,console]
+----
++-----------------------+-------------------+----------------+----------------+--------------------+----------------+----------------+
+| id                    | keyspace          | table          | tenant         | cluster            | namespace      | Status         |
++-----------------------+-------------------+----------------+----------------+--------------------+----------------+----------------+
+| 57a3024f-cdcdemotable | cdc_demo_keyspace | cdc_demo_table | cdc-demo-tenant| pulsar-aws-useast1 | astracdc       | Running        |
++-----------------------+-------------------+----------------+----------------+--------------------+----------------+----------------+
+----
+====
++
+[source,bash]
+----
+astra streaming list-cdc cdc-demo-tenant
+----
++
+.Result
+[%collapsible]
+====
+[source,console]
+----
++--------------------+----------------+----------------+-------------------+----------------+----------------+
+| cluster            | namespace      | database       | keyspace          | table          | status         |
++--------------------+----------------+----------------+-------------------+----------------+----------------+
+| pulsar-aws-useast1 | astracdc       | cdc_demo_db    | cdc_demo_keyspace | cdc_demo_table | running        |
++--------------------+----------------+----------------+-------------------+----------------+----------------+
+----
+====
+
+After you enable CDC on your {db-serverless} database, you can xref:astra-db-serverless:databases:change-data-capture.adoc#connect-a-sink[connect a sink].
