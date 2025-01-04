@@ -2255,7 +2255,7 @@ OPTIONS
 
 === End-to-end example
 
-The following procedure provides an end-to-end example of how to use the {product}'s built-in DSBulk support to load data into an {astra_db} database, get information about the data, and unload the data into CSV files:
+The following end-to-end example shows how to use the {product}'s built-in DSBulk support to load data into an {astra_db} database, get information about the data, and unload the data into CSV files:
 
 . (Optional) This procedure assumes that you have a database and keyspace both named `demo`:
 +
@@ -2937,7 +2937,7 @@ SYNOPSIS
 ----
 
 [#cdc]
-== Configure Change Data Capture (CDC)
+== Change Data Capture (CDC)
 
 [IMPORTANT]
 ====
@@ -2947,13 +2947,243 @@ For more information, see https://www.datastax.com/pricing/astra-streaming[{astr
 
 CDC for {astra_db} automatically captures changes in real time, de-duplicates the changes, and then streams the clean set of changed data into xref:astra-streaming:ROOT:index.adoc[{astra_stream}] where it can be processed by client applications or sent to downstream systems.
 
-The following procedure describes how to use the {product} to enable CDC on a {db-serverless} database:
+Use the `astra db create-cdc` command to create a CDC connection for a table in a {db-serverless} database:
+
+[source,bash,subs="+quotes"]
+----
+astra db create-cdc **DATABASE_NAME** \
+    -k **KEYSPACE_NAME** \
+    --table **TABLE_NAME** \
+    --tenant **TENANT_NAME**
+----
+
+////
+// TODO: The command is not working as expected. Must investigate and figure out why it is reporting the following error: [ERROR] INVALID_ARGUMENT: Error Code=422(422) Invalid information provided to create DB: 422 Unprocessable Entity: databaseId, keyspace, tableName, and orgId are mandatory fields
+.Result
+[%collapsible]
+====
+[source,console]
+----
+
+----
+====
+////
+
+Use the `astra db list-cdc` command to list the CDC connections for a specifc database:
+
+[source,bash,subs="+quotes"]
+----
+astra db list-cdc **DATABASE_NAME**
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
++-----------------------+-------------------+----------------+----------------+--------------------+----------------+----------------+
+| id                    | keyspace          | table          | tenant         | cluster            | namespace      | Status         |
++-----------------------+-------------------+----------------+----------------+--------------------+----------------+----------------+
+| 57a3024f-cdcdemotable | cdc_demo_keyspace | cdc_demo_table | cdc-demo-tenant| pulsar-aws-useast1 | astracdc       | Running        |
++-----------------------+-------------------+----------------+----------------+--------------------+----------------+----------------+
+----
+====
+
+Use the `astra db delete-cdc` command to delete a CDC connection for a specific table:
+
+[source,bash,subs="+quotes"]
+----
+astra db delete-cdc **DATABASE_NAME** \
+    -k **KEYSPACE_NAME** \
+    --table **TABLE_NAME** \
+    --tenant **TENANT_NAME**
+----
+
+////
+// TODO: The command is not working as expected. Must investigate and figure out why it is reporting the following error: [ERROR] INVALID_ARGUMENT: Error Code=422(422) Invalid information provided to create DB: 422 Unprocessable Entity: databaseId, keyspace, tableName, and orgId are mandatory fields
+.Result
+[%collapsible]
+====
+[source,console]
+----
+
+----
+====
+////
+
+=== `db create-cdc` options
+
+[source,console]
+----
+NAME
+        astra db create-cdc - Create a CDC to pulsar
+
+SYNOPSIS
+        astra db create-cdc [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
+                [ {-k | --keyspace} <KEYSPACE> ] [ --no-color ]
+                [ {-o | --output} <FORMAT> ]
+                [ -p, --partition <PARTITION TOKEN> ] [ --table <TABLE> ]
+                [ --tenant <TENANT> ] [ --token <AUTH_TOKEN> ]
+                [ {-v | --verbose} ] [--] <DB>
+
+OPTIONS
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        --env <Environment>
+            Astra Environment to use
+
+        -k <KEYSPACE>, --keyspace <KEYSPACE>
+            Keyspace name
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        -p, --partition <PARTITION TOKEN>
+            Paritions in the topics
+
+        --table <TABLE>
+            Table name
+
+        --tenant <TENANT>
+            Tenant name
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <DB>
+            Database name (if unique) or Database identifier
+----
+
+=== `db list-cdc` options
+
+[source,console]
+----
+NAME
+        astra db list-cdc - List CDC available on this databse
+
+SYNOPSIS
+        astra db list-cdc [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
+                [ --no-color ] [ {-o | --output} <FORMAT> ]
+                [ --token <AUTH_TOKEN> ] [ {-v | --verbose} ] [--] <DB>
+
+OPTIONS
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        --env <Environment>
+            Astra Environment to use
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <DB>
+            Database name (if unique) or Database identifier
+----
+
+=== `db delete-cdc` options
+
+[source,console]
+----
+NAME
+        astra db delete-cdc - Delete a CDC connection
+
+SYNOPSIS
+        astra db delete-cdc [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
+                [ -id <CDC_ID> ] [ {-k | --keyspace} <KEYSPACE> ]
+                [ --no-color ] [ {-o | --output} <FORMAT> ] [ --table <TABLE> ]
+                [ --tenant <TENANT> ] [ --token <AUTH_TOKEN> ]
+                [ {-v | --verbose} ] [--] <DB>
+
+OPTIONS
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        --env <Environment>
+            Astra Environment to use
+
+        -id <CDC_ID>
+            Identifier of the cdc when providing
+
+        -k <KEYSPACE>, --keyspace <KEYSPACE>
+            Keyspace name
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        --table <TABLE>
+            Table name
+
+        --tenant <TENANT>
+            Tenant name
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <DB>
+            Database name (if unique) or Database identifier
+----
+
+=== End-to-end example
+
+The following end-to-end example shows how to use the {product} to create a CDC connection for a table in a {db-serverless} database:
 
 . Create an {astra_db} {db-serverless} database:
 +
 [source,bash]
 ----
-astra db create cdc_demo_db -c aws -r us-east-1 -k cdc_demo_keyspace
+astra db create cdc_demo_db \
+    -c aws \
+    -r us-east-1 \
+    -k cdc_demo_keyspace
 ----
 +
 .Result
@@ -2975,7 +3205,9 @@ get CLoud provider
 +
 [source,bash]
 ----
-astra streaming create cdc-demo-tenant -c aws -r useast1
+astra streaming create cdc-demo-tenant \
+    -c aws \
+    -r useast1
 ----
 +
 .Result
@@ -2992,7 +3224,11 @@ https://api.astra.datastax.com/v2/streaming/tenants/cdc-demo-tenant
 +
 [source,bash]
 ----
-astra db cqlsh cdc_demo_db -e "CREATE TABLE IF NOT EXISTS cdc_demo_keyspace.cdc_demo_table (key text PRIMARY KEY, c1 text);"
+astra db cqlsh cdc_demo_db -e \
+"CREATE TABLE IF NOT EXISTS cdc_demo_keyspace.cdc_demo_table ( \
+    key text PRIMARY KEY, \
+    c1 text \
+);"
 ----
 +
 .Result
@@ -3008,7 +3244,8 @@ astra db cqlsh cdc_demo_db -e "CREATE TABLE IF NOT EXISTS cdc_demo_keyspace.cdc_
 +
 [source,bash]
 ----
-astra db cqlsh cdc_demo_db -e "SELECT * FROM cdc_demo_keyspace.cdc_demo_table"
+astra db cqlsh cdc_demo_db -e \
+"SELECT * FROM cdc_demo_keyspace.cdc_demo_table"
 ----
 +
 .Result
@@ -3025,13 +3262,18 @@ astra db cqlsh cdc_demo_db -e "SELECT * FROM cdc_demo_keyspace.cdc_demo_table"
 ----
 ====
 
-. Create a CDC connector.
+. Create a CDC connection.
 +
 [source,bash]
 ----
-astra db create-cdc cdc_demo_db -k cdc_demo_keyspace --table cdc_demo_table --tenant cdc-demo-tenant
+astra db create-cdc cdc_demo_db \
+    -k cdc_demo_keyspace \
+    --table cdc_demo_table \
+    --tenant cdc-demo-tenant
 ----
 +
+////
+// TODO: The command is not working as expected. Must investigate and figure out why it is reporting the following error: [ERROR] INVALID_ARGUMENT: Error Code=422(422) Invalid information provided to create DB: 422 Unprocessable Entity: databaseId, keyspace, tableName, and orgId are mandatory fields
 .Result
 [%collapsible]
 ====
@@ -3040,7 +3282,7 @@ astra db create-cdc cdc_demo_db -k cdc_demo_keyspace --table cdc_demo_table --te
 
 ----
 ====
-// TODO: The command is not worrking as expected. Must investigate and figure out why it is reporting the following error: [ERROR] INVALID_ARGUMENT: Error Code=422(422) Invalid information provided to create DB: 422 Unprocessable Entity: databaseId, keyspace, tableName, and orgId are mandatory fields
+////
 
 . Confirm CDC details for the database and tenant.
 +
