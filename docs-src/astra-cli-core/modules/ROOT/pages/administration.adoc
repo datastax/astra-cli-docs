@@ -1,7 +1,7 @@
-= Manage Astra organizations and users
+= Manage your Astra organization with the {product}
 :navtitle: Astra administration
 
-Use the {product} to manage your Astra organizations and users.
+Use the {product} to manage your Astra organization's users, roles, and tokens.
 
 == Get organization details
 
@@ -105,7 +105,7 @@ OPTIONS
 
 == Add a user
 
-Use `astra user invite` to invite a new user to your Astra organization:
+Use the `astra user invite` command to invite a new user to your Astra organization:
 
 [source,bash,subs="+quotes"]
 ----
@@ -206,16 +206,16 @@ astra user invite alice@example.com -r "Organization Administrator"
 
 == Get user details
 
-Use the `astra user describe` or `astra user get` command to get information about a specific user in your Astra organization:
-
-[source,bash,subs="+quotes"]
-----
-astra user describe **USER**
-----
+Use the `astra user get` or `astra user describe` command to get information about a specific user in your Astra organization:
 
 [source,bash,subs="+quotes"]
 ----
 astra user get **USER**
+----
+
+[source,bash,subs="+quotes"]
+----
+astra user describe **USER**
 ----
 
 Replace `**USER**` with the email address or ID of the user you want to get information about.
@@ -238,15 +238,15 @@ Replace `**USER**` with the email address or ID of the user you want to get info
 ----
 ====
 
-=== `user describe` options
+=== `user get` options
 
 [source,console]
 ----
 NAME
-        astra user describe - Show user details
+        astra user get - Show user details
 
 SYNOPSIS
-        astra user describe [ {-cf | --config-file} <CONFIG_FILE> ]
+        astra user get [ {-cf | --config-file} <CONFIG_FILE> ]
                 [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
                 [ --no-color ] [ {-o | --output} <FORMAT> ]
                 [ --token <AUTH_TOKEN> ] [ {-v | --verbose} ] [--] <EMAIL>
@@ -282,15 +282,15 @@ OPTIONS
             User Email
 ----
 
-=== `user get` options
+=== `user describe` options
 
 [source,console]
 ----
 NAME
-        astra user get - Show user details
+        astra user describe - Show user details
 
 SYNOPSIS
-        astra user get [ {-cf | --config-file} <CONFIG_FILE> ]
+        astra user describe [ {-cf | --config-file} <CONFIG_FILE> ]
                 [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
                 [ --no-color ] [ {-o | --output} <FORMAT> ]
                 [ --token <AUTH_TOKEN> ] [ {-v | --verbose} ] [--] <EMAIL>
@@ -338,7 +338,7 @@ The user can still access their personal {astra_db} account, if they have access
 If your organization uses SSO, make sure that you also remove the user from your IdP, if necessary.
 ====
 
-Use `astra user delete` to remove a user or revoke their invitation from your Astra organization:
+Use the `astra user delete` command to remove a user or revoke their invitation from your Astra organization:
 
 [source,bash,subs="+quotes"]
 ----
@@ -477,16 +477,16 @@ OPTIONS
 
 == Get role details
 
-Use the `astra role describe` or `astra role get` command to get information about a specific role in your Astra organization:
-
-[source,bash,subs="+quotes"]
-----
-astra role describe "**ROLE**"
-----
+Use the `astra role get` or `astra role describe` command to get information about a specific role in your Astra organization:
 
 [source,bash,subs="+quotes"]
 ----
 astra role get "**ROLE**"
+----
+
+[source,bash,subs="+quotes"]
+----
+astra role describe "**ROLE**"
 ----
 
 Replace `**ROLE**` with the name or ID of the role you want to get information about.
@@ -553,15 +553,15 @@ Replace `**ROLE**` with the name or ID of the role you want to get information a
 ----
 ====
 
-=== `role describe` options
+=== `role get` options
 
 [source,console]
 ----
 NAME
-        astra role describe - Show role details
+        astra role get - Show role details
 
 SYNOPSIS
-        astra role describe [ {-cf | --config-file} <CONFIG_FILE> ]
+        astra role get [ {-cf | --config-file} <CONFIG_FILE> ]
                 [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
                 [ --no-color ] [ {-o | --output} <FORMAT> ]
                 [ --token <AUTH_TOKEN> ] [ {-v | --verbose} ] [--] <ROLE>
@@ -597,15 +597,15 @@ OPTIONS
             Role name or identifier
 ----
 
-=== `role get` options
+=== `role describe` options
 
 [source,console]
 ----
 NAME
-        astra role get - Show role details
+        astra role describe - Show role details
 
 SYNOPSIS
-        astra role get [ {-cf | --config-file} <CONFIG_FILE> ]
+        astra role describe [ {-cf | --config-file} <CONFIG_FILE> ]
                 [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
                 [ --no-color ] [ {-o | --output} <FORMAT> ]
                 [ --token <AUTH_TOKEN> ] [ {-v | --verbose} ] [--] <ROLE>

@@ -5,7 +5,7 @@ Use the {product} to manage your {astra_stream} tenants.
 
 == List tenants
 
-Use `astra streaming list` to get a list of all tenants in your organization:
+Use the `astra streaming list` command to get a list of all tenants in your organization:
 
 [source,bash]
 ----
@@ -103,7 +103,7 @@ astra streaming list -o json
 
 == Create a tenant
 
-Use `astra streaming create` to create a new tenant:
+Use the `astra streaming create` command to create a new tenant:
 
 [source,bash,subs="+quotes"]
 ----
@@ -229,7 +229,7 @@ https://api.astra.datastax.com/v2/streaming/tenants/my-streaming-tenant
 
 == Get tenant details
 
-Use `astra streaming get` to get information about a tenant:
+Use the `astra streaming get` command to get information about a tenant:
 
 [source,bash,subs="+quotes"]
 ----
@@ -367,7 +367,7 @@ eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MzQ2MjY4MjAsImlzcyI6ImRhdGFzdGF
 
 == Delete a tenant
 
-Use `astra streaming delete` to delete a tenant:
+Use the `astra streaming delete` command to delete a tenant:
 
 
 [source,bash,subs="+quotes"]
@@ -430,7 +430,7 @@ OPTIONS
 
 == List regions
 
-Use `astra streaming list-regions` to list the cloud provider regions that currently support {astra_stream}:
+Use the `astra streaming list-regions` command to list the cloud provider regions that currently support {astra_stream}:
 
 [source,bash]
 ----
@@ -609,7 +609,7 @@ It is designed to allow developers and administrators to execute Pulsar commands
 
 The {product} provides built-in Pulsar shell support by downloading, installing, configuring, and wapping the `pulsar-shell` utility.
 
-Use `astra streaming pulsar-shell` to start the Pulsar shell in interactive mode:
+Use the `astra streaming pulsar-shell` command to start the Pulsar shell in interactive mode:
 
 [source,bash,subs="+quotes"]
 ----
@@ -839,7 +839,7 @@ It's a good practice to store these values in environment variables to facilitat
 
 The {product} can automatically generate a set of relevant variables for an {astra_stream} tenant that you can use in your applications.
 
-Use `astra streaming create-dotenv` to generate a `.env` file containing relevant environment variables for a specific {astra_stream} tenant:
+Use the `astra streaming create-dotenv` command to generate a `.env` file containing relevant environment variables for a specific {astra_stream} tenant:
 
 [source,bash,subs="+quotes"]
 ----
