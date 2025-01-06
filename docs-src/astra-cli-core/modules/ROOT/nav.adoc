@@ -2,5 +2,6 @@
 * xref:getting-started.adoc[]
 * xref:managing.adoc[]
 * xref:astra-streaming-cli.adoc[]
+* xref:administration.adoc[]
 * https://github.com/datastax/astra-cli[GitHub repo]
 * https://github.com/datastax/astra-cli/releases[Release notes]

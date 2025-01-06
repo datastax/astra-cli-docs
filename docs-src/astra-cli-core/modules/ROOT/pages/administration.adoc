@@ -1,0 +1,940 @@
+= Manage Astra organizations and users
+:navtitle: Astra administration
+
+Use the {product} to manage your Astra organizations and users.
+
+== Get organization details
+
+Use the `astra org` command to get information about the current Astra organization:
+
+[source,bash]
+----
+astra org
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
++----------------+-----------------------------------------+
+| Attribute      | Value                                   |
++----------------+-----------------------------------------+
+| Name           | My Org                                  |
+| id             | 2dbd3c55-6a68-4b5b-9155-5be9d41823e8    |
++----------------+-----------------------------------------+
+----
+====
+
+=== `org` options
+
+[source,console]
+----
+NAME
+        astra org - Display Organization Info
+
+SYNOPSIS
+        astra org { get* | id | name } [--] [ --token <AUTH_TOKEN> ]
+                [ {-cf | --config-file} <CONFIG_FILE> ] [ --no-color ]
+                [ {-v | --verbose} ] [ {-conf | --config} <CONFIG_SECTION> ]
+                [ --env <Environment> ] [ {-o | --output} <FORMAT> ]
+
+        Where * indicates the default command(s)
+        See 'astra help org <command>' for more information on a specific command.
+----
+
+== List users
+
+Use the `astra user list` command to list all users in your Astra organization:
+
+[source,bash]
+----
+astra user list
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
++--------------------------------------+--------------------+---------+
+| User Id                              | User Email         | Status  |
++--------------------------------------+--------------------+---------+
+| 9b01f7bb-ce9b-4de7-8685-beb5a869c1f0 | alice@example.com  | active  |
+| ba5533ab-769a-4ec6-aa5e-7f2c26943c57 | bob@example.com    | active  |
+| 20e0a061-c9d2-42a5-9d00-352f3b2adedc | taylor@example.com | invited |
++--------------------------------------+--------------------+---------+
+----
+====
+
+=== `user list` options
+
+[source,console]
+----
+NAME
+        astra user list - Display the list of Users in an organization
+
+SYNOPSIS
+        astra user list [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
+                [ --no-color ] [ {-o | --output} <FORMAT> ]
+                [ --token <AUTH_TOKEN> ] [ {-v | --verbose} ]
+
+OPTIONS
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        --env <Environment>
+            Astra Environment to use
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+----
+
+== Add a user
+
+Use `astra user invite` to invite a new user to your Astra organization:
+
+[source,bash,subs="+quotes"]
+----
+astra user invite **USER_EMAIL**
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
+[OK]    Database Administrator
+----
+====
+
+[IMPORTANT]
+====
+If you don't specify a role when inviting a user, the user is automatically assigned the default role of `Database Administrator`.
+====
+
+=== `user invite` options
+
+[source,console]
+----
+NAME
+        astra user invite - Invite a user to an organization
+
+SYNOPSIS
+        astra user invite [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
+                [ --no-color ] [ {-o | --output} <FORMAT> ]
+                [ {-r | --role} <ROLE> ] [ --token <AUTH_TOKEN> ]
+                [ {-v | --verbose} ] [--] <EMAIL>
+
+OPTIONS
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        --env <Environment>
+            Astra Environment to use
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        -r <ROLE>, --role <ROLE>
+            Role for the user (default is Database Administrator)
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <EMAIL>
+            User Email
+----
+
+Use the `-r`/`--role` option to specify a role when inviting a user:
+
+[source,bash,subs="+quotes"]
+----
+astra user invite **USER_EMAIL** -r "**ROLE**"
+----
+
+Replace the following:
+
+* `**USER_EMAIL**`: The email address of the user you want to invite.
+
+* `**ROLE**`: The name or ID of the role you want to assign to the user.
+To get a list of the available roles in your organization, see <<list-roles>>.
+
+For example, to invite a user with the `Organization Administrator` role:
+
+[source,bash]
+----
+astra user invite alice@example.com -r "Organization Administrator"
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
+[OK]    Organization Administrator
+----
+====
+
+== Get user details
+
+Use the `astra user describe` or `astra user get` command to get information about a specific user in your Astra organization:
+
+[source,bash,subs="+quotes"]
+----
+astra user describe **USER**
+----
+
+[source,bash,subs="+quotes"]
+----
+astra user get **USER**
+----
+
+Replace `**USER**` with the email address or ID of the user you want to get information about.
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
++----------------+-----------------------------------------+
+| Attribute      | Value                                   |
++----------------+-----------------------------------------+
+| User Id        | 20e0a061-c9d2-42a5-9d00-352f3b2adedc    |
+| User Email     | alice@example.com                       |
+| Status         | active                                  |
+|                |                                         |
+| Roles          | [0] Database Administrator              |
+|                |                                         |
++----------------+-----------------------------------------+
+----
+====
+
+=== `user describe` options
+
+[source,console]
+----
+NAME
+        astra user describe - Show user details
+
+SYNOPSIS
+        astra user describe [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
+                [ --no-color ] [ {-o | --output} <FORMAT> ]
+                [ --token <AUTH_TOKEN> ] [ {-v | --verbose} ] [--] <EMAIL>
+
+OPTIONS
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        --env <Environment>
+            Astra Environment to use
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <EMAIL>
+            User Email
+----
+
+=== `user get` options
+
+[source,console]
+----
+NAME
+        astra user get - Show user details
+
+SYNOPSIS
+        astra user get [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
+                [ --no-color ] [ {-o | --output} <FORMAT> ]
+                [ --token <AUTH_TOKEN> ] [ {-v | --verbose} ] [--] <EMAIL>
+
+OPTIONS
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        --env <Environment>
+            Astra Environment to use
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <EMAIL>
+            User Email
+----
+
+== Remove a user
+
+[IMPORTANT]
+====
+Removing a user removes their access to your organization, but it doesn't delete their account.
+
+The user retains their personal {astra_db} account under their associated email address, including access to their default (personal) organization and any other organizations they belong to.
+The user can still access their personal {astra_db} account, if they have access to the associated xref:astra-db-serverless:administration:invite-users-to-organization.adoc#accept-the-invite[authentication method].
+
+If your organization uses SSO, make sure that you also remove the user from your IdP, if necessary.
+====
+
+Use `astra user delete` to remove a user or revoke their invitation from your Astra organization:
+
+[source,bash,subs="+quotes"]
+----
+astra user delete **USER**
+----
+
+Replace `**USER**` with the email address or ID of the user you want to delete.
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
+[OK]    Deleting user 'alice@example.com' (async operation)
+----
+====
+
+=== `user delete` options
+
+[source,console]
+----
+NAME
+        astra user delete - Delete an existing user
+
+SYNOPSIS
+        astra user delete [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
+                [ --no-color ] [ {-o | --output} <FORMAT> ]
+                [ --token <AUTH_TOKEN> ] [ {-v | --verbose} ] [--] <EMAIL>
+
+OPTIONS
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        --env <Environment>
+            Astra Environment to use
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <EMAIL>
+            User email or identifier
+----
+
+[#list-roles]
+== List roles
+
+Use the `astra role list` command to list all xref:astra-db-serverless:administration:manage-database-access.adoc#default-roles[default roles] and xref:astra-db-serverless:administration:manage-database-access.adoc#custom-roles[custom roles] in your Astra organization:
+
+[source,bash]
+----
+astra role list
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
++--------------------------------------+----------------------------+----------------------------+
+| Role Id                              | Role Name                  | Description                |
++--------------------------------------+----------------------------+----------------------------+
+| b4ed0e9e-67e8-47b6-8b58-c6629be961b9 | R/W Svc Acct               | R/W Svc Acct               |
+| 43745b73-ad46-46e4-b826-c15d06d2ceb0 | Admin User                 | Admin User                 |
+| 67c4b5dc-dd3f-4b2d-be51-09be12836d67 | API Admin User             | API Admin User             |
+| ad0566b5-2a67-49de-89e8-92258c2f2c08 | Organization Administrator | Organization Administrator |
+| 16a4b1d7-a615-41f8-95ca-52b0280f4d87 | RO Svc Acct                | RO Svc Acct                |
+| 74b7d8b1-ecf1-48e5-a35f-0f999d369899 | API RO Svc Acct            | API RO Svc Acct            |
+| 946cfbde-24cc-4953-9355-d57bfd61bf49 | API R/W User               | API R/W User               |
+| dde8a0e9-f4ae-4b42-b642-9f257436c8ea | API Admin Svc Acct         | API Admin Svc Acct         |
+| efdfd41f-6184-4891-8400-b5779a0551e9 | API R/W Svc Acct           | API R/W Svc Acct           |
+| c5fabb3c-1ae1-4648-898f-d3b98167d63e | Billing Admin              | Billing Admin              |
+| 5dc84d0d-4fdd-4ec2-a223-71341b6d7695 | API RO User                | API RO User                |
+| 1faa93f2-b889-4190-9585-4bc6e3c3596a | Database Administrator     | Database Administrator     |
+| b73e44b2-b9e9-43b8-a7c1-c6a2fe2dab60 | R/W User                   | R/W User                   |
+| d2cfcd63-055c-4a58-b957-8916d4a007b5 | RO User                    | RO User                    |
+| a25baf86-1bde-43d2-86ac-647e3d884bbc | UI View Only               | UI View Only               |
+| 892c45bb-d395-488c-9428-8a50f7013e3b | Admin Svc Acct             | Admin Svc Acct             |
+| c3cdd2a6-29d5-43b9-b929-8d878066d1c4 | My Custom Role             | My Custom Role             |
++--------------------------------------+----------------------------+----------------------------+
+----
+====
+
+=== `role list` options
+
+[source,console]
+----
+NAME
+        astra role list - Display the list of Roles in an organization
+
+SYNOPSIS
+        astra role list [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
+                [ --no-color ] [ {-o | --output} <FORMAT> ]
+                [ --token <AUTH_TOKEN> ] [ {-v | --verbose} ]
+
+OPTIONS
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        --env <Environment>
+            Astra Environment to use
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+----
+
+== Get role details
+
+Use the `astra role describe` or `astra role get` command to get information about a specific role in your Astra organization:
+
+[source,bash,subs="+quotes"]
+----
+astra role describe "**ROLE**"
+----
+
+[source,bash,subs="+quotes"]
+----
+astra role get "**ROLE**"
+----
+
+Replace `**ROLE**` with the name or ID of the role you want to get information about.
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
++----------------+--------------------------------------------------------+
+| Attribute      | Value                                                  |
++----------------+--------------------------------------------------------+
+| Identifier     | c3cdd2a6-29d5-43b9-b929-8d878066d1b4                   |
+| Name           | My Custom Role                                         |
+| Description    | My Custom Role                                         |
+| Effect         | allow                                                  |
+|                |                                                        |
+| Resources      | [0] drn:astra:org:2dbd3c55-6a68-4b5b-9155-5be9d41823d8 |
+|                |                                                        |
+|                |                                                        |
+| Actions        | [0] db-graphql                                         |
+|                | [1] db-rest                                            |
+|                | [2] db-cql                                             |
+|                | [3] db-all-keyspace-create                             |
+|                | [4] db-all-keyspace-describe                           |
+|                | [5] db-keyspace-alter                                  |
+|                | [6] db-keyspace-authorize                              |
+|                | [7] db-keyspace-create                                 |
+|                | [8] db-keyspace-describe                               |
+|                | [9] db-keyspace-drop                                   |
+|                | [10] db-keyspace-grant                                 |
+|                | [11] db-keyspace-modify                                |
+|                | [12] org-db-view                                       |
+|                | [13] org-user-write                                    |
+|                | [14] org-user-read                                     |
+|                | [15] org-db-create                                     |
+|                | [16] org-write                                         |
+|                | [17] org-read                                          |
+|                | [18] org-db-terminate                                  |
+|                | [19] org-role-write                                    |
+|                | [20] org-role-read                                     |
+|                | [21] org-db-expand                                     |
+|                | [22] org-external-auth-write                           |
+|                | [23] org-external-auth-read                            |
+|                | [24] org-audits-read                                   |
+|                | [25] org-token-write                                   |
+|                | [26] org-token-read                                    |
+|                | [27] org-billing-write                                 |
+|                | [28] org-billing-read                                  |
+|                | [29] org-role-delete                                   |
+|                | [30] accesslist-read                                   |
+|                | [31] accesslist-write                                  |
+|                | [32] org-db-addpeering                                 |
+|                | [33] org-stream-manage                                 |
+|                | [34] org-cmk-read                                      |
+|                | [35] org-cmk-write                                     |
+|                | [36] org-integrations-read                             |
+|                | [37] org-integrations-write                            |
+|                | [38] db-manage-privateendpoint                         |
+|                | [39] db-manage-thirdpartymetrics                       |
+|                | [40] db-manage-region                                  |
+|                |                                                        |
++----------------+--------------------------------------------------------+
+----
+====
+
+=== `role describe` options
+
+[source,console]
+----
+NAME
+        astra role describe - Show role details
+
+SYNOPSIS
+        astra role describe [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
+                [ --no-color ] [ {-o | --output} <FORMAT> ]
+                [ --token <AUTH_TOKEN> ] [ {-v | --verbose} ] [--] <ROLE>
+
+OPTIONS
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        --env <Environment>
+            Astra Environment to use
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <ROLE>
+            Role name or identifier
+----
+
+=== `role get` options
+
+[source,console]
+----
+NAME
+        astra role get - Show role details
+
+SYNOPSIS
+        astra role get [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
+                [ --no-color ] [ {-o | --output} <FORMAT> ]
+                [ --token <AUTH_TOKEN> ] [ {-v | --verbose} ] [--] <ROLE>
+
+OPTIONS
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        --env <Environment>
+            Astra Environment to use
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <ROLE>
+            Role name or identifier
+----
+
+[#list-tokens]
+== Get a list of tokens
+
+Use the `astra token list` command to list all of the application tokens in your Astra organization:
+
+[source,bash]
+----
+astra token list
+----
+
+////
+// TODO: The command is not working as expected. Must investigate and figure out why it is reporting the following error: [ERROR] NOT_FOUND: Role '...' has not been found.
+.Result
+[%collapsible]
+====
+[source,console]
+----
+
+----
+====
+////
+
+=== `token list` options
+
+[source,console]
+----
+NAME
+        astra token list - Display the list of tokens in an organization
+
+SYNOPSIS
+        astra token list [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
+                [ --no-color ] [ {-o | --output} <FORMAT> ]
+                [ --token <AUTH_TOKEN> ] [ {-v | --verbose} ]
+
+OPTIONS
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        --env <Environment>
+            Astra Environment to use
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+----
+
+== Create an application token
+
+Use the `astra token create` command to create a new application token in your Astra organization:
+
+[source,bash,subs="+quotes"]
+----
+astra token create -r "**ROLE**"
+----
+
+Replace `**ROLE**` with the name or ID of the role you want to assign to the token.
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
+[OK]    A new token has been created.
++----------------+----------------------------------------------------------------------------------------------------------------------------------+
+| Attribute      | Value                                                                                                                            |
++----------------+----------------------------------------------------------------------------------------------------------------------------------+
+| Client Id      | loOxcdFLZWvCUIMIWFWEWheX                                                                                                         |
+| Client Secret  | 8wAswCxcmIxLtj4g812s2mekoPLWSDXQGQsf+OzQyRhXAUp0aFfCSHqP2gwvDqS51Uxngu+56DuUttT506M64DSnJMXmGiEtZjgi2e+vCgpiOcepX6bmIjx9.rGTKuuo |
+| Token          | AstraCS:loOxcdFLZWvCUIMIWFWEWheX:e942b2c9b9f022358eba088408e68b5028c029bc629da04a80c097b641244b7a                                |
++----------------+----------------------------------------------------------------------------------------------------------------------------------+
+----
+====
+
+=== `token create` options
+
+[source,console]
+----
+NAME
+        astra token create - Display the list of tokens in an organization
+
+SYNOPSIS
+        astra token create [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
+                [ --no-color ] [ {-o | --output} <FORMAT> ]
+                {-r | --role} <ROLE> [ --token <AUTH_TOKEN> ]
+                [ {-v | --verbose} ]
+
+OPTIONS
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        --env <Environment>
+            Astra Environment to use
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        -r <ROLE>, --role <ROLE>
+            Identifier of the role for this token
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+----
+
+== Show the current token
+
+Use the `astra token get` command to show the current token being used by the {product}:
+
+[source,bash]
+----
+astra token get
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
+AstraCS:FZmCtRdyzJkYidnmlzwcwJWc:f51d3ee8fce90b28a7681a1e1bc3fa0d69cb770b0219aa98b96deb61df5f7a46
+----
+====
+
+=== `token get` options
+
+[source,console]
+----
+NAME
+        astra token get - Show current token
+
+SYNOPSIS
+        astra token get [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
+                [ --no-color ] [ {-o | --output} <FORMAT> ]
+                [ --token <AUTH_TOKEN> ] [ {-v | --verbose} ]
+
+OPTIONS
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        --env <Environment>
+            Astra Environment to use
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+----
+
+== Delete an application token
+
+[IMPORTANT]
+====
+Application tokens never expire.
+====
+
+Use the `astra token delete` or `astra token revoke` command to delete an application token from your Astra organization:
+
+[source,bash,subs="+quotes"]
+----
+astra token delete "**CLIENT_ID**"
+----
+
+[source,bash,subs="+quotes"]
+----
+astra token revoke "**CLIENT_ID**"
+----
+
+Replace `**CLIENT_ID**` with the client ID of the token that you want to delete.
+To get a token's client ID, see <<list-tokens>>.
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
+[OK]    Your token has been deleted.
+----
+====
+
+=== `token delete` options
+
+[source,console]
+----
+NAME
+        astra token delete - Delete a token
+
+SYNOPSIS
+        astra token delete [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
+                [ --no-color ] [ {-o | --output} <FORMAT> ]
+                [ --token <AUTH_TOKEN> ] [ {-v | --verbose} ] [--] <TOKEN>
+
+OPTIONS
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        --env <Environment>
+            Astra Environment to use
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <TOKEN>
+            token identifier
+----
+
+=== `token revoke` options
+
+[source,console]
+----
+NAME
+        astra token revoke - Revoke a token (delete)
+
+SYNOPSIS
+        astra token revoke [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
+                [ --no-color ] [ {-o | --output} <FORMAT> ]
+                [ --token <AUTH_TOKEN> ] [ {-v | --verbose} ] [--] <TOKEN>
+
+OPTIONS
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        --env <Environment>
+            Astra Environment to use
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <TOKEN>
+            token identifier
+----

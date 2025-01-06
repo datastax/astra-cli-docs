@@ -1,5 +1,5 @@
-= Manage {astra_stream} tenants with the {product}
-:navtitle: Manage {astra_stream} tenants
+= Manage {astra_stream} with the {product}
+:navtitle: Manage {astra_stream}
 
 Use the {product} to manage your {astra_stream} tenants.
 
