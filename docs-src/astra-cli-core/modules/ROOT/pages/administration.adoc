@@ -504,7 +504,7 @@ Replace `**ROLE**` with the name or ID of the role you want to get information a
 | Description    | My Custom Role                                         |
 | Effect         | allow                                                  |
 |                |                                                        |
-| Resources      | [0] drn:astra:org:2dbd3c55-6a68-4b5b-9155-5be9d41823d8 |
+| Resources      | [0] drn:astra:org:2dbd3c55-6a68-4b5b-9155-5be9d41823e8 |
 |                |                                                        |
 |                |                                                        |
 | Actions        | [0] db-graphql                                         |

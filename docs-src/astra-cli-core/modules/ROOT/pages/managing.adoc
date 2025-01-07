@@ -2720,7 +2720,7 @@ astra db create-dotenv **DATABASE_NAME** -d ~/tmp
 ----
 ====
 
-[IMPORTANT]
+[NOTE]
 ====
 The directory must already exist before you run the command.
 If the directory doesn't exist, the {product} will report the following error: `INVALID_ARGUMENT: Destination folder has not been found`.
