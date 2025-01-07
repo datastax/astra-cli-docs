@@ -455,7 +455,7 @@ OPTIONS
             Database name (if unique) or Database identifier
 ----
 
-== Manage multiple regions
+== Manage multi-region databases
 
 You can configure a database to replicate data across multiple regions.
 Some benefits of multi-region databases include better data locality and higher availability for multi-region application architectures.
@@ -1026,7 +1026,7 @@ astra db delete **DATABASE_NAME**
 
 The database enters *Terminating* status while deletion occurs.
 
-By default, the command runs synchronously and doesn't return the command prompt until the database reaches `TERMINATED` or `ERROR` status.
+By default, the command runs synchronously and doesn't return the command prompt until the database reaches *Terminated* or *Error* status.
 To run the command _asynchronously_, add the `--async` option.
 
 === `db delete` options
@@ -1083,7 +1083,7 @@ OPTIONS
             Database name (if unique) or Database identifier
 ----
 
-== Create a keyspace
+== Manage keyspaces
 
 Use the `astra db create-keyspace` command to create a new keyspace in a database:
 
@@ -1095,17 +1095,20 @@ astra db create-keyspace **DATABASE_NAME** -k **KEYSPACE_NAME**
 .Result
 [%collapsible]
 ====
-[source,console,subs="+quotes"]
+[source,console]
 ----
-[INFO]  Keyspace  '**KEYSPACE_NAME**' is creating.
-[INFO]  Database '**DATABASE_NAME**' has status 'MAINTENANCE' waiting to be 'ACTIVE' ...
-[INFO]  Database '**DATABASE_NAME**' has status 'ACTIVE' (took 7018 millis)
-[OK]    Database '**DATABASE_NAME**' is ready.
-[OK]    Database '**DATABASE_NAME**' is ready.
+[INFO]  Keyspace  'keyspace2' is creating.
+[INFO]  Database 'my_serverless_db' has status 'MAINTENANCE' waiting to be 'ACTIVE' ...
+[INFO]  Database 'my_serverless_db' has status 'ACTIVE' (took 6882 millis)
+[OK]    Database 'my_serverless_db' is ready.
+[OK]    Database 'my_serverless_db' is ready.
 ----
 ====
 
-The database enters Maintenance status while creating the keyspace. When the database returns to Active status, you can use the new keyspace.
+The database enters *Maintenance* status while creating the keyspace.
+When the database returns to *Active* status, you can use the new keyspace.
+
+include::ROOT:partial$async-option.adoc[]
 
 [TIP]
 ======
@@ -1121,14 +1124,64 @@ astra db create-keyspace **DATABASE_NAME** -k **KEYSPACE_NAME** --if-not-exist
 .Result
 [%collapsible]
 ====
-[source,console,subs="+quotes"]
+[source,console]
 ----
-[INFO]  Keyspace  '**KEYSPACE_NAME**' already exists. Connecting to keyspace.
-[OK]    Database '**DATABASE_NAME**' is ready.
-[OK]    Database '**DATABASE_NAME**' is ready.
+[INFO]  Keyspace  'keyspace2' already exists. Connecting to keyspace.
+[OK]    Database 'my_serverless_db' is ready.
+[OK]    Database 'my_serverless_db' is ready.
 ----
 ====
 ======
+
+Use the `astra db list-keyspaces` command to get a list of the keyspaces in a database:
+
+[source,bash,subs="+quotes"]
+----
+astra db list-keyspaces **DATABASE_NAME**
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
++---------------------+
+| Name                |
++---------------------+
+| keyspace1 (default) |
+| keyspace2           |
++---------------------+
+----
+====
+
+Use the `astra db delete-keyspace` command to delete a keyspace from a database:
+
+[source,bash,subs="+quotes"]
+----
+astra db delete-keyspace **DATABASE_NAME** -k **KEYSPACE_NAME**
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
+[INFO]  Database 'my_serverless_db' has status 'MAINTENANCE' waiting to be 'ACTIVE' ...
+[INFO]  Database 'my_serverless_db' has status 'ACTIVE' (took 6917 millis)
+[OK]    Database 'my_serverless_db' is ready.
+----
+====
+
+[WARNING]
+====
+Deleting a keyspace permanently deletes all collections, tables, and data in the keyspace.
+====
+
+The database enters *Maintenance* status while it deletes the keyspace along with any collections, tables, and data within the keyspace.
+
+include::ROOT:partial$async-option.adoc[]
+
+If you delete the default keyspace, {astra_db} automatically selects another keyspace to be the default keyspace.
 
 === `db create-keyspace` options
 
@@ -1184,29 +1237,6 @@ OPTIONS
             Database name (if unique) or Database identifier
 ----
 
-== Get a list of keyspaces
-
-Use the `astra db list-keyspaces` command to list the keyspaces in a database:
-
-[source,bash,subs="+quotes"]
-----
-astra db list-keyspaces **DATABASE_NAME**
-----
-
-.Result
-[%collapsible]
-====
-[source,console]
-----
-+---------------------+
-| Name                |
-+---------------------+
-| keyspace1 (default) |
-| keyspace2           |
-+---------------------+
-----
-====
-
 === `db list-keyspaces` options
 
 [source,console]
@@ -1250,38 +1280,6 @@ OPTIONS
         <DB>
             Database name (if unique) or Database identifier
 ----
-
-== Delete a keyspace
-
-[WARNING]
-====
-Deleting a keyspace permanently deletes all collections, tables, and data in the keyspace.
-====
-
-Use the `astra db delete-keyspace` command to delete a keyspace:
-
-[source,bash,subs="+quotes"]
-----
-astra db delete-keyspace **DATABASE_NAME** -k **KEYSPACE_NAME**
-----
-
-.Result
-[%collapsible]
-====
-[source,console,subs="+quotes"]
-----
-[INFO]  Database '**DATABASE_NAME**' has status 'MAINTENANCE' waiting to be 'ACTIVE' ...
-[INFO]  Database '**DATABASE_NAME**' has status 'ACTIVE' (took 5591 millis)
-[OK]    Database '**DATABASE_NAME**' is ready.
-----
-====
-
-The database enters *Maintenance* status while it deletes the keyspace along with any collections, tables, and data within the keyspace.
-
-[NOTE]
-====
-If you delete the default keyspace, {astra_db} automatically selects another keyspace to be the default keyspace.
-====
 
 === `db delete-keyspace` options
 
@@ -1528,124 +1526,6 @@ OPTIONS
             Verbose mode with log in console
 ----
 
-Use the `-o` option to output the result in `csv` or `json` format:
-
-[source,bash,subs="+quotes"]
-----
-astra db list-regions-serverless -o csv
-----
-
-.Result
-[%collapsible]
-======
-[source,csv]
-----
-Cloud Provider,Region,Full Name
-aws,ap-east-1,Asia Pacific (Hong Kong)
-aws,ap-south-1,Asia Pacific (Mumbai)
-aws,ap-southeast-1,Asia Pacific (Singapore)
-aws,ap-southeast-2,Asia Pacific (Sydney)
-aws,ca-central-1,Canada (Central)
-aws,ca-west-1,Canada West (Calgary)
-aws,eu-central-1,Europe (Frankfurt)
-aws,eu-west-1,Europe (Ireland)
-aws,eu-west-2,Europe (London)
-aws,me-central-1,Middle East (UAE)
-aws,sa-east-1,South America (Sao Paulo)
-aws,us-east-1,US East (N. Virginia)
-aws,us-east-2,US East (Ohio)
-aws,us-west-2,US West (Oregon)
-azure,australiaeast,Australia East
-azure,brazilsouth,Brazil South (Sao Paulo)
-azure,canadacentral,Canada Central (Toronto)
-azure,centralindia,Central India (Pune)
-azure,centralus,(US) Central US
-azure,eastus,US East
-azure,eastus2,US East 2 (Virginia)
-azure,northeurope,Northern Europe (Ireland)
-azure,westeurope,West Europe
-azure,westus2,US West (Washington)
-azure,westus3,US West 3
-gcp,asia-northeast1,"Asia Northeast1 (Tokyo, Japan)"
-gcp,asia-northeast2,"Osaka, Japan, APAC"
-gcp,asia-south1,"Mumbai, India"
-gcp,australia-southeast1,"Sydney, Australia, APAC"
-gcp,europe-west1,"St. Ghislain, Belgium"
-gcp,europe-west2,"West Europe2 (London, England, UK)"
-gcp,europe-west3,"West Europe3 (Frankfurt, Germany)"
-gcp,europe-west4,"West Europe4 (Eemshaven, Netherlands)"
-gcp,northamerica-northeast1,"Montreal, Quebec"
-gcp,northamerica-northeast2,"Toronto, Ontario"
-gcp,us-central1,"Council Bluffs, Iowa"
-gcp (free-tier),us-east1,"Moncks Corner, South Carolina"
-gcp,us-east4,"Ashburn, Virginia"
-gcp,us-west1,"The Dalles, Oregon"
-gcp,us-west4,"US West (Las Vegas, USA)"
-----
-
-include::ROOT:partial$regions-change-admonition.adoc[]
-======
-
-Use the `-c`/`--cloud` option to filter available regions by cloud provider (`aws`, `gcp`, or `azure`):
-
-[source,bash,subs="+quotes"]
-----
-astra db list-regions-serverless -c aws
-----
-
-.Result
-[%collapsible]
-======
-[source,console]
-----
-+-----------------+---------------------+-------------------------------+
-| Cloud Provider  | Region              | Full Name                     |
-+-----------------+---------------------+-------------------------------+
-| aws             | ap-east-1           | Asia Pacific (Hong Kong)      |
-| aws             | ap-south-1          | Asia Pacific (Mumbai)         |
-| aws             | ap-southeast-1      | Asia Pacific (Singapore)      |
-| aws             | ap-southeast-2      | Asia Pacific (Sydney)         |
-| aws             | ca-central-1        | Canada (Central)              |
-| aws             | ca-west-1           | Canada West (Calgary)         |
-| aws             | eu-central-1        | Europe (Frankfurt)            |
-| aws             | eu-west-1           | Europe (Ireland)              |
-| aws             | eu-west-2           | Europe (London)               |
-| aws             | me-central-1        | Middle East (UAE)             |
-| aws             | sa-east-1           | South America (Sao Paulo)     |
-| aws             | us-east-1           | US East (N. Virginia)         |
-| aws             | us-east-2           | US East (Ohio)                |
-| aws             | us-west-2           | US West (Oregon)              |
-+-----------------+---------------------+-------------------------------+
-----
-
-include::ROOT:partial$regions-change-admonition.adoc[]
-======
-
-Use the `-f`/`--filter` option to filter based on an arbitrary string in Region and Full Name:
-
-[source,bash]
-----
-astra db list-regions-serverless -f australia
-----
-
-.Result
-[%collapsible]
-======
-[source,console]
-----
-+-----------------+---------------------+-------------------------------+
-| Cloud Provider  | Region              | Full Name                     |
-+-----------------+---------------------+-------------------------------+
-| azure           | australiaeast       | Australia East                |
-| gcp             | australia-southeast1| Sydney, Australia, APAC       |
-+-----------------+---------------------+-------------------------------+
-----
-
-include::ROOT:partial$regions-change-admonition.adoc[]
-======
-
-// TODO: Add examples for `-cf`/`--config-file`, `-conf/`--config`, `--env`, `--token`, and `-v`/`--verbose` options.
-
 === `db list-regions-vector` options
 
 [source,console]
@@ -1690,87 +1570,6 @@ OPTIONS
             Verbose mode with log in console
 ----
 
-Use the `-c`/`--cloud` option to filter available regions by cloud provider (`aws`, `gcp`, or `azure`):
-
-[source,bash,subs="+quotes"]
-----
-astra db list-regions-vector -c aws
-----
-
-.Result
-[%collapsible]
-======
-[source,console]
-----
-+-----------------+---------------------+-------------------------------+
-| Cloud Provider  | Region              | Full Name                     |
-+-----------------+---------------------+-------------------------------+
-| aws             | ap-south-1          | Asia Pacific (Mumbai)         |
-| aws             | ap-southeast-2      | Asia Pacific (Sydney)         |
-| aws             | eu-west-1           | Europe (Ireland)              |
-| aws             | us-east-1           | US East (N. Virginia)         |
-| aws             | us-east-2           | US East (Ohio)                |
-+-----------------+---------------------+-------------------------------+
-----
-
-include::ROOT:partial$regions-change-admonition.adoc[]
-======
-
-Use the `-o` option to output the result in `csv` or `json` format:
-
-[source,bash,subs="+quotes"]
-----
-astra db list-regions-vector -o csv
-----
-
-.Result
-[%collapsible]
-======
-[source,csv]
-----
-Cloud Provider,Region,Full Name
-aws,ap-south-1,Asia Pacific (Mumbai)
-aws,ap-southeast-2,Asia Pacific (Sydney)
-aws,eu-west-1,Europe (Ireland)
-aws,us-east-1,US East (N. Virginia)
-aws,us-east-2,US East (Ohio)
-azure,australiaeast,Australia East
-azure,centralindia,Central India (Pune)
-azure,westeurope,West Europe
-azure,westus3,US West 3
-gcp,europe-west2,"West Europe2 (London, England, UK)"
-gcp,northamerica-northeast1,"Montreal, Quebec"
-gcp (free-tier),us-east1,"Moncks Corner, South Carolina"
-gcp,us-east4,"Ashburn, Virginia"
-----
-
-include::ROOT:partial$regions-change-admonition.adoc[]
-======
-
-Use the `-f`/`--filter` option to filter based on an arbitrary string in Region and Full Name:
-
-[source,bash]
-----
-astra db list-regions-vector -f australia
-----
-
-.Result
-[%collapsible]
-======
-[source,console]
-----
-+-----------------+---------------------+-------------------------------+
-| Cloud Provider  | Region              | Full Name                     |
-+-----------------+---------------------+-------------------------------+
-| azure           | australiaeast       | Australia East                |
-+-----------------+---------------------+-------------------------------+
-----
-
-include::ROOT:partial$regions-change-admonition.adoc[]
-======
-
-// TODO: Add examples for `-cf`/`--config-file`, `-conf/`--config`, `--env`, `--token`, and `-v`/`--verbose` options.
-
 === `db list-regions-classic` options
 
 [source,console]
@@ -1814,119 +1613,6 @@ OPTIONS
         -v, --verbose
             Verbose mode with log in console
 ----
-
-Use the `-c`/`--cloud` option to filter available regions by cloud provider (`aws`, `gcp`, or `azure`):
-
-[source,bash,subs="+quotes"]
-----
-astra db list-regions-classic -c aws
-----
-
-.Result
-[%collapsible]
-======
-[source,console]
-----
-+-----------------+---------------------+-------------------------------+
-| Cloud Provider  | Region              | Full Name                     |
-+-----------------+---------------------+-------------------------------+
-| aws             | af-south-1          | Africa (Cape Town)            |
-| aws             | ap-east-1           | Hong Kong                     |
-| aws             | ap-south-1          | Asia Pacific (Mumbai)         |
-| aws             | ap-southeast-1      | Asia Pacific (Singapore)      |
-| aws             | ap-southeast-2      | Asia Pacific (Sydney)         |
-| aws             | ca-central-1        | Canada (Central)              |
-| aws             | ca-west-1           | Canada West (Calgary)         |
-| aws             | eu-central-1        | Europe (Frankfurt)            |
-| aws             | eu-west-1           | EU West 1 (Ireland)           |
-| aws             | eu-west-2           | Europe (London)               |
-| aws             | me-central-1        | Middle East (UAE)             |
-| aws             | sa-east-1           | Sao Paulo                     |
-| aws             | us-east-1           | US East (N. Virginia)         |
-| aws             | us-east-2           | US East (Ohio)                |
-| aws             | us-west-2           | US West (Oregon)              |
-+-----------------+---------------------+-------------------------------+
-----
-
-include::ROOT:partial$regions-change-admonition.adoc[]
-======
-
-Use the `-o` option to output the result in `csv` or `json` format:
-
-[source,bash,subs="+quotes"]
-----
-astra db list-regions-classic -o csv
-----
-
-.Result
-[%collapsible]
-======
-[source,csv]
-----
-Cloud Provider,Region,Full Name
-aws,af-south-1,Africa (Cape Town)
-aws,ap-east-1,Hong Kong
-aws,ap-south-1,Asia Pacific (Mumbai)
-aws,ap-southeast-1,Asia Pacific (Singapore)
-aws,ap-southeast-2,Asia Pacific (Sydney)
-aws,ca-central-1,Canada (Central)
-aws,ca-west-1,Canada West (Calgary)
-aws,eu-central-1,Europe (Frankfurt)
-aws,eu-west-1,EU West 1 (Ireland)
-aws,eu-west-2,Europe (London)
-aws,me-central-1,Middle East (UAE)
-aws,sa-east-1,Sao Paulo
-aws,us-east-1,US East (N. Virginia)
-aws,us-east-2,US East (Ohio)
-aws,us-west-2,US West (Oregon)
-azure,australiaeast,Australia East
-azure,brazilsouth,Brazil South
-azure,canadacentral,Canada Central (Toronto)
-azure,centralindia,Central India
-azure,centralus,(US) Central US
-azure,eastus2,East US 2 (Virginia)
-azure,northeurope,North Europe
-azure,southcentralus,South Central US
-azure,westeurope,West Europe
-azure,westus2,West US 2 (Washington)
-azure,westus3,West US 3
-gcp,asia-northeast2,"Osaka, Japan, APAC"
-gcp,asia-south1,"Mumbai, India"
-gcp,europe-west1,"St. Ghislain, Belgium"
-gcp,northamerica-northeast1,NA Northeast 1 (Montreal)
-gcp,southamerica-east1,"Osasco, Sao Paulo, Brazil"
-gcp,us-central1,US Central (Iowa)
-gcp (free-tier),us-east1,US East (South Carolina)
-gcp,us-east4,US East 4 (Virginia)
-gcp,us-west1,"The Dalles, Oregon"
-----
-
-include::ROOT:partial$regions-change-admonition.adoc[]
-======
-
-Use the `-f`/`--filter` option to filter based on an arbitrary string in Region and Full Name:
-
-[source,bash]
-----
-astra db list-regions-classic -f australia
-----
-
-.Result
-[%collapsible]
-======
-[source,console]
-----
-+-----------------+---------------------+-------------------------------+
-| Cloud Provider  | Region              | Full Name                     |
-+-----------------+---------------------+-------------------------------+
-| azure           | australiaeast       | Australia East                |
-+-----------------+---------------------+-------------------------------+
-----
-
-include::ROOT:partial$regions-change-admonition.adoc[]
-======
-
-// TODO: Add examples for `-cf`/`--config-file`, `-conf/`--config`, `--env`, `--token`, and `-v`/`--verbose` options.
 
 [#cqlsh]
 == Use the CQL shell (cqlsh)
@@ -2155,29 +1841,29 @@ The {product} provides built-in DSBulk support by downloading, installing, confi
 
 The {product} exposes DSBulk functionality through the `astra db load`, `astra db unload`, and `astra db count` commands.
 
-Use the `astra db load` command to load data into a table:
+Use the `astra db load` command to load data from a file into a database table:
 
 [source,bash,subs="+quotes"]
 ----
 astra db load **DATABASE_NAME** \
-  -url **FILE_LOCATION** \
   -k **KEYSPACE_NAME** \
   -t **TABLE_NAME** \
+  -url **FILE_LOCATION**
 ----
 
 .Result
 [%collapsible]
 ====
-[source,console,subs="+quotes"]
+[source,console]
 ----
 [INFO]  Downloading Dsbulk, please wait...
 [INFO]  Installing  archive, please wait...
-[INFO]  RUNNING: /Users/**USERNAME**/.astra/dsbulk-1.11.0/bin/dsbulk load -u token -p AstraCS:FZmCtRdyzJkYidnmlzwcwJWc:f51d3... -b /Users/**USERNAME**/.astra/scb/scb_d123ae26-2ba1-4975-87cd-da33a887a0c1_us-east-1.zip -k demo -t cities_by_country -logDir ./logs --log.verbosity normal --schema.allowMissingFields true -maxConcurrentQueries AUTO -delim , -url cities.csv -header true -encoding UTF-8 -skipRecords 0 -maxErrors 100
+[INFO]  RUNNING: /Users/USERNAME/.astra/dsbulk-1.11.0/bin/dsbulk load -u token -p AstraCS:FZm... -b /Users/USERNAME/.astra/scb/scb_d123ae26-2ba1-4975-87cd-da33a887a0c1_us-east-1.zip -k demo -t cities_by_country -logDir ./logs --log.verbosity normal --schema.allowMissingFields true -maxConcurrentQueries AUTO -delim , -url cities.csv -header true -encoding UTF-8 -skipRecords 0 -maxErrors 100
 [INFO]  DSBulk is starting please wait ...
 Username and password provided but auth provider not specified, inferring PlainTextAuthProvider
 A cloud secure connect bundle was provided: ignoring all explicit contact points.
 A cloud secure connect bundle was provided and selected operation performs writes: changing default consistency level to LOCAL_QUORUM.
-Operation directory: /Users/**USERNAME**/logs/LOAD_20241120-190553-154417
+Operation directory: /Users/USERNAME/logs/LOAD_20241120-190553-154417
 Setting executor.maxPerSecond not set when connecting to DataStax Astra: applying a limit of 27,000 ops/second based on the number of coordinators (9).
 If your Astra database has higher limits, please define executor.maxPerSecond explicitly.
   total | failed | rows/s |  p50ms |  p99ms | p999ms | batches
@@ -2185,7 +1871,7 @@ If your Astra database has higher limits, please define executor.maxPerSecond ex
 Operation LOAD_20241120-190553-154417 completed successfully in 7 seconds.
 Checkpoints for the current operation were written to checkpoint.csv.
 To resume the current operation, re-run it with the same settings, and add the following command line flag:
---dsbulk.log.checkpoint.file=/Users/**USERNAME**/logs/LOAD_20241120-190553-154417/checkpoint.csv
+--dsbulk.log.checkpoint.file=/Users/USERNAME/logs/LOAD_20241120-190553-154417/checkpoint.csv
 ----
 ====
 
@@ -2195,7 +1881,8 @@ You can use the `cqlsh` command to check that the data imported successfully:
 
 [source,bash,subs="+quotes"]
 ----
-astra db cqlsh **DATABASE_NAME** -e "select * from **KEYSPACE_NAME**.**TABLE_NAME** LIMIT 20;"
+astra db cqlsh **DATABASE_NAME** -e \
+"SELECT * FROM **KEYSPACE_NAME**.**TABLE_NAME** LIMIT 20;"
 ----
 
 .Result
@@ -2233,29 +1920,32 @@ astra db cqlsh **DATABASE_NAME** -e "select * from **KEYSPACE_NAME**.**TABLE_NAM
 ====
 ======
 
-Use the `astra db unload` command to unload database table rows to a file:
+Use the `astra db unload` command to unload database table rows into a file:
 
 [source,bash,subs="+quotes"]
 ----
-astra db unload **DATABASE_NAME** -k **KEYSPACE_NAME** -t **TABLE_NAME** -url **FILE_LOCATION**
+astra db unload **DATABASE_NAME** \
+    -k **KEYSPACE_NAME** \
+    -t **TABLE_NAME** \
+    -url **FILE_LOCATION**
 ----
 
 .Result
 [%collapsible]
 ====
-[source,console,subs="+quotes"]
+[source,console]
 ----
-[INFO]  RUNNING: /Users/**USERNAME**/.astra/dsbulk-1.11.0/bin/dsbulk unload -u token -p AstraCS:FZmCtRdyzJkYidnmlzwcwJWc:f51d3.. -b /Users/**USERNAME**/.astra/scb/scb_d123ae26-2ba1-4975-87cd-da33a887a0c1_us-east-1.zip -k demo -t cities_by_country -logDir ./logs --log.verbosity normal --schema.allowMissingFields true -maxConcurrentQueries AUTO -delim , -url **FILE_LOCATION** -header true -encoding UTF-8 -skipRecords 0 -maxErrors 100
+[INFO]  RUNNING: /Users/USERNAME/.astra/dsbulk-1.11.0/bin/dsbulk unload -u token -p AstraCS:FZm... -b /Users/USERNAME/.astra/scb/scb_d123ae26-2ba1-4975-87cd-da33a887a0c1_us-east-1.zip -k demo -t cities_by_country -logDir ./logs --log.verbosity normal --schema.allowMissingFields true -maxConcurrentQueries AUTO -delim , -url FILE_LOCATION -header true -encoding UTF-8 -skipRecords 0 -maxErrors 100
 [INFO]  DSBulk is starting please wait ...
 Username and password provided but auth provider not specified, inferring PlainTextAuthProvider
 A cloud secure connect bundle was provided: ignoring all explicit contact points.
-Operation directory: /Users/**USERNAME**/logs/UNLOAD_20241120-193658-535944
+Operation directory: /Users/USERNAME/logs/UNLOAD_20241120-193658-535944
   total | failed | rows/s |  p50ms |  p99ms | p999ms
 134,574 |      0 | 33,860 | 284.67 | 587.20 | 587.20
 Operation UNLOAD_20241120-193658-535944 completed successfully in 3 seconds.
 Checkpoints for the current operation were written to checkpoint.csv.
 To resume the current operation, re-run it with the same settings, and add the following command line flag:
---dsbulk.log.checkpoint.file=/Users/**USERNAME**/logs/UNLOAD_20241120-193658-535944/checkpoint.csv
+--dsbulk.log.checkpoint.file=/Users/USERNAME/logs/UNLOAD_20241120-193658-535944/checkpoint.csv
 ----
 ====
 
@@ -2263,25 +1953,27 @@ Use the `astra db count` command to get information about loaded data:
 
 [source,bash,subs="+quotes"]
 ----
-astra db count **DATABASE_NAME** -k **KEYSPACE_NAME** -t **TABLE_NAME**
+astra db count **DATABASE_NAME** \
+    -k **KEYSPACE_NAME** \
+    -t **TABLE_NAME**
 ----
 
 .Result
 [%collapsible]
 ====
-[source,console,subs="+quotes"]
+[source,console]
 ----
-[INFO]  RUNNING: /Users/**USERNAME**/.astra/dsbulk-1.11.0/bin/dsbulk count -u token -p AstraCS:FZmCtRdyzJkYidnmlzwcwJWc:f51d3... -b /Users/**USERNAME**/.astra/scb/scb_d123ae26-2ba1-4975-87cd-da33a887a0c1_us-east-1.zip -k demo -t cities_by_country -logDir ./logs --log.verbosity normal --schema.allowMissingFields true -maxConcurrentQueries AUTO
+[INFO]  RUNNING: /Users/USERNAME/.astra/dsbulk-1.11.0/bin/dsbulk count -u token -p AstraCS:FZm... -b /Users/USERNAME/.astra/scb/scb_d123ae26-2ba1-4975-87cd-da33a887a0c1_us-east-1.zip -k demo -t cities_by_country -logDir ./logs --log.verbosity normal --schema.allowMissingFields true -maxConcurrentQueries AUTO
 [INFO]  DSBulk is starting please wait ...
 Username and password provided but auth provider not specified, inferring PlainTextAuthProvider
 A cloud secure connect bundle was provided: ignoring all explicit contact points.
-Operation directory: /Users/**USERNAME**/logs/COUNT_20241120-192745-378116
+Operation directory: /Users/USERNAME/logs/COUNT_20241120-192745-378116
   total | failed | rows/s |  p50ms |  p99ms | p999ms
 134,574 |      0 | 66,270 | 236.12 | 501.22 | 501.22
 Operation COUNT_20241120-192745-378116 completed successfully in 1 second.
 Checkpoints for the current operation were written to checkpoint.csv.
 To resume the current operation, re-run it with the same settings, and add the following command line flag:
---dsbulk.log.checkpoint.file=/Users/**USERNAME**/logs/COUNT_20241120-192745-378116/checkpoint.csv
+--dsbulk.log.checkpoint.file=/Users/USERNAME/logs/COUNT_20241120-192745-378116/checkpoint.csv
 134574
 ----
 ====
@@ -2665,22 +2357,22 @@ This command creates a table named `cities_by_country` with the appropriate sche
 [source,bash]
 ----
 astra db load demo \
-  -url cities.csv \
   -k demo \
-  -t cities_by_country
+  -t cities_by_country \
+  -url cities.csv
 ----
 +
 .Result
 [%collapsible]
 ====
-[source,console,subs="+quotes"]
+[source,console]
 ----
-[INFO]  RUNNING: /Users/**USERNAME**/.astra/dsbulk-1.11.0/bin/dsbulk load -u token -p AstraCS:FZmCtRdyzJkYidnmlzwcwJWc:f51d3... -b /Users/**USERNAME**/.astra/scb/scb_a53003fe-ba42-4c3c-85d0-6b345622c2dc_us-east1.zip -k demo -t cities_by_country -logDir ./logs --log.verbosity normal --schema.allowMissingFields true -maxConcurrentQueries AUTO -delim , -url cities.csv -header true -encoding UTF-8 -skipRecords 0 -maxErrors 100
+[INFO]  RUNNING: /Users/USERNAME/.astra/dsbulk-1.11.0/bin/dsbulk load -u token -p AstraCS:FZm... -b /Users/USERNAME/.astra/scb/scb_a53003fe-ba42-4c3c-85d0-6b345622c2dc_us-east1.zip -k demo -t cities_by_country -logDir ./logs --log.verbosity normal --schema.allowMissingFields true -maxConcurrentQueries AUTO -delim , -url cities.csv -header true -encoding UTF-8 -skipRecords 0 -maxErrors 100
 [INFO]  DSBulk is starting please wait ...
 Username and password provided but auth provider not specified, inferring PlainTextAuthProvider
 A cloud secure connect bundle was provided: ignoring all explicit contact points.
 A cloud secure connect bundle was provided and selected operation performs writes: changing default consistency level to LOCAL_QUORUM.
-Operation directory: /Users/**USERNAME**/logs/LOAD_20241120-205743-166874
+Operation directory: /Users/USERNAME/logs/LOAD_20241120-205743-166874
 Setting executor.maxPerSecond not set when connecting to DataStax Astra: applying a limit of 27,000 ops/second based on the number of coordinators (9).
 If your Astra database has higher limits, please define executor.maxPerSecond explicitly.
   total | failed | rows/s |  p50ms |  p99ms |   p999ms | batches
@@ -2688,7 +2380,7 @@ If your Astra database has higher limits, please define executor.maxPerSecond ex
 Operation LOAD_20241120-205743-166874 completed successfully in 7 seconds.
 Checkpoints for the current operation were written to checkpoint.csv.
 To resume the current operation, re-run it with the same settings, and add the following command line flag:
---dsbulk.log.checkpoint.file=/Users/**USERNAME**/logs/LOAD_20241120-205743-166874/checkpoint.csv
+--dsbulk.log.checkpoint.file=/Users/USERNAME/logs/LOAD_20241120-205743-166874/checkpoint.csv
 ----
 ====
 
@@ -2696,7 +2388,8 @@ To resume the current operation, re-run it with the same settings, and add the f
 +
 [source,bash]
 ----
-astra db cqlsh demo -e "select * from demo.cities_by_country LIMIT 20;"
+astra db cqlsh demo -e \
+"select * from demo.cities_by_country LIMIT 20;"
 ----
 +
 .Result
@@ -2735,7 +2428,9 @@ astra db cqlsh demo -e "select * from demo.cities_by_country LIMIT 20;"
 +
 [source,bash]
 ----
-astra db count demo -k demo -t cities_by_country
+astra db count demo \
+    -k demo \
+    -t cities_by_country
 ----
 +
 .Result
@@ -2743,17 +2438,17 @@ astra db count demo -k demo -t cities_by_country
 ====
 [source,console]
 ----
-[INFO]  RUNNING: /Users/**USERNAME**/.astra/dsbulk-1.11.0/bin/dsbulk count -u token -p AstraCS:FZmCtRdyzJkYidnmlzwcwJWc:f51d3... -b /Users/**USERNAME**/.astra/scb/scb_a53003fe-ba42-4c3c-85d0-6b345622c2dc_us-east1.zip -k demo -t cities_by_country -logDir ./logs --log.verbosity normal --schema.allowMissingFields true -maxConcurrentQueries AUTO
+[INFO]  RUNNING: /Users/USERNAME/.astra/dsbulk-1.11.0/bin/dsbulk count -u token -p AstraCS:FZm... -b /Users/USERNAME/.astra/scb/scb_a53003fe-ba42-4c3c-85d0-6b345622c2dc_us-east1.zip -k demo -t cities_by_country -logDir ./logs --log.verbosity normal --schema.allowMissingFields true -maxConcurrentQueries AUTO
 [INFO]  DSBulk is starting please wait ...
 Username and password provided but auth provider not specified, inferring PlainTextAuthProvider
 A cloud secure connect bundle was provided: ignoring all explicit contact points.
-Operation directory: /Users/**USERNAME**/logs/COUNT_20241120-210748-465576
+Operation directory: /Users/USERNAME/logs/COUNT_20241120-210748-465576
   total | failed | rows/s |  p50ms |  p99ms | p999ms
 134,574 |      0 | 70,713 | 215.20 | 354.42 | 354.42
 Operation COUNT_20241120-210748-465576 completed successfully in 1 second.
 Checkpoints for the current operation were written to checkpoint.csv.
 To resume the current operation, re-run it with the same settings, and add the following command line flag:
---dsbulk.log.checkpoint.file=/Users/**USERNAME**/logs/COUNT_20241120-210748-465576/checkpoint.csv
+--dsbulk.log.checkpoint.file=/Users/USERNAME/logs/COUNT_20241120-210748-465576/checkpoint.csv
 134574
 ----
 ====
@@ -2762,7 +2457,10 @@ To resume the current operation, re-run it with the same settings, and add the f
 +
 [source,bash]
 ----
-astra db unload demo -k demo -t cities_by_country -url unloaded_data
+astra db unload demo \
+    -k demo \
+    -t cities_by_country \
+    -url unloaded_data
 ----
 +
 .Result
@@ -2770,17 +2468,17 @@ astra db unload demo -k demo -t cities_by_country -url unloaded_data
 ====
 [source,console]
 ----
-[INFO]  RUNNING: /Users/**USERNAME**/.astra/dsbulk-1.11.0/bin/dsbulk unload -u token -p AstraCS:FZmCtRdyzJkYidnmlzwcwJWc:f51d3... -b /Users/**USERNAME**/.astra/scb/scb_a53003fe-ba42-4c3c-85d0-6b345622c2dc_us-east1.zip -k demo -t cities_by_country -logDir ./logs --log.verbosity normal --schema.allowMissingFields true -maxConcurrentQueries AUTO -delim , -url unloaded_data -header true -encoding UTF-8 -skipRecords 0 -maxErrors 100
+[INFO]  RUNNING: /Users/USERNAME/.astra/dsbulk-1.11.0/bin/dsbulk unload -u token -p AstraCS:FZm... -b /Users/USERNAME/.astra/scb/scb_a53003fe-ba42-4c3c-85d0-6b345622c2dc_us-east1.zip -k demo -t cities_by_country -logDir ./logs --log.verbosity normal --schema.allowMissingFields true -maxConcurrentQueries AUTO -delim , -url unloaded_data -header true -encoding UTF-8 -skipRecords 0 -maxErrors 100
 [INFO]  DSBulk is starting please wait ...
 Username and password provided but auth provider not specified, inferring PlainTextAuthProvider
 A cloud secure connect bundle was provided: ignoring all explicit contact points.
-Operation directory: /Users/**USERNAME**/logs/UNLOAD_20241120-211159-993666
+Operation directory: /Users/USERNAME/logs/UNLOAD_20241120-211159-993666
   total | failed | rows/s |  p50ms |  p99ms | p999ms
 134,574 |      0 | 31,329 | 308.52 | 603.98 | 603.98
 Operation UNLOAD_20241120-211159-993666 completed successfully in 4 seconds.
 Checkpoints for the current operation were written to checkpoint.csv.
 To resume the current operation, re-run it with the same settings, and add the following command line flag:
---dsbulk.log.checkpoint.file=/Users/**USERNAME**/logs/UNLOAD_20241120-211159-993666/checkpoint.csv
+--dsbulk.log.checkpoint.file=/Users/USERNAME/logs/UNLOAD_20241120-211159-993666/checkpoint.csv
 ----
 ====
 +
@@ -2894,9 +2592,9 @@ astra db download-scb **DATABASE_NAME** -f **DESTINATION_FILE**.zip
 .Result
 [%collapsible]
 ====
-[source,console,subs="+quotes"]
+[source,console]
 ----
-[INFO]  Bundle downloaded in **DESTINATION_FILE**.zip
+[INFO]  Bundle downloaded in DESTINATION_FILE.zip
 ----
 ====
 
@@ -2925,7 +2623,7 @@ If a `.env` file already exists in the directory, the {product} appends the new 
 [source,console]
 ----
 ASTRA_DB_API_ENDPOINT="https://a53003fe-ba42-4c3c-85d0-6b345622c2dc-us-east1.apps.astra.datastax.com/api/json"
-ASTRA_DB_APPLICATION_TOKEN="AstraCS:FZmCtRdyzJkYidnmlzwcwJWc:f51d3ee8fce90b28a7681a1e1bc3fa0d69cb770b0219aa98b96deb61df5f7a36"
+ASTRA_DB_APPLICATION_TOKEN="AstraCS:FZm..."
 ASTRA_DB_GRAPHQL_URL="https://a53003fe-ba42-4c3c-85d0-6b345622c2dc-us-east1.apps.astra.datastax.com/api/graphql/demo"
 ASTRA_DB_GRAPHQL_URL_ADMIN="https://a53003fe-ba42-4c3c-85d0-6b345622c2dc-us-east1.apps.astra.datastax.com/api/graphql-admin"
 ASTRA_DB_GRAPHQL_URL_PLAYGROUND="https://a53003fe-ba42-4c3c-85d0-6b345622c2dc-us-east1.apps.astra.datastax.com/api/playground"
@@ -2935,11 +2633,11 @@ ASTRA_DB_KEYSPACE="demo"
 ASTRA_DB_REGION="us-east1"
 ASTRA_DB_REST_URL="https://a53003fe-ba42-4c3c-85d0-6b345622c2dc-us-east1.apps.astra.datastax.com/api/rest"
 ASTRA_DB_REST_URL_SWAGGER="https://a53003fe-ba42-4c3c-85d0-6b345622c2dc-us-east1.apps.astra.datastax.com/api/rest/swagger-ui/"
-ASTRA_DB_SECURE_BUNDLE_PATH="/Users/ericschneider/.astra/scb/scb_a53003fe-ba42-4c3c-85d0-6b345622c2dc_us-east1.zip"
+ASTRA_DB_SECURE_BUNDLE_PATH="/Users/USERNAME/.astra/scb/scb_a53003fe-ba42-4c3c-85d0-6b345622c2dc_us-east1.zip"
 ASTRA_DB_SECURE_BUNDLE_URL="https://datastax-cluster-config-prod.s3.us-east-2.amazonaws.com/a53003fe-ba42-4c3c-85d0-6b345622c2dc-1/secure-connect-demo.zip?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA2AIQRQ76XML7FLD6%2F20241120%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20241120T233147Z&X-Amz-Expires=300&X-Amz-SignedHeaders=host&X-Amz-Signature=46d8704e382458c82d7da02db1ca79657e003de327f0123a0189ec1a50171cb0"
-ASTRA_ORG_ID="2dbd3c55-6a68-4b5b-9155-5be9d41823d8"
-ASTRA_ORG_NAME="eric.schneider@datastax.com"
-ASTRA_ORG_TOKEN="AstraCS:FZmCtRdyzJkYidnmlzwcwJWc:f51d3ee8fce90b28a7681a1e1bc3fa0d69cb770b0219aa98b96deb61df5f7a36"
+ASTRA_ORG_ID="2dbd3c55-6a68-4b5b-9155-5be9d41823e8"
+ASTRA_ORG_NAME="alice@example.com"
+ASTRA_ORG_TOKEN="AstraCS:FZm..."
 ----
 ====
 
