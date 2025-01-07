@@ -40,51 +40,27 @@ astra db create **DATABASE_NAME** --vector
 [source,console]
 ----
 REGION OK
-[INFO]  Database 'my_serverless_vector_db' does not exist. Creating database 'my_serverless_vector_db' with keyspace 'default_keyspace'
+[INFO]  Database 'my_vector_db' does not exist. Creating database 'my_vector_db' with keyspace 'default_keyspace'
 get CLoud provider
-[INFO]  Enabling vector search for database my_serverless_vector_db
-[INFO]  Database 'my_serverless_vector_db' and keyspace 'default_keyspace' are being created.
-[INFO]  Database 'my_serverless_vector_db' has status 'PENDING' waiting to be 'ACTIVE' ...
-[INFO]  Database 'my_serverless_vector_db' has status 'ACTIVE' (took 142496 millis)
-[OK]    Database 'my_serverless_vector_db' is ready.
+[INFO]  Enabling vector search for database my_vector_db
+[INFO]  Database 'my_vector_db' and keyspace 'default_keyspace' are being created.
+[INFO]  Database 'my_vector_db' has status 'PENDING' waiting to be 'ACTIVE' ...
+[INFO]  Database 'my_vector_db' has status 'ACTIVE' (took 142496 millis)
+[OK]    Database 'my_vector_db' is ready.
 ----
 ====
 
 [NOTE]
 ====
 You cannot create {db-classic} databases with the {product}.
-However, you can use other commands, such as `<<list-databases,astra db list>>`, to return information about existing {db-classic} databases.
+However, you can use the {product} to <<get-database-details,get information>> about existing {db-classic} databases.
 ====
 
 Running `astra db create` without any options deploys the database in an available *Free* region and uses `default_keyspace` as the name for the default keyspace.
 
 If the database already exists but is currently xref:astra-db-serverless:databases:database-statuses.adoc[hibernated], the `astra db create` command <<resume-database,resumes>> the database.
 
-[TIP]
-=====
-By default, `astra db create` runs synchronously and doesn't return the command prompt until the database reaches `ACTIVE` or `ERROR` status.
-To run the command _asynchronously_, use the `--async` option:
-
-[source,bash,subs="+quotes"]
-----
-astra db create **DATABASE_NAME** --async
-----
-
-.Result
-[%collapsible]
-====
-[source,console]
-----
-REGION OK
-[INFO]  Database 'my_serverless_db' does not exist. Creating database 'my_serverless_db' with keyspace 'default_keyspace'
-get CLoud provider
-[INFO]  Database 'my_serverless_db' and keyspace 'default_keyspace' are being created.
-----
-====
-
-The {product} returns the command prompt before the database finishes creating.
-You can use the `astra db list` command to monitor the status of the database.
-=====
+include::ROOT:partial$async-option.adoc[]
 
 === `db create` options
 
@@ -200,10 +176,10 @@ astra db create demo -r us-east-1 -k keyspace1 --if-not-exist
 ----
 ////
 
-[#list-databases]
-== Get a list of databases
+[#get-database-details]
+== Get database details
 
-Use the `astra db list` command to get a list of all databases in your organization:
+Use the `astra db list` command to get a list of all the databases in your organization:
 
 [source,bash]
 ----
@@ -221,6 +197,60 @@ astra db list
 | my_serverless_db    | 3f2e8f8d-f24d-4dc9-b740-d57e643c7143 | us-east1  | gcp   |   | ACTIVE    |
 | my_vector_db        | ebae8d5a-4848-44c9-8485-87e413b60549 | us-east1  | gcp   | ■ | ACTIVE    |
 +---------------------+--------------------------------------+-----------+-------+---+-----------+
+----
+====
+
+Use the `astra db get` or `astra db describe` command to get information about a specific database:
+
+[source,bash,subs="+quotes"]
+----
+astra db get **DATABASE_NAME**
+----
+
+[source,bash,subs="+quotes"]
+----
+astra db describe **DATABASE_NAME**
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
++------------------+-----------------------------------------+
+| Attribute        | Value                                   |
++------------------+-----------------------------------------+
+| Name             | my_serverless_db                        |
+| id               | 3f2e8f8d-f24d-4dc9-b740-d57e643c7143    |
+| Cloud            | GCP                                     |
+| Regions          | us-east1                                |
+| Status           | ACTIVE                                  |
+| Vector           | Disabled                                |
+| Default Keyspace | default_keyspace                        |
+| Creation Time    | 2025-01-06T21:45:08Z                    |
+|                  |                                         |
+| Keyspaces        | [0] default_keyspace                    |
+|                  |                                         |
+|                  |                                         |
+| Regions          | [0] us-east1                            |
+|                  |                                         |
++------------------+-----------------------------------------+
+----
+====
+
+Use the `astra db status` command to get the status of a specific database:
+
+[source,bash,subs="+quotes"]
+----
+astra db status **DATABASE_NAME**
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
+[OK]    Database 'my_serverless_db' has status 'ACTIVE'
 ----
 ====
 
@@ -280,47 +310,6 @@ astra db list --vector
 +---------------------+--------------------------------------+-----------+-------+---+-----------+
 | my_vector_db        | ebae8d5a-4848-44c9-8485-87e413b60549 | us-east1  | gcp   | ■ | ACTIVE    |
 +---------------------+--------------------------------------+-----------+-------+---+-----------+
-----
-====
-
-[#get-database-details]
-== Get database details
-
-Use the `astra db get` or `astra db describe` command to get information about a specific database:
-
-[source,bash,subs="+quotes"]
-----
-astra db get **DATABASE_NAME**
-----
-
-[source,bash,subs="+quotes"]
-----
-astra db describe **DATABASE_NAME**
-----
-
-.Result
-[%collapsible]
-====
-[source,console]
-----
-+------------------+-----------------------------------------+
-| Attribute        | Value                                   |
-+------------------+-----------------------------------------+
-| Name             | my_serverless_db                        |
-| id               | 22fa1177-e365-4e20-90e6-7639664c9c6d    |
-| Cloud            | AWS                                     |
-| Regions          | us-east-1                               |
-| Status           | ACTIVE                                  |
-| Vector           | Disabled                                |
-| Default Keyspace | my_keyspace                             |
-| Creation Time    | 2025-01-06T20:34:35Z                    |
-|                  |                                         |
-| Keyspaces        | [0] my_keyspace                         |
-|                  |                                         |
-|                  |                                         |
-| Regions          | [0] us-east-1                           |
-|                  |                                         |
-+------------------+-----------------------------------------+
 ----
 ====
 
@@ -422,24 +411,6 @@ OPTIONS
             Database name (if unique) or Database identifie
 ----
 
-== Get database status
-
-Use the `astra db status` command to get the status of a database:
-
-[source,bash,subs="+quotes"]
-----
-astra db status **DATABASE_NAME**
-----
-
-.Result
-[%collapsible]
-====
-[source,console]
-----
-[OK]    Database 'my_serverless_db' has status 'ACTIVE'
-----
-====
-
 === `db status` options
 
 [source,console]
@@ -484,9 +455,62 @@ OPTIONS
             Database name (if unique) or Database identifier
 ----
 
-== Get database regions
+== Manage multiple regions
 
-Use the `astra db list-regions` command to get information about the regions that a database is deployed in:
+You can configure a database to replicate data across multiple regions.
+Some benefits of multi-region databases include better data locality and higher availability for multi-region application architectures.
+For more information, see xref:astra-db-serverless:databases:manage-regions.adoc[].
+
+[IMPORTANT]
+====
+Multi-region databases are a premium feature.
+Each region added to a database increases the database's costs.
+This includes a one-time data replication fee for the new region, and charges for replicating data to all database regions.
+For more information, see xref:astra-db-serverless:administration:subscription-plans.adoc[].
+====
+
+Use the `astra db create-region` command to add a region to a database:
+
+[source,bash,subs="+quotes"]
+----
+astra db create-region **DATABASE_NAME** -r **REGION**
+----
+
+Replace `**REGION**` with the region you want to add to your database.
+The following restrictions apply:
+
+* You can add only one region at a time.
+
+* You can't select a region that the database already uses.
+
+* You must select a region in the same cloud provider as the database's other regions.
+Multi-region databases can't span multiple cloud providers.
+
+* For {db-serverless-vector} databases, you must select a region that supports that database type.
+For more information, see xref:astra-db-serverless:databases:regions.adoc[].
+
+////
+// TODO: The command is not working as expected. Must investigate and figure out why it is reporting the following error: [ERROR] UNAVAILABLE: Database 'my_serverless_db' has been found but operation cannot be processed due to invalid state (ACTIVE) expected (ACTIVE)
+.Result
+[%collapsible]
+====
+[source,console]
+----
+
+----
+====
+////
+
+[NOTE]
+====
+The database enters *Maintenance* status while provisioning and replicating data to the new region.
+
+While in *Maintenance* status, you can't add or remove regions, truncate tables, or delete keyspaces, tables, or collections.
+
+*Maintenance* status doesn't impact reads and writes.
+====
+
+Use the `astra db list-regions` command to list the regions where a database is deployed:
 
 [source,bash,subs="+quotes"]
 ----
@@ -502,9 +526,112 @@ astra db list-regions **DATABASE_NAME**
 | Cloud Provider | Region              | Tier           | Status         |
 +----------------+---------------------+----------------+----------------+
 | gcp            | us-east1 (default)  | serverless     |                |
+| gcp            | us-west1            | serverless     |                |
 +----------------+---------------------+----------------+----------------+
 ----
 ====
+
+Use the `astra db delete-region` command to remove a region from a database:
+
+[source,bash,subs="+quotes"]
+----
+astra db delete-region **DATABASE_NAME** -r **REGION**
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
+[INFO]  Region 'us-west1' is deleting.
+[OK]    Region us-west1 has been deleted
+----
+====
+
+[NOTE]
+====
+The database enters *Maintenance* status while deleting the region.
+
+While in *Maintenance* status, you can't add or remove regions, truncate tables, or delete keyspaces, tables, or collections.
+
+*Maintenance* status doesn't impact reads and writes.
+====
+
+[IMPORTANT]
+====
+You can't remove the primary (default) region, which is the first region selected when you created the database.
+
+When you remove a region, any connections to the deleted region are also removed.
+However, to avoid data loss, all data is replicated before the region is deleted.
+====
+
+=== `db create-region` options
+
+[source,console]
+----
+NAME
+        astra db create-region - Expand database to a new region
+
+SYNOPSIS
+        astra db create-region [ --async ] [ {-c | --cloud} <CLOUD> ]
+                [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
+                [ --if-not-exist ] [ --no-color ] [ {-o | --output} <FORMAT> ]
+                {-r | --region} <REGION> [ {-t | --tier} <CLOUD> ]
+                [ --timeout <timeout> ] [ --token <AUTH_TOKEN> ]
+                [ {-v | --verbose} ] [ --wait ] [--] <DB>
+
+OPTIONS
+        --async
+            Will wait until the database become ACTIVE
+
+        -c <CLOUD>, --cloud <CLOUD>
+            Name of the cloud provider
+
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        --env <Environment>
+            Astra Environment to use
+
+        --if-not-exist
+            will create a new DB only if none with same name
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        -r <REGION>, --region <REGION>
+            Name of the region to create
+
+        -t <CLOUD>, --tier <CLOUD>
+            Name of the tiers
+
+        --timeout <timeout>
+            Max wait time in seconds, default+1800, 0 = no timeout.
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --wait
+            Will wait until the database become ACTIVE
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <DB>
+            Database name (if unique) or Database identifier
+----
 
 === `db list-regions` options
 
@@ -540,6 +667,65 @@ OPTIONS
 
         -v, --verbose
             Verbose mode with log in console
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <DB>
+            Database name (if unique) or Database identifier
+----
+
+=== `db delete-region` options
+
+[source,console]
+----
+NAME
+        astra db delete-region - Delete a region from a database
+
+SYNOPSIS
+        astra db delete-region [ --async ]
+                [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
+                [ --no-color ] [ {-o | --output} <FORMAT> ]
+                {-r | --region} <REGION> [ --timeout <timeout> ]
+                [ --token <AUTH_TOKEN> ] [ {-v | --verbose} ] [ --wait ] [--]
+                <DB>
+
+OPTIONS
+        --async
+            Will wait until the database become ACTIVE
+
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        --env <Environment>
+            Astra Environment to use
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        -r <REGION>, --region <REGION>
+            Name of the region to create
+
+        --timeout <timeout>
+            Max wait time in seconds, default+1800, 0 = no timeout.
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --wait
+            Will wait until the database become ACTIVE
 
         --
             This option can be used to separate command-line options from the
@@ -757,19 +943,7 @@ astra db resume **DATABASE_NAME**
 
 Resuming the database may take a few minutes.
 
-[TIP]
-====
-By default, `astra db resume` runs synchronously and doesn't return the command prompt until the database reaches `ACTIVE` or `ERROR` status.
-To run the command _asynchronously_, use the `--async` option:
-
-[source,bash,subs="+quotes"]
-----
-astra db resume **DATABASE_NAME** --async
-----
-
-The {product} returns the command prompt before the database finishes resuming.
-You can use the `astra db list` command to monitor the status of the database.
-====
+include::ROOT:partial$async-option.adoc[]
 
 === `db resume` options
 
@@ -825,7 +999,7 @@ OPTIONS
             Database name (if unique) or Database identifier
 ----
 
-== Delete a database
+== Terminate a database
 
 [WARNING]
 ====
@@ -833,7 +1007,7 @@ Terminating a database permanently deletes all of its data, including xref:astra
 You can't undo this action.
 ====
 
-Use the `astra db delete` command to delete an {astra_db} Serverless database:
+Use the `astra db delete` command to terminate a database:
 
 [source,bash,subs="+quotes"]
 ----
@@ -851,30 +1025,9 @@ astra db delete **DATABASE_NAME**
 ====
 
 The database enters *Terminating* status while deletion occurs.
-You receive a notification once termination is complete.
 
-[TIP]
-======
-By default, `astra db delete` runs synchronously and doesn't return the command prompt until the database reaches `TERMINATED` or `ERROR` status.
-To run the command _asynchronously_, use the `--async` option:
-
-[source,bash,subs="+quotes"]
-----
-astra db delete **DATABASE_NAME** --async
-----
-
-.Results
-[%collapsible]
-====
-[source,console]
-----
-[INFO]  Deleting Database 'my_serverless_db'
-----
-====
-
-The {product} returns the command prompt before the database finishes deleting.
-You can use the `astra db list` command to monitor the status of the database.
-======
+By default, the command runs synchronously and doesn't return the command prompt until the database reaches `TERMINATED` or `ERROR` status.
+To run the command _asynchronously_, add the `--async` option.
 
 === `db delete` options
 

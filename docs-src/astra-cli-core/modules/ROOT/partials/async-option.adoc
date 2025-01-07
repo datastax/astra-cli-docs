@@ -1,0 +1,2 @@
+By default, the command runs synchronously and doesn't return the command prompt until the database reaches `ACTIVE` or `ERROR` status.
+To run the command _asynchronously_, add the `--async` option.
