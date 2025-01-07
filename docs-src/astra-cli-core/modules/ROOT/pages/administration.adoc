@@ -1,7 +1,7 @@
 = Manage your Astra organization with the {product}
 :navtitle: Astra administration
 
-Use the {product} to manage your Astra organization's users, roles, and tokens.
+Use the {product} to manage your Astra organization.
 
 == Get organization details
 
@@ -28,6 +28,9 @@ astra org
 
 === `org` options
 
+.Expand to see all `org` options
+[%collapsible]
+====
 [source,console]
 ----
 NAME
@@ -42,6 +45,7 @@ SYNOPSIS
         Where * indicates the default command(s)
         See 'astra help org <command>' for more information on a specific command.
 ----
+====
 
 == List users
 
@@ -69,6 +73,9 @@ astra user list
 
 === `user list` options
 
+.Expand to see all `user list` options
+[%collapsible]
+====
 [source,console]
 ----
 NAME
@@ -102,6 +109,7 @@ OPTIONS
         -v, --verbose
             Verbose mode with log in console
 ----
+====
 
 == Add a user
 
@@ -128,6 +136,9 @@ If you don't specify a role when inviting a user, the user is automatically assi
 
 === `user invite` options
 
+.Expand to see all `user invite` options
+[%collapsible]
+====
 [source,console]
 ----
 NAME
@@ -173,6 +184,7 @@ OPTIONS
         <EMAIL>
             User Email
 ----
+====
 
 Use the `-r`/`--role` option to specify a role when inviting a user:
 
@@ -240,6 +252,9 @@ Replace `**USER**` with the email address or ID of the user you want to get info
 
 === `user get` options
 
+.Expand to see all `user get` options
+[%collapsible]
+====
 [source,console]
 ----
 NAME
@@ -281,9 +296,13 @@ OPTIONS
         <EMAIL>
             User Email
 ----
+====
 
 === `user describe` options
 
+.Expand to see all `user describe` options
+[%collapsible]
+====
 [source,console]
 ----
 NAME
@@ -325,6 +344,7 @@ OPTIONS
         <EMAIL>
             User Email
 ----
+====
 
 == Remove a user
 
@@ -358,6 +378,9 @@ Replace `**USER**` with the email address or ID of the user you want to delete.
 
 === `user delete` options
 
+.Expand to see all `user delete` options
+[%collapsible]
+====
 [source,console]
 ----
 NAME
@@ -399,6 +422,7 @@ OPTIONS
         <EMAIL>
             User email or identifier
 ----
+====
 
 [#list-roles]
 == List roles
@@ -441,6 +465,9 @@ astra role list
 
 === `role list` options
 
+.Expand to see all `role list` options
+[%collapsible]
+====
 [source,console]
 ----
 NAME
@@ -474,6 +501,7 @@ OPTIONS
         -v, --verbose
             Verbose mode with log in console
 ----
+====
 
 == Get role details
 
@@ -555,6 +583,9 @@ Replace `**ROLE**` with the name or ID of the role you want to get information a
 
 === `role get` options
 
+.Expand to see all `role get` options
+[%collapsible]
+====
 [source,console]
 ----
 NAME
@@ -596,9 +627,13 @@ OPTIONS
         <ROLE>
             Role name or identifier
 ----
+====
 
 === `role describe` options
 
+.Expand to see all `role describe` options
+[%collapsible]
+====
 [source,console]
 ----
 NAME
@@ -640,6 +675,7 @@ OPTIONS
         <ROLE>
             Role name or identifier
 ----
+====
 
 [#list-tokens]
 == Get a list of tokens
@@ -665,6 +701,9 @@ astra token list
 
 === `token list` options
 
+.Expand to see all `token list` options
+[%collapsible]
+====
 [source,console]
 ----
 NAME
@@ -698,6 +737,7 @@ OPTIONS
         -v, --verbose
             Verbose mode with log in console
 ----
+====
 
 == Create an application token
 
@@ -728,6 +768,9 @@ Replace `**ROLE**` with the name or ID of the role you want to assign to the tok
 
 === `token create` options
 
+.Expand to see all `token create` options
+[%collapsible]
+====
 [source,console]
 ----
 NAME
@@ -765,6 +808,7 @@ OPTIONS
         -v, --verbose
             Verbose mode with log in console
 ----
+====
 
 == Show the current token
 
@@ -786,6 +830,9 @@ AstraCS:FZmCtRdyzJkYidnmlzwcwJWc:f51d3ee8fce90b28a7681a1e1bc3fa0d69cb770b0219aa9
 
 === `token get` options
 
+.Expand to see all `token get` options
+[%collapsible]
+====
 [source,console]
 ----
 NAME
@@ -819,6 +866,7 @@ OPTIONS
         -v, --verbose
             Verbose mode with log in console
 ----
+====
 
 == Delete an application token
 
@@ -853,6 +901,9 @@ To get a token's client ID, see <<list-tokens>>.
 
 === `token delete` options
 
+.Expand to see all `token delete` options
+[%collapsible]
+====
 [source,console]
 ----
 NAME
@@ -894,9 +945,13 @@ OPTIONS
         <TOKEN>
             token identifier
 ----
+====
 
 === `token revoke` options
 
+.Expand to see all `token revoke` options
+[%collapsible]
+====
 [source,console]
 ----
 NAME
@@ -938,3 +993,4 @@ OPTIONS
         <TOKEN>
             token identifier
 ----
+====

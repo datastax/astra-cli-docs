@@ -1,7 +1,7 @@
 = Manage {astra_db} with the {product}
 :navtitle: Manage {astra_db}
 
-Use the {product} to manage your {astra_db} databases.
+Use the {product} to manage your {astra_db} deployments.
 
 == Create a database
 
@@ -64,6 +64,9 @@ include::ROOT:partial$async-option.adoc[]
 
 === `db create` options
 
+.Expand to see all `db create` options
+[%collapsible]
+====
 [source,console]
 ----
 NAME
@@ -138,6 +141,7 @@ OPTIONS
         <DB>
             Database name (if unique) or Database identifier
 ----
+====
 
 Use the `-c`, `-r`, and `-k` options to define the cloud provider, region, and keyspace name when creating a database:
 
@@ -256,6 +260,9 @@ astra db status **DATABASE_NAME**
 
 === `db list` options
 
+.Expand to see all `db list` options
+[%collapsible]
+====
 [source,console]
 ----
 NAME
@@ -292,6 +299,7 @@ OPTIONS
         --vector
             Create a database with vector search enabled
 ----
+====
 
 Use the `--vector` option to list only {db-serverless-vector} databases:
 
@@ -315,6 +323,9 @@ astra db list --vector
 
 === `db get` options
 
+.Expand to see all ``db get` options
+[%collapsible]
+====
 [source,console]
 ----
 NAME
@@ -361,9 +372,13 @@ OPTIONS
         <DB>
             Database name (if unique) or Database identifier
 ----
+====
 
 === `db describe` options
 
+.Expand to see all `db describe` options
+[%collapsible]
+====
 [source,console]
 ----
 NAME
@@ -410,9 +425,13 @@ OPTIONS
         <DB>
             Database name (if unique) or Database identifie
 ----
+====
 
 === `db status` options
 
+.Expand to see all `db status` options
+[%collapsible]
+====
 [source,console]
 ----
 NAME
@@ -454,6 +473,7 @@ OPTIONS
         <DB>
             Database name (if unique) or Database identifier
 ----
+====
 
 == Manage multi-region databases
 
@@ -567,6 +587,9 @@ However, to avoid data loss, all data is replicated before the region is deleted
 
 === `db create-region` options
 
+.Expand to see all `db create-region` options
+[%collapsible]
+====
 [source,console]
 ----
 NAME
@@ -632,9 +655,13 @@ OPTIONS
         <DB>
             Database name (if unique) or Database identifier
 ----
+====
 
 === `db list-regions` options
 
+.Expand to see all `db list-regions` options
+[%collapsible]
+====
 [source,console]
 ----
 NAME
@@ -676,9 +703,13 @@ OPTIONS
         <DB>
             Database name (if unique) or Database identifier
 ----
+====
 
 === `db delete-region` options
 
+.Expand to see all `db delete-region` options
+[%collapsible]
+====
 [source,console]
 ----
 NAME
@@ -735,6 +766,7 @@ OPTIONS
         <DB>
             Database name (if unique) or Database identifier
 ----
+====
 
 == Get database API endpoints
 
@@ -788,6 +820,9 @@ https://3f2e8f8d-f24d-4dc9-b740-d57e643c7143-us-east1.apps.astra.datastax.com/ap
 
 === `db get-endpoint-swagger` options
 
+.Expand to see all `db get-endpoint-swagger` options
+[%collapsible]
+====
 [source,console]
 ----
 NAME
@@ -833,9 +868,13 @@ OPTIONS
         <DB>
             Database name (if unique) or Database identifier
 ----
+====
 
 === `db get-endpoint-api` options
 
+.Expand to see all `db get-endpoint-api` options
+[%collapsible]
+====
 [source,console]
 ----
 NAME
@@ -881,9 +920,13 @@ OPTIONS
         <DB>
             Database name (if unique) or Database identifier
 ----
+====
 
 === `db get-endpoint-playground` options
 
+.Expand to see all `db get-endpoint-playground` options
+[%collapsible]
+====
 [source,console]
 ----
 NAME
@@ -930,6 +973,7 @@ OPTIONS
         <DB>
             Database name (if unique) or Database identifier
 ----
+====
 
 [#resume-database]
 == Resume a hibernated database
@@ -947,6 +991,9 @@ include::ROOT:partial$async-option.adoc[]
 
 === `db resume` options
 
+.Expand to see all `db resume` options
+[%collapsible]
+====
 [source,console]
 ----
 NAME
@@ -998,6 +1045,7 @@ OPTIONS
         <DB>
             Database name (if unique) or Database identifier
 ----
+====
 
 == Terminate a database
 
@@ -1031,6 +1079,9 @@ To run the command _asynchronously_, add the `--async` option.
 
 === `db delete` options
 
+.Expand to see all `db delete` options
+[%collapsible]
+====
 [source,console]
 ----
 NAME
@@ -1082,6 +1133,7 @@ OPTIONS
         <DB>
             Database name (if unique) or Database identifier
 ----
+====
 
 == Manage keyspaces
 
@@ -1185,6 +1237,9 @@ If you delete the default keyspace, {astra_db} automatically selects another key
 
 === `db create-keyspace` options
 
+.Expand to see all `db create-keyspace` options
+[%collapsible]
+====
 [source,console]
 ----
 NAME
@@ -1236,9 +1291,13 @@ OPTIONS
         <DB>
             Database name (if unique) or Database identifier
 ----
+====
 
 === `db list-keyspaces` options
 
+.Expand to see all `db list-keyspaces` options
+[%collapsible]
+====
 [source,console]
 ----
 NAME
@@ -1280,9 +1339,13 @@ OPTIONS
         <DB>
             Database name (if unique) or Database identifier
 ----
+====
 
 === `db delete-keyspace` options
 
+.Expand to see all `db delete-keyspace` options
+[%collapsible]
+====
 [source,console]
 ----
 NAME
@@ -1328,6 +1391,7 @@ OPTIONS
         <DB>
             Database name (if unique) or Database identifier
 ----
+====
 
 == Get a list of available regions
 
@@ -1484,6 +1548,9 @@ include::ROOT:partial$regions-change-admonition.adoc[]
 
 === `db list-regions-serverless` options
 
+.Expand to see all `db list-regions-serverless` options
+[%collapsible]
+====
 [source,console]
 ----
 NAME
@@ -1525,9 +1592,13 @@ OPTIONS
         -v, --verbose
             Verbose mode with log in console
 ----
+====
 
 === `db list-regions-vector` options
 
+.Expand to see all `db list-regions-vector` options
+[%collapsible]
+====
 [source,console]
 ----
 NAME
@@ -1569,9 +1640,13 @@ OPTIONS
         -v, --verbose
             Verbose mode with log in console
 ----
+====
 
 === `db list-regions-classic` options
 
+.Expand to see all `db list-regions-classic` options
+[%collapsible]
+====
 [source,console]
 ----
 NAME
@@ -1613,6 +1688,7 @@ OPTIONS
         -v, --verbose
             Verbose mode with log in console
 ----
+====
 
 [#cqlsh]
 == Use the CQL shell (cqlsh)
@@ -1673,6 +1749,9 @@ Python 3.11.10
 
 === `db cqlsh` options
 
+.Expand to see all `db cqlsh` options
+[%collapsible]
+====
 [source,console]
 ----
 NAME
@@ -1743,6 +1822,7 @@ OPTIONS
         <DB>
             Database name (if unique) or Database identifier
 ----
+====
 
 Use the `-e`/`--execute` option to execute a CQL statement:
 
@@ -1986,6 +2066,9 @@ The {product} also downloads the {scb-long} for each database you connect to and
 
 === `db load` options
 
+.Expand to see all `db load` options
+[%collapsible]
+====
 [source,console]
 ----
 NAME
@@ -2087,9 +2170,13 @@ OPTIONS
         <DB>
             Database name (if unique) or Database identifie
 ----
+====
 
 === `db unload` options
 
+.Expand to see all `db unload` options
+[%collapsible]
+====
 [source,console]
 ----
 NAME
@@ -2190,9 +2277,13 @@ OPTIONS
         <DB>
             Database name (if unique) or Database identifier
 ----
+====
 
 === `db count` options
 
+.Expand to see all `db count` options
+[%collapsible]
+====
 [source,console]
 ----
 NAME
@@ -2265,6 +2356,7 @@ OPTIONS
         <DB>
             Database name (if unique) or Database identifier
 ----
+====
 
 === End-to-end example
 
@@ -2516,6 +2608,9 @@ The {scb} contains sensitive information that establishes a connection to your d
 
 === `db download-scb` options
 
+.Expand to see all `db download-scb` options
+[%collapsible]
+====
 [source,console]
 ----
 NAME
@@ -2565,6 +2660,7 @@ OPTIONS
         <DB>
             Database name (if unique) or Database identifier
 ----
+====
 
 Use the `-r`/`--region` option to download the {scb} for a specific region:
 
@@ -2650,6 +2746,9 @@ The {scb} contains sensitive information that establishes a connection to your d
 
 === `db create-dotenv` options
 
+.Expand to see all `db create-dotenv` options
+[%collapsible]
+====
 [source,console]
 ----
 NAME
@@ -2703,6 +2802,7 @@ OPTIONS
         <DB>
             Database name (if unique) or Database identifier
 ----
+====
 
 Use the `-d`/`--directory` option to save the `.env` file to a specified directory:
 
@@ -2803,6 +2903,9 @@ astra db delete-cdc **DATABASE_NAME** \
 
 === `db create-cdc` options
 
+.Expand to see all `db create-cdc` options
+[%collapsible]
+====
 [source,console]
 ----
 NAME
@@ -2859,9 +2962,13 @@ OPTIONS
         <DB>
             Database name (if unique) or Database identifier
 ----
+====
 
 === `db list-cdc` options
 
+.Expand to see all `db list-cdc` options
+[%collapsible]
+====
 [source,console]
 ----
 NAME
@@ -2903,9 +3010,13 @@ OPTIONS
         <DB>
             Database name (if unique) or Database identifier
 ----
+====
 
 === `db delete-cdc` options
 
+.Expand to see all `db delete-cdc` options
+[%collapsible]
+====
 [source,console]
 ----
 NAME
@@ -2961,6 +3072,7 @@ OPTIONS
         <DB>
             Database name (if unique) or Database identifier
 ----
+====
 
 === End-to-end example
 

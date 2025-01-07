@@ -1,7 +1,7 @@
 = Manage {astra_stream} with the {product}
 :navtitle: Manage {astra_stream}
 
-Use the {product} to manage your {astra_stream} tenants.
+Use the {product} to manage your {astra_stream} deployments.
 
 == Create a tenant
 
@@ -71,6 +71,9 @@ https://api.astra.datastax.com/v2/streaming/tenants/my-streaming-tenant
 
 === `streaming create` options
 
+.Expand to see all `streaming create` options
+[%collapsible]
+====
 [source,console]
 ----
 NAME
@@ -135,6 +138,7 @@ OPTIONS
         <TENANT>
             Tenant identifier
 ----
+====
 
 You can use the `-c`, `-r`, and `-p`  options to define the cloud provider, region, and plan when creating a tenant:
 
@@ -158,6 +162,9 @@ https://api.astra.datastax.com/v2/streaming/tenants/my-streaming-tenant
 
 === `streaming exist` options
 
+.Expand to see all `streaming exist` options
+[%collapsible]
+====
 [source,console]
 ----
 NAME
@@ -199,6 +206,7 @@ OPTIONS
         <TENANT>
             Tenant identifier
 ----
+====
 
 == Get tenant details
 
@@ -291,6 +299,9 @@ eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MzYyMTcxMzAsImlzcyI6ImRhdGFzdGF
 
 === `streaming list` options
 
+.Expand to see all `streaming list` options
+[%collapsible]
+====
 [source,console]
 ----
 NAME
@@ -324,9 +335,13 @@ OPTIONS
         -v, --verbose
             Verbose mode with log in console
 ----
+====
 
 === `streaming get` options
 
+.Expand to see all `streaming get` options
+[%collapsible]
+====
 [source,console]
 ----
 NAME
@@ -373,9 +388,13 @@ OPTIONS
         <TENANT>
             Tenant identifier
 ----
+====
 
 === `streaming describe` options
 
+.Expand to see all `streaming describe` options
+[%collapsible]
+====
 [source,console]
 ----
 NAME
@@ -422,9 +441,13 @@ OPTIONS
         <TENANT>
             Tenant identifier
 ----
+====
 
 === `streaming status` options
 
+.Expand to see all `streaming status` options
+[%collapsible]
+====
 [source,console]
 ----
 NAME
@@ -466,9 +489,13 @@ OPTIONS
         <TENANT>
             Tenant identifier
 ----
+====
 
 === `streaming pulsar-token` options
 
+.Expand to see all `streaming pulsar-token` options
+[%collapsible]
+====
 [source,console]
 ----
 NAME
@@ -510,6 +537,7 @@ OPTIONS
         <TENANT>
             Tenant identifier
 ----
+====
 
 == Delete a tenant
 
@@ -531,6 +559,9 @@ astra streaming delete **TENANT_NAME**
 
 === `streaming delete` options
 
+.Expand to see all `streaming delete` options
+[%collapsible]
+====
 [source,console]
 ----
 NAME
@@ -572,6 +603,7 @@ OPTIONS
         <TENANT>
             Tenant identifier
 ----
+====
 
 == Get a list of available regions
 
@@ -615,6 +647,9 @@ include::ROOT:partial$regions-change-admonition.adoc[]
 
 === `streaming list-regions` options
 
+.Expand to see all `streaming list-regions` options
+[%collapsible]
+====
 [source,console]
 ----
 NAME
@@ -657,6 +692,7 @@ OPTIONS
         -v, --verbose
             Verbose mode with log in console
 ----
+====
 
 == Use the Pulsar shell
 
@@ -698,6 +734,9 @@ The first time you use the `astra streaming pulsar-shell` commands, the {product
 
 === `streaming pulsar-shell` options
 
+.Expand to see all `streaming pulsar-shell` options
+[%collapsible]
+====
 [source,console]
 ----
 NAME
@@ -756,6 +795,7 @@ OPTIONS
         <TENANT>
             Tenant unique name
 ----
+====
 
 Use the `-e`/`--execute` option to execute a Pulsar shell command:
 
@@ -932,6 +972,9 @@ The {scb} contains sensitive information that establishes a connection to your d
 
 === `streaming create-dotenv` options
 
+.Expand to see all `streaming create-dotenv` options
+[%collapsible]
+====
 [source,console]
 ----
 NAME
@@ -978,6 +1021,7 @@ OPTIONS
         <TENANT>
             Tenant identifier
 ----
+====
 
 Use the `-d`/`--directory` option to save the `.env` file to a specified directory:
 
@@ -1029,6 +1073,9 @@ astra streaming list-cdc **TENANT_NAME**
 
 === `streaming list-cdc` options
 
+.Expand to see all `streaming list-cdc` options
+[%collapsible]
+====
 [source,console]
 ----
 NAME
@@ -1070,3 +1117,4 @@ OPTIONS
         <TENANT>
             Tenant identifier
 ----
+====
