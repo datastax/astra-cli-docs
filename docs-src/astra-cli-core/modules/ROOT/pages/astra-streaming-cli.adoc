@@ -815,7 +815,7 @@ astra streaming pulsar-shell **TENANT_NAME** -f sample.txt
 
 // TODO: Add sample.txt content and the output of the command.
 
-=== Pulsar-shell example
+=== Pulsar shell example
 
 The following procedure shows an example of how to use the {product}'s built-in Pulsar shell support to write and read in a topic with a client:
 

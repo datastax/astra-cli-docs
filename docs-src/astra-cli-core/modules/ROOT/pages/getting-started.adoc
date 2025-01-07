@@ -434,7 +434,7 @@ SYNOPSIS
         See 'astra help config <command>' for more information on a specific command.
 ----
 
-.`config create` options
+.Expand to see all `config create` options
 [%collapsible]
 ====
 [source,console]
@@ -477,7 +477,7 @@ OPTIONS
 ----
 ====
 
-.`config delete` options
+.Expand to see all `config delete` options
 [%collapsible]
 ====
 [source,console]
@@ -513,7 +513,7 @@ OPTIONS
 ----
 ====
 
-.`config describe` options
+.Expand to see all `config describe` options
 [%collapsible]
 ====
 [source,console]
@@ -553,7 +553,7 @@ OPTIONS
 ----
 ====
 
-.`config get` options
+.Expand to see all `config get` options
 [%collapsible]
 ====
 [source,console]
@@ -593,7 +593,7 @@ OPTIONS
 ----
 ====
 
-.`config list` options
+.Expand to see all `config list` options
 [%collapsible]
 ====
 [source,console]
@@ -621,7 +621,7 @@ OPTIONS
 ----
 ====
 
-.`config use` options
+.Expand to see all `config use` options
 [%collapsible]
 ====
 [source,console]
@@ -659,5 +659,6 @@ OPTIONS
 
 == Next steps
 
-*  xref:ROOT:managing.adoc[]
-*  xref:ROOT:astra-streaming-cli.adoc[]
+* xref:ROOT:managing.adoc[]
+* xref:ROOT:astra-streaming-cli.adoc[]
+* xref:ROOT:administration.adoc[]
