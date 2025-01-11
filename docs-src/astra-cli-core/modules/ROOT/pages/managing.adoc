@@ -208,12 +208,12 @@ Use the `astra db get` or `astra db describe` command to get information about a
 
 [source,bash,subs="+quotes"]
 ----
-astra db get **DATABASE_NAME**
+astra db get **DATABASE_ID**
 ----
 
 [source,bash,subs="+quotes"]
 ----
-astra db describe **DATABASE_NAME**
+astra db describe **DATABASE_ID**
 ----
 
 .Result
@@ -246,7 +246,7 @@ Use the `astra db status` command to get the status of a specific database:
 
 [source,bash,subs="+quotes"]
 ----
-astra db status **DATABASE_NAME**
+astra db status **DATABASE_ID**
 ----
 
 .Result
@@ -493,7 +493,7 @@ Use the `astra db create-region` command to add a region to a database:
 
 [source,bash,subs="+quotes"]
 ----
-astra db create-region **DATABASE_NAME** -r **REGION**
+astra db create-region **DATABASE_ID** -r **REGION**
 ----
 
 Replace `**REGION**` with the region you want to add to your database.
@@ -534,7 +534,7 @@ Use the `astra db list-regions` command to list the regions where a database is 
 
 [source,bash,subs="+quotes"]
 ----
-astra db list-regions **DATABASE_NAME**
+astra db list-regions **DATABASE_ID**
 ----
 
 .Result
@@ -555,7 +555,7 @@ Use the `astra db delete-region` command to remove a region from a database:
 
 [source,bash,subs="+quotes"]
 ----
-astra db delete-region **DATABASE_NAME** -r **REGION**
+astra db delete-region **DATABASE_ID** -r **REGION**
 ----
 
 .Result
@@ -774,7 +774,7 @@ Use the `get-endpoint-swagger` command to get the Swagger UI endpoint for a data
 
 [source,bash,subs="+quotes"]
 ----
-astra db get-endpoint-swagger **DATABASE_NAME**
+astra db get-endpoint-swagger **DATABASE_ID**
 ----
 
 .Result
@@ -790,7 +790,7 @@ Use the `get-endpoint-api` command to get the JSON API endpoint for a {db-server
 
 [source,bash,subs="+quotes"]
 ----
-astra db get-endpoint-api **DATABASE_NAME**
+astra db get-endpoint-api **DATABASE_ID**
 ----
 
 .Result
@@ -806,7 +806,7 @@ Use the `get-endpoint-playground` command to get the GraphQL playground endpoint
 
 [source,bash,subs="+quotes"]
 ----
-astra db get-endpoint-playground **DATABASE_NAME**
+astra db get-endpoint-playground **DATABASE_ID**
 ----
 
 .Result
@@ -982,7 +982,7 @@ Use the `astra db resume` command to resume a xref:astra-db-serverless:databases
 
 [source,bash,subs="+quotes"]
 ----
-astra db resume **DATABASE_NAME**
+astra db resume **DATABASE_ID**
 ----
 
 Resuming the database may take a few minutes.
@@ -1059,7 +1059,7 @@ Use the `astra db delete` command to terminate a database:
 
 [source,bash,subs="+quotes"]
 ----
-astra db delete **DATABASE_NAME**
+astra db delete **DATABASE_ID**
 ----
 
 .Result
@@ -1141,7 +1141,7 @@ Use the `astra db create-keyspace` command to create a new keyspace in a databas
 
 [source,bash,subs="+quotes"]
 ----
-astra db create-keyspace **DATABASE_NAME** -k **KEYSPACE_NAME**
+astra db create-keyspace **DATABASE_ID** -k **KEYSPACE_NAME**
 ----
 
 .Result
@@ -1170,7 +1170,7 @@ This option can be useful when invoking the {product} in idempotent scripts.
 
 [source,bash,subs="+quotes"]
 ----
-astra db create-keyspace **DATABASE_NAME** -k **KEYSPACE_NAME** --if-not-exist
+astra db create-keyspace **DATABASE_ID** -k **KEYSPACE_NAME** --if-not-exist
 ----
 
 .Result
@@ -1189,7 +1189,7 @@ Use the `astra db list-keyspaces` command to get a list of the keyspaces in a da
 
 [source,bash,subs="+quotes"]
 ----
-astra db list-keyspaces **DATABASE_NAME**
+astra db list-keyspaces **DATABASE_ID**
 ----
 
 .Result
@@ -1210,7 +1210,7 @@ Use the `astra db delete-keyspace` command to delete a keyspace from a database:
 
 [source,bash,subs="+quotes"]
 ----
-astra db delete-keyspace **DATABASE_NAME** -k **KEYSPACE_NAME**
+astra db delete-keyspace **DATABASE_ID** -k **KEYSPACE_NAME**
 ----
 
 .Result
@@ -1706,7 +1706,7 @@ Use the `astra db cqlsh` command to start the CQL shell in interactive mode:
 
 [source,bash,subs="+quotes"]
 ----
-astra db cqlsh **DATABASE_NAME**
+astra db cqlsh **DATABASE_ID**
 ----
 
 .Result
@@ -1828,7 +1828,7 @@ Use the `-e`/`--execute` option to execute a CQL statement:
 
 [source,bash,subs="+quotes"]
 ----
-astra db cqlsh **DATABASE_NAME** -e "describe keyspaces;"
+astra db cqlsh **DATABASE_ID** -e "describe keyspaces;"
 ----
 
 .Result
@@ -1848,7 +1848,7 @@ Use the `-f`/`--file` option to execute a CQL file:
 
 [source,bash,subs="+quotes"]
 ----
-astra db cqlsh **DATABASE_NAME** -f sample.cql
+astra db cqlsh **DATABASE_ID** -f sample.cql
 ----
 
 .Example CQL file
@@ -1896,7 +1896,7 @@ You can also execute a CQL file using the `xref:astra@cql:reference:cqlsh-comman
 
 [source,bash,subs="+quotes"]
 ----
-astra db cqlsh **DATABASE_NAME** -e "SOURCE 'sample.cql'"
+astra db cqlsh **DATABASE_ID** -e "SOURCE 'sample.cql'"
 ----
 
 .Result
@@ -1925,7 +1925,7 @@ Use the `astra db load` command to load data from a file into a database table:
 
 [source,bash,subs="+quotes"]
 ----
-astra db load **DATABASE_NAME** \
+astra db load **DATABASE_ID** \
   -k **KEYSPACE_NAME** \
   -t **TABLE_NAME** \
   -url **FILE_LOCATION**
@@ -1961,7 +1961,7 @@ You can use the `cqlsh` command to check that the data imported successfully:
 
 [source,bash,subs="+quotes"]
 ----
-astra db cqlsh **DATABASE_NAME** -e \
+astra db cqlsh **DATABASE_ID** -e \
 "SELECT * FROM **KEYSPACE_NAME**.**TABLE_NAME** LIMIT 20;"
 ----
 
@@ -2004,7 +2004,7 @@ Use the `astra db unload` command to unload database table rows into a file:
 
 [source,bash,subs="+quotes"]
 ----
-astra db unload **DATABASE_NAME** \
+astra db unload **DATABASE_ID** \
     -k **KEYSPACE_NAME** \
     -t **TABLE_NAME** \
     -url **FILE_LOCATION**
@@ -2033,7 +2033,7 @@ Use the `astra db count` command to get information about loaded data:
 
 [source,bash,subs="+quotes"]
 ----
-astra db count **DATABASE_NAME** \
+astra db count **DATABASE_ID** \
     -k **KEYSPACE_NAME** \
     -t **TABLE_NAME**
 ----
@@ -2584,7 +2584,7 @@ Use the `astra db download-scb` command to download the {scb-long} for an {astra
 
 [source,bash,subs="+quotes"]
 ----
-astra db download-scb **DATABASE_NAME**
+astra db download-scb **DATABASE_ID**
 ----
 
 .Result
@@ -2666,7 +2666,7 @@ Use the `-r`/`--region` option to download the {scb} for a specific region:
 
 [source,bash,subs="+quotes"]
 ----
-astra db download-scb **DATABASE_NAME** -r **REGION_NAME**
+astra db download-scb **DATABASE_ID** -r **REGION_NAME**
 ----
 
 .Result
@@ -2682,7 +2682,7 @@ Use the `-f`/`--output-file` option to download the {scb} to a specific location
 
 [source,bash,subs="+quotes"]
 ----
-astra db download-scb **DATABASE_NAME** -f **DESTINATION_FILE**.zip
+astra db download-scb **DATABASE_ID** -f **DESTINATION_FILE**.zip
 ----
 
 .Result
@@ -2705,7 +2705,7 @@ Use the `astra db create-dotenv` command to generate a `.env` file containing re
 
 [source,bash,subs="+quotes"]
 ----
-astra db create-dotenv **DATABASE_NAME**
+astra db create-dotenv **DATABASE_ID**
 ----
 
 By default, the {product} saves the `.env` file to the directory where you run the command.
@@ -2808,7 +2808,7 @@ Use the `-d`/`--directory` option to save the `.env` file to a specified directo
 
 [source,bash,subs="+quotes"]
 ----
-astra db create-dotenv **DATABASE_NAME** -d ~/tmp
+astra db create-dotenv **DATABASE_ID** -d ~/tmp
 ----
 
 .Result
@@ -2841,7 +2841,7 @@ Use the `astra db create-cdc` command to create a CDC connection for a table in 
 
 [source,bash,subs="+quotes"]
 ----
-astra db create-cdc **DATABASE_NAME** \
+astra db create-cdc **DATABASE_ID** \
     -k **KEYSPACE_NAME** \
     --table **TABLE_NAME** \
     --tenant **TENANT_NAME**
@@ -2863,7 +2863,7 @@ Use the `astra db list-cdc` command to list the CDC connections for a specifc da
 
 [source,bash,subs="+quotes"]
 ----
-astra db list-cdc **DATABASE_NAME**
+astra db list-cdc **DATABASE_ID**
 ----
 
 .Result
@@ -2883,7 +2883,7 @@ Use the `astra db delete-cdc` command to delete a CDC connection for a specific 
 
 [source,bash,subs="+quotes"]
 ----
-astra db delete-cdc **DATABASE_NAME** \
+astra db delete-cdc **DATABASE_ID** \
     -k **KEYSPACE_NAME** \
     --table **TABLE_NAME** \
     --tenant **TENANT_NAME**

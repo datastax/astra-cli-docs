@@ -1,5 +1,5 @@
 = Manage your Astra organization with the {product}
-:navtitle: Astra administration
+:navtitle: Manage Astra administration
 
 Use the {product} to manage your Astra organization.
 
