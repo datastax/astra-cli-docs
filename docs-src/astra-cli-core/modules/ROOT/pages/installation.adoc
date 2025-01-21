@@ -103,7 +103,7 @@ The {product} Homebrew formula installs a completion file named `astra` in the H
 If you have shell completion enabled in Homebrew, your terminal will automatically suggest and complete {product} commands and options as you type them.
 --
 
-Curl::
+curl::
 +
 --
 You can use `curl` to install the {product} on Linux, macOS, and Windows Subsystem for Linux (WSL).
@@ -447,7 +447,7 @@ astra --version
 ====
 --
 
-Curl::
+curl::
 +
 --
 . Update the {product}:
@@ -515,7 +515,7 @@ rm ~/.astrarc
 ----
 --
 
-Curl::
+curl::
 +
 --
 . Delete the {product} and its associated installation files:
