@@ -62,15 +62,35 @@ brew install datastax/astra-cli/astra-cli
 [source,console,subs="+attributes"]
 ----
 ==> Fetching datastax/astra-cli/astra-cli
-==> Downloading https://github.com/datastax/astra-cli/releases/download/...
-==> Downloading from https://objects.githubusercontent.com/...
-######################################################################### 100.0%
+==> Downloading https://github.com/datastax/astra-cli/releases/download/{product-version}/astra-cli-{product-version}.arm64_sonoma.bottle.tar.gz
+Already downloaded: /Users/USERNAME/Library/Caches/Homebrew/downloads/ca763b5f440dad257d707b2e705e98bd5a66912662fa95ae5ef417e749a2b08a--astra-cli-{product-version}.arm64_sonoma.bottle.tar.gz
 ==> Installing astra-cli from datastax/astra-cli
 ==> Pouring astra-cli-{product-version}.arm64_sonoma.bottle.tar.gz
 ==> Caveats
-You must have python 3.7+ to use cqlsh and java11+ to use dsbulk
+------------------------
+  ENABLE AUTOCOMPLETION
+-------------------------
+To enable Bash completion for Astra CLI (and other brew formulae when enable, add the following to your shell configuration file (e.g. ~/.zshrc):
+
+if [ -f  /opt/homebrew/etc/bash_completion.d ]; then
+  .  /opt/homebrew/etc/bash_completion.d
+fi
+
+Once added, reload your shell or run:
+
+source /opt/homebrew/etc/bash_completion.d
+
+This will ensure the Bash completion script for Astra CLI is loaded.
+
+-------------------
+ SPECIAL COMMANDS
+-------------------
+
+- CQLSH: You must have python 3.7+ but less than 3.12, cqlsh is still not compatible with 3.12, downgrade if needed
+- DSBULK: You must have java11+ installm the cli is pulling regular dsbulk
+
 ==> Summary
-🍺  /opt/homebrew/Cellar/astra-cli/{product-version}: 4 files, 61.7MB
+🍺  /opt/homebrew/Cellar/astra-cli/{product-version}: 4 files, 44.4MB
 ==> Running `brew cleanup astra-cli`...
 Disable this behaviour by setting HOMEBREW_NO_INSTALL_CLEANUP.
 Hide these hints with HOMEBREW_NO_ENV_HINTS (see `man brew`).
@@ -392,21 +412,6 @@ For <<install-homebrew,Homebrew-based installations>>, the `astra` executable an
 _This file is *not* deleted when you update or re-install the {product}._
 |===
 
-////
-== Install additional components
-
-Some {product} commands require you to install additional external components.
-
-=== Install CQL shell (`cqlsh`)
-
-
-=== Install DataStax Bulk Loader (`dsbulk`)
-
-
-=== Install Pulsar shell (`pulsar-shell`)
-////
-
-
 == Update the {product}
 
 To update the {product}, follow the procedure for the method you used to originally install the {product}:
@@ -429,6 +434,45 @@ brew update
 ----
 brew upgrade datastax/astra-cli/astra-cli
 ----
++
+.Result
+[%collapsible]
+====
+[source,console]
+----
+==> Upgrading datastax/astra-cli/astra-cli
+  0.5 -> 0.6
+==> Pouring astra-cli-0.6.arm64_sonoma.bottle.tar.gz
+==> Caveats
+------------------------
+  ENABLE AUTOCOMPLETION
+-------------------------
+To enable Bash completion for Astra CLI (and other brew formulae when enable, add the following to your shell configuration file (e.g. ~/.zshrc):
+
+if [ -f  /opt/homebrew/etc/bash_completion.d ]; then
+  .  /opt/homebrew/etc/bash_completion.d
+fi
+
+Once added, reload your shell or run:
+
+source /opt/homebrew/etc/bash_completion.d
+
+This will ensure the Bash completion script for Astra CLI is loaded.
+
+-------------------
+ SPECIAL COMMANDS
+-------------------
+
+- CQLSH: You must have python 3.7+ but less than 3.12, cqlsh is still not compatible with 3.12, downgrade if needed
+- DSBULK: You must have java11+ installm the cli is pulling regular dsbulk
+
+==> Summary
+🍺  /opt/homebrew/Cellar/astra-cli/0.6: 4 files, 44.4MB
+==> Running `brew cleanup astra-cli`...
+Removing: /opt/homebrew/Cellar/astra-cli/0.5... (4 files, 61.7MB)
+Removing: /Users/USERNAME/Library/Caches/Homebrew/astra-cli--0.5.arm64_sonoma.bottle.tar.gz... (24.4MB)
+----
+====
 
 . Confirm that the latest version of the {product} is installed:
 +
@@ -445,6 +489,10 @@ astra --version
 {product-version}
 ----
 ====
++
+The command returns the {product} version that is installed.
++
+include::ROOT:partial$macos-security-notice.adoc[]
 --
 
 curl::

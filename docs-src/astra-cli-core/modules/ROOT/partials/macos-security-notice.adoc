@@ -1,31 +1,10 @@
 .macOS security alerts
 [IMPORTANT]
 ====
-The first time you run an `astra` command on macOS, the operating system may display an alert that is similar to the following: `“astra” can't be opened because Apple cannot check it for malicious software`.
+The first time you run the `astra` command after installing or updating the {product} on macOS, the operating system may display the following alert: `“astra” Not Opened`.
 
-If you encounter an alert like this, then you must override your Mac security settings before you can run {product} commands.
-
-.Override your Mac security settings
-[%collapsible]
-=====
-The following steps are for macOS 14.6 (Sonoma).
-For other versions of macOS, the steps might vary slightly.
-See the https://support.apple.com/en-us/102445[Apple support documentation] for more information.
-
-. In the alert dialog, click *Show in Finder*.
-+
 image::ROOT:install-macos-security-alert.png[]
-+
-A new finder window opens and displays the {product} executable.
 
-. Control-click or right-click on the executable and select *Open* from the context menu.
-
-. In the confirmation dialog, click *Open*.
-If prompted, enter your admin name and password.
-+
-image::ROOT:install-macos-security-alert-open.png[]
-
-You can now run {product} commands from the terminal.
-You shouldn't be prompted to override your Mac security settings again unless you reinstall the {product} or update it to a newer version.
-=====
+If you encounter this alert, then you must override your Mac security settings before you can run {product} commands.
+See the https://support.apple.com/en-us/102445#openanyway[Apple support documentation] for more information.
 ====
