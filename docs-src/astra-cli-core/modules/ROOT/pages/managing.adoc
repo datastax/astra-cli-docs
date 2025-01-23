@@ -17,12 +17,10 @@ astra db create **DATABASE_NAME**
 ====
 [source,console]
 ----
-REGION OK
 [INFO]  Database 'my_serverless_db' does not exist. Creating database 'my_serverless_db' with keyspace 'default_keyspace'
-get CLoud provider
 [INFO]  Database 'my_serverless_db' and keyspace 'default_keyspace' are being created.
 [INFO]  Database 'my_serverless_db' has status 'PENDING' waiting to be 'ACTIVE' ...
-[INFO]  Database 'my_serverless_db' has status 'ACTIVE' (took 474743 millis)
+[INFO]  Database 'my_serverless_db' has status 'ACTIVE' (took 470346 millis)
 [OK]    Database 'my_serverless_db' is ready.
 ----
 ====
@@ -39,13 +37,11 @@ astra db create **DATABASE_NAME** --vector
 ====
 [source,console]
 ----
-REGION OK
 [INFO]  Database 'my_vector_db' does not exist. Creating database 'my_vector_db' with keyspace 'default_keyspace'
-get CLoud provider
 [INFO]  Enabling vector search for database my_vector_db
 [INFO]  Database 'my_vector_db' and keyspace 'default_keyspace' are being created.
 [INFO]  Database 'my_vector_db' has status 'PENDING' waiting to be 'ACTIVE' ...
-[INFO]  Database 'my_vector_db' has status 'ACTIVE' (took 142496 millis)
+[INFO]  Database 'my_vector_db' has status 'ACTIVE' (took 142712 millis)
 [OK]    Database 'my_vector_db' is ready.
 ----
 ====
@@ -60,7 +56,7 @@ Running `astra db create` without any options deploys the database in an availab
 
 If the database already exists but is currently xref:astra-db-serverless:databases:database-statuses.adoc[hibernated], the `astra db create` command <<resume-database,resumes>> the database.
 
-include::ROOT:partial$async-option.adoc[]
+include::ROOT:partial$async-option.adoc[tags=active]
 
 === `db create` options
 
@@ -158,12 +154,10 @@ astra db create **DATABASE_NAME** \
 ====
 [source,console]
 ----
-REGION OK
 [INFO]  Database 'my_serverless_db' does not exist. Creating database 'my_serverless_db' with keyspace 'my_keyspace'
-get CLoud provider
 [INFO]  Database 'my_serverless_db' and keyspace 'my_keyspace' are being created.
 [INFO]  Database 'my_serverless_db' has status 'PENDING' waiting to be 'ACTIVE' ...
-[INFO]  Database 'my_serverless_db' has status 'ACTIVE' (took 112684 millis)
+[INFO]  Database 'my_serverless_db' has status 'ACTIVE' (took 109050 millis)
 [OK]    Database 'my_serverless_db' is ready.
 ----
 ====
@@ -198,8 +192,8 @@ astra db list
 +---------------------+--------------------------------------+-----------+-------+---+-----------+
 | Name                | id                                   | Regions   | Cloud | V | Status    |
 +---------------------+--------------------------------------+-----------+-------+---+-----------+
-| my_serverless_db    | 3f2e8f8d-f24d-4dc9-b740-d57e643c7143 | us-east1  | gcp   |   | ACTIVE    |
-| my_vector_db        | ebae8d5a-4848-44c9-8485-87e413b60549 | us-east1  | gcp   | ■ | ACTIVE    |
+| my_serverless_db    | 51d23de8-9fd9-487c-9c46-c8e1abdb251b | us-east1  | gcp   |   | ACTIVE    |
+| my_vector_db        | 6fabb532-a3ac-4780-a1bc-d984531aed76 | us-east1  | gcp   | ■ | ACTIVE    |
 +---------------------+--------------------------------------+-----------+-------+---+-----------+
 ----
 ====
@@ -225,19 +219,15 @@ astra db describe **DATABASE_ID**
 | Attribute        | Value                                   |
 +------------------+-----------------------------------------+
 | Name             | my_serverless_db                        |
-| id               | 3f2e8f8d-f24d-4dc9-b740-d57e643c7143    |
+| id               | 96b1b6e3-5288-4cef-8a41-d4f1d36bbfca    |
 | Cloud            | GCP                                     |
 | Regions          | us-east1                                |
 | Status           | ACTIVE                                  |
 | Vector           | Disabled                                |
 | Default Keyspace | default_keyspace                        |
-| Creation Time    | 2025-01-06T21:45:08Z                    |
-|                  |                                         |
+| Creation Time    | 2025-01-22T21:21:14Z                    |
 | Keyspaces        | [0] default_keyspace                    |
-|                  |                                         |
-|                  |                                         |
 | Regions          | [0] us-east1                            |
-|                  |                                         |
 +------------------+-----------------------------------------+
 ----
 ====
@@ -254,7 +244,7 @@ astra db status **DATABASE_ID**
 ====
 [source,console]
 ----
-[OK]    Database 'my_serverless_db' has status 'ACTIVE'
+[OK]    Database '96b1b6e3-5288-4cef-8a41-d4f1d36bbfca' has status 'ACTIVE'
 ----
 ====
 
@@ -423,7 +413,7 @@ OPTIONS
             command-line options)
 
         <DB>
-            Database name (if unique) or Database identifie
+            Database name (if unique) or Database identifier
 ----
 ====
 
@@ -545,8 +535,8 @@ astra db list-regions **DATABASE_ID**
 +----------------+---------------------+----------------+----------------+
 | Cloud Provider | Region              | Tier           | Status         |
 +----------------+---------------------+----------------+----------------+
-| gcp            | us-east1 (default)  | serverless     |                |
-| gcp            | us-west1            | serverless     |                |
+| aws            | us-east-2           | serverless     |                |
+| aws            | us-east-1 (default) | serverless     |                |
 +----------------+---------------------+----------------+----------------+
 ----
 ====
@@ -782,7 +772,7 @@ astra db get-endpoint-swagger **DATABASE_ID**
 ====
 [source,console]
 ----
-https://3f2e8f8d-f24d-4dc9-b740-d57e643c7143-us-east1.apps.astra.datastax.com/api/rest/swagger-ui/
+https://26054aa9-eb37-4d88-b343-7c934cd1d7bc-us-east-1.apps.astra.datastax.com/api/rest/swagger-ui/
 ----
 ====
 
@@ -798,7 +788,7 @@ astra db get-endpoint-api **DATABASE_ID**
 ====
 [source,console]
 ----
-https://ebae8d5a-4848-44c9-8485-87e413b60549-us-east1.apps.astra.datastax.com/api/json
+https://26054aa9-eb37-4d88-b343-7c934cd1d7bc-us-east-1.apps.astra.datastax.com/api/rest
 ----
 ====
 
@@ -814,7 +804,7 @@ astra db get-endpoint-playground **DATABASE_ID**
 ====
 [source,console]
 ----
-https://3f2e8f8d-f24d-4dc9-b740-d57e643c7143-us-east1.apps.astra.datastax.com/api/playground
+https://26054aa9-eb37-4d88-b343-7c934cd1d7bc-us-east-1.apps.astra.datastax.com/api/playground
 ----
 ====
 
@@ -987,7 +977,7 @@ astra db resume **DATABASE_ID**
 
 Resuming the database may take a few minutes.
 
-include::ROOT:partial$async-option.adoc[]
+include::ROOT:partial$async-option.adoc[tags=active]
 
 === `db resume` options
 
@@ -1067,15 +1057,14 @@ astra db delete **DATABASE_ID**
 ====
 [source,console]
 ----
-[INFO]  Deleting Database 'my_serverless_db'
-[OK]    Database my_serverless_db has been deleted
+[INFO]  Deleting Database '26054aa9-eb37-4d88-b343-7c934cd1d7bc'
+[OK]    Database 26054aa9-eb37-4d88-b343-7c934cd1d7bc has been deleted
 ----
 ====
 
 The database enters *Terminating* status while deletion occurs.
 
-By default, the command runs synchronously and doesn't return the command prompt until the database reaches *Terminated* or *Error* status.
-To run the command _asynchronously_, add the `--async` option.
+include::ROOT:partial$async-option.adoc[tags=terminated]
 
 === `db delete` options
 
@@ -1150,17 +1139,17 @@ astra db create-keyspace **DATABASE_ID** -k **KEYSPACE_NAME**
 [source,console]
 ----
 [INFO]  Keyspace  'keyspace2' is creating.
-[INFO]  Database 'my_serverless_db' has status 'MAINTENANCE' waiting to be 'ACTIVE' ...
-[INFO]  Database 'my_serverless_db' has status 'ACTIVE' (took 6882 millis)
-[OK]    Database 'my_serverless_db' is ready.
-[OK]    Database 'my_serverless_db' is ready.
+[INFO]  Database '26054aa9-eb37-4d88-b343-7c934cd1d7bc' has status 'MAINTENANCE' waiting to be 'ACTIVE' ...
+[INFO]  Database 'my_serverless_db' has status 'ACTIVE' (took 6669 millis)
+[OK]    Database '26054aa9-eb37-4d88-b343-7c934cd1d7bc' is ready.
+[OK]    Database '26054aa9-eb37-4d88-b343-7c934cd1d7bc' is ready.
 ----
 ====
 
 The database enters *Maintenance* status while creating the keyspace.
 When the database returns to *Active* status, you can use the new keyspace.
 
-include::ROOT:partial$async-option.adoc[]
+include::ROOT:partial$async-option.adoc[tags=active]
 
 [TIP]
 ======
@@ -1178,9 +1167,9 @@ astra db create-keyspace **DATABASE_ID** -k **KEYSPACE_NAME** --if-not-exist
 ====
 [source,console]
 ----
-[INFO]  Keyspace  'keyspace2' already exists. Connecting to keyspace.
-[OK]    Database 'my_serverless_db' is ready.
-[OK]    Database 'my_serverless_db' is ready.
+[INFO]  Keyspace  'keyspace1' already exists. Connecting to keyspace.
+[OK]    Database '26054aa9-eb37-4d88-b343-7c934cd1d7bc' is ready.
+[OK]    Database '26054aa9-eb37-4d88-b343-7c934cd1d7bc' is ready.
 ----
 ====
 ======
@@ -1218,9 +1207,9 @@ astra db delete-keyspace **DATABASE_ID** -k **KEYSPACE_NAME**
 ====
 [source,console]
 ----
-[INFO]  Database 'my_serverless_db' has status 'MAINTENANCE' waiting to be 'ACTIVE' ...
-[INFO]  Database 'my_serverless_db' has status 'ACTIVE' (took 6917 millis)
-[OK]    Database 'my_serverless_db' is ready.
+[INFO]  Database '26054aa9-eb37-4d88-b343-7c934cd1d7bc' has status 'MAINTENANCE' waiting to be 'ACTIVE' ...
+[INFO]  Database 'my_serverless_db' has status 'ACTIVE' (took 6804 millis)
+[OK]    Database '26054aa9-eb37-4d88-b343-7c934cd1d7bc' is ready.
 ----
 ====
 
@@ -1231,7 +1220,7 @@ Deleting a keyspace permanently deletes all collections, tables, and data in the
 
 The database enters *Maintenance* status while it deletes the keyspace along with any collections, tables, and data within the keyspace.
 
-include::ROOT:partial$async-option.adoc[]
+include::ROOT:partial$async-option.adoc[tags=active]
 
 If you delete the default keyspace, {astra_db} automatically selects another keyspace to be the default keyspace.
 
@@ -1540,7 +1529,7 @@ astra db list-regions-classic
 | gcp (free-tier) | us-east1                | US East (South Carolina)      |
 | gcp             | us-east4                | US East 4 (Virginia)          |
 | gcp             | us-west1                | The Dalles, Oregon            |
-+-----------------+-------------------------+-------------------------------+
++-----------------+-------------------------+-------------------------------+-+
 ----
 
 include::ROOT:partial$regions-change-admonition.adoc[]
@@ -1602,10 +1591,10 @@ OPTIONS
 [source,console]
 ----
 NAME
-        astra db list-regions-serverless - Show available regions (serverless).
+        astra db list-regions-vector - Show available regions (vector).
 
 SYNOPSIS
-        astra db list-regions-serverless [ {-c | --cloud} <CLOUD> ]
+        astra db list-regions-vector [ {-c | --cloud} <CLOUD> ]
                 [ {-cf | --config-file} <CONFIG_FILE> ]
                 [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
                 [ {-f | --filter} <filter> ] [ --no-color ]
@@ -1720,6 +1709,7 @@ astra db cqlsh **DATABASE_ID**
 Connected to cndb at 127.0.0.1:9042.
 [cqlsh 6.8.0 | Cassandra 4.0.0.6816 | CQL spec 3.4.5 | Native protocol v4]
 Use HELP for help.
+token@cqlsh>
 ----
 ====
 
@@ -1838,9 +1828,9 @@ astra db cqlsh **DATABASE_ID** -e "describe keyspaces;"
 ----
 [INFO]  Cqlsh is starting, please wait for connection establishment...
 
-system_auth    system_traces       datastax_sla
-system_schema  data_endpoint_auth  system_virtual_schema
-system         keyspace1           system_views
+system_auth    data_endpoint_auth  system_traces
+datastax_sla   default_keyspace    system_virtual_schema
+system_schema  system              system_views
 ----
 ====
 
@@ -1885,8 +1875,10 @@ SELECT * FROM users;
 
  id                                   | email             | name
 --------------------------------------+-------------------+-------
- 6639b572-fad5-4d0a-b324-bb57d3b88530 |   bob@example.com |   Bob
- c6c38995-0307-429d-935b-37173807c6d9 | alice@example.com | Alice
+ 62a32f14-5432-4a28-add7-761d3626373e |   bob@example.com |   Bob
+ 0a489e53-0eed-4385-81a6-081143c228f1 | alice@example.com | Alice
+
+(2 rows)
 ----
 ====
 
@@ -1908,8 +1900,10 @@ astra db cqlsh **DATABASE_ID** -e "SOURCE 'sample.cql'"
 
  id                                   | email             | name
 --------------------------------------+-------------------+-------
- 6639b572-fad5-4d0a-b324-bb57d3b88530 |   bob@example.com |   Bob
- c6c38995-0307-429d-935b-37173807c6d9 | alice@example.com | Alice
+ 62a32f14-5432-4a28-add7-761d3626373e |   bob@example.com |   Bob
+ 0a489e53-0eed-4385-81a6-081143c228f1 | alice@example.com | Alice
+
+(2 rows)
 ----
 ====
 ======
@@ -1938,20 +1932,20 @@ astra db load **DATABASE_ID** \
 ----
 [INFO]  Downloading Dsbulk, please wait...
 [INFO]  Installing  archive, please wait...
-[INFO]  RUNNING: /Users/USERNAME/.astra/dsbulk-1.11.0/bin/dsbulk load -u token -p AstraCS:FZm... -b /Users/USERNAME/.astra/scb/scb_d123ae26-2ba1-4975-87cd-da33a887a0c1_us-east-1.zip -k demo -t cities_by_country -logDir ./logs --log.verbosity normal --schema.allowMissingFields true -maxConcurrentQueries AUTO -delim , -url cities.csv -header true -encoding UTF-8 -skipRecords 0 -maxErrors 100
+[INFO]  RUNNING: /Users/USERNAME/.astra/dsbulk-1.11.0/bin/dsbulk load -u token -p AstraCS:FZm... -b /Users/USERNAME/.astra/scb/scb_91b35105-a5aa-4cd5-a93b-900ac58452ba_us-east1.zip -k dsbulk_demo_keyspace -t cities_by_country -logDir ./logs --log.verbosity normal --schema.allowMissingFields true -maxConcurrentQueries AUTO -delim , -url cities.csv -header true -encoding UTF-8 -skipRecords 0 -maxErrors 100
 [INFO]  DSBulk is starting please wait ...
 Username and password provided but auth provider not specified, inferring PlainTextAuthProvider
 A cloud secure connect bundle was provided: ignoring all explicit contact points.
 A cloud secure connect bundle was provided and selected operation performs writes: changing default consistency level to LOCAL_QUORUM.
-Operation directory: /Users/USERNAME/logs/LOAD_20241120-190553-154417
+Operation directory: /Users/USERNAME/logs/LOAD_20250123-020734-995267
 Setting executor.maxPerSecond not set when connecting to DataStax Astra: applying a limit of 27,000 ops/second based on the number of coordinators (9).
 If your Astra database has higher limits, please define executor.maxPerSecond explicitly.
   total | failed | rows/s |  p50ms |  p99ms | p999ms | batches
-148,266 |      0 | 19,857 | 237.29 | 738.20 | 872.42 |   31.06
-Operation LOAD_20241120-190553-154417 completed successfully in 7 seconds.
+148,266 |      0 | 19,588 | 240.82 | 771.75 | 964.69 |   30.72
+Operation LOAD_20250123-020734-995267 completed successfully in 7 seconds.
 Checkpoints for the current operation were written to checkpoint.csv.
 To resume the current operation, re-run it with the same settings, and add the following command line flag:
---dsbulk.log.checkpoint.file=/Users/USERNAME/logs/LOAD_20241120-190553-154417/checkpoint.csv
+--dsbulk.log.checkpoint.file=/Users/USERNAME/logs/LOAD_20250123-020734-995267/checkpoint.csv
 ----
 ====
 
@@ -2015,17 +2009,17 @@ astra db unload **DATABASE_ID** \
 ====
 [source,console]
 ----
-[INFO]  RUNNING: /Users/USERNAME/.astra/dsbulk-1.11.0/bin/dsbulk unload -u token -p AstraCS:FZm... -b /Users/USERNAME/.astra/scb/scb_d123ae26-2ba1-4975-87cd-da33a887a0c1_us-east-1.zip -k demo -t cities_by_country -logDir ./logs --log.verbosity normal --schema.allowMissingFields true -maxConcurrentQueries AUTO -delim , -url FILE_LOCATION -header true -encoding UTF-8 -skipRecords 0 -maxErrors 100
+[INFO]  RUNNING: /Users/USERNAME/.astra/dsbulk-1.11.0/bin/dsbulk unload -u token -p AstraCS:FZm... -b /Users/USERNAME/.astra/scb/scb_91b35105-a5aa-4cd5-a93b-900ac58452ba_us-east1.zip -k dsbulk_demo_keyspace -t cities_by_country -logDir ./logs --log.verbosity normal --schema.allowMissingFields true -maxConcurrentQueries AUTO -delim , -url unloaded_data -header true -encoding UTF-8 -skipRecords 0 -maxErrors 100
 [INFO]  DSBulk is starting please wait ...
 Username and password provided but auth provider not specified, inferring PlainTextAuthProvider
 A cloud secure connect bundle was provided: ignoring all explicit contact points.
-Operation directory: /Users/USERNAME/logs/UNLOAD_20241120-193658-535944
+Operation directory: /Users/USERNAME/logs/UNLOAD_20250123-021231-557959
   total | failed | rows/s |  p50ms |  p99ms | p999ms
-134,574 |      0 | 33,860 | 284.67 | 587.20 | 587.20
-Operation UNLOAD_20241120-193658-535944 completed successfully in 3 seconds.
+134,574 |      0 | 29,767 | 281.25 | 591.40 | 591.40
+Operation UNLOAD_20250123-021231-557959 completed successfully in 4 seconds.
 Checkpoints for the current operation were written to checkpoint.csv.
 To resume the current operation, re-run it with the same settings, and add the following command line flag:
---dsbulk.log.checkpoint.file=/Users/USERNAME/logs/UNLOAD_20241120-193658-535944/checkpoint.csv
+--dsbulk.log.checkpoint.file=/Users/USERNAME/logs/UNLOAD_20250123-021231-557959/checkpoint.csv
 ----
 ====
 
@@ -2043,17 +2037,17 @@ astra db count **DATABASE_ID** \
 ====
 [source,console]
 ----
-[INFO]  RUNNING: /Users/USERNAME/.astra/dsbulk-1.11.0/bin/dsbulk count -u token -p AstraCS:FZm... -b /Users/USERNAME/.astra/scb/scb_d123ae26-2ba1-4975-87cd-da33a887a0c1_us-east-1.zip -k demo -t cities_by_country -logDir ./logs --log.verbosity normal --schema.allowMissingFields true -maxConcurrentQueries AUTO
+[INFO]  RUNNING: /Users/USERNAME/.astra/dsbulk-1.11.0/bin/dsbulk count -u token -p AstraCS:FZm... -b /Users/USERNAME/.astra/scb/scb_91b35105-a5aa-4cd5-a93b-900ac58452ba_us-east1.zip -k dsbulk_demo_keyspace -t cities_by_country -logDir ./logs --log.verbosity normal --schema.allowMissingFields true -maxConcurrentQueries AUTO
 [INFO]  DSBulk is starting please wait ...
 Username and password provided but auth provider not specified, inferring PlainTextAuthProvider
 A cloud secure connect bundle was provided: ignoring all explicit contact points.
-Operation directory: /Users/USERNAME/logs/COUNT_20241120-192745-378116
+Operation directory: /Users/USERNAME/logs/COUNT_20250123-021120-127216
   total | failed | rows/s |  p50ms |  p99ms | p999ms
-134,574 |      0 | 66,270 | 236.12 | 501.22 | 501.22
-Operation COUNT_20241120-192745-378116 completed successfully in 1 second.
+134,574 |      0 | 65,674 | 213.18 | 329.25 | 329.25
+Operation COUNT_20250123-021120-127216 completed successfully in 1 second.
 Checkpoints for the current operation were written to checkpoint.csv.
 To resume the current operation, re-run it with the same settings, and add the following command line flag:
---dsbulk.log.checkpoint.file=/Users/USERNAME/logs/COUNT_20241120-192745-378116/checkpoint.csv
+--dsbulk.log.checkpoint.file=/Users/USERNAME/logs/COUNT_20250123-021120-127216/checkpoint.csv
 134574
 ----
 ====
@@ -2168,7 +2162,7 @@ OPTIONS
             command-line options)
 
         <DB>
-            Database name (if unique) or Database identifie
+            Database name (if unique) or Database identifier
 ----
 ====
 
@@ -2362,11 +2356,11 @@ OPTIONS
 
 The following end-to-end example shows how to use the {product}'s built-in DSBulk support to load data into an {astra_db} database, get information about the data, and unload the data into CSV files:
 
-. (Optional) This procedure assumes that you have a database and keyspace both named `demo`:
+. Create an {astra_db} {db-serverless} database:
 +
 [source,bash]
 ----
-astra db create demo -k demo
+astra db create dsbulk_demo_db -k dsbulk_demo_keyspace
 ----
 +
 .Result
@@ -2374,17 +2368,13 @@ astra db create demo -k demo
 ====
 [source,console]
 ----
-REGION OK
-[INFO]  Database 'demo' does not exist. Creating database 'demo' with keyspace 'demo'
-get CLoud provider
-[INFO]  Database 'demo' and keyspace 'demo' are being created.
-[INFO]  Database 'demo' has status 'PENDING' waiting to be 'ACTIVE' ...
-[INFO]  Database 'demo' has status 'ACTIVE' (took 484471 millis)
-[OK]    Database 'demo' is ready.
+[INFO]  Database 'dsbulk_demo_db' does not exist. Creating database 'dsbulk_demo_db' with keyspace 'dsbulk_demo_keyspace'
+[INFO]  Database 'dsbulk_demo_db' and keyspace 'dsbulk_demo_keyspace' are being created.
+[INFO]  Database 'dsbulk_demo_db' has status 'PENDING' waiting to be 'ACTIVE' ...
+[INFO]  Database 'dsbulk_demo_db' has status 'ACTIVE' (took 471460 millis)
+[OK]    Database 'dsbulk_demo_db' is ready.
 ----
 ====
-+
-If you choose not to follow this step, make sure to replace `demo` in the subsequent steps with your own database and keyspace names.
 
 . Download the xref:ROOT:attachment$cities.csv[cities.csv] file and move it to the directory where you run {product} commands.
 +
@@ -2405,7 +2395,7 @@ id,name,state_id,state_code,state_name,country_id,country_code,country_name,lati
 +
 [source,bash]
 ----
-astra db cqlsh demo -k demo
+astra db cqlsh dsbulk_demo_db -k dsbulk_demo_keyspace
 ----
 +
 .Result
@@ -2417,6 +2407,7 @@ astra db cqlsh demo -k demo
 Connected to cndb at 127.0.0.1:9042.
 [cqlsh 6.8.0 | Cassandra 4.0.0.6816 | CQL spec 3.4.5 | Native protocol v4]
 Use HELP for help.
+token@cqlsh:dsbulk_demo_keyspace>
 ----
 ====
 +
@@ -2424,7 +2415,7 @@ Use HELP for help.
 +
 [source,cql]
 ----
-CREATE TABLE cities_by_country4 (
+CREATE TABLE cities_by_country (
     country_name text,
     name text,
     id int,
@@ -2448,8 +2439,8 @@ This command creates a table named `cities_by_country` with the appropriate sche
 +
 [source,bash]
 ----
-astra db load demo \
-  -k demo \
+astra db load dsbulk_demo_db \
+  -k dsbulk_demo_keyspace \
   -t cities_by_country \
   -url cities.csv
 ----
@@ -2459,20 +2450,20 @@ astra db load demo \
 ====
 [source,console]
 ----
-[INFO]  RUNNING: /Users/USERNAME/.astra/dsbulk-1.11.0/bin/dsbulk load -u token -p AstraCS:FZm... -b /Users/USERNAME/.astra/scb/scb_a53003fe-ba42-4c3c-85d0-6b345622c2dc_us-east1.zip -k demo -t cities_by_country -logDir ./logs --log.verbosity normal --schema.allowMissingFields true -maxConcurrentQueries AUTO -delim , -url cities.csv -header true -encoding UTF-8 -skipRecords 0 -maxErrors 100
+[INFO]  RUNNING: /Users/USERNAME/.astra/dsbulk-1.11.0/bin/dsbulk load -u token -p AstraCS:FZm... -b /Users/USERNAME/.astra/scb/scb_91b35105-a5aa-4cd5-a93b-900ac58452ba_us-east1.zip -k dsbulk_demo_keyspace -t cities_by_country -logDir ./logs --log.verbosity normal --schema.allowMissingFields true -maxConcurrentQueries AUTO -delim , -url cities.csv -header true -encoding UTF-8 -skipRecords 0 -maxErrors 100
 [INFO]  DSBulk is starting please wait ...
 Username and password provided but auth provider not specified, inferring PlainTextAuthProvider
 A cloud secure connect bundle was provided: ignoring all explicit contact points.
 A cloud secure connect bundle was provided and selected operation performs writes: changing default consistency level to LOCAL_QUORUM.
-Operation directory: /Users/USERNAME/logs/LOAD_20241120-205743-166874
+Operation directory: /Users/USERNAME/logs/LOAD_20250123-020734-995267
 Setting executor.maxPerSecond not set when connecting to DataStax Astra: applying a limit of 27,000 ops/second based on the number of coordinators (9).
 If your Astra database has higher limits, please define executor.maxPerSecond explicitly.
-  total | failed | rows/s |  p50ms |  p99ms |   p999ms | batches
-148,266 |      0 | 14,545 | 245.70 | 792.72 | 1,149.24 |   31.03
-Operation LOAD_20241120-205743-166874 completed successfully in 7 seconds.
+  total | failed | rows/s |  p50ms |  p99ms | p999ms | batches
+148,266 |      0 | 19,588 | 240.82 | 771.75 | 964.69 |   30.72
+Operation LOAD_20250123-020734-995267 completed successfully in 7 seconds.
 Checkpoints for the current operation were written to checkpoint.csv.
 To resume the current operation, re-run it with the same settings, and add the following command line flag:
---dsbulk.log.checkpoint.file=/Users/USERNAME/logs/LOAD_20241120-205743-166874/checkpoint.csv
+--dsbulk.log.checkpoint.file=/Users/USERNAME/logs/LOAD_20250123-020734-995267/checkpoint.csv
 ----
 ====
 
@@ -2480,8 +2471,8 @@ To resume the current operation, re-run it with the same settings, and add the f
 +
 [source,bash]
 ----
-astra db cqlsh demo -e \
-"select * from demo.cities_by_country LIMIT 20;"
+astra db cqlsh dsbulk_demo_db -e \
+"select * from dsbulk_demo_keyspace.cities_by_country LIMIT 20;"
 ----
 +
 .Result
@@ -2489,6 +2480,8 @@ astra db cqlsh demo -e \
 ====
 [source,console]
 ----
+[INFO]  Cqlsh is starting, please wait for connection establishment...
+
  country_name | name                | country_code | country_id | id   | latitude | longitude | state_code | state_id | state_name          | wikidataid
 --------------+---------------------+--------------+------------+------+----------+-----------+------------+----------+---------------------+------------
    Bangladesh |             Azimpur |           BD |         19 | 8454 |  23.7298 |   90.3854 |         13 |      771 |      Dhaka District |       null
@@ -2520,8 +2513,8 @@ astra db cqlsh demo -e \
 +
 [source,bash]
 ----
-astra db count demo \
-    -k demo \
+astra db count dsbulk_demo_db \
+    -k dsbulk_demo_keyspace \
     -t cities_by_country
 ----
 +
@@ -2530,17 +2523,17 @@ astra db count demo \
 ====
 [source,console]
 ----
-[INFO]  RUNNING: /Users/USERNAME/.astra/dsbulk-1.11.0/bin/dsbulk count -u token -p AstraCS:FZm... -b /Users/USERNAME/.astra/scb/scb_a53003fe-ba42-4c3c-85d0-6b345622c2dc_us-east1.zip -k demo -t cities_by_country -logDir ./logs --log.verbosity normal --schema.allowMissingFields true -maxConcurrentQueries AUTO
+[INFO]  RUNNING: /Users/USERNAME/.astra/dsbulk-1.11.0/bin/dsbulk count -u token -p AstraCS:FZm... -b /Users/USERNAME/.astra/scb/scb_91b35105-a5aa-4cd5-a93b-900ac58452ba_us-east1.zip -k dsbulk_demo_keyspace -t cities_by_country -logDir ./logs --log.verbosity normal --schema.allowMissingFields true -maxConcurrentQueries AUTO
 [INFO]  DSBulk is starting please wait ...
 Username and password provided but auth provider not specified, inferring PlainTextAuthProvider
 A cloud secure connect bundle was provided: ignoring all explicit contact points.
-Operation directory: /Users/USERNAME/logs/COUNT_20241120-210748-465576
+Operation directory: /Users/USERNAME/logs/COUNT_20250123-021120-127216
   total | failed | rows/s |  p50ms |  p99ms | p999ms
-134,574 |      0 | 70,713 | 215.20 | 354.42 | 354.42
-Operation COUNT_20241120-210748-465576 completed successfully in 1 second.
+134,574 |      0 | 65,674 | 213.18 | 329.25 | 329.25
+Operation COUNT_20250123-021120-127216 completed successfully in 1 second.
 Checkpoints for the current operation were written to checkpoint.csv.
 To resume the current operation, re-run it with the same settings, and add the following command line flag:
---dsbulk.log.checkpoint.file=/Users/USERNAME/logs/COUNT_20241120-210748-465576/checkpoint.csv
+--dsbulk.log.checkpoint.file=/Users/USERNAME/logs/COUNT_20250123-021120-127216/checkpoint.csv
 134574
 ----
 ====
@@ -2549,8 +2542,8 @@ To resume the current operation, re-run it with the same settings, and add the f
 +
 [source,bash]
 ----
-astra db unload demo \
-    -k demo \
+astra db unload dsbulk_demo_db \
+    -k dsbulk_demo_keyspace \
     -t cities_by_country \
     -url unloaded_data
 ----
@@ -2560,17 +2553,17 @@ astra db unload demo \
 ====
 [source,console]
 ----
-[INFO]  RUNNING: /Users/USERNAME/.astra/dsbulk-1.11.0/bin/dsbulk unload -u token -p AstraCS:FZm... -b /Users/USERNAME/.astra/scb/scb_a53003fe-ba42-4c3c-85d0-6b345622c2dc_us-east1.zip -k demo -t cities_by_country -logDir ./logs --log.verbosity normal --schema.allowMissingFields true -maxConcurrentQueries AUTO -delim , -url unloaded_data -header true -encoding UTF-8 -skipRecords 0 -maxErrors 100
+[INFO]  RUNNING: /Users/USERNAME/.astra/dsbulk-1.11.0/bin/dsbulk unload -u token -p AstraCS:FZm... -b /Users/USERNAME/.astra/scb/scb_91b35105-a5aa-4cd5-a93b-900ac58452ba_us-east1.zip -k dsbulk_demo_keyspace -t cities_by_country -logDir ./logs --log.verbosity normal --schema.allowMissingFields true -maxConcurrentQueries AUTO -delim , -url unloaded_data -header true -encoding UTF-8 -skipRecords 0 -maxErrors 100
 [INFO]  DSBulk is starting please wait ...
 Username and password provided but auth provider not specified, inferring PlainTextAuthProvider
 A cloud secure connect bundle was provided: ignoring all explicit contact points.
-Operation directory: /Users/USERNAME/logs/UNLOAD_20241120-211159-993666
+Operation directory: /Users/USERNAME/logs/UNLOAD_20250123-021231-557959
   total | failed | rows/s |  p50ms |  p99ms | p999ms
-134,574 |      0 | 31,329 | 308.52 | 603.98 | 603.98
-Operation UNLOAD_20241120-211159-993666 completed successfully in 4 seconds.
+134,574 |      0 | 29,767 | 281.25 | 591.40 | 591.40
+Operation UNLOAD_20250123-021231-557959 completed successfully in 4 seconds.
 Checkpoints for the current operation were written to checkpoint.csv.
 To resume the current operation, re-run it with the same settings, and add the following command line flag:
---dsbulk.log.checkpoint.file=/Users/USERNAME/logs/UNLOAD_20241120-211159-993666/checkpoint.csv
+--dsbulk.log.checkpoint.file=/Users/USERNAME/logs/UNLOAD_20250123-021231-557959/checkpoint.csv
 ----
 ====
 +
