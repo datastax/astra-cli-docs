@@ -174,6 +174,1162 @@ astra db create demo -r us-east-1 -k keyspace1 --if-not-exist
 ----
 ////
 
+== Manage keyspaces
+
+Use the `astra db create-keyspace` command to create a new keyspace in a database:
+
+[source,bash,subs="+quotes"]
+----
+astra db create-keyspace **DATABASE_ID** -k **KEYSPACE_NAME**
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
+[INFO]  Keyspace  'keyspace2' is creating.
+[INFO]  Database '26054aa9-eb37-4d88-b343-7c934cd1d7bc' has status 'MAINTENANCE' waiting to be 'ACTIVE' ...
+[INFO]  Database 'my_serverless_db' has status 'ACTIVE' (took 6669 millis)
+[OK]    Database '26054aa9-eb37-4d88-b343-7c934cd1d7bc' is ready.
+[OK]    Database '26054aa9-eb37-4d88-b343-7c934cd1d7bc' is ready.
+----
+====
+
+The database enters *Maintenance* status while creating the keyspace.
+When the database returns to *Active* status, you can use the new keyspace.
+
+include::ROOT:partial$async-option.adoc[tags=active]
+
+[TIP]
+======
+By default, the {product} returns an error if a keyspace with the same name already exists.
+However, if you use the `--if-not-exist` option, the {product} automatically connects to the existing keyspace instead of returning an error.
+This option can be useful when invoking the {product} in idempotent scripts.
+
+[source,bash,subs="+quotes"]
+----
+astra db create-keyspace **DATABASE_ID** -k **KEYSPACE_NAME** --if-not-exist
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
+[INFO]  Keyspace  'keyspace1' already exists. Connecting to keyspace.
+[OK]    Database '26054aa9-eb37-4d88-b343-7c934cd1d7bc' is ready.
+[OK]    Database '26054aa9-eb37-4d88-b343-7c934cd1d7bc' is ready.
+----
+====
+======
+
+Use the `astra db list-keyspaces` command to get a list of the keyspaces in a database:
+
+[source,bash,subs="+quotes"]
+----
+astra db list-keyspaces **DATABASE_ID**
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
++---------------------+
+| Name                |
++---------------------+
+| keyspace1 (default) |
+| keyspace2           |
++---------------------+
+----
+====
+
+Use the `astra db delete-keyspace` command to delete a keyspace from a database:
+
+[source,bash,subs="+quotes"]
+----
+astra db delete-keyspace **DATABASE_ID** -k **KEYSPACE_NAME**
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
+[INFO]  Database '26054aa9-eb37-4d88-b343-7c934cd1d7bc' has status 'MAINTENANCE' waiting to be 'ACTIVE' ...
+[INFO]  Database 'my_serverless_db' has status 'ACTIVE' (took 6804 millis)
+[OK]    Database '26054aa9-eb37-4d88-b343-7c934cd1d7bc' is ready.
+----
+====
+
+[WARNING]
+====
+Deleting a keyspace permanently deletes all collections, tables, and data in the keyspace.
+====
+
+The database enters *Maintenance* status while it deletes the keyspace along with any collections, tables, and data within the keyspace.
+
+include::ROOT:partial$async-option.adoc[tags=active]
+
+If you delete the default keyspace, {astra_db} automatically selects another keyspace to be the default keyspace.
+
+=== `db create-keyspace` options
+
+.Expand to see all `db create-keyspace` options
+[%collapsible]
+====
+[source,console]
+----
+NAME
+        astra db create-keyspace - Create a new keyspace
+
+SYNOPSIS
+        astra db create-keyspace [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
+                [ --if-not-exist ] {-k | --keyspace} <KEYSPACE> [ --no-color ]
+                [ {-o | --output} <FORMAT> ] [ --token <AUTH_TOKEN> ]
+                [ {-v | --verbose} ] [ --wait ] [--] <DB>
+
+OPTIONS
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        --env <Environment>
+            Astra Environment to use
+
+        --if-not-exist
+            will create a new DB only if none with same name
+
+        -k <KEYSPACE>, --keyspace <KEYSPACE>
+            Name of the keyspace to create
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --wait
+            Will wait until the database become ACTIVE
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <DB>
+            Database name (if unique) or Database identifier
+----
+====
+
+=== `db list-keyspaces` options
+
+.Expand to see all `db list-keyspaces` options
+[%collapsible]
+====
+[source,console]
+----
+NAME
+        astra db list-keyspaces - Display the list of Keyspaces in an database
+
+SYNOPSIS
+        astra db list-keyspaces [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
+                [ --no-color ] [ {-o | --output} <FORMAT> ]
+                [ --token <AUTH_TOKEN> ] [ {-v | --verbose} ] [--] <DB>
+
+OPTIONS
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        --env <Environment>
+            Astra Environment to use
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <DB>
+            Database name (if unique) or Database identifier
+----
+====
+
+=== `db delete-keyspace` options
+
+.Expand to see all `db delete-keyspace` options
+[%collapsible]
+====
+[source,console]
+----
+NAME
+        astra db delete-keyspace - Delete an existing keyspace
+
+SYNOPSIS
+        astra db delete-keyspace [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
+                {-k | --keyspace} <KEYSPACE> [ --no-color ]
+                [ {-o | --output} <FORMAT> ] [ --token <AUTH_TOKEN> ]
+                [ {-v | --verbose} ] [--] <DB>
+
+OPTIONS
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        --env <Environment>
+            Astra Environment to use
+
+        -k <KEYSPACE>, --keyspace <KEYSPACE>
+            Name of the keyspace to create
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <DB>
+            Database name (if unique) or Database identifier
+----
+====
+
+== Manage collections
+
+Use the `astra db create-collection` command to create a new collection in a {db-serverless-vector} database:
+
+[source,bash,subs="+quotes"]
+----
+astra db create-collection **DATABASE_ID** -c **COLLECTION_NAME**
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
+[OK]    Collection 'my_collection' as been created from db '58747660-464b-4085-bef2-c3f3e5401e3d' on keyspace  'default_keyspace'
+[OK]    Database '58747660-464b-4085-bef2-c3f3e5401e3d' is ready.
+----
+====
+
+Use the `astra db list-collections` command to get a list of the collections in a {db-serverless-vector} database:
+
+[source,bash,subs="+quotes"]
+----
+astra db list-collections **DATABASE_ID**
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
++---------------------+-----------+-------------------+--------------------+--------------+---------------------+
+| Name                | DefaultId | Vector Dimension  | Similarity Metric  | AI Provider  | AI Model            |
++---------------------+-----------+-------------------+--------------------+--------------+---------------------+
+| my_collection       | default   |                   |                    |              |                     |
++---------------------+-----------+-------------------+--------------------+--------------+---------------------+
+----
+====
+
+Use the `astra db describe-collection` command to get information about a specific collection:
+
+[source,bash,subs="+quotes"]
+----
+astra db describe-collection **DATABASE_ID** -c **COLLECTION_NAME**
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
++----------------+-----------------------------------------+
+| Attribute      | Value                                   |
++----------------+-----------------------------------------+
+| Name           | my_collection                           |
+| Estim. Count   | 0                                       |
++----------------+-----------------------------------------+
+----
+====
+
+Use the `astra db truncate-collection` command to clear an existing collection:
+
+[source,bash,subs="+quotes"]
+----
+astra db truncate-collection **DATABASE_ID** -c **COLLECTION_NAME**
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
+[OK]    Collection 'my_collection' as been truncated from '58747660-464b-4085-bef2-c3f3e5401e3d'.
+----
+====
+
+Use the `astra db delete-collection` command to delete a collection from a a {db-serverless-vector} database:
+
+[source,bash,subs="+quotes"]
+----
+astra db delete-collection **DATABASE_ID** -c **COLLECTION_NAME**
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
+[OK]    Collection 'my_collection' as been deleted from '58747660-464b-4085-bef2-c3f3e5401e3d'.
+[OK]    Database '58747660-464b-4085-bef2-c3f3e5401e3d' is ready.
+----
+====
+
+=== `db create-collection` options
+
+.Expand to see all `db create-collection` options
+[%collapsible]
+====
+[source,console]
+----
+NAME
+        astra db create-collection - Create a new collection
+
+SYNOPSIS
+        astra db create-collection {-c | --collection} <COLLECTION>
+                [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ]
+                [ {-d | --dimension} <DIMENSION> ]
+                [ --default-id <DEFAULT_ID> ]
+                [ --embedding-key <EMBEDDING_KEY> ]
+                [ --embedding-model <EMBEDDING_MODEL> ]
+                [ --embedding-provider <EMBEDDING_PROVIDER> ]
+                [ --env <Environment> ] [ --if-not-exists ]
+                [ --indexing-allow <INDEXING_ALLOW> ]
+                [ --indexing-deny <INDEXING_DENY> ]
+                [ {-k | --keyspace} <KEYSPACE> ] [ {-m | --metric} <METRIC> ]
+                [ --no-color ] [ {-o | --output} <FORMAT> ]
+                [ --token <AUTH_TOKEN> ] [ {-v | --verbose} ] [--] <DB>
+
+OPTIONS
+        -c <COLLECTION>, --collection <COLLECTION>
+            Name of the collection to create
+
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        -d <DIMENSION>, --dimension <DIMENSION>
+            Name of the collection to create
+
+        --default-id <DEFAULT_ID>
+            Default identifier to use for the collection
+
+        --embedding-key <EMBEDDING_KEY>
+            Using Vectorize, embedding key used for shared secret
+
+        --embedding-model <EMBEDDING_MODEL>
+            Using Vectorize, embedding mode to use
+
+        --embedding-provider <EMBEDDING_PROVIDER>
+            Using Vectorize, embedding provider to use
+
+        --env <Environment>
+            Astra Environment to use
+
+        --if-not-exists
+            will create a new collection only if none with same name
+
+        --indexing-allow <INDEXING_ALLOW>
+            List of attribute to add into index (comma separated)
+
+        --indexing-deny <INDEXING_DENY>
+            List of attribute to remove from index (comma separated)
+
+        -k <KEYSPACE>, --keyspace <KEYSPACE>
+            Name of the keyspace to create the collection
+
+        -m <METRIC>, --metric <METRIC>
+            Name of the collection to create
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <DB>
+            Database name (if unique) or Database identifier
+----
+====
+
+=== `db list-collection` options
+
+.Expand to see all `db list-collection` options
+[%collapsible]
+====
+[source,console]
+----
+NAME
+        astra db list-collections - Display the list of collections in an
+        database
+
+SYNOPSIS
+        astra db list-collections [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
+                [ {-k | --keyspace} <KEYSPACE> ] [ --no-color ]
+                [ {-o | --output} <FORMAT> ] [ --token <AUTH_TOKEN> ]
+                [ {-v | --verbose} ] [--] <DB>
+
+OPTIONS
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        --env <Environment>
+            Astra Environment to use
+
+        -k <KEYSPACE>, --keyspace <KEYSPACE>
+            Name of the keyspace to create the collection
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <DB>
+            Database name (if unique) or Database identifier
+----
+====
+
+=== `db describe-collection` options
+
+.Expand to see all `db describe-collection` options
+[%collapsible]
+====
+[source,console]
+----
+NAME
+        astra db describe-collection - Describe an existing collection
+
+SYNOPSIS
+        astra db describe-collection {-c | --collection} <COLLECTION>
+                [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
+                [ {-k | --keyspace} <KEYSPACE> ] [ --no-color ]
+                [ {-o | --output} <FORMAT> ] [ --token <AUTH_TOKEN> ]
+                [ {-v | --verbose} ] [--] <DB>
+
+OPTIONS
+        -c <COLLECTION>, --collection <COLLECTION>
+            Name of the collection
+
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        --env <Environment>
+            Astra Environment to use
+
+        -k <KEYSPACE>, --keyspace <KEYSPACE>
+            Name of the keyspace to create the collection
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <DB>
+            Database name (if unique) or Database identifier
+----
+====
+
+=== `db truncate-collection` options
+
+.Expand to see all `db truncate-collection` options
+[%collapsible]
+====
+[source,console]
+----
+NAME
+        astra db truncate-collection - Clear an existing collection
+
+SYNOPSIS
+        astra db truncate-collection {-c | --collection} <COLLECTION>
+                [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
+                [ {-k | --keyspace} <KEYSPACE> ] [ --no-color ]
+                [ {-o | --output} <FORMAT> ] [ --token <AUTH_TOKEN> ]
+                [ {-v | --verbose} ] [--] <DB>
+
+OPTIONS
+        -c <COLLECTION>, --collection <COLLECTION>
+            Name of the collection
+
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        --env <Environment>
+            Astra Environment to use
+
+        -k <KEYSPACE>, --keyspace <KEYSPACE>
+            Name of the keyspace to clear the table
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <DB>
+            Database name (if unique) or Database identifier
+----
+====
+
+=== `db delete-collection` options
+
+.Expand to see all `db delete-collection` options
+[%collapsible]
+====
+[source,console]
+----
+NAME
+        astra db delete-collection - Delete an existing collection
+
+SYNOPSIS
+        astra db delete-collection {-c | --collection} <COLLECTION>
+                [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
+                [ --if-exists ] [ {-k | --keyspace} <KEYSPACE> ] [ --no-color ]
+                [ {-o | --output} <FORMAT> ] [ --token <AUTH_TOKEN> ]
+                [ {-v | --verbose} ] [--] <DB>
+
+OPTIONS
+        -c <COLLECTION>, --collection <COLLECTION>
+            Name of the collection to delete
+
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        --env <Environment>
+            Astra Environment to use
+
+        --if-exists
+            will delete the collection only if it exists
+
+        -k <KEYSPACE>, --keyspace <KEYSPACE>
+            Name of the keyspace to create the collection
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <DB>
+            Database name (if unique) or Database identifier
+----
+====
+
+== Manage tables
+
+Use the `astra db list-tables` command to get a list of the tables in a {db-serverless-vector} database:
+
+[source,bash,subs="+quotes"]
+----
+astra db list-tables **DATABASE_ID**
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
++---------------------+
+| Name                |
++---------------------+
+| students            |
++---------------------+
+----
+====
+
+
+Use the `astra db describe-table` command to get information about a specific table:
+
+[source,bash,subs="+quotes"]
+----
+astra db describe-table **DATABASE_ID** -t **TABLE_NAME**
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
++------------------+-----------------------------------------+
+| Attribute        | Value                                   |
++------------------+-----------------------------------------+
+| Name             | students                                |
+|                  |                                         |
+| COLUMNS          |                                         |
+| email            | TEXT                                    |
+| extracurriculars | SET<TEXT>                               |
+| grades           | MAP<TEXT, INT>                          |
+| graduated        | BOOLEAN                                 |
+| graduation_year  | INT                                     |
+| name             | TEXT                                    |
+| semester_gpas    | LIST<DECIMAL>                           |
+| vect_emb         | VECTOR<FLOAT,1024>                      |
+|                  |                                         |
+| PRIMARY KEY      |                                         |
+| Partition Key    | [0] email                               |
++------------------+-----------------------------------------+
+----
+====
+
+Use the `astra db truncate-table` command to clear an existing table:
+
+[source,bash,subs="+quotes"]
+----
+astra db truncate-table **DATABASE_ID** -t **TABLE_NAME**
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
+[OK]    Table 'students' as been truncated from '58747660-464b-4085-bef2-c3f3e5401e3d'.
+----
+====
+
+Use the `astra db delete-collection` command to delete a collection from a a {db-serverless-vector} database:
+
+[source,bash,subs="+quotes"]
+----
+astra db delete-table **DATABASE_ID** -t **TABLE_NAME**
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
+[OK]    Table 'students' as been deleted from '58747660-464b-4085-bef2-c3f3e5401e3d'.
+[OK]    Database '58747660-464b-4085-bef2-c3f3e5401e3d' is ready.
+----
+====
+
+=== `db list-tables` options
+
+.Expand to see all `db list-tables` options
+[%collapsible]
+====
+[source,console]
+----
+NAME
+        astra db list-tables - Display the list of tables in a
+        database/keyspace couple
+
+SYNOPSIS
+        astra db list-tables [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
+                [ {-k | --keyspace} <KEYSPACE> ] [ --no-color ]
+                [ {-o | --output} <FORMAT> ] [ --token <AUTH_TOKEN> ]
+                [ {-v | --verbose} ] [--] <DB>
+
+OPTIONS
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        --env <Environment>
+            Astra Environment to use
+
+        -k <KEYSPACE>, --keyspace <KEYSPACE>
+            Name of the keyspace
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <DB>
+            Database name (if unique) or Database identifier
+----
+====
+
+=== `db describe-table` options
+
+.Expand to see all `db describe-table` options
+[%collapsible]
+====
+[source,console]
+----
+NAME
+        astra db describe-table - Describe an existing table
+
+SYNOPSIS
+        astra db describe-table [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
+                [ {-k | --keyspace} <KEYSPACE> ] [ --no-color ]
+                [ {-o | --output} <FORMAT> ] {-t | --table} <TABLE>
+                [ --token <AUTH_TOKEN> ] [ {-v | --verbose} ] [--] <DB>
+
+OPTIONS
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        --env <Environment>
+            Astra Environment to use
+
+        -k <KEYSPACE>, --keyspace <KEYSPACE>
+            Name of the keyspace to create the collection
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        -t <TABLE>, --table <TABLE>
+            Name of the table
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <DB>
+            Database name (if unique) or Database identifier
+----
+====
+
+=== `db truncate-table` options
+
+.Expand to see all `db truncate-table` options
+[%collapsible]
+====
+[source,console]
+----
+NAME
+        astra db truncate-table - Clear an existing table
+
+SYNOPSIS
+        astra db truncate-table [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
+                [ {-k | --keyspace} <KEYSPACE> ] [ --no-color ]
+                [ {-o | --output} <FORMAT> ] {-t | --table} <TABLE>
+                [ --token <AUTH_TOKEN> ] [ {-v | --verbose} ] [--] <DB>
+
+OPTIONS
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        --env <Environment>
+            Astra Environment to use
+
+        -k <KEYSPACE>, --keyspace <KEYSPACE>
+            Name of the keyspace to clear the table
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        -t <TABLE>, --table <TABLE>
+            Name of the table
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <DB>
+            Database name (if unique) or Database identifier
+----
+====
+
+=== `db delete-table` options
+
+.Expand to see all `db delete-table` options
+[%collapsible]
+====
+[source,console]
+----
+NAME
+        astra db delete-table - Delete an existing table
+
+SYNOPSIS
+        astra db delete-table [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
+                [ --if-exists ] [ {-k | --keyspace} <KEYSPACE> ] [ --no-color ]
+                [ {-o | --output} <FORMAT> ] {-t | --table} <TABLE>
+                [ --token <AUTH_TOKEN> ] [ {-v | --verbose} ] [--] <DB>
+
+OPTIONS
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        --env <Environment>
+            Astra Environment to use
+
+        --if-exists
+            will delete the table only if it exists
+
+        -k <KEYSPACE>, --keyspace <KEYSPACE>
+            Name of the keyspace to delete the table
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        -t <TABLE>, --table <TABLE>
+            Name of the table
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <DB>
+            Database name (if unique) or Database identifier
+----
+====
+
+== Manage embedding providers
+
+Use the `astra db list-embedding-providers` command to get a list of the embedding provider integrations that are available for a {db-serverless-vector} database:
+
+[source,bash,subs="+quotes"]
+----
+astra db list-embedding-providers **DATABASE_ID**
+----
+
+.Result
+[%collapsible]
+======
+[source,console]
+----
++----------------------+--------------------------+--------+------------+---------+----------+
+| Key                  | DisplayName              | Models | Parameters | Au.Head | S.Secret |
++----------------------+--------------------------+--------+------------+---------+----------+
+| cohere               | Cohere                   | 3      | 0          | ■       | ■        |
+| openai               | OpenAI                   | 3      | 2          | ■       | ■        |
+| huggingfaceDedicated | Hugging Face - Dedicated | 1      | 3          | ■       | ■        |
+| azureOpenAI          | Azure OpenAI             | 3      | 2          | ■       | ■        |
+| bedrock              | Amazon Bedrock           | 2      | 1          | ■       | ■        |
+| jinaAI               | Jina AI                  | 5      | 0          | ■       | ■        |
+| voyageAI             | Voyage AI                | 7      | 1          | ■       | ■        |
+| upstageAI            | Upstage                  | 1      | 0          | ■       | ■        |
+| huggingface          | Hugging Face - Serverless| 6      | 0          | ■       | ■        |
+| nvidia               | Nvidia                   | 1      | 0          |         |          |
+| mistral              | Mistral AI               | 1      | 0          | ■       | ■        |
++----------------------+--------------------------+--------+------------+---------+----------+
+----
+
+include::ROOT:partial$ep-change-admonition.adoc[]
+======
+
+Use the `astra db describe-embedding-provider` command to get information about a specific embedding provider integration:
+
+[source,bash,subs="+quotes"]
+----
+astra db describe-embedding-provider **DATABASE_ID** -ep **PROVIDER_NAME**
+----
+
+.Result
+[%collapsible]
+======
+[source,console]
+----
++-------------------+---------------------------------------------------------------------------------------------+
+| Attribute         | Value                                                                                       |
++-------------------+---------------------------------------------------------------------------------------------+
+| Key               | openai                                                                                      |
+| DisplayName       | OpenAI                                                                                      |
+| Parameters        | [0] organizationId (STRING)                                                                 |
+|                   | [1] projectId (STRING)                                                                      |
+| Models:           |                                                                                             |
+| Name              | text-embedding-3-small                                                                      |
+| Parameters        | [0] vectorDimension (number) , defaultValue=1536                                            |
+| Name              | text-embedding-3-large                                                                      |
+| Parameters        | [0] vectorDimension (number) , defaultValue=3072                                            |
+| Name              | text-embedding-ada-002                                                                      |
+| Vector Dimension  | 1536                                                                                        |
+| Header Auth:      |                                                                                             |
+| Tokens            | [0] forwarded=Authorization, accepted=x-embedding-api-key                                   |
+| Shar.Secret Auth: |                                                                                             |
+| Tokens            | [0] forwarded=Authorization, accepted=providerKey                                           |
+| Supported Auth:   |                                                                                             |
+| Authentication    | [0] NONE: []                                                                                |
+|                   | [1] SHARED_SECRET: [EmbeddingProvider.Token(forwarded=Authorization, accepted=providerKey)] |
+|                   | [2] HEADER: [EmbeddingProvider.Token(forwarded=Authorization, accepted=x-embedding-api-key)]|
++-------------------+---------------------------------------------------------------------------------------------+
+
+[OK]    Database '58747660-464b-4085-bef2-c3f3e5401e3d' is ready.
+----
+
+include::ROOT:partial$ep-change-admonition.adoc[]
+======
+
+=== `db list-embedding-providers` options
+
+.Expand to see all `db list-embedding-providers` options
+[%collapsible]
+====
+[source,console]
+----
+NAME
+        astra db list-embedding-providers - Display the list of embedding
+        providers in an database
+
+SYNOPSIS
+        astra db list-embedding-providers
+                [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
+                [ --no-color ] [ {-o | --output} <FORMAT> ]
+                [ --token <AUTH_TOKEN> ] [ {-v | --verbose} ] [--] <DB>
+
+OPTIONS
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        --env <Environment>
+            Astra Environment to use
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <DB>
+            Database name (if unique) or Database identifier
+----
+====
+
+=== `db describe-embedding-provider` options
+
+.Expand to see all `db describe-embedding-provider` options
+[%collapsible]
+====
+[source,console]
+----
+NAME
+        astra db describe-embedding-provider - Describe an existing embedding
+        provider
+
+SYNOPSIS
+        astra db describe-embedding-provider
+                [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
+                {-ep | --embedding-provider} <EMBEDDING_PROVIDER>
+                [ --no-color ] [ {-o | --output} <FORMAT> ]
+                [ --token <AUTH_TOKEN> ] [ {-v | --verbose} ] [--] <DB>
+
+OPTIONS
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        --env <Environment>
+            Astra Environment to use
+
+        -ep <EMBEDDING_PROVIDER>, --embedding-provider <EMBEDDING_PROVIDER>
+            Key of the embedding provider
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <DB>
+            Database name (if unique) or Database identifier
+----
+====
+
 [#get-database-details]
 == Get database details
 
@@ -1113,264 +2269,6 @@ OPTIONS
 
         --wait
             Will wait until the database become ACTIVE
-
-        --
-            This option can be used to separate command-line options from the
-            list of arguments (useful when arguments might be mistaken for
-            command-line options)
-
-        <DB>
-            Database name (if unique) or Database identifier
-----
-====
-
-== Manage keyspaces
-
-Use the `astra db create-keyspace` command to create a new keyspace in a database:
-
-[source,bash,subs="+quotes"]
-----
-astra db create-keyspace **DATABASE_ID** -k **KEYSPACE_NAME**
-----
-
-.Result
-[%collapsible]
-====
-[source,console]
-----
-[INFO]  Keyspace  'keyspace2' is creating.
-[INFO]  Database '26054aa9-eb37-4d88-b343-7c934cd1d7bc' has status 'MAINTENANCE' waiting to be 'ACTIVE' ...
-[INFO]  Database 'my_serverless_db' has status 'ACTIVE' (took 6669 millis)
-[OK]    Database '26054aa9-eb37-4d88-b343-7c934cd1d7bc' is ready.
-[OK]    Database '26054aa9-eb37-4d88-b343-7c934cd1d7bc' is ready.
-----
-====
-
-The database enters *Maintenance* status while creating the keyspace.
-When the database returns to *Active* status, you can use the new keyspace.
-
-include::ROOT:partial$async-option.adoc[tags=active]
-
-[TIP]
-======
-By default, the {product} returns an error if a keyspace with the same name already exists.
-However, if you use the `--if-not-exist` option, the {product} automatically connects to the existing keyspace instead of returning an error.
-This option can be useful when invoking the {product} in idempotent scripts.
-
-[source,bash,subs="+quotes"]
-----
-astra db create-keyspace **DATABASE_ID** -k **KEYSPACE_NAME** --if-not-exist
-----
-
-.Result
-[%collapsible]
-====
-[source,console]
-----
-[INFO]  Keyspace  'keyspace1' already exists. Connecting to keyspace.
-[OK]    Database '26054aa9-eb37-4d88-b343-7c934cd1d7bc' is ready.
-[OK]    Database '26054aa9-eb37-4d88-b343-7c934cd1d7bc' is ready.
-----
-====
-======
-
-Use the `astra db list-keyspaces` command to get a list of the keyspaces in a database:
-
-[source,bash,subs="+quotes"]
-----
-astra db list-keyspaces **DATABASE_ID**
-----
-
-.Result
-[%collapsible]
-====
-[source,console]
-----
-+---------------------+
-| Name                |
-+---------------------+
-| keyspace1 (default) |
-| keyspace2           |
-+---------------------+
-----
-====
-
-Use the `astra db delete-keyspace` command to delete a keyspace from a database:
-
-[source,bash,subs="+quotes"]
-----
-astra db delete-keyspace **DATABASE_ID** -k **KEYSPACE_NAME**
-----
-
-.Result
-[%collapsible]
-====
-[source,console]
-----
-[INFO]  Database '26054aa9-eb37-4d88-b343-7c934cd1d7bc' has status 'MAINTENANCE' waiting to be 'ACTIVE' ...
-[INFO]  Database 'my_serverless_db' has status 'ACTIVE' (took 6804 millis)
-[OK]    Database '26054aa9-eb37-4d88-b343-7c934cd1d7bc' is ready.
-----
-====
-
-[WARNING]
-====
-Deleting a keyspace permanently deletes all collections, tables, and data in the keyspace.
-====
-
-The database enters *Maintenance* status while it deletes the keyspace along with any collections, tables, and data within the keyspace.
-
-include::ROOT:partial$async-option.adoc[tags=active]
-
-If you delete the default keyspace, {astra_db} automatically selects another keyspace to be the default keyspace.
-
-=== `db create-keyspace` options
-
-.Expand to see all `db create-keyspace` options
-[%collapsible]
-====
-[source,console]
-----
-NAME
-        astra db create-keyspace - Create a new keyspace
-
-SYNOPSIS
-        astra db create-keyspace [ {-cf | --config-file} <CONFIG_FILE> ]
-                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
-                [ --if-not-exist ] {-k | --keyspace} <KEYSPACE> [ --no-color ]
-                [ {-o | --output} <FORMAT> ] [ --token <AUTH_TOKEN> ]
-                [ {-v | --verbose} ] [ --wait ] [--] <DB>
-
-OPTIONS
-        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
-            Configuration file (default = ~/.astrarc)
-
-        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
-            Section in configuration file (default = ~/.astrarc)
-
-        --env <Environment>
-            Astra Environment to use
-
-        --if-not-exist
-            will create a new DB only if none with same name
-
-        -k <KEYSPACE>, --keyspace <KEYSPACE>
-            Name of the keyspace to create
-
-        --no-color
-            Remove all colors in output
-
-        -o <FORMAT>, --output <FORMAT>
-            Output format, valid values are: human,json,csv
-
-        --token <AUTH_TOKEN>
-            Key to use authenticate each call.
-
-        -v, --verbose
-            Verbose mode with log in console
-
-        --wait
-            Will wait until the database become ACTIVE
-
-        --
-            This option can be used to separate command-line options from the
-            list of arguments (useful when arguments might be mistaken for
-            command-line options)
-
-        <DB>
-            Database name (if unique) or Database identifier
-----
-====
-
-=== `db list-keyspaces` options
-
-.Expand to see all `db list-keyspaces` options
-[%collapsible]
-====
-[source,console]
-----
-NAME
-        astra db list-keyspaces - Display the list of Keyspaces in an database
-
-SYNOPSIS
-        astra db list-keyspaces [ {-cf | --config-file} <CONFIG_FILE> ]
-                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
-                [ --no-color ] [ {-o | --output} <FORMAT> ]
-                [ --token <AUTH_TOKEN> ] [ {-v | --verbose} ] [--] <DB>
-
-OPTIONS
-        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
-            Configuration file (default = ~/.astrarc)
-
-        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
-            Section in configuration file (default = ~/.astrarc)
-
-        --env <Environment>
-            Astra Environment to use
-
-        --no-color
-            Remove all colors in output
-
-        -o <FORMAT>, --output <FORMAT>
-            Output format, valid values are: human,json,csv
-
-        --token <AUTH_TOKEN>
-            Key to use authenticate each call.
-
-        -v, --verbose
-            Verbose mode with log in console
-
-        --
-            This option can be used to separate command-line options from the
-            list of arguments (useful when arguments might be mistaken for
-            command-line options)
-
-        <DB>
-            Database name (if unique) or Database identifier
-----
-====
-
-=== `db delete-keyspace` options
-
-.Expand to see all `db delete-keyspace` options
-[%collapsible]
-====
-[source,console]
-----
-NAME
-        astra db delete-keyspace - Delete an existing keyspace
-
-SYNOPSIS
-        astra db delete-keyspace [ {-cf | --config-file} <CONFIG_FILE> ]
-                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
-                {-k | --keyspace} <KEYSPACE> [ --no-color ]
-                [ {-o | --output} <FORMAT> ] [ --token <AUTH_TOKEN> ]
-                [ {-v | --verbose} ] [--] <DB>
-
-OPTIONS
-        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
-            Configuration file (default = ~/.astrarc)
-
-        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
-            Section in configuration file (default = ~/.astrarc)
-
-        --env <Environment>
-            Astra Environment to use
-
-        -k <KEYSPACE>, --keyspace <KEYSPACE>
-            Name of the keyspace to create
-
-        --no-color
-            Remove all colors in output
-
-        -o <FORMAT>, --output <FORMAT>
-            Output format, valid values are: human,json,csv
-
-        --token <AUTH_TOKEN>
-            Key to use authenticate each call.
-
-        -v, --verbose
-            Verbose mode with log in console
 
         --
             This option can be used to separate command-line options from the
