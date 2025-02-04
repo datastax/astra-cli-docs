@@ -1915,666 +1915,7 @@ OPTIONS
 ----
 ====
 
-== Manage multi-region databases
-
-You can configure a database to replicate data across multiple regions.
-Some benefits of multi-region databases include better data locality and higher availability for multi-region application architectures.
-For more information, see xref:astra-db-serverless:databases:manage-regions.adoc[].
-
-[IMPORTANT]
-====
-Multi-region databases are a premium feature.
-Each region added to a database increases the database's costs.
-This includes a one-time data replication fee for the new region, and charges for replicating data to all database regions.
-For more information, see xref:astra-db-serverless:administration:subscription-plans.adoc[].
-====
-
-Use the `astra db create-region` command to add a region to a database:
-
-[source,bash,subs="+quotes"]
-----
-astra db create-region **DATABASE_ID** -r **REGION**
-----
-
-Replace `**REGION**` with the region you want to add to your database.
-The following restrictions apply:
-
-* You can add only one region at a time.
-
-* You can't select a region that the database already uses.
-
-* You must select a region in the same cloud provider as the database's other regions.
-Multi-region databases can't span multiple cloud providers.
-
-* For {db-serverless-vector} databases, you must select a region that supports that database type.
-For more information, see xref:astra-db-serverless:databases:regions.adoc[].
-
-////
-// TODO: The command is not working as expected. Must investigate and figure out why it is reporting the following error: [ERROR] UNAVAILABLE: Database 'my_serverless_db' has been found but operation cannot be processed due to invalid state (ACTIVE) expected (ACTIVE)
-.Result
-[%collapsible]
-====
-[source,console]
-----
-
-----
-====
-////
-
-[NOTE]
-====
-The database enters *Maintenance* status while provisioning and replicating data to the new region.
-
-While in *Maintenance* status, you can't add or remove regions, truncate tables, or delete keyspaces, tables, or collections.
-
-*Maintenance* status doesn't impact reads and writes.
-====
-
-Use the `astra db list-regions` command to list the regions where a database is deployed:
-
-[source,bash,subs="+quotes"]
-----
-astra db list-regions **DATABASE_ID**
-----
-
-.Result
-[%collapsible]
-====
-[source,console]
-----
-+----------------+---------------------+----------------+----------------+
-| Cloud Provider | Region              | Tier           | Status         |
-+----------------+---------------------+----------------+----------------+
-| aws            | us-east-2           | serverless     |                |
-| aws            | us-east-1 (default) | serverless     |                |
-+----------------+---------------------+----------------+----------------+
-----
-====
-
-Use the `astra db delete-region` command to remove a region from a database:
-
-[source,bash,subs="+quotes"]
-----
-astra db delete-region **DATABASE_ID** -r **REGION**
-----
-
-.Result
-[%collapsible]
-====
-[source,console]
-----
-[INFO]  Region 'us-west1' is deleting.
-[OK]    Region us-west1 has been deleted
-----
-====
-
-[NOTE]
-====
-The database enters *Maintenance* status while deleting the region.
-
-While in *Maintenance* status, you can't add or remove regions, truncate tables, or delete keyspaces, tables, or collections.
-
-*Maintenance* status doesn't impact reads and writes.
-====
-
-[IMPORTANT]
-====
-You can't remove the primary (default) region, which is the first region selected when you created the database.
-
-When you remove a region, any connections to the deleted region are also removed.
-However, to avoid data loss, all data is replicated before the region is deleted.
-====
-
-=== `db create-region` options
-
-.Expand to see all `db create-region` options
-[%collapsible]
-====
-[source,console]
-----
-NAME
-        astra db create-region - Expand database to a new region
-
-SYNOPSIS
-        astra db create-region [ --async ] [ {-c | --cloud} <CLOUD> ]
-                [ {-cf | --config-file} <CONFIG_FILE> ]
-                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
-                [ --if-not-exist ] [ --no-color ] [ {-o | --output} <FORMAT> ]
-                {-r | --region} <REGION> [ {-t | --tier} <CLOUD> ]
-                [ --timeout <timeout> ] [ --token <AUTH_TOKEN> ]
-                [ {-v | --verbose} ] [ --wait ] [--] <DB>
-
-OPTIONS
-        --async
-            Will wait until the database become ACTIVE
-
-        -c <CLOUD>, --cloud <CLOUD>
-            Name of the cloud provider
-
-        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
-            Configuration file (default = ~/.astrarc)
-
-        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
-            Section in configuration file (default = ~/.astrarc)
-
-        --env <Environment>
-            Astra Environment to use
-
-        --if-not-exist
-            will create a new DB only if none with same name
-
-        --no-color
-            Remove all colors in output
-
-        -o <FORMAT>, --output <FORMAT>
-            Output format, valid values are: human,json,csv
-
-        -r <REGION>, --region <REGION>
-            Name of the region to create
-
-        -t <CLOUD>, --tier <CLOUD>
-            Name of the tiers
-
-        --timeout <timeout>
-            Max wait time in seconds, default+1800, 0 = no timeout.
-
-        --token <AUTH_TOKEN>
-            Key to use authenticate each call.
-
-        -v, --verbose
-            Verbose mode with log in console
-
-        --wait
-            Will wait until the database become ACTIVE
-
-        --
-            This option can be used to separate command-line options from the
-            list of arguments (useful when arguments might be mistaken for
-            command-line options)
-
-        <DB>
-            Database name (if unique) or Database identifier
-----
-====
-
-=== `db list-regions` options
-
-.Expand to see all `db list-regions` options
-[%collapsible]
-====
-[source,console]
-----
-NAME
-        astra db list-regions - List regions for a database
-
-SYNOPSIS
-        astra db list-regions [ {-cf | --config-file} <CONFIG_FILE> ]
-                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
-                [ --no-color ] [ {-o | --output} <FORMAT> ]
-                [ --token <AUTH_TOKEN> ] [ {-v | --verbose} ] [--] <DB>
-
-OPTIONS
-        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
-            Configuration file (default = ~/.astrarc)
-
-        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
-            Section in configuration file (default = ~/.astrarc)
-
-        --env <Environment>
-            Astra Environment to use
-
-        --no-color
-            Remove all colors in output
-
-        -o <FORMAT>, --output <FORMAT>
-            Output format, valid values are: human,json,csv
-
-        --token <AUTH_TOKEN>
-            Key to use authenticate each call.
-
-        -v, --verbose
-            Verbose mode with log in console
-
-        --
-            This option can be used to separate command-line options from the
-            list of arguments (useful when arguments might be mistaken for
-            command-line options)
-
-        <DB>
-            Database name (if unique) or Database identifier
-----
-====
-
-=== `db delete-region` options
-
-.Expand to see all `db delete-region` options
-[%collapsible]
-====
-[source,console]
-----
-NAME
-        astra db delete-region - Delete a region from a database
-
-SYNOPSIS
-        astra db delete-region [ --async ]
-                [ {-cf | --config-file} <CONFIG_FILE> ]
-                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
-                [ --no-color ] [ {-o | --output} <FORMAT> ]
-                {-r | --region} <REGION> [ --timeout <timeout> ]
-                [ --token <AUTH_TOKEN> ] [ {-v | --verbose} ] [ --wait ] [--]
-                <DB>
-
-OPTIONS
-        --async
-            Will wait until the database become ACTIVE
-
-        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
-            Configuration file (default = ~/.astrarc)
-
-        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
-            Section in configuration file (default = ~/.astrarc)
-
-        --env <Environment>
-            Astra Environment to use
-
-        --no-color
-            Remove all colors in output
-
-        -o <FORMAT>, --output <FORMAT>
-            Output format, valid values are: human,json,csv
-
-        -r <REGION>, --region <REGION>
-            Name of the region to create
-
-        --timeout <timeout>
-            Max wait time in seconds, default+1800, 0 = no timeout.
-
-        --token <AUTH_TOKEN>
-            Key to use authenticate each call.
-
-        -v, --verbose
-            Verbose mode with log in console
-
-        --wait
-            Will wait until the database become ACTIVE
-
-        --
-            This option can be used to separate command-line options from the
-            list of arguments (useful when arguments might be mistaken for
-            command-line options)
-
-        <DB>
-            Database name (if unique) or Database identifier
-----
-====
-
-== Get database API endpoints
-
-Use the `get-endpoint-swagger` command to get the Swagger UI endpoint for a database:
-
-[source,bash,subs="+quotes"]
-----
-astra db get-endpoint-swagger **DATABASE_ID**
-----
-
-.Result
-[%collapsible]
-====
-[source,console]
-----
-https://26054aa9-eb37-4d88-b343-7c934cd1d7bc-us-east-1.apps.astra.datastax.com/api/rest/swagger-ui/
-----
-====
-
-Use the `get-endpoint-api` command to get the JSON API endpoint for a {db-serverless-vector} database:
-
-[source,bash,subs="+quotes"]
-----
-astra db get-endpoint-api **DATABASE_ID**
-----
-
-.Result
-[%collapsible]
-====
-[source,console]
-----
-https://26054aa9-eb37-4d88-b343-7c934cd1d7bc-us-east-1.apps.astra.datastax.com/api/rest
-----
-====
-
-Use the `get-endpoint-playground` command to get the GraphQL playground endpoint for a non-vector database:
-
-[source,bash,subs="+quotes"]
-----
-astra db get-endpoint-playground **DATABASE_ID**
-----
-
-.Result
-[%collapsible]
-====
-[source,console]
-----
-https://26054aa9-eb37-4d88-b343-7c934cd1d7bc-us-east-1.apps.astra.datastax.com/api/playground
-----
-====
-
-=== `db get-endpoint-swagger` options
-
-.Expand to see all `db get-endpoint-swagger` options
-[%collapsible]
-====
-[source,console]
-----
-NAME
-        astra db get-endpoint-swagger - Open the swagger user interface
-
-SYNOPSIS
-        astra db get-endpoint-swagger [ {-cf | --config-file} <CONFIG_FILE> ]
-                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
-                [ --no-color ] [ {-o | --output} <FORMAT> ]
-                [ {-r | --region} <DB_REGION> ] [ --token <AUTH_TOKEN> ]
-                [ {-v | --verbose} ] [--] <DB>
-
-OPTIONS
-        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
-            Configuration file (default = ~/.astrarc)
-
-        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
-            Section in configuration file (default = ~/.astrarc)
-
-        --env <Environment>
-            Astra Environment to use
-
-        --no-color
-            Remove all colors in output
-
-        -o <FORMAT>, --output <FORMAT>
-            Output format, valid values are: human,json,csv
-
-        -r <DB_REGION>, --region <DB_REGION>
-            Cloud provider region
-
-        --token <AUTH_TOKEN>
-            Key to use authenticate each call.
-
-        -v, --verbose
-            Verbose mode with log in console
-
-        --
-            This option can be used to separate command-line options from the
-            list of arguments (useful when arguments might be mistaken for
-            command-line options)
-
-        <DB>
-            Database name (if unique) or Database identifier
-----
-====
-
-=== `db get-endpoint-api` options
-
-.Expand to see all `db get-endpoint-api` options
-[%collapsible]
-====
-[source,console]
-----
-NAME
-        astra db get-endpoint-api - Open the json api endpoint
-
-SYNOPSIS
-        astra db get-endpoint-api [ {-cf | --config-file} <CONFIG_FILE> ]
-                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
-                [ --no-color ] [ {-o | --output} <FORMAT> ]
-                [ {-r | --region} <DB_REGION> ] [ --token <AUTH_TOKEN> ]
-                [ {-v | --verbose} ] [--] <DB>
-
-OPTIONS
-        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
-            Configuration file (default = ~/.astrarc)
-
-        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
-            Section in configuration file (default = ~/.astrarc)
-
-        --env <Environment>
-            Astra Environment to use
-
-        --no-color
-            Remove all colors in output
-
-        -o <FORMAT>, --output <FORMAT>
-            Output format, valid values are: human,json,csv
-
-        -r <DB_REGION>, --region <DB_REGION>
-            Cloud provider region
-
-        --token <AUTH_TOKEN>
-            Key to use authenticate each call.
-
-        -v, --verbose
-            Verbose mode with log in console
-
-        --
-            This option can be used to separate command-line options from the
-            list of arguments (useful when arguments might be mistaken for
-            command-line options)
-
-        <DB>
-            Database name (if unique) or Database identifier
-----
-====
-
-=== `db get-endpoint-playground` options
-
-.Expand to see all `db get-endpoint-playground` options
-[%collapsible]
-====
-[source,console]
-----
-NAME
-        astra db get-endpoint-playground - Expand database to a new region
-
-SYNOPSIS
-        astra db get-endpoint-playground
-                [ {-cf | --config-file} <CONFIG_FILE> ]
-                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
-                [ --no-color ] [ {-o | --output} <FORMAT> ]
-                [ {-r | --region} <DB_REGION> ] [ --token <AUTH_TOKEN> ]
-                [ {-v | --verbose} ] [--] <DB>
-
-OPTIONS
-        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
-            Configuration file (default = ~/.astrarc)
-
-        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
-            Section in configuration file (default = ~/.astrarc)
-
-        --env <Environment>
-            Astra Environment to use
-
-        --no-color
-            Remove all colors in output
-
-        -o <FORMAT>, --output <FORMAT>
-            Output format, valid values are: human,json,csv
-
-        -r <DB_REGION>, --region <DB_REGION>
-            Cloud provider region
-
-        --token <AUTH_TOKEN>
-            Key to use authenticate each call.
-
-        -v, --verbose
-            Verbose mode with log in console
-
-        --
-            This option can be used to separate command-line options from the
-            list of arguments (useful when arguments might be mistaken for
-            command-line options)
-
-        <DB>
-            Database name (if unique) or Database identifier
-----
-====
-
-[#resume-database]
-== Resume a hibernated database
-
-Use the `astra db resume` command to resume a xref:astra-db-serverless:databases:database-statuses.adoc[hibernated] database:
-
-[source,bash,subs="+quotes"]
-----
-astra db resume **DATABASE_ID**
-----
-
-Resuming the database may take a few minutes.
-
-include::ROOT:partial$async-option.adoc[tags=active]
-
-=== `db resume` options
-
-.Expand to see all `db resume` options
-[%collapsible]
-====
-[source,console]
-----
-NAME
-        astra db resume - Resume a db if needed
-
-SYNOPSIS
-        astra db resume [ --async ] [ {-cf | --config-file} <CONFIG_FILE> ]
-                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
-                [ --no-color ] [ {-o | --output} <FORMAT> ]
-                [ --timeout <timeout> ] [ --token <AUTH_TOKEN> ]
-                [ {-v | --verbose} ] [ --wait ] [--] <DB>
-
-OPTIONS
-        --async
-            Will not wait for the resource to become available
-
-        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
-            Configuration file (default = ~/.astrarc)
-
-        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
-            Section in configuration file (default = ~/.astrarc)
-
-        --env <Environment>
-            Astra Environment to use
-
-        --no-color
-            Remove all colors in output
-
-        -o <FORMAT>, --output <FORMAT>
-            Output format, valid values are: human,json,csv
-
-        --timeout <timeout>
-            Provide a limit to the wait period in seconds, default is 180s.
-
-        --token <AUTH_TOKEN>
-            Key to use authenticate each call.
-
-        -v, --verbose
-            Verbose mode with log in console
-
-        --wait
-            Will wait until the database become ACTIVE
-
-        --
-            This option can be used to separate command-line options from the
-            list of arguments (useful when arguments might be mistaken for
-            command-line options)
-
-        <DB>
-            Database name (if unique) or Database identifier
-----
-====
-
-== Terminate a database
-
-[WARNING]
-====
-Terminating a database permanently deletes all of its data, including xref:astra-db-serverless:databases:backup-restore.adoc[automatic backups].
-You can't undo this action.
-====
-
-Use the `astra db delete` command to terminate a database:
-
-[source,bash,subs="+quotes"]
-----
-astra db delete **DATABASE_ID**
-----
-
-.Result
-[%collapsible]
-====
-[source,console]
-----
-[INFO]  Deleting Database '26054aa9-eb37-4d88-b343-7c934cd1d7bc'
-[OK]    Database 26054aa9-eb37-4d88-b343-7c934cd1d7bc has been deleted
-----
-====
-
-The database enters *Terminating* status while deletion occurs.
-
-include::ROOT:partial$async-option.adoc[tags=terminated]
-
-=== `db delete` options
-
-.Expand to see all `db delete` options
-[%collapsible]
-====
-[source,console]
-----
-NAME
-        astra db delete - Delete an existing database
-
-SYNOPSIS
-        astra db delete [ --async ] [ {-cf | --config-file} <CONFIG_FILE> ]
-                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
-                [ --no-color ] [ {-o | --output} <FORMAT> ]
-                [ --timeout <timeout> ] [ --token <AUTH_TOKEN> ]
-                [ {-v | --verbose} ] [ --wait ] [--] <DB>
-
-OPTIONS
-        --async
-            Will not wait for the resource to become available
-
-        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
-            Configuration file (default = ~/.astrarc)
-
-        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
-            Section in configuration file (default = ~/.astrarc)
-
-        --env <Environment>
-            Astra Environment to use
-
-        --no-color
-            Remove all colors in output
-
-        -o <FORMAT>, --output <FORMAT>
-            Output format, valid values are: human,json,csv
-
-        --timeout <timeout>
-            Provide a limit to the wait period in seconds, default is 500s.
-
-        --token <AUTH_TOKEN>
-            Key to use authenticate each call.
-
-        -v, --verbose
-            Verbose mode with log in console
-
-        --wait
-            Will wait until the database become ACTIVE
-
-        --
-            This option can be used to separate command-line options from the
-            list of arguments (useful when arguments might be mistaken for
-            command-line options)
-
-        <DB>
-            Database name (if unique) or Database identifier
-----
-====
-
-== Get a list of available regions
+== Get a list of available {astra_db} regions
 
 Use the `astra db list-regions-serverless` command to get a list of available cloud provider regions that support {db-serverless} databases:
 
@@ -2908,6 +2249,665 @@ OPTIONS
 
         -v, --verbose
             Verbose mode with log in console
+----
+====
+
+== Configure multiple regions
+
+You can configure a database to replicate data across multiple regions.
+Some benefits of multi-region databases include better data locality and higher availability for multi-region application architectures.
+For more information, see xref:astra-db-serverless:databases:manage-regions.adoc[].
+
+[IMPORTANT]
+====
+Multi-region databases are a premium feature.
+Each region added to a database increases the database's costs.
+This includes a one-time data replication fee for the new region, and charges for replicating data to all database regions.
+For more information, see xref:astra-db-serverless:administration:subscription-plans.adoc[].
+====
+
+Use the `astra db create-region` command to add a region to a database:
+
+[source,bash,subs="+quotes"]
+----
+astra db create-region **DATABASE_ID** -r **REGION**
+----
+
+Replace `**REGION**` with the region you want to add to your database.
+The following restrictions apply:
+
+* You can add only one region at a time.
+
+* You can't select a region that the database already uses.
+
+* You must select a region in the same cloud provider as the database's other regions.
+Multi-region databases can't span multiple cloud providers.
+
+* For {db-serverless-vector} databases, you must select a region that supports that database type.
+For more information, see xref:astra-db-serverless:databases:regions.adoc[].
+
+////
+// TODO: The command is not working as expected. Must investigate and figure out why it is reporting the following error: [ERROR] UNAVAILABLE: Database 'my_serverless_db' has been found but operation cannot be processed due to invalid state (ACTIVE) expected (ACTIVE)
+.Result
+[%collapsible]
+====
+[source,console]
+----
+
+----
+====
+////
+
+[NOTE]
+====
+The database enters *Maintenance* status while provisioning and replicating data to the new region.
+
+While in *Maintenance* status, you can't add or remove regions, truncate tables, or delete keyspaces, tables, or collections.
+
+*Maintenance* status doesn't impact reads and writes.
+====
+
+Use the `astra db list-regions` command to list the regions where a database is deployed:
+
+[source,bash,subs="+quotes"]
+----
+astra db list-regions **DATABASE_ID**
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
++----------------+---------------------+----------------+----------------+
+| Cloud Provider | Region              | Tier           | Status         |
++----------------+---------------------+----------------+----------------+
+| aws            | us-east-2           | serverless     |                |
+| aws            | us-east-1 (default) | serverless     |                |
++----------------+---------------------+----------------+----------------+
+----
+====
+
+Use the `astra db delete-region` command to remove a region from a database:
+
+[source,bash,subs="+quotes"]
+----
+astra db delete-region **DATABASE_ID** -r **REGION**
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
+[INFO]  Region 'us-west1' is deleting.
+[OK]    Region us-west1 has been deleted
+----
+====
+
+[NOTE]
+====
+The database enters *Maintenance* status while deleting the region.
+
+While in *Maintenance* status, you can't add or remove regions, truncate tables, or delete keyspaces, tables, or collections.
+
+*Maintenance* status doesn't impact reads and writes.
+====
+
+[IMPORTANT]
+====
+You can't remove the primary (default) region, which is the first region selected when you created the database.
+
+When you remove a region, any connections to the deleted region are also removed.
+However, to avoid data loss, all data is replicated before the region is deleted.
+====
+
+=== `db create-region` options
+
+.Expand to see all `db create-region` options
+[%collapsible]
+====
+[source,console]
+----
+NAME
+        astra db create-region - Expand database to a new region
+
+SYNOPSIS
+        astra db create-region [ --async ] [ {-c | --cloud} <CLOUD> ]
+                [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
+                [ --if-not-exist ] [ --no-color ] [ {-o | --output} <FORMAT> ]
+                {-r | --region} <REGION> [ {-t | --tier} <CLOUD> ]
+                [ --timeout <timeout> ] [ --token <AUTH_TOKEN> ]
+                [ {-v | --verbose} ] [ --wait ] [--] <DB>
+
+OPTIONS
+        --async
+            Will wait until the database become ACTIVE
+
+        -c <CLOUD>, --cloud <CLOUD>
+            Name of the cloud provider
+
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        --env <Environment>
+            Astra Environment to use
+
+        --if-not-exist
+            will create a new DB only if none with same name
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        -r <REGION>, --region <REGION>
+            Name of the region to create
+
+        -t <CLOUD>, --tier <CLOUD>
+            Name of the tiers
+
+        --timeout <timeout>
+            Max wait time in seconds, default+1800, 0 = no timeout.
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --wait
+            Will wait until the database become ACTIVE
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <DB>
+            Database name (if unique) or Database identifier
+----
+====
+
+=== `db list-regions` options
+
+.Expand to see all `db list-regions` options
+[%collapsible]
+====
+[source,console]
+----
+NAME
+        astra db list-regions - List regions for a database
+
+SYNOPSIS
+        astra db list-regions [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
+                [ --no-color ] [ {-o | --output} <FORMAT> ]
+                [ --token <AUTH_TOKEN> ] [ {-v | --verbose} ] [--] <DB>
+
+OPTIONS
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        --env <Environment>
+            Astra Environment to use
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <DB>
+            Database name (if unique) or Database identifier
+----
+====
+
+=== `db delete-region` options
+
+.Expand to see all `db delete-region` options
+[%collapsible]
+====
+[source,console]
+----
+NAME
+        astra db delete-region - Delete a region from a database
+
+SYNOPSIS
+        astra db delete-region [ --async ]
+                [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
+                [ --no-color ] [ {-o | --output} <FORMAT> ]
+                {-r | --region} <REGION> [ --timeout <timeout> ]
+                [ --token <AUTH_TOKEN> ] [ {-v | --verbose} ] [ --wait ] [--]
+                <DB>
+
+OPTIONS
+        --async
+            Will wait until the database become ACTIVE
+
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        --env <Environment>
+            Astra Environment to use
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        -r <REGION>, --region <REGION>
+            Name of the region to create
+
+        --timeout <timeout>
+            Max wait time in seconds, default+1800, 0 = no timeout.
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --wait
+            Will wait until the database become ACTIVE
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <DB>
+            Database name (if unique) or Database identifier
+----
+====
+
+[#resume-database]
+== Resume a hibernated database
+
+Use the `astra db resume` command to resume a xref:astra-db-serverless:databases:database-statuses.adoc[hibernated] database:
+
+[source,bash,subs="+quotes"]
+----
+astra db resume **DATABASE_ID**
+----
+
+Resuming the database may take a few minutes.
+
+include::ROOT:partial$async-option.adoc[tags=active]
+
+=== `db resume` options
+
+.Expand to see all `db resume` options
+[%collapsible]
+====
+[source,console]
+----
+NAME
+        astra db resume - Resume a db if needed
+
+SYNOPSIS
+        astra db resume [ --async ] [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
+                [ --no-color ] [ {-o | --output} <FORMAT> ]
+                [ --timeout <timeout> ] [ --token <AUTH_TOKEN> ]
+                [ {-v | --verbose} ] [ --wait ] [--] <DB>
+
+OPTIONS
+        --async
+            Will not wait for the resource to become available
+
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        --env <Environment>
+            Astra Environment to use
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        --timeout <timeout>
+            Provide a limit to the wait period in seconds, default is 180s.
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --wait
+            Will wait until the database become ACTIVE
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <DB>
+            Database name (if unique) or Database identifier
+----
+====
+
+== Terminate a database
+
+[WARNING]
+====
+Terminating a database permanently deletes all of its data, including xref:astra-db-serverless:databases:backup-restore.adoc[automatic backups].
+You can't undo this action.
+====
+
+Use the `astra db delete` command to terminate a database:
+
+[source,bash,subs="+quotes"]
+----
+astra db delete **DATABASE_ID**
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
+[INFO]  Deleting Database '26054aa9-eb37-4d88-b343-7c934cd1d7bc'
+[OK]    Database 26054aa9-eb37-4d88-b343-7c934cd1d7bc has been deleted
+----
+====
+
+The database enters *Terminating* status while deletion occurs.
+
+include::ROOT:partial$async-option.adoc[tags=terminated]
+
+=== `db delete` options
+
+.Expand to see all `db delete` options
+[%collapsible]
+====
+[source,console]
+----
+NAME
+        astra db delete - Delete an existing database
+
+SYNOPSIS
+        astra db delete [ --async ] [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
+                [ --no-color ] [ {-o | --output} <FORMAT> ]
+                [ --timeout <timeout> ] [ --token <AUTH_TOKEN> ]
+                [ {-v | --verbose} ] [ --wait ] [--] <DB>
+
+OPTIONS
+        --async
+            Will not wait for the resource to become available
+
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        --env <Environment>
+            Astra Environment to use
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        --timeout <timeout>
+            Provide a limit to the wait period in seconds, default is 500s.
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --wait
+            Will wait until the database become ACTIVE
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <DB>
+            Database name (if unique) or Database identifier
+----
+====
+
+== Get database API endpoints
+
+Use the `get-endpoint-swagger` command to get the Swagger UI endpoint for a database:
+
+[source,bash,subs="+quotes"]
+----
+astra db get-endpoint-swagger **DATABASE_ID**
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
+https://26054aa9-eb37-4d88-b343-7c934cd1d7bc-us-east-1.apps.astra.datastax.com/api/rest/swagger-ui/
+----
+====
+
+Use the `get-endpoint-api` command to get the JSON API endpoint for a {db-serverless-vector} database:
+
+[source,bash,subs="+quotes"]
+----
+astra db get-endpoint-api **DATABASE_ID**
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
+https://26054aa9-eb37-4d88-b343-7c934cd1d7bc-us-east-1.apps.astra.datastax.com/api/rest
+----
+====
+
+Use the `get-endpoint-playground` command to get the GraphQL playground endpoint for a non-vector database:
+
+[source,bash,subs="+quotes"]
+----
+astra db get-endpoint-playground **DATABASE_ID**
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
+https://26054aa9-eb37-4d88-b343-7c934cd1d7bc-us-east-1.apps.astra.datastax.com/api/playground
+----
+====
+
+=== `db get-endpoint-swagger` options
+
+.Expand to see all `db get-endpoint-swagger` options
+[%collapsible]
+====
+[source,console]
+----
+NAME
+        astra db get-endpoint-swagger - Open the swagger user interface
+
+SYNOPSIS
+        astra db get-endpoint-swagger [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
+                [ --no-color ] [ {-o | --output} <FORMAT> ]
+                [ {-r | --region} <DB_REGION> ] [ --token <AUTH_TOKEN> ]
+                [ {-v | --verbose} ] [--] <DB>
+
+OPTIONS
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        --env <Environment>
+            Astra Environment to use
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        -r <DB_REGION>, --region <DB_REGION>
+            Cloud provider region
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <DB>
+            Database name (if unique) or Database identifier
+----
+====
+
+=== `db get-endpoint-api` options
+
+.Expand to see all `db get-endpoint-api` options
+[%collapsible]
+====
+[source,console]
+----
+NAME
+        astra db get-endpoint-api - Open the json api endpoint
+
+SYNOPSIS
+        astra db get-endpoint-api [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
+                [ --no-color ] [ {-o | --output} <FORMAT> ]
+                [ {-r | --region} <DB_REGION> ] [ --token <AUTH_TOKEN> ]
+                [ {-v | --verbose} ] [--] <DB>
+
+OPTIONS
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        --env <Environment>
+            Astra Environment to use
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        -r <DB_REGION>, --region <DB_REGION>
+            Cloud provider region
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <DB>
+            Database name (if unique) or Database identifier
+----
+====
+
+=== `db get-endpoint-playground` options
+
+.Expand to see all `db get-endpoint-playground` options
+[%collapsible]
+====
+[source,console]
+----
+NAME
+        astra db get-endpoint-playground - Expand database to a new region
+
+SYNOPSIS
+        astra db get-endpoint-playground
+                [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
+                [ --no-color ] [ {-o | --output} <FORMAT> ]
+                [ {-r | --region} <DB_REGION> ] [ --token <AUTH_TOKEN> ]
+                [ {-v | --verbose} ] [--] <DB>
+
+OPTIONS
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        --env <Environment>
+            Astra Environment to use
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        -r <DB_REGION>, --region <DB_REGION>
+            Cloud provider region
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <DB>
+            Database name (if unique) or Database identifier
 ----
 ====
 
@@ -3801,258 +3801,8 @@ To resume the current operation, re-run it with the same settings, and add the f
 +
 This command unloads row data from the `cities_by_country` table, and stores it as CSV files within a subsirectory names `unloaded_data` in the same directory where you ran the command.
 
-== Download the {scb-cap}
-
-The xref:astra-db-serverless:drivers:secure-connect-bundle.adoc[] is a zip file containing security credentials and certificates required for secure mutual TLS (mTLS) connection to your {astra_db} database.
-
-Use the `astra db download-scb` command to download the {scb-long} for an {astra_db} database:
-
-[source,bash,subs="+quotes"]
-----
-astra db download-scb **DATABASE_ID**
-----
-
-.Result
-[%collapsible]
-====
-[source,console]
-----
-[INFO]  Bundle downloaded in ./scb_a53003fe-ba42-4c3c-85d0-6b345622c2dc_dc-1.zip
-----
-====
-
-By default, the {product} downloads the {scb} to the directory where you run the command using the following naming pattern: `scb_**DATABASE-ID**_**REGION-NAME**.zip`.
-For multi-region databases, the {product} downloads a different SCB for each region.
-
-[WARNING]
-====
-Treat the {scb} the same way you would any other sensitive values, such as passwords or tokens.
-
-The {scb} contains sensitive information that establishes a connection to your database, including key pairs and certificates.
-====
-
-=== `db download-scb` options
-
-.Expand to see all `db download-scb` options
-[%collapsible]
-====
-[source,console]
-----
-NAME
-        astra db download-scb - Download secure connect bundle archive for a
-        region
-
-SYNOPSIS
-        astra db download-scb [ {-cf | --config-file} <CONFIG_FILE> ]
-                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
-                [ {-f | --output-file} <DEST> ] [ --no-color ]
-                [ {-o | --output} <FORMAT> ] [ {-r | --region} <DB_REGION> ]
-                [ --token <AUTH_TOKEN> ] [ {-v | --verbose} ] [--] <DB>
-
-OPTIONS
-        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
-            Configuration file (default = ~/.astrarc)
-
-        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
-            Section in configuration file (default = ~/.astrarc)
-
-        --env <Environment>
-            Astra Environment to use
-
-        -f <DEST>, --output-file <DEST>
-            Destination file
-
-        --no-color
-            Remove all colors in output
-
-        -o <FORMAT>, --output <FORMAT>
-            Output format, valid values are: human,json,csv
-
-        -r <DB_REGION>, --region <DB_REGION>
-            Cloud provider region
-
-        --token <AUTH_TOKEN>
-            Key to use authenticate each call.
-
-        -v, --verbose
-            Verbose mode with log in console
-
-        --
-            This option can be used to separate command-line options from the
-            list of arguments (useful when arguments might be mistaken for
-            command-line options)
-
-        <DB>
-            Database name (if unique) or Database identifier
-----
-====
-
-Use the `-r` / `--region` option to download the {scb} for a specific region:
-
-[source,bash,subs="+quotes"]
-----
-astra db download-scb **DATABASE_ID** -r **REGION_NAME**
-----
-
-.Result
-[%collapsible]
-====
-[source,console]
-----
-[INFO]  Bundle downloaded in ./scb_a53003fe-ba42-4c3c-85d0-6b345622c2dc_dc-1.zip
-----
-====
-
-Use the `-f` / `--output-file` option to download the {scb} to a specific location and filename:
-
-[source,bash,subs="+quotes"]
-----
-astra db download-scb **DATABASE_ID** -f **DESTINATION_FILE**.zip
-----
-
-.Result
-[%collapsible]
-====
-[source,console]
-----
-[INFO]  Bundle downloaded in DESTINATION_FILE.zip
-----
-====
-
-== Create environment variables
-
-When developing applications with {astra_db} APIs, you will notice common values that are frequently reused, such as application tokens, database API endpoints, database IDs, and keyspace names.
-It's a good practice to store these values in environment variables to facilitate reuse in your scripts, simplify token rotation, and increase security by keeping sensitive information separate from your core application code.
-
-The {product} can automatically generate a set of relevant variables for an {astra_db} database that you can use in your applications.
-
-Use the `astra db create-dotenv` command to generate a `.env` file containing relevant environment variables for a specific {astra_db} database:
-
-[source,bash,subs="+quotes"]
-----
-astra db create-dotenv **DATABASE_ID**
-----
-
-By default, the {product} saves the `.env` file to the directory where you run the command.
-
-If a `.env` file already exists in the directory, the {product} appends the new environment variables to the existing file.
-
-.Result
-[%collapsible%open]
-====
-..env
-[source,console]
-----
-ASTRA_DB_API_ENDPOINT="https://a53003fe-ba42-4c3c-85d0-6b345622c2dc-us-east1.apps.astra.datastax.com/api/json"
-ASTRA_DB_APPLICATION_TOKEN="AstraCS:FZm..."
-ASTRA_DB_GRAPHQL_URL="https://a53003fe-ba42-4c3c-85d0-6b345622c2dc-us-east1.apps.astra.datastax.com/api/graphql/demo"
-ASTRA_DB_GRAPHQL_URL_ADMIN="https://a53003fe-ba42-4c3c-85d0-6b345622c2dc-us-east1.apps.astra.datastax.com/api/graphql-admin"
-ASTRA_DB_GRAPHQL_URL_PLAYGROUND="https://a53003fe-ba42-4c3c-85d0-6b345622c2dc-us-east1.apps.astra.datastax.com/api/playground"
-ASTRA_DB_GRAPHQL_URL_SCHEMA="https://a53003fe-ba42-4c3c-85d0-6b345622c2dc-us-east1.apps.astra.datastax.com/api/graphql-schema"
-ASTRA_DB_ID="a53003fe-ba42-4c3c-85d0-6b345622c2dc"
-ASTRA_DB_KEYSPACE="demo"
-ASTRA_DB_REGION="us-east1"
-ASTRA_DB_REST_URL="https://a53003fe-ba42-4c3c-85d0-6b345622c2dc-us-east1.apps.astra.datastax.com/api/rest"
-ASTRA_DB_REST_URL_SWAGGER="https://a53003fe-ba42-4c3c-85d0-6b345622c2dc-us-east1.apps.astra.datastax.com/api/rest/swagger-ui/"
-ASTRA_DB_SECURE_BUNDLE_PATH="/Users/USERNAME/.astra/scb/scb_a53003fe-ba42-4c3c-85d0-6b345622c2dc_us-east1.zip"
-ASTRA_DB_SECURE_BUNDLE_URL="https://datastax-cluster-config-prod.s3.us-east-2.amazonaws.com/a53003fe-ba42-4c3c-85d0-6b345622c2dc-1/secure-connect-demo.zip?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA2AIQRQ76XML7FLD6%2F20241120%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20241120T233147Z&X-Amz-Expires=300&X-Amz-SignedHeaders=host&X-Amz-Signature=46d8704e382458c82d7da02db1ca79657e003de327f0123a0189ec1a50171cb0"
-ASTRA_ORG_ID="2dbd3c55-6a68-4b5b-9155-5be9d41823e8"
-ASTRA_ORG_NAME="alice@example.com"
-ASTRA_ORG_TOKEN="AstraCS:FZm..."
-----
-====
-
-[WARNING]
-====
-The generated `.env` files contains sensitive information, including the application token that the {product} uses to connect to Astra.
-
-The {scb} contains sensitive information that establishes a connection to your database, including key pairs and certificates.
-====
-
-=== `db create-dotenv` options
-
-.Expand to see all `db create-dotenv` options
-[%collapsible]
-====
-[source,console]
-----
-NAME
-        astra db create-dotenv - Generate an .env configuration file associate
-        with the db
-
-SYNOPSIS
-        astra db create-dotenv [ {-cf | --config-file} <CONFIG_FILE> ]
-                [ {-conf | --config} <CONFIG_SECTION> ]
-                [ {-d | --directory} <DIRECTORY> ] [ --env <Environment> ]
-                [ {-k | --keyspace} <KEYSPACE> ] [ --no-color ]
-                [ {-o | --output} <FORMAT> ] [ {-r | --region} <DB_REGION> ]
-                [ --token <AUTH_TOKEN> ] [ {-v | --verbose} ] [--] <DB>
-
-OPTIONS
-        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
-            Configuration file (default = ~/.astrarc)
-
-        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
-            Section in configuration file (default = ~/.astrarc)
-
-        -d <DIRECTORY>, --directory <DIRECTORY>
-            Destination for the config file
-
-        --env <Environment>
-            Astra Environment to use
-
-        -k <KEYSPACE>, --keyspace <KEYSPACE>
-            Default keyspace created with the Db
-
-        --no-color
-            Remove all colors in output
-
-        -o <FORMAT>, --output <FORMAT>
-            Output format, valid values are: human,json,csv
-
-        -r <DB_REGION>, --region <DB_REGION>
-            Cloud provider region
-
-        --token <AUTH_TOKEN>
-            Key to use authenticate each call.
-
-        -v, --verbose
-            Verbose mode with log in console
-
-        --
-            This option can be used to separate command-line options from the
-            list of arguments (useful when arguments might be mistaken for
-            command-line options)
-
-        <DB>
-            Database name (if unique) or Database identifier
-----
-====
-
-Use the `-d` / `--directory` option to save the `.env` file to a specified directory:
-
-[source,bash,subs="+quotes"]
-----
-astra db create-dotenv **DATABASE_ID** -d ~/tmp
-----
-
-.Result
-[%collapsible]
-====
-[source,console]
-----
-[OK]    File '/Users/USERNAME/tmp/.env' has been created/amended
-----
-====
-
-[NOTE]
-====
-The directory must already exist before you run the command.
-If the directory doesn't exist, the {product} will report the following error: `INVALID_ARGUMENT: Destination folder has not been found`.
-====
-
 [#cdc]
-== Change Data Capture (CDC)
+== Configure Change Data Capture (CDC)
 
 [IMPORTANT]
 ====
@@ -4450,3 +4200,255 @@ astra streaming list-cdc cdc-demo-tenant
 ====
 
 After you enable CDC on your {db-serverless} database, you can xref:astra-db-serverless:databases:change-data-capture.adoc#connect-a-sink[connect a sink].
+
+
+== Download the {scb-cap}
+
+The xref:astra-db-serverless:drivers:secure-connect-bundle.adoc[] is a zip file containing security credentials and certificates required for secure mutual TLS (mTLS) connection to your {astra_db} database.
+
+Use the `astra db download-scb` command to download the {scb-long} for an {astra_db} database:
+
+[source,bash,subs="+quotes"]
+----
+astra db download-scb **DATABASE_ID**
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
+[INFO]  Bundle downloaded in ./scb_a53003fe-ba42-4c3c-85d0-6b345622c2dc_dc-1.zip
+----
+====
+
+By default, the {product} downloads the {scb} to the directory where you run the command using the following naming pattern: `scb_**DATABASE-ID**_**REGION-NAME**.zip`.
+For multi-region databases, the {product} downloads a different SCB for each region.
+
+[WARNING]
+====
+Treat the {scb} the same way you would any other sensitive values, such as passwords or tokens.
+
+The {scb} contains sensitive information that establishes a connection to your database, including key pairs and certificates.
+====
+
+=== `db download-scb` options
+
+.Expand to see all `db download-scb` options
+[%collapsible]
+====
+[source,console]
+----
+NAME
+        astra db download-scb - Download secure connect bundle archive for a
+        region
+
+SYNOPSIS
+        astra db download-scb [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
+                [ {-f | --output-file} <DEST> ] [ --no-color ]
+                [ {-o | --output} <FORMAT> ] [ {-r | --region} <DB_REGION> ]
+                [ --token <AUTH_TOKEN> ] [ {-v | --verbose} ] [--] <DB>
+
+OPTIONS
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        --env <Environment>
+            Astra Environment to use
+
+        -f <DEST>, --output-file <DEST>
+            Destination file
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        -r <DB_REGION>, --region <DB_REGION>
+            Cloud provider region
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <DB>
+            Database name (if unique) or Database identifier
+----
+====
+
+Use the `-r` / `--region` option to download the {scb} for a specific region:
+
+[source,bash,subs="+quotes"]
+----
+astra db download-scb **DATABASE_ID** -r **REGION_NAME**
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
+[INFO]  Bundle downloaded in ./scb_a53003fe-ba42-4c3c-85d0-6b345622c2dc_dc-1.zip
+----
+====
+
+Use the `-f` / `--output-file` option to download the {scb} to a specific location and filename:
+
+[source,bash,subs="+quotes"]
+----
+astra db download-scb **DATABASE_ID** -f **DESTINATION_FILE**.zip
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
+[INFO]  Bundle downloaded in DESTINATION_FILE.zip
+----
+====
+
+== Create environment variables
+
+When developing applications with {astra_db} APIs, you will notice common values that are frequently reused, such as application tokens, database API endpoints, database IDs, and keyspace names.
+It's a good practice to store these values in environment variables to facilitate reuse in your scripts, simplify token rotation, and increase security by keeping sensitive information separate from your core application code.
+
+The {product} can automatically generate a set of relevant variables for an {astra_db} database that you can use in your applications.
+
+Use the `astra db create-dotenv` command to generate a `.env` file containing relevant environment variables for a specific {astra_db} database:
+
+[source,bash,subs="+quotes"]
+----
+astra db create-dotenv **DATABASE_ID**
+----
+
+By default, the {product} saves the `.env` file to the directory where you run the command.
+
+If a `.env` file already exists in the directory, the {product} appends the new environment variables to the existing file.
+
+.Result
+[%collapsible%open]
+====
+..env
+[source,console]
+----
+ASTRA_DB_API_ENDPOINT="https://a53003fe-ba42-4c3c-85d0-6b345622c2dc-us-east1.apps.astra.datastax.com/api/json"
+ASTRA_DB_APPLICATION_TOKEN="AstraCS:FZm..."
+ASTRA_DB_GRAPHQL_URL="https://a53003fe-ba42-4c3c-85d0-6b345622c2dc-us-east1.apps.astra.datastax.com/api/graphql/demo"
+ASTRA_DB_GRAPHQL_URL_ADMIN="https://a53003fe-ba42-4c3c-85d0-6b345622c2dc-us-east1.apps.astra.datastax.com/api/graphql-admin"
+ASTRA_DB_GRAPHQL_URL_PLAYGROUND="https://a53003fe-ba42-4c3c-85d0-6b345622c2dc-us-east1.apps.astra.datastax.com/api/playground"
+ASTRA_DB_GRAPHQL_URL_SCHEMA="https://a53003fe-ba42-4c3c-85d0-6b345622c2dc-us-east1.apps.astra.datastax.com/api/graphql-schema"
+ASTRA_DB_ID="a53003fe-ba42-4c3c-85d0-6b345622c2dc"
+ASTRA_DB_KEYSPACE="demo"
+ASTRA_DB_REGION="us-east1"
+ASTRA_DB_REST_URL="https://a53003fe-ba42-4c3c-85d0-6b345622c2dc-us-east1.apps.astra.datastax.com/api/rest"
+ASTRA_DB_REST_URL_SWAGGER="https://a53003fe-ba42-4c3c-85d0-6b345622c2dc-us-east1.apps.astra.datastax.com/api/rest/swagger-ui/"
+ASTRA_DB_SECURE_BUNDLE_PATH="/Users/USERNAME/.astra/scb/scb_a53003fe-ba42-4c3c-85d0-6b345622c2dc_us-east1.zip"
+ASTRA_DB_SECURE_BUNDLE_URL="https://datastax-cluster-config-prod.s3.us-east-2.amazonaws.com/a53003fe-ba42-4c3c-85d0-6b345622c2dc-1/secure-connect-demo.zip?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA2AIQRQ76XML7FLD6%2F20241120%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20241120T233147Z&X-Amz-Expires=300&X-Amz-SignedHeaders=host&X-Amz-Signature=46d8704e382458c82d7da02db1ca79657e003de327f0123a0189ec1a50171cb0"
+ASTRA_ORG_ID="2dbd3c55-6a68-4b5b-9155-5be9d41823e8"
+ASTRA_ORG_NAME="alice@example.com"
+ASTRA_ORG_TOKEN="AstraCS:FZm..."
+----
+====
+
+[WARNING]
+====
+The generated `.env` files contains sensitive information, including the application token that the {product} uses to connect to Astra.
+
+The {scb} contains sensitive information that establishes a connection to your database, including key pairs and certificates.
+====
+
+=== `db create-dotenv` options
+
+.Expand to see all `db create-dotenv` options
+[%collapsible]
+====
+[source,console]
+----
+NAME
+        astra db create-dotenv - Generate an .env configuration file associate
+        with the db
+
+SYNOPSIS
+        astra db create-dotenv [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ]
+                [ {-d | --directory} <DIRECTORY> ] [ --env <Environment> ]
+                [ {-k | --keyspace} <KEYSPACE> ] [ --no-color ]
+                [ {-o | --output} <FORMAT> ] [ {-r | --region} <DB_REGION> ]
+                [ --token <AUTH_TOKEN> ] [ {-v | --verbose} ] [--] <DB>
+
+OPTIONS
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        -d <DIRECTORY>, --directory <DIRECTORY>
+            Destination for the config file
+
+        --env <Environment>
+            Astra Environment to use
+
+        -k <KEYSPACE>, --keyspace <KEYSPACE>
+            Default keyspace created with the Db
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        -r <DB_REGION>, --region <DB_REGION>
+            Cloud provider region
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <DB>
+            Database name (if unique) or Database identifier
+----
+====
+
+Use the `-d` / `--directory` option to save the `.env` file to a specified directory:
+
+[source,bash,subs="+quotes"]
+----
+astra db create-dotenv **DATABASE_ID** -d ~/tmp
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
+[OK]    File '/Users/USERNAME/tmp/.env' has been created/amended
+----
+====
+
+[NOTE]
+====
+The directory must already exist before you run the command.
+If the directory doesn't exist, the {product} will report the following error: `INVALID_ARGUMENT: Destination folder has not been found`.
+====
+
