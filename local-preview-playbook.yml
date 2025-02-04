@@ -24,10 +24,10 @@ content:
 
 antora:
   extensions:
-  - '@antora/atlas-extension'
   - '@antora/collector-extension'
   - lib/assets-processor.js
   - lib/tailwind-processor.js
+  - '@antora/atlas-extension'
   - id: unlisted-pages
     enabled: true
     require: lib/unlisted-pages-extension.js
@@ -79,6 +79,12 @@ asciidoc:
     classic_cap: 'Classic'
     serverless: 'serverless'
     serverless_cap: 'Serverless'
+    py-client-api-ref-url: 'xref:astra-api-docs:ROOT:attachment$python-client-1x/astrapy'
+    ts-client-api-ref-url: 'xref:astra-api-docs:ROOT:attachment$typescript-client-1x'
+    java-client-api-ref-url: 'xref:astra-api-docs:ROOT:attachment$java-client-1x'
+    py-client-api-ref-url-2x: 'xref:astra-api-docs:ROOT:attachment$python-client/astrapy'
+    ts-client-api-ref-url-2x: 'xref:astra-api-docs:ROOT:attachment$typescript-client'
+    java-client-api-ref-url-2x: 'xref:astra-api-docs:ROOT:attachment$java-client'
     # Antora Atlas
     primary-site-url: https://docs.datastax.com/en
     primary-site-manifest-url: https://docs.datastax.com/en/site-manifest.json

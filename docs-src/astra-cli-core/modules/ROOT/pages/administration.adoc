@@ -759,9 +759,9 @@ Replace `**ROLE**` with the name or ID of the role you want to assign to the tok
 +----------------+----------------------------------------------------------------------------------------------------------------------------------+
 | Attribute      | Value                                                                                                                            |
 +----------------+----------------------------------------------------------------------------------------------------------------------------------+
-| Client Id      | loOxcdFLZWvCUIMIWFWEWheX                                                                                                         |
-| Client Secret  | 8wAswCxcmIxLtj4g812s2mekoPLWSDXQGQsf+OzQyRhXAUp0aFfCSHqP2gwvDqS51Uxngu+56DuUttT506M64DSnJMXmGiEtZjgi2e+vCgpiOcepX6bmIjx9.rGTKuuo |
-| Token          | AstraCS:loOxcdFLZWvCUIMIWFWEWheX:e942b2c9b9f022358eba088408e68b5028c029bc629da04a80c097b641244b7a                                |
+| Client Id      | loOxcdFLZWvCUIMIWFWEWhfX                                                                                                         |
+| Client Secret  | 8wAswCxcmIxLtj4g812s2mekoPLWSDXQGQsf+OzQyRhXAUp0aFfCSHqP2gwvDqS51Uxngu+56DuUttT506M64DSnJMXmGiEtZjgi2e+vCgpiOcepX6bmIja9.rGTKuuo |
+| Token          | AstraCS:FZm...                                                                                                                   |
 +----------------+----------------------------------------------------------------------------------------------------------------------------------+
 ----
 ====
@@ -824,7 +824,7 @@ astra token get
 ====
 [source,console]
 ----
-AstraCS:FZmCtRdyzJkYidnmlzwcwJWc:f51d3ee8fce90b28a7681a1e1bc3fa0d69cb770b0219aa98b96deb61df5f7a46
+AstraCS:FZm...
 ----
 ====
 

@@ -694,6 +694,46 @@ OPTIONS
 ----
 ====
 
+=== `streaming list-clouds` options
+
+.Expand to see all `streaming list-clouds` options
+[%collapsible]
+====
+[source,console]
+----
+NAME
+        astra streaming list-clouds - Display the list of clouds
+
+SYNOPSIS
+        astra streaming list-clouds [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
+                [ --no-color ] [ {-o | --output} <FORMAT> ]
+                [ --token <AUTH_TOKEN> ] [ {-v | --verbose} ]
+
+OPTIONS
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        --env <Environment>
+            Astra Environment to use
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+----
+====
+
 == Use the Pulsar shell
 
 The https://pulsar.apache.org/docs/next/administration-pulsar-shell/[Pulsar shell] is an interactive command-line interface tool for managing and interacting with Pulsar clusters.

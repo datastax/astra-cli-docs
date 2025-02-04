@@ -257,7 +257,7 @@ For example:
 
 [source,bash]
 ----
-java -jar ./astra-cli.jar db list --token AstraCS:...
+java -jar ./astra-cli.jar db list --token AstraCS:FZm...
 ----
 --
 

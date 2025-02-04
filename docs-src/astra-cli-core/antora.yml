@@ -10,6 +10,7 @@ asciidoc:
   attributes:
     product: 'Astra CLI'
     product-version: '0.6'
+    astra: 'Astra'
     db-serverless: 'Serverless (Non-Vector)'
     db-serverless-vector: 'Serverless (Vector)'
     db-classic: 'Classic'
