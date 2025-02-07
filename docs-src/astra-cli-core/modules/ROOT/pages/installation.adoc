@@ -1,4 +1,4 @@
-= Installing {astra_cli}
+= Hello world
 
 You can install {astra_cli} on macOS, Linux, and Windows (with WSL) environments.
 
