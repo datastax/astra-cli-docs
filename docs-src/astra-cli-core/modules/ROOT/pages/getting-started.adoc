@@ -68,8 +68,6 @@ astra config list
 ====
 
 The {product} is initialized and your application token is set as the default configuration.
-The {product} uses the default configuration whenever you run a command without the `--config` option.
-
 The {product} stores configurations and their associated application tokens in the `~/.astrarc` file.
 To create additional configurations, see <<manage-configuration>>.
 
@@ -366,14 +364,20 @@ Use `astra config list` to confirm that the selected configuration is now the de
 
 [TIP]
 ====
-Every {product} command supports the `--config` option, which lets you specify a configuration to use for that command.
-This lets you use different configurations for different commands without changing the default configuration.
-
-For example:
+Every {product} command supports the `--config` option.
+This option lets you use a different configuration when running a command without changing the default configuration.
 
 [source,bash,subs="+quotes"]
 ----
 astra user list --config "**CONFIG_NAME**"
+----
+
+Alternatively, you can use the `--token` option to supply an application token when running a command.
+This option lets you use a different application token without having to create a new configuration.
+
+[source,bash,subs="+quotes"]
+----
+astra user list --token "**APPLICATION_TOKEN**"
 ----
 ====
 

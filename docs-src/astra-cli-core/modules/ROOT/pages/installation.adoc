@@ -12,13 +12,13 @@ The {product} supports the following operating systems:
 |Operating System |Architecture
 
 |Linux
-|x86-64, ARM
+|x86_64
 
 |macOS
-|x86-64, ARM
+|x86_64, ARM64
 
 |Microsoft Windows
-|x86-64, ARM
+|x86_64
 
 _Requires https://learn.microsoft.com/en-us/windows/wsl/install[Windows Subsystem for Linux (WSL)]_
 |===
@@ -32,15 +32,11 @@ Install the {product} using your preferred method:
 Homebrew::
 +
 --
-You can use Homebrew to install the {product} on macOS.
+You can use Homebrew to install the {product} on macOS and Linux.
 
-To install the {product} using Homebrew, you must have https://brew.sh/[Homebrew] installed and you must set your macOS app security settings to https://support.apple.com/en-us/102445[allow apps downloaded from App Store and identified developers].
-
-[NOTE]
-====
-The Homebrew formula installs a native executable for macOS that is not compatible with https://docs.brew.sh/Homebrew-on-Linux[Homebrew on Linux].
-To install {product} on Linux-based systems, use <<install-curl,curl>> or one of the other installation methods.
-====
+.Prerequisites
+* You must have https://brew.sh/[Homebrew] installed.
+* On macOS, you must set your macOS app security settings to https://support.apple.com/en-us/102445#openanyway[Allow applications from App Store & Known Developers].
 
 . Make sure Homebrew is up to date:
 +
@@ -266,7 +262,7 @@ Docker::
 --
 The {product} is available as an https://hub.docker.com/r/datastax/astra-cli[official Docker image] that you can run in a container.
 
-To install the {product} using Docker, you must have the https://docs.docker.com/engine/install/[Docker engine] or https://www.docker.com/products/docker-desktop[Docker desktop] installed.
+To install the {product} using Docker, you must have https://docs.docker.com/engine/install/[Docker engine] or https://www.docker.com/products/docker-desktop[Docker desktop] installed.
 
 . Confirm that Docker is installed and running:
 +

@@ -6,6 +6,11 @@
 
 Use the {product} to manage your {astra_db} deployments.
 
+[TIP]
+====
+You can use `**DATABASE_NAME**` instead of `**DATABASE_ID**` in all `astra db` commands, so long as the database name is unique within your organization and your application token has enough permissions to list databases.
+====
+
 == Create a database
 
 Use the `astra db create` command to create a new {db-serverless} database:
@@ -2945,7 +2950,7 @@ token@cqlsh>
 ----
 ====
 
-Type `exit` and press kbd:[Return] to exit the CQL shell.
+Type `exit` or `quit;` and press kbd:[Return] to exit the CQL shell.
 
 The first time you use the `astra db cqlsh` command, the {product} downloads and installs the `cqlsh` utility to the {product} installation directory (`~/.astra/cqlsh-astra`).
 The {product} also downloads the {scb-long} for each database you connect to and stores the {scb} zip files in the `~/.astra/scb` directory.
@@ -3043,6 +3048,26 @@ OPTIONS
 
         <DB>
             Database name (if unique) or Database identifier
+----
+====
+
+Use the `-k` / `--keyspace` option to connect directly to a specific keyspace:
+
+[source,bash,subs="+quotes"]
+----
+astra db cqlsh **DATABASE_ID** -k **KEYSPACE_NAME**
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
+[INFO]  Cqlsh is starting, please wait for connection establishment...
+Connected to cndb at 127.0.0.1:9042.
+[cqlsh 6.8.0 | Cassandra 4.0.0.6816 | CQL spec 3.4.5 | Native protocol v4]
+Use HELP for help.
+token@cqlsh:keyspace2>
 ----
 ====
 
@@ -3665,7 +3690,7 @@ CREATE TABLE cities_by_country (
 +
 This command creates a table named `cities_by_country` with the appropriate schema for the `cities.csv` dataset.
 +
-.. Type `exit` and press kbd:[Return] to exit the CQL shell.
+.. Type `exit` or `quit;` and press kbd:[Return] to exit the CQL shell.
 
 . Load the data from the `cities.csv` file into the `cities_by_country` table that you just created in your database:
 +
