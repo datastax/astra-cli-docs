@@ -216,7 +216,7 @@ You can install Java by downloading and installing the latest https://www.oracle
 java --version
 ----
 
-. Download the latest release from the https://github.com/datastax/astra-cli/releases[{product} GitHub repository]:
+. Download the latest release of https://github.com/datastax/astra-cli/releases[astra-cli] image:https://img.shields.io/github/v/release/datastax/astra-cli?label=latest&color=green[alt="Latest astra-cli release on GitHub",link="https://github.com/datastax/astra-cli/releases"]:
 +
 [source,bash,subs="+attributes"]
 ----
