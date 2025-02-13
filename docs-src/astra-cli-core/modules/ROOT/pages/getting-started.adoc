@@ -1,4 +1,4 @@
-= Getting started with {astra_cli}
+= test4 started with {astra_cli}
 
 Initialize the Astra CLI and run your first commands.
 
