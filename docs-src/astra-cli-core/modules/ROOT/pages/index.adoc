@@ -1,4 +1,4 @@
-= {astra_cli}
+= test2
 :page-layout: landing
 :data-uri:
 
