@@ -1,4 +1,4 @@
-= Managing {astra_db} databases with {astra_cli}
+= test {astra_db} databases with {astra_cli}
 
 Use the following {astra_cli} commands to manage your {astra_db} databases.
 From the command line in a Terminal, the supported tasks are:
