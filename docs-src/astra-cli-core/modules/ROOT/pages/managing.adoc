@@ -4463,7 +4463,7 @@ OPTIONS
 ----
 ====
 
-Use the `-d` / `--directory` option to save the `.env` file to a specified directory:
+Use the `-d` / `--directory` option to save the `.env` file to a specific directory:
 
 [source,bash,subs="+quotes"]
 ----
