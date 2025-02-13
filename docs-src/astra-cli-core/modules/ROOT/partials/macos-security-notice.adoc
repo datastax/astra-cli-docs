@@ -1,0 +1,10 @@
+.macOS security alerts
+[IMPORTANT]
+====
+The first time you run the `astra` command after installing or updating the {product} on macOS, the operating system may display the following alert: `“astra” Not Opened`.
+
+image::ROOT:install-macos-security-alert.png[]
+
+If you encounter this alert, then you must override your Mac security settings before you can run {product} commands.
+See the https://support.apple.com/en-us/102445#openanyway[Apple support documentation] for more information.
+====

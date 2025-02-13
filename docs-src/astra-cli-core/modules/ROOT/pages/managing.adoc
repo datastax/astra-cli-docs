@@ -1,1060 +1,4487 @@
-= Managing {astra_db} databases with {astra_cli}
+= Manage {astra_db} with the {product}
+:navtitle: Manage {astra_db}
+:embedding-provider-name: NVIDIA
+:embedding-provider-name-api: nvidia
+:embedding-provider-model-name-api: NV-Embed-QA
 
-Use the following {astra_cli} commands to manage your {astra_db} databases.
-From the command line in a Terminal, the supported tasks are:
-
-* <<List databases>>
-* <<Create a database>>
-* <<List regions>>
-* <<Manage users and roles>>
-* <<Get database details>>
-* <<Delete a database>>
-* <<Manage keyspaces>>
-* <<Use cqlsh>>
-* <<Use DSBulk with Astra CLI>>
-* <<Download Secure Connect Bundle>>
-* <<Create environment variables>>
-* <<Resume a hibernated database>>
-* <<Create and manage configurations>>
-
-== List databases
-
-To get the list of active databases in your {astra_db} organization, use the command `astra db list`.
+Use the {product} to manage your {astra_db} deployments.
 
 [TIP]
 ====
-For help on this command, use:
-
-[source,bash]
-----
-astra help db list
-----
-====
-
-Example:
-
-[tabs]
-====
-Astra CLI::
-+
---
-[source,bash]
-----
-astra db list
-----
---
-+
-Sample result::
-+
---
-[source,bash]
-----
- +---------------------+--------------------------------------+---------------------+----------------+
- | Name                | id                                   | Default Region      | Status         |
- +---------------------+--------------------------------------+---------------------+----------------+
- | mtg                 | dde308f5-a8b0-474d-afd6-999999999999 | eu-central-1        | ACTIVE         |
- | workshops           | 3ed83de7-d97f-4fb6-bf9f-999999999999 | eu-west-1           | ACTIVE         |
- | sdk_tests           | 06a9675a-ca62-4cd0-9b94-999999999999 | us-east-1           | ACTIVE         |
- | test                | 7677a789-bd57-455d-ab2c-999999999999 | eu-central-1        | ACTIVE         |
- | demo                | 071d7059-d55b-4cdb-90c6-999999999999 | us-east-1           | ACTIVE         |
- | ac201               | 48c7178c-58cb-4657-b3d2-999999999999 | us-east-1           | ACTIVE         |
- +---------------------+--------------------------------------+---------------------+----------------+
-----
---
-====
-
-You can also change the database list's output type with the `astra db list -o <type>` command, where <type> can be `csv` or `json`.
-
-Examples:
-
-[tabs]
-====
-Astra CLI::
-+
---
-[source,bash]
-----
-astra db list -o csv
-----
---
-+
-Sample result::
-+
---
-[source,csv]
-----
- Name,id,Default Region,Status
- mtg,dde308f5-a8b0-474d-afd6-999999999999,eu-central-1,ACTIVE
- workshops,3ed83de7-d97f-4fb6-bf9f-999999999999,eu-west-1,ACTIVE
- sdk_tests,06a9675a-ca62-4cd0-9b94-999999999999,us-east-1,ACTIVE
- test,7677a789-bd57-455d-ab2c-999999999999,eu-central-1,ACTIVE
- demo,071d7059-d55b-4cdb-90c6-999999999999,us-east-1,ACTIVE
- ac201,48c7178c-58cb-4657-b3d2-999999999999,us-east-1,ACTIVE
-----
---
-====
-
-Or, for JSON output:
-
-[tabs]
-====
-Astra CLI::
-+
---
-[source,bash]
-----
-astra db list -o json
-----
---
-+
-Sample result::
-+
---
-[source,json]
-----
-   {
-     "code" : 0,
-     "message" : "astra db list -o json",
-     "data" : [ {
-       "Status" : "ACTIVE",
-       "Default Region" : "eu-central-1",
-       "id" : "dde308f5-a8b0-474d-afd6-999999999999",
-       "Name" : "mtg"
-     }, {
-       "Status" : "ACTIVE",
-       "Default Region" : "eu-west-1",
-       "id" : "3ed83de7-d97f-4fb6-bf9f-999999999999",
-       "Name" : "workshops"
-     }, {
-       "Status" : "ACTIVE",
-       "Default Region" : "us-east-1",
-       "id" : "06a9675a-ca62-4cd0-9b94-999999999999",
-       "Name" : "sdk_tests"
-     }, {
-       "Status" : "ACTIVE",
-       "Default Region" : "eu-central-1",
-       "id" : "7677a789-bd57-455d-ab2c-999999999999",
-       "Name" : "test"
-     }, {
-       "Status" : "ACTIVE",
-       "Default Region" : "us-east-1",
-       "id" : "071d7059-d55b-4cdb-90c6-999999999999",
-       "Name" : "demo"
-     }, {
-       "Status" : "ACTIVE",
-       "Default Region" : "us-east-1",
-       "id" : "48c7178c-58cb-4657-b3d2-999999999999",
-       "Name" : "ac201"
-     } ]
-   }
-----
---
+You can use `**DATABASE_NAME**` instead of `**DATABASE_ID**` in all `astra db` commands, so long as the database name is unique within your organization and your application token has enough permissions to list databases.
 ====
 
 == Create a database
 
-You can create an {astra_db} *Serverless* database with the `astra db create <db-name>` command.
+Use the `astra db create` command to create a new {db-serverless} database:
 
-[NOTE]
+[source,bash,subs="+quotes"]
+----
+astra db create **DATABASE_NAME**
+----
+
+.Result
+[%collapsible]
 ====
-While you cannot create {astra_db} *Classic* databases with the `astra db create <db-name>` command, you can use other {astra_cli} commands to return information about existing {astra_db} Classic databases.
-====
-
-[TIP]
-====
-For help on this command, use:
-
-[source,bash]
+[source,console]
 ----
-astra help db create
-----
-====
-
-Example:
-
-[source,bash]
-----
-astra db create demo
-----
-
-By default, the region will be an available free region, and the keyspace name will be the same as the database name. You can change the names with `-r` and `-k` respectively.
-
-=== Using create options
-
-The database name itself does not ensure uniqueness within your {astra_db} organization. (The database id ensures uniqueness.) Consequently, if you issue the `astra db create` command multiple times, you will end up with multiple database instances.
-
-To change this behavior, use the `--if-not-exist` option.
-
-Database creation is asynchronous operation.
-Still during your CI/CD you want the database to be in an `ACTIVE` state before moving forward.
-Using the option `--wait` will trigger a blocking command until the database is ready.
-
-Example:
-
-[source,bash]
-----
-astra db create demo -k ks2 --if-not-exist --wait
-----
-
-If you are using the Free plan, after a period of inactivity (23 hours) the database moves to a `HIBERNATED` state.
-You can use the `astra db resume <db-name>` command to reactivate the database.
-
-
-== List regions
-
-For database creation or regions management, the region name is expected.
-
-With {astra_cli}, you can list every available regions per service.
-
-[TIP]
-====
-For help on this command, use:
-
-[source,bash]
-----
-astra help db list-regions-serverless
-----
-
-Or:
-
-[source,bash]
-----
-astra help db list-regions-classic
+[INFO]  Database 'my_serverless_db' does not exist. Creating database 'my_serverless_db' with keyspace 'default_keyspace'
+[INFO]  Database 'my_serverless_db' and keyspace 'default_keyspace' are being created.
+[INFO]  Database 'my_serverless_db' has status 'PENDING' waiting to be 'ACTIVE' ...
+[INFO]  Database 'my_serverless_db' has status 'ACTIVE' (took 470346 millis)
+[OK]    Database 'my_serverless_db' is ready.
 ----
 ====
 
-=== List Serverless regions
+Use the `--vector` option to create a {db-serverless-vector} database:
 
-In this example, `aws` is the cloud provider.
+[source,bash,subs="+quotes"]
+----
+astra db create **DATABASE_NAME** --vector
+----
 
-[tabs]
+.Result
+[%collapsible]
 ====
-Astra CLI::
-+
---
-[source,bash]
+[source,console]
 ----
-astra db list-regions-serverless -c aws
+[INFO]  Database 'my_vector_db' does not exist. Creating database 'my_vector_db' with keyspace 'default_keyspace'
+[INFO]  Enabling vector search for database my_vector_db
+[INFO]  Database 'my_vector_db' and keyspace 'default_keyspace' are being created.
+[INFO]  Database 'my_vector_db' has status 'PENDING' waiting to be 'ACTIVE' ...
+[INFO]  Database 'my_vector_db' has status 'ACTIVE' (took 142712 millis)
+[OK]    Database 'my_vector_db' is ready.
 ----
---
-+
-Sample result::
-+
---
-[source,csv]
-----
- +----------------+---------------------+-------------------------------+
- | Cloud Provider | Region              | Full Name                     |
- +----------------+---------------------+-------------------------------+
- | aws            | ap-east-1           | Asia Pacific (Hong Kong)      |
- | aws            | ap-south-1          | Asia Pacific (Mumbai)         |
- | aws            | ap-southeast-1      | Asia Pacific (Singapore)      |
- | aws            | ap-southeast-2      | Asia Pacific (Sydney)         |
- | aws            | eu-central-1        | Europe (Frankfurt)            |
- | aws            | eu-west-1           | Europe (Ireland)              |
- | aws            | sa-east-1           | South America (Sao Paulo)     |
- | aws            | us-east-1           | US East (N. Virginia)         |
- | aws            | us-east-2           | US East (Ohio)                |
- | aws            | us-west-2           | US West (Oregon)              |
- +----------------+---------------------+-------------------------------+
-----
---
-====
-
-Command parameters:
-
-* `-c` or `--cloud` allows you to select the cloud provider - accepted values are `aws`, `gcp` and `azure`
-* `-f` or `--filter` allows you to look for either a location of region, such as `-f France` or `-f us`
-* `-o` or `--output` can change output from the default table output to `csv` or `json`
-* `-v` for verbose mode
-* `-t` to provide token of organization if not default selected
-
-[NOTE]
-====
-Supported regions are subject to change and may be different from the sample output shown above.
-====
-
-=== List Classic regions
-
-[tabs]
-====
-Astra CLI::
-+
---
-[source,bash]
-----
-astra db list-regions-classic
-----
---
-+
-Sample result::
-+
---
-[source,csv]
-----
- +----------------+---------------------+-------------------------------+
- | Cloud Provider | Region              | Full Name                     |
- +----------------+---------------------+-------------------------------+
- | aws            | ap-south-1          | Asia Pacific (Mumbai)         |
- | aws            | ap-southeast-1      | Asia Pacific (Singapore)      |
- | aws            | ap-southeast-2      | Asia Pacific (Sydney)         |
- | aws            | ap-northeast-1      | Asia Pacific (Tokyo)          |
- | aws            | eu-central-1        | Europe (Frankfurt)            |
- | aws            | eu-west-1           | Europe (Ireland)              |
- | aws            | eu-west-2           | Europe (London)               |
- | aws            | ca-central-1        | Canada (Montréal)             |
- | aws            | us-east-1           | US East (N. Virginia)         |
- | aws            | us-east-2           | US East (Ohio)                |
- | aws            | us-west-2           | US West (Oregon)              |
- +----------------+---------------------+-------------------------------+
-----
---
 ====
 
 [NOTE]
 ====
-Supported regions are subject to change and may be different from the sample output shown above.
+You cannot create {db-classic} databases with the {product}.
+However, you can use the {product} to <<get-database-details,get information>> about existing {db-classic} databases.
 ====
 
+Running `astra db create` without any options deploys the database in an available *Free* region and uses `default_keyspace` as the name for the default keyspace.
 
-== Manage users and roles
+If the database already exists but is currently xref:astra-db-serverless:databases:database-statuses.adoc[hibernated], the `astra db create` command <<resume-database,resumes>> the database.
 
-For your {astra_db} organization, you can use {astra_cli} commands to:
+include::ROOT:partial$async-option.adoc[tags=active]
 
-* <<List users>>
-* <<Invite a new user>>
-* <<Delete a user>>
-* <<List roles>>
-* <<Get specific role information>>
+=== `db create` options
 
-=== List users
-
-[tabs]
+.Expand to see all `db create` options
+[%collapsible]
 ====
-Astra CLI::
-+
---
-[source,bash]
+[source,console]
 ----
-astra user list
-----
---
-+
-Sample result::
-+
---
-[source,csv]
-----
- +--------------------------------------+-----------------------------+---------------------+
- | User Id                              | User Email                  | Status              |
- +--------------------------------------+-----------------------------+---------------------+
- | b665658a-ae6a-4f30-a740-999999999999 | mr.wonderful@mycompany.com  | active              |
- +--------------------------------------+-----------------------------+---------------------+
-----
---
-====
+NAME
+        astra db create - Create a database with cli
 
+SYNOPSIS
+        astra db create [ --async ] [ {-c | --cloud} <cloud> ]
+                [ --capacity-units <CAPACITY UNITS> ]
+                [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
+                [ {--if-not-exist | --if-not-exists} ]
+                [ {-k | --keyspace} <KEYSPACE> ] [ --no-color ]
+                [ {-o | --output} <FORMAT> ] [ {-r | --region} <DB_REGION> ]
+                [ --tier <TIER> ] [ --timeout <timeout> ]
+                [ --token <AUTH_TOKEN> ] [ {-v | --verbose} ] [ --vector ] [--]
+                <DB>
 
-=== Invite a new user
+OPTIONS
+        --async
+            Will not wait for the resource to become available
 
-[tabs]
-====
-Astra CLI::
-+
---
-[source,bash]
-----
-astra user invite mydevfriend99a9@gmail.com
-----
---
-+
-Sample result::
-+
---
-[source,csv]
-----
- +--------------------------------------+-----------------------------+---------------------+
- | User Id                              | User Email                  | Status              |
- +--------------------------------------+-----------------------------+---------------------+
- | 825bd3d3-82ae-404b-9aad-999999999999 | mydevfriend99a9@gmail.com   | invited             |
- | b665658a-ae6a-4f30-a740-999999999999 | mr.wonderful@mycompany.com  | active              |
- +--------------------------------------+-----------------------------+---------------------+
-----
---
-====
+        -c <cloud>, --cloud <cloud>
+            Cloud Provider to create a db
 
+        --capacity-units <CAPACITY UNITS>
+            Capacity units to create the database with (default 1)
 
-=== Delete a user
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
 
-[source,bash]
-----
-astra user delete mydevfriend99a9@gmail.com
-----
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
 
-=== List roles
+        --env <Environment>
+            Astra Environment to use
 
-[source,bash]
-----
-astra role list
-----
+        --if-not-exist, --if-not-exists
+            will create a new DB only if none with same name
 
-=== Get specific role information
+        -k <KEYSPACE>, --keyspace <KEYSPACE>
+            Default keyspace created with the Db
 
-[source,bash]
-----
-astra role get "Database Administrator"
-----
+        --no-color
+            Remove all colors in output
 
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
 
-== Get database details
+        -r <DB_REGION>, --region <DB_REGION>
+            Cloud provider region to provision
 
-To get general information or details on an entity, use the command `astra db get <db-name>`.
-The output includes specific information about the list of keyspaces available and the different regions.
+        --tier <TIER>
+            Tier to create the database in
 
-[TIP]
-====
-For help on this command, use:
+        --timeout <timeout>
+            Provide a limit to the wait period in seconds, default is 300s.
 
-[source,bash]
-----
-astra help db get
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --vector
+            Create a database with vector search enabled
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <DB>
+            Database name (if unique) or Database identifier
 ----
 ====
 
+Use the `-c`, `-r`, and `-k` options to specify the cloud provider, region, and keyspace name when creating a database:
 
-Example:
+[source,bash,subs="+quotes"]
+----
+astra db create **DATABASE_NAME** \
+    -c **CLOUD_PROVIDER** \
+    -r **REGION** \
+    -k **KEYSPACE_NAME**
+----
 
-[tabs]
+.Result
+[%collapsible]
 ====
-Astra CLI::
-+
---
-[source,bash]
+[source,console]
 ----
-astra db get demo
+[INFO]  Database 'my_serverless_db' does not exist. Creating database 'my_serverless_db' with keyspace 'my_keyspace'
+[INFO]  Database 'my_serverless_db' and keyspace 'my_keyspace' are being created.
+[INFO]  Database 'my_serverless_db' has status 'PENDING' waiting to be 'ACTIVE' ...
+[INFO]  Database 'my_serverless_db' has status 'ACTIVE' (took 109050 millis)
+[OK]    Database 'my_serverless_db' is ready.
 ----
---
-+
-Sample result::
-+
---
-[source,csv]
-----
- +------------------------+-----------------------------------------+
- | Attribute              | Value                                   |
- +------------------------+-----------------------------------------+
- | Name                   | demo                                    |
- | id                     | 071d7059-d55b-4cdb-90c6-999999999999    |
- | Status                 | ACTIVE                                  |
- | Default Cloud Provider | AWS                                     |
- | Default Region         | us-east-1                               |
- | Default Keyspace       | demo                                    |
- | Creation Time          | 2022-11-26T15:41:18Z                    |
- |                        |                                         |
- | Keyspaces              | [0] demo                                |
- |                        |                                         |
- | Regions                | [0] us-east-1                           |
- +------------------------+-----------------------------------------+
-----
---
 ====
 
-
-To get a special property, add the option `--key` and its type.
-
-Multiple key types are available: `id`, `status`, `cloud`, `keyspace`, `keyspaces`, `region`, `regions`.
-
-Notice that the output is raw.
-
-This command is expected to be used in scripts.
-Example:
-
-[tabs]
-====
-Astra CLI::
-+
---
-[source,bash]
-----
-astra db get demo --key id
-----
---
-+
-Sample result::
-+
---
-[source,csv]
-----
- dde308f5-a8b0-474d-afd6-999999999999
-----
---
-====
-
-To get the database status in a human readable result, use the `astra db status` command.
-Example:
-
-[tabs]
-====
-Astra CLI::
-+
---
-[source,bash]
-----
-astra db status demo
-----
---
-+
-Sample result::
-+
---
-[source,csv]
-----
- [ INFO ] - Database 'demo' has status 'ACTIVE'
-----
---
-====
-
-
-== Delete a database
-
-To delete an {astra_db} database, use the command `astra db delete <db-name>`.
-Example:
+//TODO: Confirm that this no longer applies.
+////
+The database ID, not the database name, ensures uniqueness within your {astra_db} organization.
+Consequently, if you issue the `astra db create` command multiple times, you will create multiple database instances.
+To ensure that you don't create a database with the same name as another existing database, use the `--if-not-exist` option:
 
 [source,bash]
 ----
-astra db delete demo2
+astra db create demo -r us-east-1 -k keyspace1 --if-not-exist
 ----
-
+////
 
 == Manage keyspaces
 
-A keyspace is created when you create the database. A keyspace is essentially a handle that you can use to identify database resources such as its tables and indexes.
+{astra_db} databases store data in <<manage-collections,collections>> and <<manage-tables,tables>>, which exist inside keyspaces.
+Each database must have at least one keyspace, and you can create more as needed.
 
-By default, {astra_cli} provides values for the keyspace and database names. Optionally, you can define a custom keyspace name by using the flag `-k`.
+Use the `astra db create-keyspace` command to create a new keyspace in a database:
+
+[source,bash,subs="+quotes"]
+----
+astra db create-keyspace **DATABASE_ID** -k **KEYSPACE_NAME**
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
+[INFO]  Keyspace  'keyspace2' is creating.
+[INFO]  Database '26054aa9-eb37-4d88-b343-7c934cd1d7bc' has status 'MAINTENANCE' waiting to be 'ACTIVE' ...
+[INFO]  Database 'my_serverless_db' has status 'ACTIVE' (took 6669 millis)
+[OK]    Database '26054aa9-eb37-4d88-b343-7c934cd1d7bc' is ready.
+[OK]    Database '26054aa9-eb37-4d88-b343-7c934cd1d7bc' is ready.
+----
+====
+
+The database enters *Maintenance* status while creating the keyspace.
+When the database returns to *Active* status, you can use the new keyspace.
+
+include::ROOT:partial$async-option.adoc[tags=active]
 
 [TIP]
+======
+By default, the {product} returns an error if a keyspace with the same name already exists.
+However, if you use the `--if-not-exist` option, the {product} automatically connects to the existing keyspace instead of returning an error.
+This option can be useful when invoking the {product} in idempotent scripts.
+
+[source,bash,subs="+quotes"]
+----
+astra db create-keyspace **DATABASE_ID** -k **KEYSPACE_NAME** --if-not-exist
+----
+
+.Result
+[%collapsible]
 ====
-For help on this command, use:
-
-[source,bash]
+[source,console]
 ----
-astra help db create-keyspaces
+[INFO]  Keyspace  'keyspace1' already exists. Connecting to keyspace.
+[OK]    Database '26054aa9-eb37-4d88-b343-7c934cd1d7bc' is ready.
+[OK]    Database '26054aa9-eb37-4d88-b343-7c934cd1d7bc' is ready.
+----
+====
+======
 
-or:
+Use the `astra db list-keyspaces` command to get a list of the keyspaces in a database:
 
-astra help db list-keyspaces
+[source,bash,subs="+quotes"]
+----
+astra db list-keyspaces **DATABASE_ID**
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
++---------------------+
+| Name                |
++---------------------+
+| keyspace1 (default) |
+| keyspace2           |
++---------------------+
 ----
 ====
 
+Use the `astra db delete-keyspace` command to delete a keyspace from a database:
 
-=== Create a new keyspace
-
-To add a keyspace named `ks2` to an existing database named `demo`, use the following command.
-The option `--if-not-exist` is optional but could help you provide idempotent scripts.
-Example:
-
-[source,bash]
+[source,bash,subs="+quotes"]
 ----
-astra db create-keyspace demo -k ks2 --if-not-exist
+astra db delete-keyspace **DATABASE_ID** -k **KEYSPACE_NAME**
 ----
 
-If the database is not found, {astra_db} returns a warning message and a dedicated code.
-To see your new keyspace, you can display your database details.
-
-[source,bash]
+.Result
+[%collapsible]
+====
+[source,console]
 ----
-astra db list-keyspaces demo
+[INFO]  Database '26054aa9-eb37-4d88-b343-7c934cd1d7bc' has status 'MAINTENANCE' waiting to be 'ACTIVE' ...
+[INFO]  Database 'my_serverless_db' has status 'ACTIVE' (took 6804 millis)
+[OK]    Database '26054aa9-eb37-4d88-b343-7c934cd1d7bc' is ready.
 ----
+====
 
+[WARNING]
+====
+Deleting a keyspace permanently deletes all collections, tables, and data in the keyspace.
+====
 
-== Use cqlsh
+The database enters *Maintenance* status while it deletes the keyspace along with any collections, tables, and data within the keyspace.
 
-https://cassandra.apache.org/doc/latest/cassandra/tools/cqlsh.html[cqlsh^] is a standalone shell to work with Apache Cassandra&reg;.
-It is compliant with {astra_cli} but requires a few extra steps of configuration.
-The purpose of {astra_cli} is to integrate with `cqlsh` and to perform the integration for you.
+include::ROOT:partial$async-option.adoc[tags=active]
 
-{astra_cli} will *download*, *install*, *setup* and *wrap* `cqlsh` for you to interact with {astra_db}.
+If you delete the default keyspace, {astra_db} automatically selects another keyspace to be the default keyspace.
 
-=== Interactive mode
+=== `db create-keyspace` options
 
-If no options are provided, by default you'll enter `cqlsh` interactive mode.
-Example:
+.Expand to see all `db create-keyspace` options
+[%collapsible]
+====
+[source,console]
+----
+NAME
+        astra db create-keyspace - Create a new keyspace
+
+SYNOPSIS
+        astra db create-keyspace [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
+                [ --if-not-exist ] {-k | --keyspace} <KEYSPACE> [ --no-color ]
+                [ {-o | --output} <FORMAT> ] [ --token <AUTH_TOKEN> ]
+                [ {-v | --verbose} ] [ --wait ] [--] <DB>
+
+OPTIONS
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        --env <Environment>
+            Astra Environment to use
+
+        --if-not-exist
+            will create a new DB only if none with same name
+
+        -k <KEYSPACE>, --keyspace <KEYSPACE>
+            Name of the keyspace to create
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --wait
+            Will wait until the database become ACTIVE
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <DB>
+            Database name (if unique) or Database identifier
+----
+====
+
+=== `db list-keyspaces` options
+
+.Expand to see all `db list-keyspaces` options
+[%collapsible]
+====
+[source,console]
+----
+NAME
+        astra db list-keyspaces - Display the list of Keyspaces in an database
+
+SYNOPSIS
+        astra db list-keyspaces [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
+                [ --no-color ] [ {-o | --output} <FORMAT> ]
+                [ --token <AUTH_TOKEN> ] [ {-v | --verbose} ] [--] <DB>
+
+OPTIONS
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        --env <Environment>
+            Astra Environment to use
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <DB>
+            Database name (if unique) or Database identifier
+----
+====
+
+=== `db delete-keyspace` options
+
+.Expand to see all `db delete-keyspace` options
+[%collapsible]
+====
+[source,console]
+----
+NAME
+        astra db delete-keyspace - Delete an existing keyspace
+
+SYNOPSIS
+        astra db delete-keyspace [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
+                {-k | --keyspace} <KEYSPACE> [ --no-color ]
+                [ {-o | --output} <FORMAT> ] [ --token <AUTH_TOKEN> ]
+                [ {-v | --verbose} ] [--] <DB>
+
+OPTIONS
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        --env <Environment>
+            Astra Environment to use
+
+        -k <KEYSPACE>, --keyspace <KEYSPACE>
+            Name of the keyspace to create
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <DB>
+            Database name (if unique) or Database identifier
+----
+====
+
+[#manage-collections]
+== Manage collections
+
+xref:astra-db-serverless:databases:manage-collections.adoc[Collections] store semi-structured data, in the form of documents, in {db-serverless-vector} databases.
+
+When you create a collection, you decide if the collection can store structured vector data.
+This is known as a _vector-enabled collection_.
+For vector-enabled collections, you also decide how to provide embeddings.
+You can bring your own embeddings and xref:astra-db-serverless:databases:embedding-generation.adoc[automatically generate embeddings with vectorize].
+**You must decide which options you need when you create the collection.**
+
+Use the `astra db create-collection` command to create a new collection in a {db-serverless-vector} database:
 
 [tabs]
-====
-Astra CLI::
+======
+Bring my own embeddings::
 +
 --
-[source,bash]
-----
-astra db cqlsh demo
-----
---
-+
-Sample result::
-+
---
-[source,csv]
-----
- Cqlsh is starting please wait for connection establishment...
- Connected to cndb at 127.0.0.1:9042.
- [cqlsh 6.8.0 | Cassandra 4.0.0.6816 | CQL spec 3.4.5 | Native protocol v4]
- Use HELP for help.
- token@cqlsh>
+Use this option if you plan to generate your own embeddings and import them when you load data into your collection.
 
+[source,bash,subs="+quotes"]
 ----
---
-====
+astra db create-collection **DATABASE_ID** \
+    -c **COLLECTION_NAME** \
+    -d **DIMENSION** \
+    -m **SIMILARITY_METRIC**
+----
 
+Replace the following:
 
-=== Execute CQL
+* `**COLLECTION_NAME**`: The name of the collection you want to create.
+* `**DIMENSION**`: The number of dimensions for the vectors in your dataset.
+* (Optional) `**SIMILARITY_METRIC**`: The xref:astra-db-serverless:get-started:concepts.adoc#metrics[similarity metric] that your embedding model will use to compare vectors.
+The available metrics are `cosine` (default), `dot_product`, and `euclidean`.
 
-To execute a CQL statement with `cqlsh` use the flag `-e`.
 Example:
 
 [source,bash]
 ----
-astra db cqlsh demo -e "describe keyspaces;"
+astra db create-collection 58747660-464b-4085-bef2-c3f3e5401e3d \
+    -c my_collection \
+    -d 1024 \
+    -m dot_product
 ----
 
-=== Execute CQL files
+.Result
+[%collapsible]
+====
+[source,console]
+----
+[OK]    Collection 'my_collection' as been created from db '58747660-464b-4085-bef2-c3f3e5401e3d' on keyspace  'default_keyspace'
+[OK]    Database '58747660-464b-4085-bef2-c3f3e5401e3d' is ready.
+----
+====
 
-To execute CQL files with `cqlsh` use the flag `-f`.
-You could also use the CQL syntax SOURCE.
+[NOTE]
+=====
+To create a collection that is _not_ vector-enabled, omit the `-d` and `-m` options.
+
+[source,bash,subs="+quotes"]
+----
+astra db create-collection **DATABASE_ID** -c **COLLECTION_NAME**
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
+[OK]    Collection 'my_collection' as been created from db '58747660-464b-4085-bef2-c3f3e5401e3d' on keyspace  'default_keyspace'
+[OK]    Database '58747660-464b-4085-bef2-c3f3e5401e3d' is ready.
+----
+====
+
+You can't load vector data into a non-vector collection.
+=====
+--
+
+Use an {astra}-hosted provider::
++
+--
+To automatically generate embeddings with xref:astra-db-serverless:databases:embedding-generation.adoc[{astra_db} vectorize], add an embedding provider integration to your collection.
+Embedding provider integrations are either {astra}-hosted or external.
+
+[source,bash,subs="+quotes"]
+----
+astra db create-collection **DATABASE_ID** \
+    -c **COLLECTION_NAME** \
+    --embedding-provider **PROVIDER_NAME** \
+    --embedding-model **MODEL_NAME** \
+    -d **DIMENSION** \
+    -m **SIMILARITY_METRIC**
+----
+
+Replace the following:
+
+* `**COLLECTION_NAME**`: The name of the collection you want to create.
+* `**PROVIDER_NAME**`: The name of the {astra}-hosted embedding provider.
+* `**MODEL_NAME**`: The name of the embedding model that you want to use to generate embeddings.
+* (Optional) `**DIMENSION**`: The number of dimensions that you want the generated vectors to have.
+You can only set the dimensions if the chosen model supports a range of dimensions.
+* (Optional) `**SIMILARITY_METRIC**`: The xref:astra-db-serverless:get-started:concepts.adoc#metrics[similarity metric] that your embedding model will use to compare vectors.
+The available metrics are `cosine` (default), `dot_product`, and `euclidean`.
+
 Example:
 
 [source,bash]
 ----
-astra db cqlsh demo -f sample.cql
+astra db create-collection 58747660-464b-4085-bef2-c3f3e5401e3d \
+    -c my_collection \
+    --embedding-provider nvidia \
+    --embedding-model NV-Embed-QA \
+    -d 1024 \
+    -m dot_product
 ----
 
-
-== Use DSBulk with Astra CLI
-
-https://github.com/datastax/dsbulk[DataStax Bulk Loader^] (`dsbulk`) allows you to you load, unload, and count data from Cassandra-based database tables, such as those in Apache Cassandra, DataStax Enterprise, and Astra DB. {astra_cli} commands can invoke dsbulk.
-
-As for `cqlsh`, {astra_cli} will *download*, *install*, *setup* and *wrap* the `dsbulk` command for you.
-All options are available.
-
-=== Set up the demo
-
-To give you an idea, let's walk through a simple example, where we have a database named `demo` with a keyspace named `demo`. If you haven't already, here is the preliminary step:
-
-[source,bash]
-----
-astra db create demo
-----
-
-Let's look at a dataset of cities around the world. We'll use this CSV file from the Awesome Astra site:
-
-https://raw.githubusercontent.com/awesome-astra/docs/main/docs/assets/cities.csv[cities.csv, window="_blank"]
-
-For example, here are the first lines of the CSV:
-
-[source,csv]
-----
-id,name,state_id,state_code,state_name,country_id,country_code,country_name,latitude,longitude,wikiDataId 52,Ashkāsham,3901,BDS,Badakhshan,1,AF,Afghanistan,36.68333000,71.53333000,Q4805192 68,Fayzabad,3901,BDS,Badakhshan,1,AF,Afghanistan,37.11664000,70.58002000,Q156558
-----
-
-Let's create a table to store those values.
-
-Connect to CQLSH with this {astra_cli} command:
-
-[source,bash]
-----
-astra db cqlsh demo -k demo
-----
-
-Create the table in cqlsh:
-
-[source,cql]
-----
-CREATE TABLE cities_by_country ( country_name text, name text, id int, state_id text, state_code text, state_name text, country_id text, country_code text, latitude double, longitude double, wikiDataId text, PRIMARY KEY ((country_name), name) );
-
-describe table cities_by_country;
-
-quit
-----
-
-
-=== Load data
-
-{astra_cli} will get cities.csv sample data from https://raw.githubusercontent.com/awesome-astra/docs/main/docs/assets/cities.csv[this file^].
-
-[TIP]
+.Result
+[%collapsible]
 ====
-The first time you run the `astra db load` command, the message -- `DSBulk is starting please wait` -- may take a few seconds to appear because {astra_cli} is downloading `dsbulk` (if it wasn't downloaded previously).
+[source,console]
+----
+[OK]    Collection 'my_collection' as been created from db '58747660-464b-4085-bef2-c3f3e5401e3d' on keyspace  'default_keyspace'
+[OK]    Database '58747660-464b-4085-bef2-c3f3e5401e3d' is ready.
+----
 ====
+--
+
+Use an external provider::
++
+--
+To automatically generate embeddings with xref:astra-db-serverless:databases:embedding-generation.adoc[{astra_db} vectorize], add an embedding provider integration to your collection.
+Embedding provider integrations are either {astra}-hosted or external.
+
+To use an external embedding provider, you must add an xref:astra-db-serverless:databases:embedding-generation.adoc#supported-embedding-providers[embedding provider integration] to your {astra_db} organization, and then you can select that embedding provider when you create a collection.
+
+[source,bash,subs="+quotes"]
+----
+astra db create-collection **DATABASE_ID** \
+    -c **COLLECTION_NAME** \
+    --embedding-provider **PROVIDER_NAME** \
+    --embedding-model **MODEL_NAME** \
+    --embedding-key **PROVIDER_KEY_NAME** \
+    -d **DIMENSION** \
+    -m **SIMILARITY_METRIC**
+----
+
+Replace the following:
+
+* `**COLLECTION_NAME**`: The name of the collection you want to create.
+* `**PROVIDER_NAME**`: The name of the {astra}-hosted embedding provider.
+* `**MODEL_NAME**`: The name of the embedding model that you want to use to generate embeddings.
+* (Optional) `**PROVIDER_KEY_NAME**`: The name of the provider key that you want to use to authenticate with the external embedding provider.
+* (Optional) `**DIMENSION**`: The number of dimensions that you want the generated vectors to have.
+You can only set the dimensions if the chosen model supports a range of dimensions.
+* (Optional) `**SIMILARITY_METRIC**`: The xref:astra-db-serverless:get-started:concepts.adoc#metrics[similarity metric] that your embedding model will use to compare vectors.
+The available metrics are `cosine` (default), `dot_product`, and `euclidean`.
 
 Example:
 
-[tabs]
-====
-Astra CLI::
-+
---
 [source,bash]
 ----
-astra db load demo \
- -url https://raw.githubusercontent.com/awesome-astra/docs/main/docs/assets/cities.csv \
- -k demo \
- -t cities_by_country \
- --schema.allowMissingFields true
+astra db create-collection 58747660-464b-4085-bef2-c3f3e5401e3d \
+    -c my_collection \
+    --embedding-provider openai \
+    --embedding-model text-embedding-3-small \
+    --embedding-key my_openai_key \
+    -d 1024 \
+    -m dot_product
 ----
---
-+
-Sample result::
-+
---
-[source,csv]
+
+.Result
+[%collapsible]
+====
+[source,console]
 ----
- DSBulk is starting please wait ...
- Username and password provided but auth provider not specified, inferring PlainTextAuthProvider
- A cloud secure connect bundle was provided: ignoring all explicit contact points.
- A cloud secure connect bundle was provided and selected operation performs writes: changing default consistency level to LOCAL_QUORUM.
- Operation directory: /Users/awesome.user/Downloads/logs/LOAD_20220823-182343-074618
- Setting executor.maxPerSecond not set when connecting to DataStax Astra: applying a limit of 9,000 ops/second based on the number of coordinators (3).
- If your Astra database has higher limits, please define executor.maxPerSecond explicitly.
-   total | failed | rows/s |  p50ms |  p99ms | p999ms | batches
- 148,266 |      0 |  8,361 | 663.86 | 767.56 | 817.89 |   30.91
- Operation LOAD_20221123-182343-074618 completed successfully in 17 seconds.
- Last processed positions can be found in positions.txt
+[OK]    Collection 'my_collection' as been created from db '58747660-464b-4085-bef2-c3f3e5401e3d' on keyspace  'default_keyspace'
+[OK]    Database '58747660-464b-4085-bef2-c3f3e5401e3d' is ready.
 ----
+====
 --
+======
+
+Use the `astra db list-collections` command to get a list of the collections in `default_keyspace`:
+
+[source,bash,subs="+quotes"]
+----
+astra db list-collections **DATABASE_ID**
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
++---------------------+-----------+-------------------+--------------------+--------------+------------------------+
+| Name                | DefaultId | Vector Dimension  | Similarity Metric  | AI Provider  | AI Model               |
++---------------------+-----------+-------------------+--------------------+--------------+------------------------+
+| my_collection       | default   | 1024              | dot_product        |              |                        |
+| my_collection2      | default   | 1024              | dot_product        | nvidia       | NV-Embed-QA            |
+| my_collection3      | default   | 1024              | dot_product        | openai       | text-embedding-3-small |
++---------------------+-----------+-------------------+--------------------+--------------+------------------------+
+----
+====
+
+Use the `astra db describe-collection` command to get information about a specific collection:
+
+[source,bash,subs="+quotes"]
+----
+astra db describe-collection **DATABASE_ID** -c **COLLECTION_NAME**
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
++-------------------+-----------------------------------------+
+| Attribute         | Value                                   |
++-------------------+-----------------------------------------+
+| Name              | my_collection                           |
+| Estim. Count      | 0                                       |
+|                   |                                         |
+| Vector:           |                                         |
+| Vector Dimension  | 1024                                    |
+| Similarity Metric | dot_product                             |
++-------------------+-----------------------------------------+
+
+[OK]    Database '58747660-464b-4085-bef2-c3f3e5401e3d' is ready.
+----
+====
+
+Use the `astra db truncate-collection` command to clear an existing collection:
+
+[source,bash,subs="+quotes"]
+----
+astra db truncate-collection **DATABASE_ID** -c **COLLECTION_NAME**
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
+[OK]    Collection 'my_collection' as been truncated from '58747660-464b-4085-bef2-c3f3e5401e3d'.
+----
+====
+
+Use the `astra db delete-collection` command to delete a collection:
+
+[source,bash,subs="+quotes"]
+----
+astra db delete-collection **DATABASE_ID** -c **COLLECTION_NAME**
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
+[OK]    Collection 'my_collection' as been deleted from '58747660-464b-4085-bef2-c3f3e5401e3d'.
+[OK]    Database '58747660-464b-4085-bef2-c3f3e5401e3d' is ready.
+----
+====
+
+=== `db create-collection` options
+
+.Expand to see all `db create-collection` options
+[%collapsible]
+====
+[source,console]
+----
+NAME
+        astra db create-collection - Create a new collection
+
+SYNOPSIS
+        astra db create-collection {-c | --collection} <COLLECTION>
+                [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ]
+                [ {-d | --dimension} <DIMENSION> ]
+                [ --default-id <DEFAULT_ID> ]
+                [ --embedding-key <EMBEDDING_KEY> ]
+                [ --embedding-model <EMBEDDING_MODEL> ]
+                [ --embedding-provider <EMBEDDING_PROVIDER> ]
+                [ --env <Environment> ] [ --if-not-exists ]
+                [ --indexing-allow <INDEXING_ALLOW> ]
+                [ --indexing-deny <INDEXING_DENY> ]
+                [ {-k | --keyspace} <KEYSPACE> ] [ {-m | --metric} <METRIC> ]
+                [ --no-color ] [ {-o | --output} <FORMAT> ]
+                [ --token <AUTH_TOKEN> ] [ {-v | --verbose} ] [--] <DB>
+
+OPTIONS
+        -c <COLLECTION>, --collection <COLLECTION>
+            Name of the collection to create
+
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        -d <DIMENSION>, --dimension <DIMENSION>
+            Name of the collection to create
+
+        --default-id <DEFAULT_ID>
+            Default identifier to use for the collection
+
+        --embedding-key <EMBEDDING_KEY>
+            Using Vectorize, embedding key used for shared secret
+
+        --embedding-model <EMBEDDING_MODEL>
+            Using Vectorize, embedding mode to use
+
+        --embedding-provider <EMBEDDING_PROVIDER>
+            Using Vectorize, embedding provider to use
+
+        --env <Environment>
+            Astra Environment to use
+
+        --if-not-exists
+            will create a new collection only if none with same name
+
+        --indexing-allow <INDEXING_ALLOW>
+            List of attribute to add into index (comma separated)
+
+        --indexing-deny <INDEXING_DENY>
+            List of attribute to remove from index (comma separated)
+
+        -k <KEYSPACE>, --keyspace <KEYSPACE>
+            Name of the keyspace to create the collection
+
+        -m <METRIC>, --metric <METRIC>
+            Name of the collection to create
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <DB>
+            Database name (if unique) or Database identifier
+----
+====
+
+Use the `-k` / `--keyspace` option to create a collection in a specific keyspace:
+
+[source,bash,subs="+quotes"]
+----
+astra db create-collection **DATABASE_ID** \
+    -k **KEYSPACE_NAME** \
+    -c **COLLECTION_NAME** \
+    -d **DIMENSION**
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
+[OK]    Collection 'my_collection' as been created from db '58747660-464b-4085-bef2-c3f3e5401e3d' on keyspace  'my_keyspace'
+[OK]    Database '58747660-464b-4085-bef2-c3f3e5401e3d' is ready.
+----
+====
+
+=== `db list-collections` options
+
+.Expand to see all `db list-collections` options
+[%collapsible]
+====
+[source,console]
+----
+NAME
+        astra db list-collections - Display the list of collections in an
+        database
+
+SYNOPSIS
+        astra db list-collections [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
+                [ {-k | --keyspace} <KEYSPACE> ] [ --no-color ]
+                [ {-o | --output} <FORMAT> ] [ --token <AUTH_TOKEN> ]
+                [ {-v | --verbose} ] [--] <DB>
+
+OPTIONS
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        --env <Environment>
+            Astra Environment to use
+
+        -k <KEYSPACE>, --keyspace <KEYSPACE>
+            Name of the keyspace to create the collection
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <DB>
+            Database name (if unique) or Database identifier
+----
+====
+
+Use the `-k` / `--keyspace` option to get a list of the collections in a specific keyspace:
+
+[source,bash,subs="+quotes"]
+----
+astra db list-collections **DATABASE_ID** -k **KEYSPACE_NAME**
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
++--------------------------+-----------+-------------------+--------------------+--------------+---------------------+
+| Name                     | DefaultId | Vector Dimension  | Similarity Metric  | AI Provider  | AI Model            |
++--------------------------+-----------+-------------------+--------------------+--------------+---------------------+
+| my_collection            | default   | 1024              | cosine             |              |                     |
+| my_collection_non_vector | default   |                   |                    |              |                     |
++--------------------------+-----------+-------------------+--------------------+--------------+---------------------+
+----
+====
+
+=== `db describe-collection` options
+
+.Expand to see all `db describe-collection` options
+[%collapsible]
+====
+[source,console]
+----
+NAME
+        astra db describe-collection - Describe an existing collection
+
+SYNOPSIS
+        astra db describe-collection {-c | --collection} <COLLECTION>
+                [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
+                [ {-k | --keyspace} <KEYSPACE> ] [ --no-color ]
+                [ {-o | --output} <FORMAT> ] [ --token <AUTH_TOKEN> ]
+                [ {-v | --verbose} ] [--] <DB>
+
+OPTIONS
+        -c <COLLECTION>, --collection <COLLECTION>
+            Name of the collection
+
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        --env <Environment>
+            Astra Environment to use
+
+        -k <KEYSPACE>, --keyspace <KEYSPACE>
+            Name of the keyspace to create the collection
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <DB>
+            Database name (if unique) or Database identifier
+----
+====
+
+Use the `-k` / `--keyspace` option to get information about a collection in a specific keyspace:
+
+[source,bash,subs="+quotes"]
+----
+astra db describe-collection **DATABASE_ID** \
+    -k **KEYSPACE_NAME** \
+    -c **COLLECTION_NAME**
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
++-------------------+-----------------------------------------+
+| Attribute         | Value                                   |
++-------------------+-----------------------------------------+
+| Name              | my_collection                           |
+| Estim. Count      | 0                                       |
+|                   |                                         |
+| Vector:           |                                         |
+| Vector Dimension  | 1024                                    |
+| Similarity Metric | cosine                                  |
++-------------------+-----------------------------------------+
+
+[OK]    Database '58747660-464b-4085-bef2-c3f3e5401e3d' is ready.
+----
+====
+
+=== `db truncate-collection` options
+
+.Expand to see all `db truncate-collection` options
+[%collapsible]
+====
+[source,console]
+----
+NAME
+        astra db truncate-collection - Clear an existing collection
+
+SYNOPSIS
+        astra db truncate-collection {-c | --collection} <COLLECTION>
+                [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
+                [ {-k | --keyspace} <KEYSPACE> ] [ --no-color ]
+                [ {-o | --output} <FORMAT> ] [ --token <AUTH_TOKEN> ]
+                [ {-v | --verbose} ] [--] <DB>
+
+OPTIONS
+        -c <COLLECTION>, --collection <COLLECTION>
+            Name of the collection
+
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        --env <Environment>
+            Astra Environment to use
+
+        -k <KEYSPACE>, --keyspace <KEYSPACE>
+            Name of the keyspace to clear the table
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <DB>
+            Database name (if unique) or Database identifier
+----
+====
+
+Use the `-k` / `--keyspace` option to clear an existing collection in a specific keyspace:
+
+[source,bash,subs="+quotes"]
+----
+astra db truncate-collection **DATABASE_ID** \
+    -k **KEYSPACE_NAME** \
+    -c **COLLECTION_NAME**
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
+[OK]    Collection 'my_collection' as been truncated from '58747660-464b-4085-bef2-c3f3e5401e3d'.
+----
+====
+
+=== `db delete-collection` options
+
+.Expand to see all `db delete-collection` options
+[%collapsible]
+====
+[source,console]
+----
+NAME
+        astra db delete-collection - Delete an existing collection
+
+SYNOPSIS
+        astra db delete-collection {-c | --collection} <COLLECTION>
+                [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
+                [ --if-exists ] [ {-k | --keyspace} <KEYSPACE> ] [ --no-color ]
+                [ {-o | --output} <FORMAT> ] [ --token <AUTH_TOKEN> ]
+                [ {-v | --verbose} ] [--] <DB>
+
+OPTIONS
+        -c <COLLECTION>, --collection <COLLECTION>
+            Name of the collection to delete
+
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        --env <Environment>
+            Astra Environment to use
+
+        --if-exists
+            will delete the collection only if it exists
+
+        -k <KEYSPACE>, --keyspace <KEYSPACE>
+            Name of the keyspace to create the collection
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <DB>
+            Database name (if unique) or Database identifier
+----
+====
+
+Use the `-k` / `--keyspace` option to delete a collection from a specific keyspace:
+
+[source,bash,subs="+quotes"]
+----
+astra db delete-collection **DATABASE_ID** \
+    -k **KEYSPACE_NAME** \
+    -c **COLLECTION_NAME**
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
+[OK]    Collection 'my_collection' as been deleted from '58747660-464b-4085-bef2-c3f3e5401e3d'.
+[OK]    Database '58747660-464b-4085-bef2-c3f3e5401e3d' is ready.
+----
+====
+
+[#manage-tables]
+== Manage tables
+
+xref:astra-db-serverless:databases:manage-collections.adoc[Tables] store structured data, in the form of rows, in {db-serverless-vector} and {db-serverless} databases.
+
+[NOTE]
+====
+The commands described in this section apply only to {db-serverless-vector} databases.
+====
+
+Use the `astra db list-tables` command to get a list of the tables in a {db-serverless-vector} database:
+
+[source,bash,subs="+quotes"]
+----
+astra db list-tables **DATABASE_ID**
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
++---------------------+
+| Name                |
++---------------------+
+| students            |
++---------------------+
+----
 ====
 
 
-=== Count table row data
+Use the `astra db describe-table` command to get information about a specific table:
 
-Check than the data has been imported with cqlsh.
-Example:
+[source,bash,subs="+quotes"]
+----
+astra db describe-table **DATABASE_ID** -t **TABLE_NAME**
+----
 
-[tabs]
+.Result
+[%collapsible]
 ====
-Astra CLI::
-+
---
-[source,bash]
+[source,console]
 ----
-astra db cqlsh demo -e "select * from demo.cities_by_country LIMIT 20;"
++------------------+-----------------------------------------+
+| Attribute        | Value                                   |
++------------------+-----------------------------------------+
+| Name             | students                                |
+|                  |                                         |
+| COLUMNS          |                                         |
+| email            | TEXT                                    |
+| extracurriculars | SET<TEXT>                               |
+| grades           | MAP<TEXT, INT>                          |
+| graduated        | BOOLEAN                                 |
+| graduation_year  | INT                                     |
+| name             | TEXT                                    |
+| semester_gpas    | LIST<DECIMAL>                           |
+| vect_emb         | VECTOR<FLOAT,1024>                      |
+|                  |                                         |
+| PRIMARY KEY      |                                         |
+| Partition Key    | [0] email                               |
++------------------+-----------------------------------------+
 ----
---
-+
-Sample result::
-+
---
-[source,csv]
-----
-Cqlsh is starting please wait for connection establishment...
-
-country_name | name                | country_code | country_id | id   | latitude | longitude | state_code | state_id | state_name          | wikidataid
---------------+---------------------+--------------+------------+------+----------+-----------+------------+----------+---------------------+------------
-  Bangladesh |             Azimpur |           BD |         19 | 8454 |  23.7298 |   90.3854 |         13 |      771 |      Dhaka District |       null
-  Bangladesh |           Badarganj |           BD |         19 | 8455 | 25.67419 |  89.05377 |         55 |      759 |    Rangpur District |       null
-  Bangladesh |            Bagerhat |           BD |         19 | 8456 |     22.4 |     89.75 |         27 |      811 |     Khulna District |       null
-  Bangladesh |           Bandarban |           BD |         19 | 8457 |       22 |  92.33333 |          B |      803 | Chittagong Division |       null
-  Bangladesh |          Baniachang |           BD |         19 | 8458 | 24.51863 |  91.35787 |         60 |      767 |     Sylhet District |       null
-  Bangladesh |             Barguna |           BD |         19 | 8459 | 22.13333 |  90.13333 |         06 |      818 |    Barisal District |       null
-  Bangladesh |             Barisal |           BD |         19 | 8460 |     22.8 |      90.5 |         06 |      818 |    Barisal District |       null
-  Bangladesh |                Bera |           BD |         19 | 8462 | 24.07821 |  89.63262 |         54 |      813 |   Rajshahi District |       null
-  Bangladesh |       Bhairab Bāzār |           BD |         19 | 8463 |  24.0524 |   90.9764 |         13 |      771 |      Dhaka District |       null
-  Bangladesh |           Bherāmāra |           BD |         19 | 8464 | 24.02452 |  88.99234 |         27 |      811 |     Khulna District |       null
-  Bangladesh |               Bhola |           BD |         19 | 8465 | 22.36667 |  90.81667 |         06 |      818 |    Barisal District |       null
-  Bangladesh |           Bhāndāria |           BD |         19 | 8466 | 22.48898 |  90.06273 |         06 |      818 |    Barisal District |       null
-  Bangladesh | Bhātpāra Abhaynagar |           BD |         19 | 8467 | 23.01472 |  89.43936 |         27 |      811 |     Khulna District |       null
-  Bangladesh |           Bibir Hat |           BD |         19 | 8468 | 22.68347 |  91.79058 |          B |      803 | Chittagong Division |       null
-  Bangladesh |               Bogra |           BD |         19 | 8469 | 24.78333 |     89.35 |         54 |      813 |   Rajshahi District |       null
-  Bangladesh |        Brahmanbaria |           BD |         19 | 8470 | 23.98333 |  91.16667 |          B |      803 | Chittagong Division |       null
-  Bangladesh |         Burhānuddin |           BD |         19 | 8471 | 22.49518 |  90.72391 |         06 |      818 |    Barisal District |       null
-  Bangladesh |            Bājitpur |           BD |         19 | 8472 | 24.21623 |  90.95002 |         13 |      771 |      Dhaka District |       null
-  Bangladesh |            Chandpur |           BD |         19 | 8474 |    23.25 |  90.83333 |          B |      803 | Chittagong Division |       null
-  Bangladesh |    Chapai Nababganj |           BD |         19 | 8475 | 24.68333 |     88.25 |         54 |      813 |   Rajshahi District |       null
-----
---
 ====
 
+Use the `astra db truncate-table` command to clear an existing table:
 
-This next example shows how to count the loaded data:
+[source,bash,subs="+quotes"]
+----
+astra db truncate-table **DATABASE_ID** -t **TABLE_NAME**
+----
 
-[tabs]
+.Result
+[%collapsible]
 ====
-Astra CLI::
-+
---
-[source,bash]
+[source,console]
 ----
-astra db count demo -k demo -t cities_by_country
+[OK]    Table 'students' as been truncated from '58747660-464b-4085-bef2-c3f3e5401e3d'.
 ----
---
-+
-Sample result::
-+
---
-[source,csv]
-----
- DSBulk is starting please wait ...
- [INFO ] - RUNNING: /Users/awesome.user/.astra/dsbulk-1.9.1/bin/dsbulk count -k demo -t cities_by_country -u token -p AstraCS:gdZaqzmFZsza999999999999:edd25600df1c01506f5388340f138f277cece2c93cb70f999999999999 -b /Users/awesome.user/.astra/scb/scb_071d7059-d55b-4cdb-90c6-999999999999_us-east-1.zip
- Username and password provided but auth provider not specified, inferring PlainTextAuthProvider
- A cloud secure connect bundle was provided: ignoring all explicit contact points.
- Operation directory: /Users/awesome.user/Downloads/logs/COUNT_20221123-182833-197954
-   total | failed | rows/s |  p50ms |  p99ms | p999ms
- 134,574 |      0 | 43,307 | 315.71 | 457.18 | 457.18
-----
---
 ====
 
+Use the `astra db delete-collection` command to delete a collection from a a {db-serverless-vector} database:
 
-=== Unload data
+[source,bash,subs="+quotes"]
+----
+astra db delete-table **DATABASE_ID** -t **TABLE_NAME**
+----
 
-You can also unload data.
-Example:
-
-[tabs]
+.Result
+[%collapsible]
 ====
-Astra CLI::
-+
---
-[source,bash]
+[source,console]
 ----
-astra db unload demo -k demo -t cities_by_country -url /tmp/unload
+[OK]    Table 'students' as been deleted from '58747660-464b-4085-bef2-c3f3e5401e3d'.
+[OK]    Database '58747660-464b-4085-bef2-c3f3e5401e3d' is ready.
 ----
---
-+
-Sample result::
-+
---
-[source,csv]
-----
- DSBulk is starting please wait ...
- Username and password provided but auth provider not specified, inferring PlainTextAuthProvider
- A cloud secure connect bundle was provided: ignoring all explicit contact points.
- Operation directory: /Users/awesome.user/Downloads/logs/UNLOAD_20221123-183054-208353
-   total | failed | rows/s |  p50ms |    p99ms |   p999ms
- 134,574 |      0 | 14,103 | 927.51 | 1,853.88 | 1,853.88
- Operation UNLOAD_20221123-183054-208353 completed successfully in 9 seconds.
-----
---
 ====
 
+=== `db list-tables` options
 
-== Download Secure Connect Bundle
-
-=== Default values
-
-Use the `astra db download-scb` command to download the different secure connect bundles (one per region) with the pattern `+scb_${dbid}-${dbregion}.zip+` in the current folder.
-
-[source,bash]
-----
-mkdir db-demo
-cd db-demo
-astra db download-scb demo
-ls
-----
-
-=== Download to a specific target folder
-
-Use the `astra db download-scb` command with the `-d` (`--output-directory`) option to download the different secure connect bundles (one per region) with the pattern `+scb_${dbid}-${dbregion}.zip+`. Example of downloading to a `/tmp` folder:
-
-[source,bash]
-----
-astra db download-scb demo -d /tmp
-----
-
-=== Download an SCB and provide output zip filename
-
-Provide the target filename with `-f` (`--output-file`). This command flag works only if you have a **single region** for your database (or you will have to use the flag `-d`).
-
-[source,bash]
-----
-astra db download-scb demo -f /tmp/demo.zip
-----
-
-
-== Create environment variables
-
-When working with Astra DB, it's handy to generate a set of relevant environment variables such as database name, database region, API call URLs, and so on.
-
-This {astra_cli} command creates an `.env` file based on your environment.
-Example:
-
-[tabs]
+.Expand to see all `db list-tables` options
+[%collapsible]
 ====
-Astra CLI::
-+
---
-[source,bash]
+[source,console]
 ----
-astra db create-dotenv -f /tmp/.env
+NAME
+        astra db list-tables - Display the list of tables in a
+        database/keyspace couple
+
+SYNOPSIS
+        astra db list-tables [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
+                [ {-k | --keyspace} <KEYSPACE> ] [ --no-color ]
+                [ {-o | --output} <FORMAT> ] [ --token <AUTH_TOKEN> ]
+                [ {-v | --verbose} ] [--] <DB>
+
+OPTIONS
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        --env <Environment>
+            Astra Environment to use
+
+        -k <KEYSPACE>, --keyspace <KEYSPACE>
+            Name of the keyspace
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <DB>
+            Database name (if unique) or Database identifier
 ----
---
-+
-Sample result::
-+
---
-[source,bash]
-----
- ASTRA_DB_APPLICATION_TOKEN="AstraCS:QeUmROP..."
- ASTRA_DB_GRAPHQL_URL="https://a6b5cb4c-3267-4414-8bba-999999999999-us-east-1.apps.astra.datastax.com/api/graphql/order_management_data"
- ASTRA_DB_GRAPHQL_URL_ADMIN="https://a6b5cb4c-3267-4414-8bba-999999999999-us-east-1.apps.astra.datastax.com/api/graphql-admin"
- ASTRA_DB_GRAPHQL_URL_PLAYGROUND="https://a6b5cb4c-3267-4414-8bba-999999999999-us-east-1.apps.astra.datastax.com/api/playground"
- ASTRA_DB_GRAPHQL_URL_SCHEMA="https://a6b5cb4c-3267-4414-8bba-999999999999-us-east-1.apps.astra.datastax.com/api/graphql-schema"
- ASTRA_DB_ID="a6b5cb4c-3267-4414-8bba-999999999999"
- ASTRA_DB_KEYSPACE="order_management_data"
- ASTRA_DB_REGION="us-east-1"
- ASTRA_DB_REST_URL="https://a6b5cb4c-3267-4414-8bba-999999999999-us-east-1.apps.astra.datastax.com/api/rest"
- ASTRA_DB_REST_URL_SWAGGER="https://a6b5cb4c-3267-4414-8bba-999999999999-us-east-1.apps.astra.datastax.com/api/rest/swagger-ui/"
- ASTRA_DB_SECURE_BUNDLE_PATH="/Users/awesome.user/.astra/scb/scb_a6b5cb4c-3267-4414-8bba-999999999999-east-1.zip"
- ASTRA_DB_SECURE_BUNDLE_URL="https://datastax-cluster-config-prod.s3.us-east-2.amazonaws.com/a6b5cb4c-3267-4414-8bba-999999999999....X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA2AI....."
- ASTRA_ORG_ID="f9460f14-9879-...."
- ASTRA_ORG_NAME="awe..."
- ASTRA_ORG_TOKEN="AstraCS:QeUmROPLeNbd..."
-----
---
 ====
 
+=== `db describe-table` options
 
-== Resume a hibernated database
-
-If you are using the {astra_db} Free plan, your database will be hibernated (made inactive) after 23 hours of inactivity.
-(This behavior does not occur when you upgrade to a paid {astra_db} plan.)
-
-To wake up the database, you can use the `astra db resume` command.
-
-Assume you have a hibernating database.
-Example:
-
-[tabs]
+.Expand to see all `db describe-table` options
+[%collapsible]
 ====
-Astra CLI::
-+
---
+[source,console]
+----
+NAME
+        astra db describe-table - Describe an existing table
+
+SYNOPSIS
+        astra db describe-table [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
+                [ {-k | --keyspace} <KEYSPACE> ] [ --no-color ]
+                [ {-o | --output} <FORMAT> ] {-t | --table} <TABLE>
+                [ --token <AUTH_TOKEN> ] [ {-v | --verbose} ] [--] <DB>
+
+OPTIONS
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        --env <Environment>
+            Astra Environment to use
+
+        -k <KEYSPACE>, --keyspace <KEYSPACE>
+            Name of the keyspace to create the collection
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        -t <TABLE>, --table <TABLE>
+            Name of the table
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <DB>
+            Database name (if unique) or Database identifier
+----
+====
+
+=== `db truncate-table` options
+
+.Expand to see all `db truncate-table` options
+[%collapsible]
+====
+[source,console]
+----
+NAME
+        astra db truncate-table - Clear an existing table
+
+SYNOPSIS
+        astra db truncate-table [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
+                [ {-k | --keyspace} <KEYSPACE> ] [ --no-color ]
+                [ {-o | --output} <FORMAT> ] {-t | --table} <TABLE>
+                [ --token <AUTH_TOKEN> ] [ {-v | --verbose} ] [--] <DB>
+
+OPTIONS
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        --env <Environment>
+            Astra Environment to use
+
+        -k <KEYSPACE>, --keyspace <KEYSPACE>
+            Name of the keyspace to clear the table
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        -t <TABLE>, --table <TABLE>
+            Name of the table
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <DB>
+            Database name (if unique) or Database identifier
+----
+====
+
+=== `db delete-table` options
+
+.Expand to see all `db delete-table` options
+[%collapsible]
+====
+[source,console]
+----
+NAME
+        astra db delete-table - Delete an existing table
+
+SYNOPSIS
+        astra db delete-table [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
+                [ --if-exists ] [ {-k | --keyspace} <KEYSPACE> ] [ --no-color ]
+                [ {-o | --output} <FORMAT> ] {-t | --table} <TABLE>
+                [ --token <AUTH_TOKEN> ] [ {-v | --verbose} ] [--] <DB>
+
+OPTIONS
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        --env <Environment>
+            Astra Environment to use
+
+        --if-exists
+            will delete the table only if it exists
+
+        -k <KEYSPACE>, --keyspace <KEYSPACE>
+            Name of the keyspace to delete the table
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        -t <TABLE>, --table <TABLE>
+            Name of the table
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <DB>
+            Database name (if unique) or Database identifier
+----
+====
+
+== Manage embedding providers
+
+Use the `astra db list-embedding-providers` command to get a list of the embedding provider integrations that are available for a {db-serverless-vector} database:
+
+[source,bash,subs="+quotes"]
+----
+astra db list-embedding-providers **DATABASE_ID**
+----
+
+.Result
+[%collapsible]
+======
+[source,console]
+----
++----------------------+--------------------------+--------+------------+---------+----------+
+| Key                  | DisplayName              | Models | Parameters | Au.Head | S.Secret |
++----------------------+--------------------------+--------+------------+---------+----------+
+| cohere               | Cohere                   | 3      | 0          | ■       | ■        |
+| openai               | OpenAI                   | 3      | 2          | ■       | ■        |
+| huggingfaceDedicated | Hugging Face - Dedicated | 1      | 3          | ■       | ■        |
+| azureOpenAI          | Azure OpenAI             | 3      | 2          | ■       | ■        |
+| bedrock              | Amazon Bedrock           | 2      | 1          | ■       | ■        |
+| jinaAI               | Jina AI                  | 5      | 0          | ■       | ■        |
+| voyageAI             | Voyage AI                | 7      | 1          | ■       | ■        |
+| upstageAI            | Upstage                  | 1      | 0          | ■       | ■        |
+| huggingface          | Hugging Face - Serverless| 6      | 0          | ■       | ■        |
+| nvidia               | Nvidia                   | 1      | 0          |         |          |
+| mistral              | Mistral AI               | 1      | 0          | ■       | ■        |
++----------------------+--------------------------+--------+------------+---------+----------+
+----
+
+include::ROOT:partial$ep-change-admonition.adoc[]
+======
+
+Use the `astra db describe-embedding-provider` command to get information about a specific embedding provider integration:
+
+[source,bash,subs="+quotes"]
+----
+astra db describe-embedding-provider **DATABASE_ID** -ep **PROVIDER_NAME**
+----
+
+The `**PROVIDER_NAME**` is the name listed in the `Key` column in the output of the `astra db list-embedding-providers` command.
+
+.Result
+[%collapsible]
+======
+[source,console]
+----
++-------------------+---------------------------------------------------------------------------------------------+
+| Attribute         | Value                                                                                       |
++-------------------+---------------------------------------------------------------------------------------------+
+| Key               | openai                                                                                      |
+| DisplayName       | OpenAI                                                                                      |
+| Parameters        | [0] organizationId (STRING)                                                                 |
+|                   | [1] projectId (STRING)                                                                      |
+| Models:           |                                                                                             |
+| Name              | text-embedding-3-small                                                                      |
+| Parameters        | [0] vectorDimension (number) , defaultValue=1536                                            |
+| Name              | text-embedding-3-large                                                                      |
+| Parameters        | [0] vectorDimension (number) , defaultValue=3072                                            |
+| Name              | text-embedding-ada-002                                                                      |
+| Vector Dimension  | 1536                                                                                        |
+| Header Auth:      |                                                                                             |
+| Tokens            | [0] forwarded=Authorization, accepted=x-embedding-api-key                                   |
+| Shar.Secret Auth: |                                                                                             |
+| Tokens            | [0] forwarded=Authorization, accepted=providerKey                                           |
+| Supported Auth:   |                                                                                             |
+| Authentication    | [0] NONE: []                                                                                |
+|                   | [1] SHARED_SECRET: [EmbeddingProvider.Token(forwarded=Authorization, accepted=providerKey)] |
+|                   | [2] HEADER: [EmbeddingProvider.Token(forwarded=Authorization, accepted=x-embedding-api-key)]|
++-------------------+---------------------------------------------------------------------------------------------+
+
+[OK]    Database '58747660-464b-4085-bef2-c3f3e5401e3d' is ready.
+----
+
+include::ROOT:partial$ep-change-admonition.adoc[]
+======
+
+=== `db list-embedding-providers` options
+
+.Expand to see all `db list-embedding-providers` options
+[%collapsible]
+====
+[source,console]
+----
+NAME
+        astra db list-embedding-providers - Display the list of embedding
+        providers in an database
+
+SYNOPSIS
+        astra db list-embedding-providers
+                [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
+                [ --no-color ] [ {-o | --output} <FORMAT> ]
+                [ --token <AUTH_TOKEN> ] [ {-v | --verbose} ] [--] <DB>
+
+OPTIONS
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        --env <Environment>
+            Astra Environment to use
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <DB>
+            Database name (if unique) or Database identifier
+----
+====
+
+=== `db describe-embedding-provider` options
+
+.Expand to see all `db describe-embedding-provider` options
+[%collapsible]
+====
+[source,console]
+----
+NAME
+        astra db describe-embedding-provider - Describe an existing embedding
+        provider
+
+SYNOPSIS
+        astra db describe-embedding-provider
+                [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
+                {-ep | --embedding-provider} <EMBEDDING_PROVIDER>
+                [ --no-color ] [ {-o | --output} <FORMAT> ]
+                [ --token <AUTH_TOKEN> ] [ {-v | --verbose} ] [--] <DB>
+
+OPTIONS
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        --env <Environment>
+            Astra Environment to use
+
+        -ep <EMBEDDING_PROVIDER>, --embedding-provider <EMBEDDING_PROVIDER>
+            Key of the embedding provider
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <DB>
+            Database name (if unique) or Database identifier
+----
+====
+
+[#get-database-details]
+== Get database details
+
+Use the `astra db list` command to get a list of all the databases in your organization:
+
 [source,bash]
 ----
 astra db list
 ----
---
-+
-Sample result::
-+
---
-[source,bash]
+
+.Result
+[%collapsible]
+====
+[source,console]
 ----
- +---------------------+--------------------------------------+---------------------+----------------+
- | Name                | id                                   | Default Region      | Status         |
- +---------------------+--------------------------------------+---------------------+----------------+
- | mydatabase          | 643c6bb8-2336-4649-97d5-999999999999 | eu-central-1        | HIBERNATED     |
- +---------------------+--------------------------------------+---------------------+----------------+
++---------------------+--------------------------------------+-----------+-------+---+-----------+
+| Name                | id                                   | Regions   | Cloud | V | Status    |
++---------------------+--------------------------------------+-----------+-------+---+-----------+
+| my_serverless_db    | 51d23de8-9fd9-487c-9c46-c8e1abdb251b | us-east1  | gcp   |   | ACTIVE    |
+| my_vector_db        | 6fabb532-a3ac-4780-a1bc-d984531aed76 | us-east1  | gcp   | ■ | ACTIVE    |
++---------------------+--------------------------------------+-----------+-------+---+-----------+
 ----
---
 ====
 
-Trigger an explicit resuming state with:
+Use the `astra db get` or `astra db describe` command to get information about a specific database:
 
-[tabs]
+[source,bash,subs="+quotes"]
+----
+astra db get **DATABASE_ID**
+----
+
+[source,bash,subs="+quotes"]
+----
+astra db describe **DATABASE_ID**
+----
+
+.Result
+[%collapsible]
 ====
-Astra CLI::
-+
---
-[source,bash]
+[source,console]
 ----
-astra db resume mydatabase
++------------------+-----------------------------------------+
+| Attribute        | Value                                   |
++------------------+-----------------------------------------+
+| Name             | my_serverless_db                        |
+| id               | 96b1b6e3-5288-4cef-8a41-d4f1d36bbfca    |
+| Cloud            | GCP                                     |
+| Regions          | us-east1                                |
+| Status           | ACTIVE                                  |
+| Vector           | Disabled                                |
+| Default Keyspace | default_keyspace                        |
+| Creation Time    | 2025-01-22T21:21:14Z                    |
+| Keyspaces        | [0] default_keyspace                    |
+| Regions          | [0] us-east1                            |
++------------------+-----------------------------------------+
 ----
---
-+
-Sample result::
-+
---
-[source,bash]
-----
- +---------------------+--------------------------------------+---------------------+----------------+
- | Name                | id                                   | Default Region      | Status         |
- +---------------------+--------------------------------------+---------------------+----------------+
- | mydatabase          | 643c6bb8-2336-4649-97d5-999999999999 | eu-central-1        | RESUMING       |
- +---------------------+--------------------------------------+---------------------+----------------+
-----
-
-After some time:
-
-[source,bash]
-----
- +---------------------+--------------------------------------+---------------------+----------------+
- | Name                | id                                   | Default Region      | Status         |
- +---------------------+--------------------------------------+---------------------+----------------+
- | mydatabase          | 643c6bb8-2336-4649-97d5-999999999999 | eu-central-1        | ACTIVE         |
- +---------------------+--------------------------------------+---------------------+----------------+
-----
---
 ====
 
+Use the `astra db status` command to get the status of a specific database:
 
-== Create and manage configurations
+[source,bash,subs="+quotes"]
+----
+astra db status **DATABASE_ID**
+----
 
-If you work with multiple {astra_db} organizations, it can be useful to switch from one configuration to another, and from one auth token to another.
+.Result
+[%collapsible]
+====
+[source,console]
+----
+[OK]    Database '96b1b6e3-5288-4cef-8a41-d4f1d36bbfca' has status 'ACTIVE'
+----
+====
 
-{astra_cli} provides a configuration management solution to handle these use cases.
+=== `db list` options
 
-=== List available configurations
+.Expand to see all `db list` options
+[%collapsible]
+====
+[source,console]
+----
+NAME
+        astra db list - Display the list of Databases in an organization
+
+SYNOPSIS
+        astra db list [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
+                [ --no-color ] [ {-o | --output} <FORMAT> ]
+                [ --token <AUTH_TOKEN> ] [ {-v | --verbose} ] [ --vector ]
+
+OPTIONS
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        --env <Environment>
+            Astra Environment to use
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --vector
+            Create a database with vector search enabled
+----
+====
+
+Use the `--vector` option to list only {db-serverless-vector} databases:
 
 [source,bash]
 ----
-astra config list
+astra db list --vector
 ----
 
-=== Create a new section
+.Result
+[%collapsible]
+====
+[source,console]
+----
++---------------------+--------------------------------------+-----------+-------+---+-----------+
+| Name                | id                                   | Regions   | Cloud | V | Status    |
++---------------------+--------------------------------------+-----------+-------+---+-----------+
+| my_vector_db        | ebae8d5a-4848-44c9-8485-87e413b60549 | us-east1  | gcp   | ■ | ACTIVE    |
++---------------------+--------------------------------------+-----------+-------+---+-----------+
+----
+====
 
-Here we'll name a configuration `dev` and identify the auth token of a separate organization:
+=== `db get` options
+
+.Expand to see all ``db get` options
+[%collapsible]
+====
+[source,console]
+----
+NAME
+        astra db get - Show details of a database
+
+SYNOPSIS
+        astra db get [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
+                [ {-k | --key} <Key> ] [ --no-color ]
+                [ {-o | --output} <FORMAT> ] [ --token <AUTH_TOKEN> ]
+                [ {-v | --verbose} ] [--] <DB>
+
+OPTIONS
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        --env <Environment>
+            Astra Environment to use
+
+        -k <Key>, --key <Key>
+            Show value for a property among: 'id', 'status', 'cloud',
+            'keyspace', 'keyspaces', 'region', 'regions'
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <DB>
+            Database name (if unique) or Database identifier
+----
+====
+
+=== `db describe` options
+
+.Expand to see all `db describe` options
+[%collapsible]
+====
+[source,console]
+----
+NAME
+        astra db describe - Show details of a database
+
+SYNOPSIS
+        astra db describe [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
+                [ {-k | --key} <Key> ] [ --no-color ]
+                [ {-o | --output} <FORMAT> ] [ --token <AUTH_TOKEN> ]
+                [ {-v | --verbose} ] [--] <DB>
+
+OPTIONS
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        --env <Environment>
+            Astra Environment to use
+
+        -k <Key>, --key <Key>
+            Show value for a property among: 'id', 'status', 'cloud',
+            'keyspace', 'keyspaces', 'region', 'regions'
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <DB>
+            Database name (if unique) or Database identifier
+----
+====
+
+=== `db status` options
+
+.Expand to see all `db status` options
+[%collapsible]
+====
+[source,console]
+----
+NAME
+        astra db status - Show status of a database
+
+SYNOPSIS
+        astra db status [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
+                [ --no-color ] [ {-o | --output} <FORMAT> ]
+                [ --token <AUTH_TOKEN> ] [ {-v | --verbose} ] [--] <DB>
+
+OPTIONS
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        --env <Environment>
+            Astra Environment to use
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <DB>
+            Database name (if unique) or Database identifier
+----
+====
+
+== Get a list of available {astra_db} regions
+
+Use the `astra db list-regions-serverless` command to get a list of available cloud provider regions that support {db-serverless} databases:
 
 [source,bash]
 ----
-astra config create dev --token <token_of_org_2>
+astra db list-regions-serverless
 ----
 
-=== Use your section configuration
+.Result
+[%collapsible]
+======
+[source,console]
+----
++-----------------+-------------------------+---------------------------------------+
+| Cloud Provider  | Region                  | Full Name                             |
++-----------------+-------------------------+---------------------------------------+
+| aws             | ap-east-1               | Asia Pacific (Hong Kong)              |
+| aws             | ap-south-1              | Asia Pacific (Mumbai)                 |
+| aws             | ap-southeast-1          | Asia Pacific (Singapore)              |
+| aws             | ap-southeast-2          | Asia Pacific (Sydney)                 |
+| aws             | ca-central-1            | Canada (Central)                      |
+| aws             | ca-west-1               | Canada West (Calgary)                 |
+| aws             | eu-central-1            | Europe (Frankfurt)                    |
+| aws             | eu-west-1               | Europe (Ireland)                      |
+| aws             | eu-west-2               | Europe (London)                       |
+| aws             | me-central-1            | Middle East (UAE)                     |
+| aws             | sa-east-1               | South America (Sao Paulo)             |
+| aws             | us-east-1               | US East (N. Virginia)                 |
+| aws             | us-east-2               | US East (Ohio)                        |
+| aws             | us-west-2               | US West (Oregon)                      |
+| azure           | australiaeast           | Australia East                        |
+| azure           | brazilsouth             | Brazil South (Sao Paulo)              |
+| azure           | canadacentral           | Canada Central (Toronto)              |
+| azure           | centralindia            | Central India (Pune)                  |
+| azure           | centralus               | (US) Central US                       |
+| azure           | eastus                  | US East                               |
+| azure           | eastus2                 | US East 2 (Virginia)                  |
+| azure           | northeurope             | Northern Europe (Ireland)             |
+| azure           | westeurope              | West Europe                           |
+| azure           | westus2                 | US West (Washington)                  |
+| azure           | westus3                 | US West 3                             |
+| gcp             | asia-northeast1         | Asia Northeast1 (Tokyo, Japan)        |
+| gcp             | asia-northeast2         | Osaka, Japan, APAC                    |
+| gcp             | asia-south1             | Mumbai, India                         |
+| gcp             | australia-southeast1    | Sydney, Australia, APAC               |
+| gcp             | europe-west1            | St. Ghislain, Belgium                 |
+| gcp             | europe-west2            | West Europe2 (London, England, UK)    |
+| gcp             | europe-west3            | West Europe3 (Frankfurt, Germany)     |
+| gcp             | europe-west4            | West Europe4 (Eemshaven, Netherlands) |
+| gcp             | northamerica-northeast1 | Montreal, Quebec                      |
+| gcp             | northamerica-northeast2 | Toronto, Ontario                      |
+| gcp             | us-central1             | Council Bluffs, Iowa                  |
+| gcp (free-tier) | us-east1                | Moncks Corner, South Carolina         |
+| gcp             | us-east4                | Ashburn, Virginia                     |
+| gcp             | us-west1                | The Dalles, Oregon                    |
+| gcp             | us-west4                | US West (Las Vegas, USA)              |
++-----------------+-------------------------+---------------------------------------+
+----
 
-You can use an organization configuration anytime by qualifying the `astra` command with the `--config <config_name>` option.
-Example:
+include::ROOT:partial$regions-change-admonition.adoc[]
+======
+
+Use the `astra db list-regions-vector` command to get a list of available cloud provider regions that support {db-serverless-vector} databases:
 
 [source,bash]
 ----
-astra user list --config dev
+astra db list-regions-vector
 ----
 
-=== Select a section as the default
+.Result
+[%collapsible]
+======
+[source,console]
+----
++-----------------+-------------------------+------------------------------------+
+| Cloud Provider  | Region                  | Full Name                          |
++-----------------+-------------------------+------------------------------------+
+| aws             | ap-south-1              | Asia Pacific (Mumbai)              |
+| aws             | ap-southeast-2          | Asia Pacific (Sydney)              |
+| aws             | eu-west-1               | Europe (Ireland)                   |
+| aws             | us-east-1               | US East (N. Virginia)              |
+| aws             | us-east-2               | US East (Ohio)                     |
+| azure           | australiaeast           | Australia East                     |
+| azure           | centralindia            | Central India (Pune)               |
+| azure           | westeurope              | West Europe                        |
+| azure           | westus3                 | US West 3                          |
+| gcp             | europe-west2            | West Europe2 (London, England, UK) |
+| gcp             | northamerica-northeast1 | Montreal, Quebec                   |
+| gcp (free-tier) | us-east1                | Moncks Corner, South Carolina      |
+| gcp             | us-east4                | Ashburn, Virginia                  |
++-----------------+-------------------------+------------------------------------+
+----
 
-Change the current organization:
+include::ROOT:partial$regions-change-admonition.adoc[]
+======
+
+Use the `astra db list-regions-classic` command to get a list of available cloud provider regions that support {db-classic} databases:
 
 [source,bash]
 ----
-astra config use dev
+astra db list-regions-classic
 ----
 
-See your new list:
+.Result
+[%collapsible]
+======
+[source,console]
+----
++-----------------+-------------------------+-------------------------------+
+| Cloud Provider  | Region                  | Full Name                     |
++-----------------+-------------------------+-------------------------------+
+| aws             | af-south-1              | Africa (Cape Town)            |
+| aws             | ap-east-1               | Hong Kong                     |
+| aws             | ap-south-1              | Asia Pacific (Mumbai)         |
+| aws             | ap-southeast-1          | Asia Pacific (Singapore)      |
+| aws             | ap-southeast-2          | Asia Pacific (Sydney)         |
+| aws             | ca-central-1            | Canada (Central)              |
+| aws             | ca-west-1               | Canada West (Calgary)         |
+| aws             | eu-central-1            | Europe (Frankfurt)            |
+| aws             | eu-west-1               | EU West 1 (Ireland)           |
+| aws             | eu-west-2               | Europe (London)               |
+| aws             | me-central-1            | Middle East (UAE)             |
+| aws             | sa-east-1               | Sao Paulo                     |
+| aws             | us-east-1               | US East (N. Virginia)         |
+| aws             | us-east-2               | US East (Ohio)                |
+| aws             | us-west-2               | US West (Oregon)              |
+| azure           | australiaeast           | Australia East                |
+| azure           | brazilsouth             | Brazil South                  |
+| azure           | canadacentral           | Canada Central (Toronto)      |
+| azure           | centralindia            | Central India                 |
+| azure           | centralus               | (US) Central US               |
+| azure           | eastus2                 | East US 2 (Virginia)          |
+| azure           | northeurope             | North Europe                  |
+| azure           | southcentralus          | South Central US              |
+| azure           | westeurope              | West Europe                   |
+| azure           | westus2                 | West US 2 (Washington)        |
+| azure           | westus3                 | West US 3                     |
+| gcp             | asia-northeast2         | Osaka, Japan, APAC            |
+| gcp             | asia-south1             | Mumbai, India                 |
+| gcp             | europe-west1            | St. Ghislain, Belgium         |
+| gcp             | northamerica-northeast1 | NA Northeast 1 (Montreal)     |
+| gcp             | southamerica-east1      | Osasco, Sao Paulo, Brazil     |
+| gcp             | us-central1             | US Central (Iowa)             |
+| gcp (free-tier) | us-east1                | US East (South Carolina)      |
+| gcp             | us-east4                | US East 4 (Virginia)          |
+| gcp             | us-west1                | The Dalles, Oregon            |
++-----------------+-------------------------+-------------------------------+-+
+----
+
+include::ROOT:partial$regions-change-admonition.adoc[]
+======
+
+=== `db list-regions-serverless` options
+
+.Expand to see all `db list-regions-serverless` options
+[%collapsible]
+====
+[source,console]
+----
+NAME
+        astra db list-regions-serverless - Show available regions (serverless).
+
+SYNOPSIS
+        astra db list-regions-serverless [ {-c | --cloud} <CLOUD> ]
+                [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
+                [ {-f | --filter} <filter> ] [ --no-color ]
+                [ {-o | --output} <FORMAT> ] [ --token <AUTH_TOKEN> ]
+                [ {-v | --verbose} ]
+
+OPTIONS
+        -c <CLOUD>, --cloud <CLOUD>
+            Filter on Cloud provider
+
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        --env <Environment>
+            Astra Environment to use
+
+        -f <filter>, --filter <filter>
+            Filter on names
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+----
+====
+
+=== `db list-regions-vector` options
+
+.Expand to see all `db list-regions-vector` options
+[%collapsible]
+====
+[source,console]
+----
+NAME
+        astra db list-regions-vector - Show available regions (vector).
+
+SYNOPSIS
+        astra db list-regions-vector [ {-c | --cloud} <CLOUD> ]
+                [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
+                [ {-f | --filter} <filter> ] [ --no-color ]
+                [ {-o | --output} <FORMAT> ] [ --token <AUTH_TOKEN> ]
+                [ {-v | --verbose} ]
+
+OPTIONS
+        -c <CLOUD>, --cloud <CLOUD>
+            Filter on Cloud provider
+
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        --env <Environment>
+            Astra Environment to use
+
+        -f <filter>, --filter <filter>
+            Filter on names
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+----
+====
+
+=== `db list-regions-classic` options
+
+.Expand to see all `db list-regions-classic` options
+[%collapsible]
+====
+[source,console]
+----
+NAME
+        astra db list-regions-classic - Show available regions (classic).
+
+SYNOPSIS
+        astra db list-regions-classic [ {-c | --cloud} <CLOUD> ]
+                [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
+                [ {-f | --filter} <filter> ] [ --no-color ]
+                [ {-o | --output} <FORMAT> ] [ --token <AUTH_TOKEN> ]
+                [ {-v | --verbose} ]
+
+OPTIONS
+        -c <CLOUD>, --cloud <CLOUD>
+            Filter on Cloud provider
+
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        --env <Environment>
+            Astra Environment to use
+
+        -f <filter>, --filter <filter>
+            Filter on names
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+----
+====
+
+=== `db list-clouds` options
+
+.Expand to see all `db list-clouds` options
+[%collapsible]
+====
+[source,console]
+----
+NAME
+        astra db list-clouds - Show available clouds
+
+SYNOPSIS
+        astra db list-clouds [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
+                [ --no-color ] [ {-o | --output} <FORMAT> ]
+                [ --token <AUTH_TOKEN> ] [ {-v | --verbose} ]
+
+OPTIONS
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        --env <Environment>
+            Astra Environment to use
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+----
+====
+
+[#configure-multiple-regions]
+== Configure multiple regions
+
+You can configure a database to replicate data across multiple regions.
+Some benefits of multi-region databases include better data locality and higher availability for multi-region application architectures.
+For more information, see xref:astra-db-serverless:databases:manage-regions.adoc[].
+
+[IMPORTANT]
+====
+Multi-region databases are a premium feature.
+Each region added to a database increases the database's costs.
+This includes a one-time data replication fee for the new region, and charges for replicating data to all database regions.
+For more information, see xref:astra-db-serverless:administration:subscription-plans.adoc[].
+====
+
+Use the `astra db create-region` command to add a region to a database:
+
+[source,bash,subs="+quotes"]
+----
+astra db create-region **DATABASE_ID** -r **REGION**
+----
+
+Replace `**REGION**` with the region you want to add to your database.
+The following restrictions apply:
+
+* You can add only one region at a time.
+
+* You can't select a region that the database already uses.
+
+* You must select a region in the same cloud provider as the database's other regions.
+Multi-region databases can't span multiple cloud providers.
+
+* For {db-serverless-vector} databases, you must select a region that supports that database type.
+For more information, see xref:astra-db-serverless:databases:regions.adoc[].
+
+////
+// TODO: The command is not working as expected. Must investigate and figure out why it is reporting the following error: [ERROR] UNAVAILABLE: Database 'my_serverless_db' has been found but operation cannot be processed due to invalid state (ACTIVE) expected (ACTIVE)
+.Result
+[%collapsible]
+====
+[source,console]
+----
+
+----
+====
+////
+
+[NOTE]
+====
+The database enters *Maintenance* status while provisioning and replicating data to the new region.
+
+While in *Maintenance* status, you can't add or remove regions, truncate tables, or delete keyspaces, tables, or collections.
+
+*Maintenance* status doesn't impact reads and writes.
+====
+
+Use the `astra db list-regions` command to list the regions where a database is deployed:
+
+[source,bash,subs="+quotes"]
+----
+astra db list-regions **DATABASE_ID**
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
++----------------+---------------------+----------------+----------------+
+| Cloud Provider | Region              | Tier           | Status         |
++----------------+---------------------+----------------+----------------+
+| aws            | us-east-2           | serverless     |                |
+| aws            | us-east-1 (default) | serverless     |                |
++----------------+---------------------+----------------+----------------+
+----
+====
+
+Use the `astra db delete-region` command to remove a region from a database:
+
+[source,bash,subs="+quotes"]
+----
+astra db delete-region **DATABASE_ID** -r **REGION**
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
+[INFO]  Region 'us-west1' is deleting.
+[OK]    Region us-west1 has been deleted
+----
+====
+
+[NOTE]
+====
+The database enters *Maintenance* status while deleting the region.
+
+While in *Maintenance* status, you can't add or remove regions, truncate tables, or delete keyspaces, tables, or collections.
+
+*Maintenance* status doesn't impact reads and writes.
+====
+
+[IMPORTANT]
+====
+You can't remove the primary (default) region, which is the first region selected when you created the database.
+
+When you remove a region, any connections to the deleted region are also removed.
+However, to avoid data loss, all data is replicated before the region is deleted.
+====
+
+=== `db create-region` options
+
+.Expand to see all `db create-region` options
+[%collapsible]
+====
+[source,console]
+----
+NAME
+        astra db create-region - Expand database to a new region
+
+SYNOPSIS
+        astra db create-region [ --async ] [ {-c | --cloud} <CLOUD> ]
+                [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
+                [ --if-not-exist ] [ --no-color ] [ {-o | --output} <FORMAT> ]
+                {-r | --region} <REGION> [ {-t | --tier} <CLOUD> ]
+                [ --timeout <timeout> ] [ --token <AUTH_TOKEN> ]
+                [ {-v | --verbose} ] [ --wait ] [--] <DB>
+
+OPTIONS
+        --async
+            Will wait until the database become ACTIVE
+
+        -c <CLOUD>, --cloud <CLOUD>
+            Name of the cloud provider
+
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        --env <Environment>
+            Astra Environment to use
+
+        --if-not-exist
+            will create a new DB only if none with same name
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        -r <REGION>, --region <REGION>
+            Name of the region to create
+
+        -t <CLOUD>, --tier <CLOUD>
+            Name of the tiers
+
+        --timeout <timeout>
+            Max wait time in seconds, default+1800, 0 = no timeout.
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --wait
+            Will wait until the database become ACTIVE
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <DB>
+            Database name (if unique) or Database identifier
+----
+====
+
+=== `db list-regions` options
+
+.Expand to see all `db list-regions` options
+[%collapsible]
+====
+[source,console]
+----
+NAME
+        astra db list-regions - List regions for a database
+
+SYNOPSIS
+        astra db list-regions [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
+                [ --no-color ] [ {-o | --output} <FORMAT> ]
+                [ --token <AUTH_TOKEN> ] [ {-v | --verbose} ] [--] <DB>
+
+OPTIONS
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        --env <Environment>
+            Astra Environment to use
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <DB>
+            Database name (if unique) or Database identifier
+----
+====
+
+=== `db delete-region` options
+
+.Expand to see all `db delete-region` options
+[%collapsible]
+====
+[source,console]
+----
+NAME
+        astra db delete-region - Delete a region from a database
+
+SYNOPSIS
+        astra db delete-region [ --async ]
+                [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
+                [ --no-color ] [ {-o | --output} <FORMAT> ]
+                {-r | --region} <REGION> [ --timeout <timeout> ]
+                [ --token <AUTH_TOKEN> ] [ {-v | --verbose} ] [ --wait ] [--]
+                <DB>
+
+OPTIONS
+        --async
+            Will wait until the database become ACTIVE
+
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        --env <Environment>
+            Astra Environment to use
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        -r <REGION>, --region <REGION>
+            Name of the region to create
+
+        --timeout <timeout>
+            Max wait time in seconds, default+1800, 0 = no timeout.
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --wait
+            Will wait until the database become ACTIVE
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <DB>
+            Database name (if unique) or Database identifier
+----
+====
+
+[#resume-database]
+== Resume a hibernated database
+
+Use the `astra db resume` command to resume a xref:astra-db-serverless:databases:database-statuses.adoc[hibernated] database:
+
+[source,bash,subs="+quotes"]
+----
+astra db resume **DATABASE_ID**
+----
+
+Resuming the database may take a few minutes.
+
+include::ROOT:partial$async-option.adoc[tags=active]
+
+=== `db resume` options
+
+.Expand to see all `db resume` options
+[%collapsible]
+====
+[source,console]
+----
+NAME
+        astra db resume - Resume a db if needed
+
+SYNOPSIS
+        astra db resume [ --async ] [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
+                [ --no-color ] [ {-o | --output} <FORMAT> ]
+                [ --timeout <timeout> ] [ --token <AUTH_TOKEN> ]
+                [ {-v | --verbose} ] [ --wait ] [--] <DB>
+
+OPTIONS
+        --async
+            Will not wait for the resource to become available
+
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        --env <Environment>
+            Astra Environment to use
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        --timeout <timeout>
+            Provide a limit to the wait period in seconds, default is 180s.
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --wait
+            Will wait until the database become ACTIVE
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <DB>
+            Database name (if unique) or Database identifier
+----
+====
+
+== Terminate a database
+
+[WARNING]
+====
+Terminating a database permanently deletes all of its data, including xref:astra-db-serverless:databases:backup-restore.adoc[automatic backups].
+You can't undo this action.
+====
+
+Use the `astra db delete` command to terminate a database:
+
+[source,bash,subs="+quotes"]
+----
+astra db delete **DATABASE_ID**
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
+[INFO]  Deleting Database '26054aa9-eb37-4d88-b343-7c934cd1d7bc'
+[OK]    Database 26054aa9-eb37-4d88-b343-7c934cd1d7bc has been deleted
+----
+====
+
+The database enters *Terminating* status while deletion occurs.
+
+include::ROOT:partial$async-option.adoc[tags=terminated]
+
+=== `db delete` options
+
+.Expand to see all `db delete` options
+[%collapsible]
+====
+[source,console]
+----
+NAME
+        astra db delete - Delete an existing database
+
+SYNOPSIS
+        astra db delete [ --async ] [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
+                [ --no-color ] [ {-o | --output} <FORMAT> ]
+                [ --timeout <timeout> ] [ --token <AUTH_TOKEN> ]
+                [ {-v | --verbose} ] [ --wait ] [--] <DB>
+
+OPTIONS
+        --async
+            Will not wait for the resource to become available
+
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        --env <Environment>
+            Astra Environment to use
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        --timeout <timeout>
+            Provide a limit to the wait period in seconds, default is 500s.
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --wait
+            Will wait until the database become ACTIVE
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <DB>
+            Database name (if unique) or Database identifier
+----
+====
+
+== Get database API endpoints
+
+Use the `get-endpoint-swagger` command to get the Swagger UI endpoint for a database:
+
+[source,bash,subs="+quotes"]
+----
+astra db get-endpoint-swagger **DATABASE_ID**
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
+https://26054aa9-eb37-4d88-b343-7c934cd1d7bc-us-east-1.apps.astra.datastax.com/api/rest/swagger-ui/
+----
+====
+
+Use the `get-endpoint-api` command to get the JSON API endpoint for a {db-serverless-vector} database:
+
+[source,bash,subs="+quotes"]
+----
+astra db get-endpoint-api **DATABASE_ID**
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
+https://26054aa9-eb37-4d88-b343-7c934cd1d7bc-us-east-1.apps.astra.datastax.com/api/rest
+----
+====
+
+Use the `get-endpoint-playground` command to get the GraphQL playground endpoint for a non-vector database:
+
+[source,bash,subs="+quotes"]
+----
+astra db get-endpoint-playground **DATABASE_ID**
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
+https://26054aa9-eb37-4d88-b343-7c934cd1d7bc-us-east-1.apps.astra.datastax.com/api/playground
+----
+====
+
+=== `db get-endpoint-swagger` options
+
+.Expand to see all `db get-endpoint-swagger` options
+[%collapsible]
+====
+[source,console]
+----
+NAME
+        astra db get-endpoint-swagger - Open the swagger user interface
+
+SYNOPSIS
+        astra db get-endpoint-swagger [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
+                [ --no-color ] [ {-o | --output} <FORMAT> ]
+                [ {-r | --region} <DB_REGION> ] [ --token <AUTH_TOKEN> ]
+                [ {-v | --verbose} ] [--] <DB>
+
+OPTIONS
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        --env <Environment>
+            Astra Environment to use
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        -r <DB_REGION>, --region <DB_REGION>
+            Cloud provider region
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <DB>
+            Database name (if unique) or Database identifier
+----
+====
+
+=== `db get-endpoint-api` options
+
+.Expand to see all `db get-endpoint-api` options
+[%collapsible]
+====
+[source,console]
+----
+NAME
+        astra db get-endpoint-api - Open the json api endpoint
+
+SYNOPSIS
+        astra db get-endpoint-api [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
+                [ --no-color ] [ {-o | --output} <FORMAT> ]
+                [ {-r | --region} <DB_REGION> ] [ --token <AUTH_TOKEN> ]
+                [ {-v | --verbose} ] [--] <DB>
+
+OPTIONS
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        --env <Environment>
+            Astra Environment to use
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        -r <DB_REGION>, --region <DB_REGION>
+            Cloud provider region
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <DB>
+            Database name (if unique) or Database identifier
+----
+====
+
+=== `db get-endpoint-playground` options
+
+.Expand to see all `db get-endpoint-playground` options
+[%collapsible]
+====
+[source,console]
+----
+NAME
+        astra db get-endpoint-playground - Expand database to a new region
+
+SYNOPSIS
+        astra db get-endpoint-playground
+                [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
+                [ --no-color ] [ {-o | --output} <FORMAT> ]
+                [ {-r | --region} <DB_REGION> ] [ --token <AUTH_TOKEN> ]
+                [ {-v | --verbose} ] [--] <DB>
+
+OPTIONS
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        --env <Environment>
+            Astra Environment to use
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        -r <DB_REGION>, --region <DB_REGION>
+            Cloud provider region
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <DB>
+            Database name (if unique) or Database identifier
+----
+====
+
+[#cqlsh]
+== Use the CQL shell (cqlsh)
+
+The CQL shell (`cqlsh`) is an interface that you can use to issue xref:astra@cql:ROOT:index.adoc[{cass-short} Query Language (CQL)] commands to your database.
+The {product} provides built-in CQL shell support by downloading, installing, configuring, and wapping the `cqlsh` utility.
+This can act as a convenient alternative to installing and configuring a xref:astra-db-serverless:cql:develop-with-cql.adoc#connect-to-the-cql-shell[standalone CQL shell].
+
+To use `cqlsh` commands, you must have a supported version of Python installed on your system.
+The underlying `cqlsh` utility requires Python 2.7 (with TLS support) or Python 3.6--3.11.
+Python versions 3.12 and later are not supported.
+For more details, see this https://support.datastax.com/s/article/cqlsh-may-fail-with-A-Python-installation-with-SSL-is-required-to-connect-to-a-cloud-cluster-when-connecting-to-Astra[Support article]
+
+Use the `astra db cqlsh` command to start the CQL shell in interactive mode:
+
+[source,bash,subs="+quotes"]
+----
+astra db cqlsh **DATABASE_ID**
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
+[INFO]  Downloading Cqlshell, please wait...
+[INFO]  Installing  archive, please wait...
+[INFO]  Cqlsh is starting, please wait for connection establishment...
+Connected to cndb at 127.0.0.1:9042.
+[cqlsh 6.8.0 | Cassandra 4.0.0.6816 | CQL spec 3.4.5 | Native protocol v4]
+Use HELP for help.
+token@cqlsh>
+----
+====
+
+Type `exit` or `quit;` and press kbd:[Return] to exit the CQL shell.
+
+The first time you use the `astra db cqlsh` command, the {product} downloads and installs the `cqlsh` utility to the {product} installation directory (`~/.astra/cqlsh-astra`).
+The {product} also downloads the {scb-long} for each database you connect to and stores the {scb} zip files in the `~/.astra/scb` directory.
+
+[NOTE]
+======
+If the {product} reports `ModuleNotFoundError`, check that you have a supported version of Python available in your terminal:
 
 [source,bash]
 ----
-astra config list
+python -V
 ----
 
-=== Delete a section
+.Result
+[%collapsible]
+====
+[source,console]
+----
+Python 3.11.10
+----
+====
+======
 
-You can delete any organization.
-If you delete the selected organization, you will have to pick a new one.
+=== `db cqlsh` options
 
-Delete your config:
+.Expand to see all `db cqlsh` options
+[%collapsible]
+====
+[source,console]
+----
+NAME
+        astra db cqlsh - Start Cqlsh
 
+SYNOPSIS
+        astra db cqlsh [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ]
+                [ --connect-timeout <TIMEOUT> ] [ --debug ]
+                [ {-e | --execute} <STATEMENT> ] [ --encoding <ENCODING> ]
+                [ --env <Environment> ] [ {-f | --file} <FILE> ]
+                [ {-k | --keyspace} <KEYSPACE> ] [ --no-color ]
+                [ {-o | --output} <FORMAT> ] [ --request-timeout <TIMEOUT> ]
+                [ --token <AUTH_TOKEN> ] [ {-v | --verbose} ] [ --version ]
+                [--] <DB>
+
+OPTIONS
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        --connect-timeout <TIMEOUT>
+            Connection timeout in seconds (default is 10
+
+        --debug
+            Show additional debugging information.
+
+        -e <STATEMENT>, --execute <STATEMENT>
+            Execute the statement and quit.
+
+        --encoding <ENCODING>
+            Output encoding. Default encoding: utf8.
+
+        --env <Environment>
+            Astra Environment to use
+
+        -f <FILE>, --file <FILE>
+            Execute commands from a CQL file, then exit.
+
+        -k <KEYSPACE>, --keyspace <KEYSPACE>
+            Authenticate to the given keyspace.
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        --request-timeout <TIMEOUT>
+            Request timeout in seconds (default is 20
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --version
+            Display information of cqlsh.
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <DB>
+            Database name (if unique) or Database identifier
+----
+====
+
+Use the `-k` / `--keyspace` option to connect directly to a specific keyspace:
+
+[source,bash,subs="+quotes"]
+----
+astra db cqlsh **DATABASE_ID** -k **KEYSPACE_NAME**
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
+[INFO]  Cqlsh is starting, please wait for connection establishment...
+Connected to cndb at 127.0.0.1:9042.
+[cqlsh 6.8.0 | Cassandra 4.0.0.6816 | CQL spec 3.4.5 | Native protocol v4]
+Use HELP for help.
+token@cqlsh:keyspace2>
+----
+====
+
+Use the `-e` / `--execute` option to execute a CQL statement:
+
+[source,bash,subs="+quotes"]
+----
+astra db cqlsh **DATABASE_ID** -e "describe keyspaces;"
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
+[INFO]  Cqlsh is starting, please wait for connection establishment...
+
+system_auth    data_endpoint_auth  system_traces
+datastax_sla   default_keyspace    system_virtual_schema
+system_schema  system              system_views
+----
+====
+
+Use the `-f` / `--file` option to execute a CQL file:
+
+[source,bash,subs="+quotes"]
+----
+astra db cqlsh **DATABASE_ID** -f sample.cql
+----
+
+.Example CQL file
+[%collapsible]
+====
+.sample.cql
+[source,cql]
+----
+-- Use a specific keyspace
+USE keyspace1;
+
+-- Create a table
+CREATE TABLE IF NOT EXISTS users (
+    id UUID PRIMARY KEY,
+    name TEXT,
+    email TEXT
+);
+
+-- Insert some data
+INSERT INTO users (id, name, email) VALUES (uuid(), 'Alice', 'alice@example.com');
+INSERT INTO users (id, name, email) VALUES (uuid(), 'Bob', 'bob@example.com');
+
+-- Query the data
+SELECT * FROM users;
+----
+====
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
+[INFO]  Cqlsh is starting, please wait for connection establishment...
+
+ id                                   | email             | name
+--------------------------------------+-------------------+-------
+ 62a32f14-5432-4a28-add7-761d3626373e |   bob@example.com |   Bob
+ 0a489e53-0eed-4385-81a6-081143c228f1 | alice@example.com | Alice
+
+(2 rows)
+----
+====
+
+[TIP]
+======
+You can also execute a CQL file using the `xref:astra@cql:reference:cqlsh-commands/source.adoc[]` CQL command:
+
+[source,bash,subs="+quotes"]
+----
+astra db cqlsh **DATABASE_ID** -e "SOURCE 'sample.cql'"
+----
+
+.Result
+[%collapsible]
+====
+[source,cql]
+----
+[INFO]  Cqlsh is starting, please wait for connection establishment...
+
+ id                                   | email             | name
+--------------------------------------+-------------------+-------
+ 62a32f14-5432-4a28-add7-761d3626373e |   bob@example.com |   Bob
+ 0a489e53-0eed-4385-81a6-081143c228f1 | alice@example.com | Alice
+
+(2 rows)
+----
+====
+======
+
+== Use DataStax Bulk Loader (DSBulk)
+
+The xref:dsbulk:overview:dsbulk-about.adoc[DataStax Bulk Loader] (DSBulk) lets you load, unload, and count data in your database tables.
+The {product} provides built-in DSBulk support by downloading, installing, configuring, and wapping the `dsbulk` utility.
+
+The {product} exposes DSBulk functionality through the `astra db load`, `astra db unload`, and `astra db count` commands.
+
+Use the `astra db load` command to load data from a file into a database table:
+
+[source,bash,subs="+quotes"]
+----
+astra db load **DATABASE_ID** \
+  -k **KEYSPACE_NAME** \
+  -t **TABLE_NAME** \
+  -url **FILE_LOCATION**
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
+[INFO]  Downloading Dsbulk, please wait...
+[INFO]  Installing  archive, please wait...
+[INFO]  RUNNING: /Users/USERNAME/.astra/dsbulk-1.11.0/bin/dsbulk load -u token -p AstraCS:FZm... -b /Users/USERNAME/.astra/scb/scb_91b35105-a5aa-4cd5-a93b-900ac58452ba_us-east1.zip -k dsbulk_demo_keyspace -t cities_by_country -logDir ./logs --log.verbosity normal --schema.allowMissingFields true -maxConcurrentQueries AUTO -delim , -url cities.csv -header true -encoding UTF-8 -skipRecords 0 -maxErrors 100
+[INFO]  DSBulk is starting please wait ...
+Username and password provided but auth provider not specified, inferring PlainTextAuthProvider
+A cloud secure connect bundle was provided: ignoring all explicit contact points.
+A cloud secure connect bundle was provided and selected operation performs writes: changing default consistency level to LOCAL_QUORUM.
+Operation directory: /Users/USERNAME/logs/LOAD_20250123-020734-995267
+Setting executor.maxPerSecond not set when connecting to DataStax Astra: applying a limit of 27,000 ops/second based on the number of coordinators (9).
+If your Astra database has higher limits, please define executor.maxPerSecond explicitly.
+  total | failed | rows/s |  p50ms |  p99ms | p999ms | batches
+148,266 |      0 | 19,588 | 240.82 | 771.75 | 964.69 |   30.72
+Operation LOAD_20250123-020734-995267 completed successfully in 7 seconds.
+Checkpoints for the current operation were written to checkpoint.csv.
+To resume the current operation, re-run it with the same settings, and add the following command line flag:
+--dsbulk.log.checkpoint.file=/Users/USERNAME/logs/LOAD_20250123-020734-995267/checkpoint.csv
+----
+====
+
+[TIP]
+======
+You can use the `cqlsh` command to check that the data imported successfully:
+
+[source,bash,subs="+quotes"]
+----
+astra db cqlsh **DATABASE_ID** -e \
+"SELECT * FROM **KEYSPACE_NAME**.**TABLE_NAME** LIMIT 20;"
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
+[INFO]  Cqlsh is starting, please wait for connection establishment...
+
+ country_name | name                | country_code | country_id | id   | latitude | longitude | state_code | state_id | state_name          | wikidataid
+--------------+---------------------+--------------+------------+------+----------+-----------+------------+----------+---------------------+------------
+   Bangladesh |             Azimpur |           BD |         19 | 8454 |  23.7298 |   90.3854 |         13 |      771 |      Dhaka District |       null
+   Bangladesh |           Badarganj |           BD |         19 | 8455 | 25.67419 |  89.05377 |         55 |      759 |    Rangpur District |       null
+   Bangladesh |            Bagerhat |           BD |         19 | 8456 |     22.4 |     89.75 |         27 |      811 |     Khulna District |       null
+   Bangladesh |           Bandarban |           BD |         19 | 8457 |       22 |  92.33333 |          B |      803 | Chittagong Division |       null
+   Bangladesh |          Baniachang |           BD |         19 | 8458 | 24.51863 |  91.35787 |         60 |      767 |     Sylhet District |       null
+   Bangladesh |             Barguna |           BD |         19 | 8459 | 22.13333 |  90.13333 |         06 |      818 |    Barisal District |       null
+   Bangladesh |             Barisal |           BD |         19 | 8460 |     22.8 |      90.5 |         06 |      818 |    Barisal District |       null
+   Bangladesh |                Bera |           BD |         19 | 8462 | 24.07821 |  89.63262 |         54 |      813 |   Rajshahi District |       null
+   Bangladesh |       Bhairab Bāzār |           BD |         19 | 8463 |  24.0524 |   90.9764 |         13 |      771 |      Dhaka District |       null
+   Bangladesh |           Bherāmāra |           BD |         19 | 8464 | 24.02452 |  88.99234 |         27 |      811 |     Khulna District |       null
+   Bangladesh |               Bhola |           BD |         19 | 8465 | 22.36667 |  90.81667 |         06 |      818 |    Barisal District |       null
+   Bangladesh |           Bhāndāria |           BD |         19 | 8466 | 22.48898 |  90.06273 |         06 |      818 |    Barisal District |       null
+   Bangladesh | Bhātpāra Abhaynagar |           BD |         19 | 8467 | 23.01472 |  89.43936 |         27 |      811 |     Khulna District |       null
+   Bangladesh |           Bibir Hat |           BD |         19 | 8468 | 22.68347 |  91.79058 |          B |      803 | Chittagong Division |       null
+   Bangladesh |               Bogra |           BD |         19 | 8469 | 24.78333 |     89.35 |         54 |      813 |   Rajshahi District |       null
+   Bangladesh |        Brahmanbaria |           BD |         19 | 8470 | 23.98333 |  91.16667 |          B |      803 | Chittagong Division |       null
+   Bangladesh |         Burhānuddin |           BD |         19 | 8471 | 22.49518 |  90.72391 |         06 |      818 |    Barisal District |       null
+   Bangladesh |            Bājitpur |           BD |         19 | 8472 | 24.21623 |  90.95002 |         13 |      771 |      Dhaka District |       null
+   Bangladesh |            Chandpur |           BD |         19 | 8474 |    23.25 |  90.83333 |          B |      803 | Chittagong Division |       null
+   Bangladesh |    Chapai Nababganj |           BD |         19 | 8475 | 24.68333 |     88.25 |         54 |      813 |   Rajshahi District |       null
+
+(20 rows)
+----
+====
+======
+
+Use the `astra db unload` command to unload database table rows into a file:
+
+[source,bash,subs="+quotes"]
+----
+astra db unload **DATABASE_ID** \
+    -k **KEYSPACE_NAME** \
+    -t **TABLE_NAME** \
+    -url **FILE_LOCATION**
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
+[INFO]  RUNNING: /Users/USERNAME/.astra/dsbulk-1.11.0/bin/dsbulk unload -u token -p AstraCS:FZm... -b /Users/USERNAME/.astra/scb/scb_91b35105-a5aa-4cd5-a93b-900ac58452ba_us-east1.zip -k dsbulk_demo_keyspace -t cities_by_country -logDir ./logs --log.verbosity normal --schema.allowMissingFields true -maxConcurrentQueries AUTO -delim , -url unloaded_data -header true -encoding UTF-8 -skipRecords 0 -maxErrors 100
+[INFO]  DSBulk is starting please wait ...
+Username and password provided but auth provider not specified, inferring PlainTextAuthProvider
+A cloud secure connect bundle was provided: ignoring all explicit contact points.
+Operation directory: /Users/USERNAME/logs/UNLOAD_20250123-021231-557959
+  total | failed | rows/s |  p50ms |  p99ms | p999ms
+134,574 |      0 | 29,767 | 281.25 | 591.40 | 591.40
+Operation UNLOAD_20250123-021231-557959 completed successfully in 4 seconds.
+Checkpoints for the current operation were written to checkpoint.csv.
+To resume the current operation, re-run it with the same settings, and add the following command line flag:
+--dsbulk.log.checkpoint.file=/Users/USERNAME/logs/UNLOAD_20250123-021231-557959/checkpoint.csv
+----
+====
+
+Use the `astra db count` command to get information about loaded data:
+
+[source,bash,subs="+quotes"]
+----
+astra db count **DATABASE_ID** \
+    -k **KEYSPACE_NAME** \
+    -t **TABLE_NAME**
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
+[INFO]  RUNNING: /Users/USERNAME/.astra/dsbulk-1.11.0/bin/dsbulk count -u token -p AstraCS:FZm... -b /Users/USERNAME/.astra/scb/scb_91b35105-a5aa-4cd5-a93b-900ac58452ba_us-east1.zip -k dsbulk_demo_keyspace -t cities_by_country -logDir ./logs --log.verbosity normal --schema.allowMissingFields true -maxConcurrentQueries AUTO
+[INFO]  DSBulk is starting please wait ...
+Username and password provided but auth provider not specified, inferring PlainTextAuthProvider
+A cloud secure connect bundle was provided: ignoring all explicit contact points.
+Operation directory: /Users/USERNAME/logs/COUNT_20250123-021120-127216
+  total | failed | rows/s |  p50ms |  p99ms | p999ms
+134,574 |      0 | 65,674 | 213.18 | 329.25 | 329.25
+Operation COUNT_20250123-021120-127216 completed successfully in 1 second.
+Checkpoints for the current operation were written to checkpoint.csv.
+To resume the current operation, re-run it with the same settings, and add the following command line flag:
+--dsbulk.log.checkpoint.file=/Users/USERNAME/logs/COUNT_20250123-021120-127216/checkpoint.csv
+134574
+----
+====
+
+[NOTE]
+====
+The first time you use one of the `astra db load`, `astra db unload`, or `astra db count` commands, the {product} downloads and installs the `dsbulk` utility to the {product} installation directory (`~/.astra/dsbulk-*`).
+The {product} also downloads the {scb-long} for each database you connect to and stores the {scb} zip files in the `~/.astra/scb` directory.
+====
+
+=== `db load` options
+
+.Expand to see all `db load` options
+[%collapsible]
+====
+[source,console]
+----
+NAME
+        astra db load - Load data leveraging DSBulk
+
+SYNOPSIS
+        astra db load [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ -delim <delim> ]
+                [ -dryRun ] [ --dsbulk-config <DSBULK_CONF_FILE> ]
+                [ -encoding <ENCODING> ] [ --env <Environment> ]
+                [ -header <header> ] [ {-k | --keyspace} <KEYSPACE> ]
+                [ -logDir <log directory> ]
+                [ {-m | --schema.mapping} <mapping> ]
+                [ -maxConcurrentQueries <maxConcurrentQueries> ]
+                [ -maxErrors <maxErrors> ] [ --no-color ]
+                [ {-o | --output} <FORMAT> ]
+                [ {-query | --schema.query} <QUERY> ]
+                [ --schema.allowMissingFields <allowMissingFields> ]
+                [ -skipRecords <skipRecords> ] [ {-t | --table} <TABLE> ]
+                [ --token <AUTH_TOKEN> ] -url <url> [ {-v | --verbose} ] [--]
+                <DB>
+
+OPTIONS
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        -delim <delim>
+            Character(s) use as field delimiter.
+
+        -dryRun
+            Enable or disable dry-run mode.
+
+        --dsbulk-config <DSBULK_CONF_FILE>
+            Not all options offered by the loader DSBulk are exposed in this
+            CLI
+
+        -encoding <ENCODING>
+            The file name format to use when writing. This setting is ignored
+            when reading and for non-file URLs.
+
+        --env <Environment>
+            Astra Environment to use
+
+        -header <header>
+            Read, Write Header in input file
+
+        -k <KEYSPACE>, --keyspace <KEYSPACE>
+            Keyspace used for loading or unloading data.
+
+        -logDir <log directory>
+            Optional filter
+
+        -m <mapping>, --schema.mapping <mapping>
+            Field-to-column mapping to use.
+
+        -maxConcurrentQueries <maxConcurrentQueries>
+            The maximum number of concurrent queries that should be carried in
+            parallel.
+
+        -maxErrors <maxErrors>
+            Maximum number of errors before aborting the operation.
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        -query <QUERY>, --schema.query <QUERY>
+            Optional to unload or count
+
+        --schema.allowMissingFields <allowMissingFields>
+            Ease the mapping
+
+        -skipRecords <skipRecords>
+            Lines to skip before readind
+
+        -t <TABLE>, --table <TABLE>
+            Table used for loading or unloading data. Table names should not be
+            quoted and are case-sensitive.
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -url <url>
+            File location to load data
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <DB>
+            Database name (if unique) or Database identifier
+----
+====
+
+=== `db unload` options
+
+.Expand to see all `db unload` options
+[%collapsible]
+====
+[source,console]
+----
+NAME
+        astra db unload - Unload data leveraging DSBulk
+
+SYNOPSIS
+        astra db unload [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ -delim <delim> ]
+                [ --dsbulk-config <DSBULK_CONF_FILE> ] [ -encoding <ENCODING> ]
+                [ --env <Environment> ] [ -header <header> ]
+                [ {-k | --keyspace} <KEYSPACE> ] [ -logDir <log directory> ]
+                [ {-m | --schema.mapping} <mapping> ]
+                [ -maxConcurrentQueries <maxConcurrentQueries> ]
+                [ -maxErrors <maxErrors> ] [ --no-color ]
+                [ {-o | --output} <FORMAT> ]
+                [ {-query | --schema.query} <QUERY> ]
+                [ -skipRecords <skipRecords> ] [ {-t | --table} <TABLE> ]
+                [ --token <AUTH_TOKEN> ] [ -url <url> ] [ {-v | --verbose} ]
+                [--] <DB>
+
+OPTIONS
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        -delim <delim>
+            The character(s) to use as field delimiter. Field delimiters
+            containing more than one character are accepted.
+
+        --dsbulk-config <DSBULK_CONF_FILE>
+            Not all options offered by the loader DSBulk are exposed in this
+            CLI
+
+        -encoding <ENCODING>
+            The file name format to use when writing. This setting is ignored
+            when reading and for non-file URLs.
+
+        --env <Environment>
+            Astra Environment to use
+
+        -header <header>
+            Enable or disable whether the files to read or write begin with a
+            header line.
+
+        -k <KEYSPACE>, --keyspace <KEYSPACE>
+            Keyspace used for loading or unloading data.
+
+        -logDir <log directory>
+            Optional filter
+
+        -m <mapping>, --schema.mapping <mapping>
+            The field-to-column mapping to use, that applies to both loading
+            and unloading; ignored when counting.
+
+        -maxConcurrentQueries <maxConcurrentQueries>
+            The maximum number of concurrent queries that should be carried in
+            parallel.
+
+        -maxErrors <maxErrors>
+            The maximum number of errors to tolerate before aborting the entire
+            operation.
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        -query <QUERY>, --schema.query <QUERY>
+            Optional to unload or count
+
+        -skipRecords <skipRecords>
+            The number of records to skip from each input file before the
+            parser can begin to execute. Note that if the file contains a
+            header line, that line is not counted as a valid record. This
+            setting is ignored when writing.
+
+        -t <TABLE>, --table <TABLE>
+            Table used for loading or unloading data. Table names should not be
+            quoted and are case-sensitive.
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -url <url>
+            The URL or path of the resource(s) to read from or write to.
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <DB>
+            Database name (if unique) or Database identifier
+----
+====
+
+=== `db count` options
+
+.Expand to see all `db count` options
+[%collapsible]
+====
+[source,console]
+----
+NAME
+        astra db count - Count items for a table, a query
+
+SYNOPSIS
+        astra db count [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ]
+                [ --dsbulk-config <DSBULK_CONF_FILE> ] [ -encoding <ENCODING> ]
+                [ --env <Environment> ] [ {-k | --keyspace} <KEYSPACE> ]
+                [ -logDir <log directory> ]
+                [ -maxConcurrentQueries <maxConcurrentQueries> ] [ --no-color ]
+                [ {-o | --output} <FORMAT> ]
+                [ {-query | --schema.query} <QUERY> ]
+                [ {-t | --table} <TABLE> ] [ --token <AUTH_TOKEN> ]
+                [ {-v | --verbose} ] [--] <DB>
+
+OPTIONS
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        --dsbulk-config <DSBULK_CONF_FILE>
+            Not all options offered by the loader DSBulk are exposed in this
+            CLI
+
+        -encoding <ENCODING>
+            The file name format to use when writing. This setting is ignored
+            when reading and for non-file URLs.
+
+        --env <Environment>
+            Astra Environment to use
+
+        -k <KEYSPACE>, --keyspace <KEYSPACE>
+            Keyspace used for loading or unloading data.
+
+        -logDir <log directory>
+            Optional filter
+
+        -maxConcurrentQueries <maxConcurrentQueries>
+            The maximum number of concurrent queries that should be carried in
+            parallel.
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        -query <QUERY>, --schema.query <QUERY>
+            Optional to unload or count
+
+        -t <TABLE>, --table <TABLE>
+            Table used for loading or unloading data. Table names should not be
+            quoted and are case-sensitive.
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <DB>
+            Database name (if unique) or Database identifier
+----
+====
+
+=== End-to-end example
+
+The following end-to-end example shows how to use the {product}'s built-in DSBulk support to load data into a database, get information about the data, and unload the data into CSV files:
+
+. Create an {astra_db} {db-serverless} database:
++
 [source,bash]
 ----
-astra config delete dev
+astra db create dsbulk_demo_db -k dsbulk_demo_keyspace
+----
++
+.Result
+[%collapsible]
+====
+[source,console]
+----
+[INFO]  Database 'dsbulk_demo_db' does not exist. Creating database 'dsbulk_demo_db' with keyspace 'dsbulk_demo_keyspace'
+[INFO]  Database 'dsbulk_demo_db' and keyspace 'dsbulk_demo_keyspace' are being created.
+[INFO]  Database 'dsbulk_demo_db' has status 'PENDING' waiting to be 'ACTIVE' ...
+[INFO]  Database 'dsbulk_demo_db' has status 'ACTIVE' (took 471460 millis)
+[OK]    Database 'dsbulk_demo_db' is ready.
+----
+====
+
+. Download the xref:ROOT:attachment$cities.csv[cities.csv] file and move it to the directory where you run {product} commands.
++
+The `cities.csv` dataset contains information about cities around the world:
++
+.cities.csv
+[source,csv]
+----
+id,name,state_id,state_code,state_name,country_id,country_code,country_name,latitude,longitude,wikiDataId
+52,Ashkāsham,3901,BDS,Badakhshan,1,AF,Afghanistan,36.68333000,71.53333000,Q4805192
+68,Fayzabad,3901,BDS,Badakhshan,1,AF,Afghanistan,37.11664000,70.58002000,Q156558
+...
 ----
 
-See the new list:
-
+. Create a table in your database to store your data.
++
+.. Start the CQL shell in interactive mode:
++
 [source,bash]
 ----
-astra config list
+astra db cqlsh dsbulk_demo_db -k dsbulk_demo_keyspace
+----
++
+.Result
+[%collapsible]
+====
+[source,console]
+----
+[INFO]  Cqlsh is starting, please wait for connection establishment...
+Connected to cndb at 127.0.0.1:9042.
+[cqlsh 6.8.0 | Cassandra 4.0.0.6816 | CQL spec 3.4.5 | Native protocol v4]
+Use HELP for help.
+token@cqlsh:dsbulk_demo_keyspace>
+----
+====
++
+.. Copy and paste the following CQL command into the `cqlsh` prompt and press kbd:[Return]:
++
+[source,cql]
+----
+CREATE TABLE cities_by_country (
+    country_name text,
+    name text,
+    id int,
+    state_id text,
+    state_code text,
+    state_name text,
+    country_id text,
+    country_code text,
+    latitude double,
+    longitude double,
+    wikiDataId text,
+    PRIMARY KEY ((country_name), name)
+);
+----
++
+This command creates a table named `cities_by_country` with the appropriate schema for the `cities.csv` dataset.
++
+.. Type `exit` or `quit;` and press kbd:[Return] to exit the CQL shell.
+
+. Load the data from the `cities.csv` file into the `cities_by_country` table that you just created in your database:
++
+[source,bash]
+----
+astra db load dsbulk_demo_db \
+  -k dsbulk_demo_keyspace \
+  -t cities_by_country \
+  -url cities.csv
+----
++
+.Result
+[%collapsible]
+====
+[source,console]
+----
+[INFO]  RUNNING: /Users/USERNAME/.astra/dsbulk-1.11.0/bin/dsbulk load -u token -p AstraCS:FZm... -b /Users/USERNAME/.astra/scb/scb_91b35105-a5aa-4cd5-a93b-900ac58452ba_us-east1.zip -k dsbulk_demo_keyspace -t cities_by_country -logDir ./logs --log.verbosity normal --schema.allowMissingFields true -maxConcurrentQueries AUTO -delim , -url cities.csv -header true -encoding UTF-8 -skipRecords 0 -maxErrors 100
+[INFO]  DSBulk is starting please wait ...
+Username and password provided but auth provider not specified, inferring PlainTextAuthProvider
+A cloud secure connect bundle was provided: ignoring all explicit contact points.
+A cloud secure connect bundle was provided and selected operation performs writes: changing default consistency level to LOCAL_QUORUM.
+Operation directory: /Users/USERNAME/logs/LOAD_20250123-020734-995267
+Setting executor.maxPerSecond not set when connecting to DataStax Astra: applying a limit of 27,000 ops/second based on the number of coordinators (9).
+If your Astra database has higher limits, please define executor.maxPerSecond explicitly.
+  total | failed | rows/s |  p50ms |  p99ms | p999ms | batches
+148,266 |      0 | 19,588 | 240.82 | 771.75 | 964.69 |   30.72
+Operation LOAD_20250123-020734-995267 completed successfully in 7 seconds.
+Checkpoints for the current operation were written to checkpoint.csv.
+To resume the current operation, re-run it with the same settings, and add the following command line flag:
+--dsbulk.log.checkpoint.file=/Users/USERNAME/logs/LOAD_20250123-020734-995267/checkpoint.csv
+----
+====
+
+. Confirm that the data loaded successfully:
++
+[source,bash]
+----
+astra db cqlsh dsbulk_demo_db -e \
+"select * from dsbulk_demo_keyspace.cities_by_country LIMIT 20;"
+----
++
+.Result
+[%collapsible]
+====
+[source,console]
+----
+[INFO]  Cqlsh is starting, please wait for connection establishment...
+
+ country_name | name                | country_code | country_id | id   | latitude | longitude | state_code | state_id | state_name          | wikidataid
+--------------+---------------------+--------------+------------+------+----------+-----------+------------+----------+---------------------+------------
+   Bangladesh |             Azimpur |           BD |         19 | 8454 |  23.7298 |   90.3854 |         13 |      771 |      Dhaka District |       null
+   Bangladesh |           Badarganj |           BD |         19 | 8455 | 25.67419 |  89.05377 |         55 |      759 |    Rangpur District |       null
+   Bangladesh |            Bagerhat |           BD |         19 | 8456 |     22.4 |     89.75 |         27 |      811 |     Khulna District |       null
+   Bangladesh |           Bandarban |           BD |         19 | 8457 |       22 |  92.33333 |          B |      803 | Chittagong Division |       null
+   Bangladesh |          Baniachang |           BD |         19 | 8458 | 24.51863 |  91.35787 |         60 |      767 |     Sylhet District |       null
+   Bangladesh |             Barguna |           BD |         19 | 8459 | 22.13333 |  90.13333 |         06 |      818 |    Barisal District |       null
+   Bangladesh |             Barisal |           BD |         19 | 8460 |     22.8 |      90.5 |         06 |      818 |    Barisal District |       null
+   Bangladesh |                Bera |           BD |         19 | 8462 | 24.07821 |  89.63262 |         54 |      813 |   Rajshahi District |       null
+   Bangladesh |       Bhairab Bāzār |           BD |         19 | 8463 |  24.0524 |   90.9764 |         13 |      771 |      Dhaka District |       null
+   Bangladesh |           Bherāmāra |           BD |         19 | 8464 | 24.02452 |  88.99234 |         27 |      811 |     Khulna District |       null
+   Bangladesh |               Bhola |           BD |         19 | 8465 | 22.36667 |  90.81667 |         06 |      818 |    Barisal District |       null
+   Bangladesh |           Bhāndāria |           BD |         19 | 8466 | 22.48898 |  90.06273 |         06 |      818 |    Barisal District |       null
+   Bangladesh | Bhātpāra Abhaynagar |           BD |         19 | 8467 | 23.01472 |  89.43936 |         27 |      811 |     Khulna District |       null
+   Bangladesh |           Bibir Hat |           BD |         19 | 8468 | 22.68347 |  91.79058 |          B |      803 | Chittagong Division |       null
+   Bangladesh |               Bogra |           BD |         19 | 8469 | 24.78333 |     89.35 |         54 |      813 |   Rajshahi District |       null
+   Bangladesh |        Brahmanbaria |           BD |         19 | 8470 | 23.98333 |  91.16667 |          B |      803 | Chittagong Division |       null
+   Bangladesh |         Burhānuddin |           BD |         19 | 8471 | 22.49518 |  90.72391 |         06 |      818 |    Barisal District |       null
+   Bangladesh |            Bājitpur |           BD |         19 | 8472 | 24.21623 |  90.95002 |         13 |      771 |      Dhaka District |       null
+   Bangladesh |            Chandpur |           BD |         19 | 8474 |    23.25 |  90.83333 |          B |      803 | Chittagong Division |       null
+   Bangladesh |    Chapai Nababganj |           BD |         19 | 8475 | 24.68333 |     88.25 |         54 |      813 |   Rajshahi District |       null
+
+(20 rows)
+----
+====
+
+. Count the loaded data:
++
+[source,bash]
+----
+astra db count dsbulk_demo_db \
+    -k dsbulk_demo_keyspace \
+    -t cities_by_country
+----
++
+.Result
+[%collapsible]
+====
+[source,console]
+----
+[INFO]  RUNNING: /Users/USERNAME/.astra/dsbulk-1.11.0/bin/dsbulk count -u token -p AstraCS:FZm... -b /Users/USERNAME/.astra/scb/scb_91b35105-a5aa-4cd5-a93b-900ac58452ba_us-east1.zip -k dsbulk_demo_keyspace -t cities_by_country -logDir ./logs --log.verbosity normal --schema.allowMissingFields true -maxConcurrentQueries AUTO
+[INFO]  DSBulk is starting please wait ...
+Username and password provided but auth provider not specified, inferring PlainTextAuthProvider
+A cloud secure connect bundle was provided: ignoring all explicit contact points.
+Operation directory: /Users/USERNAME/logs/COUNT_20250123-021120-127216
+  total | failed | rows/s |  p50ms |  p99ms | p999ms
+134,574 |      0 | 65,674 | 213.18 | 329.25 | 329.25
+Operation COUNT_20250123-021120-127216 completed successfully in 1 second.
+Checkpoints for the current operation were written to checkpoint.csv.
+To resume the current operation, re-run it with the same settings, and add the following command line flag:
+--dsbulk.log.checkpoint.file=/Users/USERNAME/logs/COUNT_20250123-021120-127216/checkpoint.csv
+134574
+----
+====
+
+. Unload the data into CSV files:
++
+[source,bash]
+----
+astra db unload dsbulk_demo_db \
+    -k dsbulk_demo_keyspace \
+    -t cities_by_country \
+    -url unloaded_data
+----
++
+.Result
+[%collapsible]
+====
+[source,console]
+----
+[INFO]  RUNNING: /Users/USERNAME/.astra/dsbulk-1.11.0/bin/dsbulk unload -u token -p AstraCS:FZm... -b /Users/USERNAME/.astra/scb/scb_91b35105-a5aa-4cd5-a93b-900ac58452ba_us-east1.zip -k dsbulk_demo_keyspace -t cities_by_country -logDir ./logs --log.verbosity normal --schema.allowMissingFields true -maxConcurrentQueries AUTO -delim , -url unloaded_data -header true -encoding UTF-8 -skipRecords 0 -maxErrors 100
+[INFO]  DSBulk is starting please wait ...
+Username and password provided but auth provider not specified, inferring PlainTextAuthProvider
+A cloud secure connect bundle was provided: ignoring all explicit contact points.
+Operation directory: /Users/USERNAME/logs/UNLOAD_20250123-021231-557959
+  total | failed | rows/s |  p50ms |  p99ms | p999ms
+134,574 |      0 | 29,767 | 281.25 | 591.40 | 591.40
+Operation UNLOAD_20250123-021231-557959 completed successfully in 4 seconds.
+Checkpoints for the current operation were written to checkpoint.csv.
+To resume the current operation, re-run it with the same settings, and add the following command line flag:
+--dsbulk.log.checkpoint.file=/Users/USERNAME/logs/UNLOAD_20250123-021231-557959/checkpoint.csv
+----
+====
++
+This command unloads row data from the `cities_by_country` table, and stores it as CSV files within a subsirectory names `unloaded_data` in the same directory where you ran the command.
+
+[#cdc]
+== Configure Change Data Capture (CDC)
+
+[IMPORTANT]
+====
+CDC for {astra_db} incurs billed charges based on your {astra_stream} usage.
+For more information, see https://www.datastax.com/pricing/astra-streaming[{astra_stream} pricing] and https://www.datastax.com/products/datastax-astra/cdc-for-astra-db[CDC metering rates].
+====
+
+CDC for {astra_db} automatically captures changes in real time, de-duplicates the changes, and then streams the clean set of changed data into xref:astra-streaming:ROOT:index.adoc[{astra_stream}] where it can be processed by client applications or sent to downstream systems.
+
+Use the `astra db create-cdc` command to create a CDC connection for a table in a {db-serverless} database:
+
+[source,bash,subs="+quotes"]
+----
+astra db create-cdc **DATABASE_ID** \
+    -k **KEYSPACE_NAME** \
+    --table **TABLE_NAME** \
+    --tenant **TENANT_NAME**
 ----
 
+////
+// TODO: The command is not working as expected. Must investigate and figure out why it is reporting the following error: [ERROR] INVALID_ARGUMENT: Error Code=422(422) Invalid information provided to create DB: 422 Unprocessable Entity: databaseId, keyspace, tableName, and orgId are mandatory fields
+.Result
+[%collapsible]
+====
+[source,console]
+----
 
-== What's next?
+----
+====
+////
 
-See the CLI commands that you can use to manage your {company} {astra_stream} xref:astra-streaming-cli.adoc[operations].
+Use the `astra db list-cdc` command to list the CDC connections for a specifc database:
+
+[source,bash,subs="+quotes"]
+----
+astra db list-cdc **DATABASE_ID**
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
++-----------------------+-------------------+----------------+----------------+--------------------+----------------+----------------+
+| id                    | keyspace          | table          | tenant         | cluster            | namespace      | Status         |
++-----------------------+-------------------+----------------+----------------+--------------------+----------------+----------------+
+| 57a3024f-cdcdemotable | cdc_demo_keyspace | cdc_demo_table | cdc-demo-tenant| pulsar-aws-useast1 | astracdc       | Running        |
++-----------------------+-------------------+----------------+----------------+--------------------+----------------+----------------+
+----
+====
+
+Use the `astra db delete-cdc` command to delete a CDC connection for a specific table:
+
+[source,bash,subs="+quotes"]
+----
+astra db delete-cdc **DATABASE_ID** \
+    -k **KEYSPACE_NAME** \
+    --table **TABLE_NAME** \
+    --tenant **TENANT_NAME**
+----
+
+////
+// TODO: The command is not working as expected. Must investigate and figure out why it is reporting the following error: [ERROR] INVALID_ARGUMENT: Error Code=422(422) Invalid information provided to create DB: 422 Unprocessable Entity: databaseId, keyspace, tableName, and orgId are mandatory fields
+.Result
+[%collapsible]
+====
+[source,console]
+----
+
+----
+====
+////
+
+=== `db create-cdc` options
+
+.Expand to see all `db create-cdc` options
+[%collapsible]
+====
+[source,console]
+----
+NAME
+        astra db create-cdc - Create a CDC to pulsar
+
+SYNOPSIS
+        astra db create-cdc [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
+                [ {-k | --keyspace} <KEYSPACE> ] [ --no-color ]
+                [ {-o | --output} <FORMAT> ]
+                [ -p, --partition <PARTITION TOKEN> ] [ --table <TABLE> ]
+                [ --tenant <TENANT> ] [ --token <AUTH_TOKEN> ]
+                [ {-v | --verbose} ] [--] <DB>
+
+OPTIONS
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        --env <Environment>
+            Astra Environment to use
+
+        -k <KEYSPACE>, --keyspace <KEYSPACE>
+            Keyspace name
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        -p, --partition <PARTITION TOKEN>
+            Paritions in the topics
+
+        --table <TABLE>
+            Table name
+
+        --tenant <TENANT>
+            Tenant name
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <DB>
+            Database name (if unique) or Database identifier
+----
+====
+
+=== `db list-cdc` options
+
+.Expand to see all `db list-cdc` options
+[%collapsible]
+====
+[source,console]
+----
+NAME
+        astra db list-cdc - List CDC available on this databse
+
+SYNOPSIS
+        astra db list-cdc [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
+                [ --no-color ] [ {-o | --output} <FORMAT> ]
+                [ --token <AUTH_TOKEN> ] [ {-v | --verbose} ] [--] <DB>
+
+OPTIONS
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        --env <Environment>
+            Astra Environment to use
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <DB>
+            Database name (if unique) or Database identifier
+----
+====
+
+=== `db delete-cdc` options
+
+.Expand to see all `db delete-cdc` options
+[%collapsible]
+====
+[source,console]
+----
+NAME
+        astra db delete-cdc - Delete a CDC connection
+
+SYNOPSIS
+        astra db delete-cdc [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
+                [ -id <CDC_ID> ] [ {-k | --keyspace} <KEYSPACE> ]
+                [ --no-color ] [ {-o | --output} <FORMAT> ] [ --table <TABLE> ]
+                [ --tenant <TENANT> ] [ --token <AUTH_TOKEN> ]
+                [ {-v | --verbose} ] [--] <DB>
+
+OPTIONS
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        --env <Environment>
+            Astra Environment to use
+
+        -id <CDC_ID>
+            Identifier of the cdc when providing
+
+        -k <KEYSPACE>, --keyspace <KEYSPACE>
+            Keyspace name
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        --table <TABLE>
+            Table name
+
+        --tenant <TENANT>
+            Tenant name
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <DB>
+            Database name (if unique) or Database identifier
+----
+====
+
+=== End-to-end example
+
+The following end-to-end example shows how to use the {product} to create a CDC connection for a table in a {db-serverless} database:
+
+. Create an {astra_db} {db-serverless} database:
++
+[source,bash]
+----
+astra db create cdc_demo_db \
+    -c aws \
+    -r us-east-1 \
+    -k cdc_demo_keyspace
+----
++
+.Result
+[%collapsible]
+====
+[source,console]
+----
+REGION OK
+[INFO]  Database 'cdc_demo_db' does not exist. Creating database 'cdc_demo_db' with keyspace 'cdc_demo_keyspace'
+get CLoud provider
+[INFO]  Database 'cdc_demo_db' and keyspace 'cdc_demo_keyspace' are being created.
+[INFO]  Database 'cdc_demo_db' has status 'PENDING' waiting to be 'ACTIVE' ...
+[INFO]  Database 'cdc_demo_db' has status 'ACTIVE' (took 112117 millis)
+[OK]    Database 'cdc_demo_db' is ready.
+----
+====
+
+. Create an {astra_stream} tenant in the same region as your database:
++
+[source,bash]
+----
+astra streaming create cdc-demo-tenant \
+    -c aws \
+    -r useast1
+----
++
+.Result
+[%collapsible]
+====
+[source,console]
+----
+https://api.astra.datastax.com/v2/streaming/tenants/cdc-demo-tenant
+[OK]    Tenant 'cdc-demo-tenant' has being created.
+----
+====
+
+. Use the xref:ROOT:managing.adoc#cqlsh[CQL shell] to create a table with a primary key column in your database.
++
+[source,bash]
+----
+astra db cqlsh cdc_demo_db -e \
+"CREATE TABLE IF NOT EXISTS cdc_demo_keyspace.cdc_demo_table ( \
+    key text PRIMARY KEY, \
+    c1 text \
+);"
+----
++
+.Result
+[%collapsible]
+====
+[source,console]
+----
+[INFO]  Cqlsh is starting, please wait for connection establishment...
+----
+====
+
+. Confirm table creation:
++
+[source,bash]
+----
+astra db cqlsh cdc_demo_db -e \
+"SELECT * FROM cdc_demo_keyspace.cdc_demo_table"
+----
++
+.Result
+[%collapsible]
+====
+[source,console]
+----
+[INFO]  Cqlsh is starting, please wait for connection establishment...
+
+ key | c1
+-----+----
+
+(0 rows)
+----
+====
+
+. Create a CDC connection.
++
+[source,bash]
+----
+astra db create-cdc cdc_demo_db \
+    -k cdc_demo_keyspace \
+    --table cdc_demo_table \
+    --tenant cdc-demo-tenant
+----
++
+////
+// TODO: The command is not working as expected. Must investigate and figure out why it is reporting the following error: [ERROR] INVALID_ARGUMENT: Error Code=422(422) Invalid information provided to create DB: 422 Unprocessable Entity: databaseId, keyspace, tableName, and orgId are mandatory fields
+.Result
+[%collapsible]
+====
+[source,console]
+----
+
+----
+====
+////
+
+. Confirm CDC details for the database and tenant.
++
+[source,bash]
+----
+astra db list-cdc cdc_demo_db
+----
++
+.Result
+[%collapsible]
+====
+[source,console]
+----
++-----------------------+-------------------+----------------+----------------+--------------------+----------------+----------------+
+| id                    | keyspace          | table          | tenant         | cluster            | namespace      | Status         |
++-----------------------+-------------------+----------------+----------------+--------------------+----------------+----------------+
+| 57a3024f-cdcdemotable | cdc_demo_keyspace | cdc_demo_table | cdc-demo-tenant| pulsar-aws-useast1 | astracdc       | Running        |
++-----------------------+-------------------+----------------+----------------+--------------------+----------------+----------------+
+----
+====
++
+[source,bash]
+----
+astra streaming list-cdc cdc-demo-tenant
+----
++
+.Result
+[%collapsible]
+====
+[source,console]
+----
++--------------------+----------------+----------------+-------------------+----------------+----------------+
+| cluster            | namespace      | database       | keyspace          | table          | status         |
++--------------------+----------------+----------------+-------------------+----------------+----------------+
+| pulsar-aws-useast1 | astracdc       | cdc_demo_db    | cdc_demo_keyspace | cdc_demo_table | running        |
++--------------------+----------------+----------------+-------------------+----------------+----------------+
+----
+====
+
+After you enable CDC on your {db-serverless} database, you can xref:astra-db-serverless:databases:change-data-capture.adoc#connect-a-sink[connect a sink].
+
+== Download the {scb-cap}
+
+The xref:astra-db-serverless:drivers:secure-connect-bundle.adoc[] is a zip file containing security credentials and certificates required for secure mutual TLS (mTLS) connection to your database.
+
+Use the `astra db download-scb` command to download the {scb-long} for a database:
+
+[source,bash,subs="+quotes"]
+----
+astra db download-scb **DATABASE_ID** -r **REGION_NAME**
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
+[INFO]  Bundle downloaded in ./scb_a53003fe-ba42-4c3c-85d0-6b345622c2dc_dc-1.zip
+----
+====
+
+The `-r **REGION_NAME**` option is required for <<configure-multiple-regions,multi-region databases>>.
+If your database is configured with multiple regions, replace `**REGION_NAME**` with the name of the region you want to download the {scb} for.
+
+By default, the {product} downloads the {scb} to the directory where you run the command and saves the file with the following naming pattern: `scb_**DATABASE-ID**_**REGION-NAME**.zip`.
+
+[WARNING]
+====
+Treat the {scb} the same way you would any other sensitive values, such as passwords or tokens.
+
+The {scb} contains sensitive information that establishes a connection to your database, including key pairs and certificates.
+====
+
+=== `db download-scb` options
+
+.Expand to see all `db download-scb` options
+[%collapsible]
+====
+[source,console]
+----
+NAME
+        astra db download-scb - Download secure connect bundle archive for a
+        region
+
+SYNOPSIS
+        astra db download-scb [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
+                [ {-f | --output-file} <DEST> ] [ --no-color ]
+                [ {-o | --output} <FORMAT> ] [ {-r | --region} <DB_REGION> ]
+                [ --token <AUTH_TOKEN> ] [ {-v | --verbose} ] [--] <DB>
+
+OPTIONS
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        --env <Environment>
+            Astra Environment to use
+
+        -f <DEST>, --output-file <DEST>
+            Destination file
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        -r <DB_REGION>, --region <DB_REGION>
+            Cloud provider region
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <DB>
+            Database name (if unique) or Database identifier
+----
+====
+
+Use the `-r` / `--region` option to download the {scb} for a specific region:
+
+[source,bash,subs="+quotes"]
+----
+astra db download-scb **DATABASE_ID** -r **REGION_NAME**
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
+[INFO]  Bundle downloaded in ./scb_a53003fe-ba42-4c3c-85d0-6b345622c2dc_dc-1.zip
+----
+====
+
+[TIP]
+====
+Use the `astra db list-regions` command to get a list of the region names where a database is deployed.
+For more information, see <<configure-multiple-regions>>.
+====
+
+Use the `-f` / `--output-file` option to download the {scb} to a specific location and filename:
+
+[source,bash,subs="+quotes"]
+----
+astra db download-scb **DATABASE_ID** -f **DESTINATION_FILE**.zip
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
+[INFO]  Bundle downloaded in DESTINATION_FILE.zip
+----
+====
+
+== Create environment variables
+
+When developing applications with {astra_db} APIs, you will notice common values that are frequently reused, such as application tokens, database API endpoints, database IDs, and keyspace names.
+It's a good practice to store these values in environment variables to facilitate reuse in your scripts, simplify token rotation, and increase security by keeping sensitive information separate from your core application code.
+
+The {product} can automatically generate a set of relevant variables for a database that you can use in your applications.
+
+Use the `astra db create-dotenv` command to generate a `.env` file containing relevant environment variables for a specific database:
+
+[source,bash,subs="+quotes"]
+----
+astra db create-dotenv **DATABASE_ID**
+----
+
+By default, the {product} saves the `.env` file to the directory where you run the command.
+
+If a `.env` file already exists in the directory, the {product} appends the new environment variables to the existing file.
+
+.Result
+[%collapsible%open]
+====
+..env
+[source,console]
+----
+ASTRA_DB_API_ENDPOINT="https://a53003fe-ba42-4c3c-85d0-6b345622c2dc-us-east1.apps.astra.datastax.com/api/json"
+ASTRA_DB_APPLICATION_TOKEN="AstraCS:FZm..."
+ASTRA_DB_GRAPHQL_URL="https://a53003fe-ba42-4c3c-85d0-6b345622c2dc-us-east1.apps.astra.datastax.com/api/graphql/demo"
+ASTRA_DB_GRAPHQL_URL_ADMIN="https://a53003fe-ba42-4c3c-85d0-6b345622c2dc-us-east1.apps.astra.datastax.com/api/graphql-admin"
+ASTRA_DB_GRAPHQL_URL_PLAYGROUND="https://a53003fe-ba42-4c3c-85d0-6b345622c2dc-us-east1.apps.astra.datastax.com/api/playground"
+ASTRA_DB_GRAPHQL_URL_SCHEMA="https://a53003fe-ba42-4c3c-85d0-6b345622c2dc-us-east1.apps.astra.datastax.com/api/graphql-schema"
+ASTRA_DB_ID="a53003fe-ba42-4c3c-85d0-6b345622c2dc"
+ASTRA_DB_KEYSPACE="demo"
+ASTRA_DB_REGION="us-east1"
+ASTRA_DB_REST_URL="https://a53003fe-ba42-4c3c-85d0-6b345622c2dc-us-east1.apps.astra.datastax.com/api/rest"
+ASTRA_DB_REST_URL_SWAGGER="https://a53003fe-ba42-4c3c-85d0-6b345622c2dc-us-east1.apps.astra.datastax.com/api/rest/swagger-ui/"
+ASTRA_DB_SECURE_BUNDLE_PATH="/Users/USERNAME/.astra/scb/scb_a53003fe-ba42-4c3c-85d0-6b345622c2dc_us-east1.zip"
+ASTRA_DB_SECURE_BUNDLE_URL="https://datastax-cluster-config-prod.s3.us-east-2.amazonaws.com/a53003fe-ba42-4c3c-85d0-6b345622c2dc-1/secure-connect-demo.zip?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA2AIQRQ76XML7FLD6%2F20241120%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20241120T233147Z&X-Amz-Expires=300&X-Amz-SignedHeaders=host&X-Amz-Signature=46d8704e382458c82d7da02db1ca79657e003de327f0123a0189ec1a50171cb0"
+ASTRA_ORG_ID="2dbd3c55-6a68-4b5b-9155-5be9d41823e8"
+ASTRA_ORG_NAME="alice@example.com"
+ASTRA_ORG_TOKEN="AstraCS:FZm..."
+----
+====
+
+[WARNING]
+====
+The generated `.env` files contains sensitive information, including the application token that the {product} uses to connect to Astra.
+
+The {scb} contains sensitive information that establishes a connection to your database, including key pairs and certificates.
+====
+
+=== `db create-dotenv` options
+
+.Expand to see all `db create-dotenv` options
+[%collapsible]
+====
+[source,console]
+----
+NAME
+        astra db create-dotenv - Generate an .env configuration file associate
+        with the db
+
+SYNOPSIS
+        astra db create-dotenv [ {-cf | --config-file} <CONFIG_FILE> ]
+                [ {-conf | --config} <CONFIG_SECTION> ]
+                [ {-d | --directory} <DIRECTORY> ] [ --env <Environment> ]
+                [ {-k | --keyspace} <KEYSPACE> ] [ --no-color ]
+                [ {-o | --output} <FORMAT> ] [ {-r | --region} <DB_REGION> ]
+                [ --token <AUTH_TOKEN> ] [ {-v | --verbose} ] [--] <DB>
+
+OPTIONS
+        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
+            Configuration file (default = ~/.astrarc)
+
+        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
+            Section in configuration file (default = ~/.astrarc)
+
+        -d <DIRECTORY>, --directory <DIRECTORY>
+            Destination for the config file
+
+        --env <Environment>
+            Astra Environment to use
+
+        -k <KEYSPACE>, --keyspace <KEYSPACE>
+            Default keyspace created with the Db
+
+        --no-color
+            Remove all colors in output
+
+        -o <FORMAT>, --output <FORMAT>
+            Output format, valid values are: human,json,csv
+
+        -r <DB_REGION>, --region <DB_REGION>
+            Cloud provider region
+
+        --token <AUTH_TOKEN>
+            Key to use authenticate each call.
+
+        -v, --verbose
+            Verbose mode with log in console
+
+        --
+            This option can be used to separate command-line options from the
+            list of arguments (useful when arguments might be mistaken for
+            command-line options)
+
+        <DB>
+            Database name (if unique) or Database identifier
+----
+====
+
+Use the `-d` / `--directory` option to save the `.env` file to a specific directory:
+
+[source,bash,subs="+quotes"]
+----
+astra db create-dotenv **DATABASE_ID** -d ~/tmp
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
+[OK]    File '/Users/USERNAME/tmp/.env' has been created/amended
+----
+====
+
+[NOTE]
+====
+The directory must already exist before you run the command.
+If the directory doesn't exist, the {product} will report the following error: `INVALID_ARGUMENT: Destination folder has not been found`.
+====
+

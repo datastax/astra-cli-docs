@@ -1,0 +1,4 @@
+[NOTE]
+====
+Supported embedding providers are subject to change and may be different from the sample result.
+====
