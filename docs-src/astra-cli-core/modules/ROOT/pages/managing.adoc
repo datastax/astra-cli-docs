@@ -185,7 +185,7 @@ astra db create demo -r us-east-1 -k keyspace1 --if-not-exist
 == Manage keyspaces
 
 {astra_db} databases store data in <<manage-collections,collections>> and <<manage-tables,tables>>, which exist inside keyspaces.
-Each {astra_db} database must have at least one keyspace, and you can create more as needed.
+Each database must have at least one keyspace, and you can create more as needed.
 
 Use the `astra db create-keyspace` command to create a new keyspace in a database:
 
@@ -2257,6 +2257,7 @@ OPTIONS
 ----
 ====
 
+[#configure-multiple-regions]
 == Configure multiple regions
 
 You can configure a database to replicate data across multiple regions.
@@ -2919,7 +2920,7 @@ OPTIONS
 [#cqlsh]
 == Use the CQL shell (cqlsh)
 
-The CQL shell (`cqlsh`) is an interface that you can use to issue xref:astra@cql:ROOT:index.adoc[{cass-short} Query Language (CQL)] commands to your {astra_db} database.
+The CQL shell (`cqlsh`) is an interface that you can use to issue xref:astra@cql:ROOT:index.adoc[{cass-short} Query Language (CQL)] commands to your database.
 The {product} provides built-in CQL shell support by downloading, installing, configuring, and wapping the `cqlsh` utility.
 This can act as a convenient alternative to installing and configuring a xref:astra-db-serverless:cql:develop-with-cql.adoc#connect-to-the-cql-shell[standalone CQL shell].
 
@@ -3167,7 +3168,7 @@ astra db cqlsh **DATABASE_ID** -e "SOURCE 'sample.cql'"
 
 == Use DataStax Bulk Loader (DSBulk)
 
-The xref:dsbulk:overview:dsbulk-about.adoc[DataStax Bulk Loader] (DSBulk) lets you load, unload, and count data in your {astra_db} database tables.
+The xref:dsbulk:overview:dsbulk-about.adoc[DataStax Bulk Loader] (DSBulk) lets you load, unload, and count data in your database tables.
 The {product} provides built-in DSBulk support by downloading, installing, configuring, and wapping the `dsbulk` utility.
 
 The {product} exposes DSBulk functionality through the `astra db load`, `astra db unload`, and `astra db count` commands.
@@ -3611,7 +3612,7 @@ OPTIONS
 
 === End-to-end example
 
-The following end-to-end example shows how to use the {product}'s built-in DSBulk support to load data into an {astra_db} database, get information about the data, and unload the data into CSV files:
+The following end-to-end example shows how to use the {product}'s built-in DSBulk support to load data into a database, get information about the data, and unload the data into CSV files:
 
 . Create an {astra_db} {db-serverless} database:
 +
@@ -3646,7 +3647,7 @@ id,name,state_id,state_code,state_name,country_id,country_code,country_name,lati
 ...
 ----
 
-. Create a table in your {astra_db} database to store your data.
+. Create a table in your database to store your data.
 +
 .. Start the CQL shell in interactive mode:
 +
@@ -4226,16 +4227,15 @@ astra streaming list-cdc cdc-demo-tenant
 
 After you enable CDC on your {db-serverless} database, you can xref:astra-db-serverless:databases:change-data-capture.adoc#connect-a-sink[connect a sink].
 
-
 == Download the {scb-cap}
 
-The xref:astra-db-serverless:drivers:secure-connect-bundle.adoc[] is a zip file containing security credentials and certificates required for secure mutual TLS (mTLS) connection to your {astra_db} database.
+The xref:astra-db-serverless:drivers:secure-connect-bundle.adoc[] is a zip file containing security credentials and certificates required for secure mutual TLS (mTLS) connection to your database.
 
-Use the `astra db download-scb` command to download the {scb-long} for an {astra_db} database:
+Use the `astra db download-scb` command to download the {scb-long} for a database:
 
 [source,bash,subs="+quotes"]
 ----
-astra db download-scb **DATABASE_ID**
+astra db download-scb **DATABASE_ID** -r **REGION_NAME**
 ----
 
 .Result
@@ -4247,8 +4247,10 @@ astra db download-scb **DATABASE_ID**
 ----
 ====
 
-By default, the {product} downloads the {scb} to the directory where you run the command using the following naming pattern: `scb_**DATABASE-ID**_**REGION-NAME**.zip`.
-For multi-region databases, the {product} downloads a different SCB for each region.
+The `-r **REGION_NAME**` option is required for <<configure-multiple-regions,multi-region databases>>.
+If your database is configured with multiple regions, replace `**REGION_NAME**` with the name of the region you want to download the {scb} for.
+
+By default, the {product} downloads the {scb} to the directory where you run the command and saves the file with the following naming pattern: `scb_**DATABASE-ID**_**REGION-NAME**.zip`.
 
 [WARNING]
 ====
@@ -4329,6 +4331,12 @@ astra db download-scb **DATABASE_ID** -r **REGION_NAME**
 ----
 ====
 
+[TIP]
+====
+Use the `astra db list-regions` command to get a list of the region names where a database is deployed.
+For more information, see <<configure-multiple-regions>>.
+====
+
 Use the `-f` / `--output-file` option to download the {scb} to a specific location and filename:
 
 [source,bash,subs="+quotes"]
@@ -4350,9 +4358,9 @@ astra db download-scb **DATABASE_ID** -f **DESTINATION_FILE**.zip
 When developing applications with {astra_db} APIs, you will notice common values that are frequently reused, such as application tokens, database API endpoints, database IDs, and keyspace names.
 It's a good practice to store these values in environment variables to facilitate reuse in your scripts, simplify token rotation, and increase security by keeping sensitive information separate from your core application code.
 
-The {product} can automatically generate a set of relevant variables for an {astra_db} database that you can use in your applications.
+The {product} can automatically generate a set of relevant variables for a database that you can use in your applications.
 
-Use the `astra db create-dotenv` command to generate a `.env` file containing relevant environment variables for a specific {astra_db} database:
+Use the `astra db create-dotenv` command to generate a `.env` file containing relevant environment variables for a specific database:
 
 [source,bash,subs="+quotes"]
 ----

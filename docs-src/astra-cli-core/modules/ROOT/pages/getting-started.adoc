@@ -15,9 +15,9 @@ To configure the {product}:
 
 * [[get-credentials]]You must have an xref:astra-db-serverless:administration:manage-application-tokens.adoc[application token] that is assigned a _role_ with adequate _permissions_ to perform the tasks you'd like to accomplish with the {product}.
 
-** *Non-production organizations*: If your Astra organization has no production databases or streaming tenants, you can grant your application token the `Organization Administrator` role to try out all of the {product} features.
+** *Non-production organizations*: If your Astra organization has no databases or streaming tenants that handle sensitive information, you can grant your application token the `Organization Administrator` role to try out all of the {product} features.
 
-** *Production organizations*: If you're using Astra in production, {company} recommends that you use a xref:astra-db-serverless:administration:manage-database-access.adoc#custom-roles[custom role] to grant your application token the bare minimum xref:astra-db-serverless:administration:manage-database-access.adoc#about-permissions[permissions] required to perform the tasks you'll be doing with the {product}.
+** *Production organizations*: If you're using Astra in production, {company} recommends that you use a xref:astra-db-serverless:administration:manage-database-access.adoc#custom-roles[custom role] to grant your application token the bare minimum xref:astra-db-serverless:administration:manage-database-access.adoc#about-permissions[permissions] required to perform the required tasks with the {product}.
 
 * If you plan to manage an {astra_db} database that has restricted public access, then you must xref:astra-db-serverless:administration:manage-database-ip-access-list.adoc#add-ip-access-list-entries[add your IP address to the database's access list].
 
