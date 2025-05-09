@@ -517,7 +517,7 @@ astra db create-collection **DATABASE_ID** -c **COLLECTION_NAME**
 ----
 ====
 
-You can't load vector data into a non-vector collection.
+You cannot load vector data into a non-vector collection.
 =====
 --
 
@@ -2284,10 +2284,10 @@ The following restrictions apply:
 
 * You can add only one region at a time.
 
-* You can't select a region that the database already uses.
+* You cannot select a region that the database already uses.
 
 * You must select a region in the same cloud provider as the database's other regions.
-Multi-region databases can't span multiple cloud providers.
+Multi-region databases cannot span multiple cloud providers.
 
 * For {db-serverless-vector} databases, you must select a region that supports that database type.
 For more information, see xref:astra-db-serverless:databases:regions.adoc[].
@@ -2308,7 +2308,7 @@ For more information, see xref:astra-db-serverless:databases:regions.adoc[].
 ====
 The database enters *Maintenance* status while provisioning and replicating data to the new region.
 
-While in *Maintenance* status, you can't add or remove regions, truncate tables, or delete keyspaces, tables, or collections.
+While in *Maintenance* status, you cannot add or remove regions, truncate tables, or delete keyspaces, tables, or collections.
 
 *Maintenance* status doesn't impact reads and writes.
 ====
@@ -2355,14 +2355,14 @@ astra db delete-region **DATABASE_ID** -r **REGION**
 ====
 The database enters *Maintenance* status while deleting the region.
 
-While in *Maintenance* status, you can't add or remove regions, truncate tables, or delete keyspaces, tables, or collections.
+While in *Maintenance* status, you cannot add or remove regions, truncate tables, or delete keyspaces, tables, or collections.
 
 *Maintenance* status doesn't impact reads and writes.
 ====
 
 [IMPORTANT]
 ====
-You can't remove the primary (default) region, which is the first region selected when you created the database.
+You cannot remove the primary (default) region, which is the first region selected when you created the database.
 
 When you remove a region, any connections to the deleted region are also removed.
 However, to avoid data loss, all data is replicated before the region is deleted.
@@ -2628,7 +2628,7 @@ OPTIONS
 [WARNING]
 ====
 Terminating a database permanently deletes all of its data, including xref:astra-db-serverless:databases:backup-restore.adoc[automatic backups].
-You can't undo this action.
+You cannot undo this action.
 ====
 
 Use the `astra db delete` command to terminate a database:
