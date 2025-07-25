@@ -2918,18 +2918,18 @@ OPTIONS
 ====
 
 [#cqlsh]
-== Use the CQL shell (cqlsh)
+== Use cqlsh
 
-The CQL shell (`cqlsh`) is an interface that you can use to issue xref:astra@cql:ROOT:index.adoc[{cass-short} Query Language (CQL)] commands to your database.
-The {product} provides built-in CQL shell support by downloading, installing, configuring, and wapping the `cqlsh` utility.
-This can act as a convenient alternative to installing and configuring a xref:astra-db-serverless:cql:develop-with-cql.adoc#connect-to-the-cql-shell[standalone CQL shell].
+`cqlsh` is an interface that you can use to issue xref:astra@cql:ROOT:index.adoc[{cass-short} Query Language (CQL)] commands to your database.
+The {product} provides built-in `cqlsh` support by downloading, installing, configuring, and wapping the `cqlsh` utility.
+This can act as a convenient alternative to installing and configuring a xref:astra-db-serverless:cql:develop-with-cql.adoc#connect-to-the-cql-shell[standalone cqlsh].
 
 To use `cqlsh` commands, you must have a supported version of Python installed on your system.
 The underlying `cqlsh` utility requires Python 2.7 (with TLS support) or Python 3.6--3.11.
 Python versions 3.12 and later are not supported.
 For more details, see this https://support.datastax.com/s/article/cqlsh-may-fail-with-A-Python-installation-with-SSL-is-required-to-connect-to-a-cloud-cluster-when-connecting-to-Astra[Support article]
 
-Use the `astra db cqlsh` command to start the CQL shell in interactive mode:
+Use the `astra db cqlsh` command to start `cqlsh` in interactive mode:
 
 [source,bash,subs="+quotes"]
 ----
@@ -2951,7 +2951,7 @@ token@cqlsh>
 ----
 ====
 
-Type `exit` or `quit;` and press kbd:[Return] to exit the CQL shell.
+Type `exit` or `quit;` and press kbd:[Return] to exit `cqlsh`.
 
 The first time you use the `astra db cqlsh` command, the {product} downloads and installs the `cqlsh` utility to the {product} installation directory (`~/.astra/cqlsh-astra`).
 The {product} also downloads the {scb-long} for each database you connect to and stores the {scb} zip files in the `~/.astra/scb` directory.
@@ -3649,7 +3649,7 @@ id,name,state_id,state_code,state_name,country_id,country_code,country_name,lati
 
 . Create a table in your database to store your data.
 +
-.. Start the CQL shell in interactive mode:
+.. Start `cqlsh` in interactive mode:
 +
 [source,bash]
 ----
@@ -3691,7 +3691,7 @@ CREATE TABLE cities_by_country (
 +
 This command creates a table named `cities_by_country` with the appropriate schema for the `cities.csv` dataset.
 +
-.. Type `exit` or `quit;` and press kbd:[Return] to exit the CQL shell.
+.. Type `exit` or `quit;` and press kbd:[Return] to exit `cqlsh`.
 
 . Load the data from the `cities.csv` file into the `cities_by_country` table that you just created in your database:
 +
@@ -4123,7 +4123,7 @@ https://api.astra.datastax.com/v2/streaming/tenants/cdc-demo-tenant
 ----
 ====
 
-. Use the xref:ROOT:managing.adoc#cqlsh[CQL shell] to create a table with a primary key column in your database.
+. Use `xref:ROOT:managing.adoc#cqlsh[cqlsh]` to create a table with a primary key column in your database.
 +
 [source,bash]
 ----
