@@ -2268,10 +2268,16 @@ For more information, see xref:astra-db-serverless:databases:manage-regions.adoc
 
 [IMPORTANT]
 ====
-Multi-region databases are a premium feature.
+* **Premium feature**: Multi-region databases are a premium feature.
 Each region added to a database increases the database's costs.
 This includes a one-time data replication fee for the new region, and charges for replicating data to all database regions.
 For more information, see xref:astra-db-serverless:administration:subscription-plans.adoc[].
+
+* **Status change**: The database enters *Maintenance* status while provisioning and replicating data to the new region.
+While in *Maintenance* status, you cannot add or remove regions, truncate tables, or delete keyspaces, tables, or collections.
+However, *Maintenance* status doesn't impact reads and writes.
+
+* **PCU groups**: For organizations on *Enterprise* plans that require use of xref:astra-db-serverless:administration:provisioned-capacity-units.adoc[PCU groups], you must xref:astra-db-serverless:databases:manage-regions.adoc[use the {astra-ui} to add regions] because the {product} doesn't support PCU group assignment when adding a region.
 ====
 
 Use the `astra db create-region` command to add a region to a database:
@@ -2305,15 +2311,6 @@ For more information, see xref:astra-db-serverless:databases:regions.adoc[].
 ----
 ====
 ////
-
-[NOTE]
-====
-The database enters *Maintenance* status while provisioning and replicating data to the new region.
-
-While in *Maintenance* status, you cannot add or remove regions, truncate tables, or delete keyspaces, tables, or collections.
-
-*Maintenance* status doesn't impact reads and writes.
-====
 
 Use the `astra db list-regions` command to list the regions where a database is deployed:
 
