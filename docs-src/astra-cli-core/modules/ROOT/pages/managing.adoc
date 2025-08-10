@@ -54,10 +54,12 @@ astra db create **DATABASE_NAME** --vector
 ----
 ====
 
-[NOTE]
+[IMPORTANT]
 ====
-You cannot create {db-classic} databases with the {product}.
+* **{db-classic} databases**: You cannot create {db-classic} databases with the {product}.
 However, you can use the {product} to <<get-database-details,get information>> about existing {db-classic} databases.
+
+* **PCU groups**: For organizations on *Enterprise* plans that require new databases to belong to a xref:astra-db-serverless:administration:provisioned-capacity-units.adoc[PCU group], you must xref:astra-db-serverless:databases:create-database.adoc[use the {astra-ui} to create databases] because the {product} doesn't support PCU group assignment with database creation.
 ====
 
 Running `astra db create` without any options deploys the database in an available *Free* region and uses `default_keyspace` as the name for the default keyspace.
