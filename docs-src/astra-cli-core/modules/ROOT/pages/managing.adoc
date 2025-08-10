@@ -523,11 +523,11 @@ You cannot load vector data into a non-vector collection.
 =====
 --
 
-Use an {astra}-hosted provider::
+Use an Astra-hosted provider::
 +
 --
 To automatically generate embeddings with xref:astra-db-serverless:databases:embedding-generation.adoc[{astra_db} vectorize], add an embedding provider integration to your collection.
-Embedding provider integrations are either {astra}-hosted or external.
+Embedding provider integrations are either Astra-hosted or external.
 
 [source,bash,subs="+quotes"]
 ----
@@ -542,7 +542,7 @@ astra db create-collection **DATABASE_ID** \
 Replace the following:
 
 * `**COLLECTION_NAME**`: The name of the collection you want to create.
-* `**PROVIDER_NAME**`: The name of the {astra}-hosted embedding provider.
+* `**PROVIDER_NAME**`: The name of the Astra-hosted embedding provider.
 * `**MODEL_NAME**`: The name of the embedding model that you want to use to generate embeddings.
 * (Optional) `**DIMENSION**`: The number of dimensions that you want the generated vectors to have.
 You can only set the dimensions if the chosen model supports a range of dimensions.
@@ -576,7 +576,7 @@ Use an external provider::
 +
 --
 To automatically generate embeddings with xref:astra-db-serverless:databases:embedding-generation.adoc[{astra_db} vectorize], add an embedding provider integration to your collection.
-Embedding provider integrations are either {astra}-hosted or external.
+Embedding provider integrations are either Astra-hosted or external.
 
 To use an external embedding provider, you must add an xref:astra-db-serverless:databases:embedding-generation.adoc#supported-embedding-providers[embedding provider integration] to your {astra_db} organization, and then you can select that embedding provider when you create a collection.
 
@@ -594,7 +594,7 @@ astra db create-collection **DATABASE_ID** \
 Replace the following:
 
 * `**COLLECTION_NAME**`: The name of the collection you want to create.
-* `**PROVIDER_NAME**`: The name of the {astra}-hosted embedding provider.
+* `**PROVIDER_NAME**`: The name of the Astra-hosted embedding provider.
 * `**MODEL_NAME**`: The name of the embedding model that you want to use to generate embeddings.
 * (Optional) `**PROVIDER_KEY_NAME**`: The name of the provider key that you want to use to authenticate with the external embedding provider.
 * (Optional) `**DIMENSION**`: The number of dimensions that you want the generated vectors to have.
@@ -2956,7 +2956,7 @@ token@cqlsh>
 Type `exit` or `quit;` and press kbd:[Return] to exit `cqlsh`.
 
 The first time you use the `astra db cqlsh` command, the {product} downloads and installs the `cqlsh` utility to the {product} installation directory (`~/.astra/cqlsh-astra`).
-The {product} also downloads the {scb-long} for each database you connect to and stores the {scb} zip files in the `~/.astra/scb` directory.
+The {product} also downloads the {scb} for each database you connect to and stores the {scb-short} zip files in the `~/.astra/scb` directory.
 
 [NOTE]
 ======
@@ -3315,7 +3315,7 @@ To resume the current operation, re-run it with the same settings, and add the f
 [NOTE]
 ====
 The first time you use one of the `astra db load`, `astra db unload`, or `astra db count` commands, the {product} downloads and installs the `dsbulk` utility to the {product} installation directory (`~/.astra/dsbulk-*`).
-The {product} also downloads the {scb-long} for each database you connect to and stores the {scb} zip files in the `~/.astra/scb` directory.
+The {product} also downloads the {scb} for each database you connect to and stores the {scb-short} zip files in the `~/.astra/scb` directory.
 ====
 
 === `db load` options
@@ -4229,11 +4229,11 @@ astra streaming list-cdc cdc-demo-tenant
 
 After you enable CDC on your {db-serverless} database, you can xref:astra-db-serverless:databases:change-data-capture.adoc#connect-a-sink[connect a sink].
 
-== Download the {scb-cap}
+== Download the {scb-brief}
 
 The xref:astra-db-serverless:drivers:secure-connect-bundle.adoc[] is a zip file containing security credentials and certificates required for secure mutual TLS (mTLS) connection to your database.
 
-Use the `astra db download-scb` command to download the {scb-long} for a database:
+Use the `astra db download-scb` command to download the {scb} for a database:
 
 [source,bash,subs="+quotes"]
 ----
@@ -4250,15 +4250,15 @@ astra db download-scb **DATABASE_ID** -r **REGION_NAME**
 ====
 
 The `-r **REGION_NAME**` option is required for <<configure-multiple-regions,multi-region databases>>.
-If your database is configured with multiple regions, replace `**REGION_NAME**` with the name of the region you want to download the {scb} for.
+If your database is configured with multiple regions, replace `**REGION_NAME**` with the name of the region you want to download the {scb-short} for.
 
-By default, the {product} downloads the {scb} to the directory where you run the command and saves the file with the following naming pattern: `scb_**DATABASE-ID**_**REGION-NAME**.zip`.
+By default, the {product} downloads the {scb-short} to the directory where you run the command and saves the file with the following naming pattern: `scb_**DATABASE-ID**_**REGION-NAME**.zip`.
 
 [WARNING]
 ====
-Treat the {scb} the same way you would any other sensitive values, such as passwords or tokens.
+Treat the {scb-short} the same way you would any other sensitive values, such as passwords or tokens.
 
-The {scb} contains sensitive information that establishes a connection to your database, including key pairs and certificates.
+The {scb-short} contains sensitive information that establishes a connection to your database, including key pairs and certificates.
 ====
 
 === `db download-scb` options
@@ -4317,7 +4317,7 @@ OPTIONS
 ----
 ====
 
-Use the `-r` / `--region` option to download the {scb} for a specific region:
+Use the `-r` / `--region` option to download the {scb-short} for a specific region:
 
 [source,bash,subs="+quotes"]
 ----
@@ -4339,7 +4339,7 @@ Use the `astra db list-regions` command to get a list of the region names where 
 For more information, see <<configure-multiple-regions>>.
 ====
 
-Use the `-f` / `--output-file` option to download the {scb} to a specific location and filename:
+Use the `-f` / `--output-file` option to download the {scb-short} to a specific location and filename:
 
 [source,bash,subs="+quotes"]
 ----
@@ -4402,7 +4402,7 @@ ASTRA_ORG_TOKEN="AstraCS:FZm..."
 ====
 The generated `.env` files contains sensitive information, including the application token that the {product} uses to connect to Astra.
 
-The {scb} contains sensitive information that establishes a connection to your database, including key pairs and certificates.
+The {scb-short} contains sensitive information that establishes a connection to your database, including key pairs and certificates.
 ====
 
 === `db create-dotenv` options

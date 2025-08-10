@@ -8,19 +8,25 @@ nav:
 
 asciidoc:
   attributes:
+    # General attributes
+    company: 'DataStax'
+    support-url: 'https://support.datastax.com'
+    # Other product attributes
+    cass-reg: 'Apache Cassandra(R)'
+    cass: 'Apache Cassandra'
+    cass-short: 'Cassandra'
+    # Astra DB attributes
+    astra-db: 'Astra DB'
+    astra: 'Astra'
     product: 'Astra CLI'
     product-version: '0.6'
-    astra: 'Astra'
     db-serverless: 'Serverless (Non-Vector)'
     db-serverless-vector: 'Serverless (Vector)'
     db-classic: 'Classic'
-    astra-api: 'Data API'
-    url-astra: 'https://astra.datastax.com'
-    link-astra-portal: '{url-astra}[{astra_ui}^]'
-    py-client-api-ref-url: 'xref:astra-api-docs:ROOT:attachment$python-client/astrapy'
-    ts-client-api-ref-url: 'xref:astra-api-docs:ROOT:attachment$typescript-client'
-    java-client-api-ref-url: 'xref:astra-api-docs:ROOT:attachment$java-client'
-    cass-short: 'Cassandra'
-    scb-long: Secure Connect Bundle (SCB)
-    scb-cap: Secure Connect Bundle
-    scb: SCB
+    astra-stream: 'Astra Streaming'
+    astra-ui: 'Astra Portal'
+    astra-url: 'https://astra.datastax.com'
+    astra-ui-link: '{astra-url}[{astra-ui}^]'
+    scb: 'Secure Connect Bundle (SCB)'
+    scb-short: 'SCB'
+    scb-brief: 'Secure Connect Bundle'
