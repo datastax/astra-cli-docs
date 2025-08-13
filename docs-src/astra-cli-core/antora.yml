@@ -23,6 +23,7 @@ asciidoc:
     db-serverless: 'Serverless (Non-Vector)'
     db-serverless-vector: 'Serverless (Vector)'
     db-classic: 'Classic'
+    devops-api: 'DevOps API'
     astra-stream: 'Astra Streaming'
     astra-ui: 'Astra Portal'
     astra-url: 'https://astra.datastax.com'

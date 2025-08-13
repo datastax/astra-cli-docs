@@ -59,7 +59,7 @@ astra db create **DATABASE_NAME** --vector
 * **{db-classic} databases**: You cannot create {db-classic} databases with the {product}.
 However, you can use the {product} to <<get-database-details,get information>> about existing {db-classic} databases.
 
-* **PCU groups**: For organizations on *Enterprise* plans that require new databases to belong to a xref:astra-db-serverless:administration:provisioned-capacity-units.adoc[PCU group], you must xref:astra-db-serverless:databases:create-database.adoc[use the {astra-ui} to create databases] because the {product} doesn't support PCU group assignment with database creation.
+* **PCU groups**: For organizations on *Enterprise* plans that require new databases to belong to a xref:astra-db-serverless:administration:provisioned-capacity-units.adoc[PCU group], you must xref:astra-db-serverless:databases:create-database.adoc[use the {astra-ui} or {devops-api} to create databases] because the {product} doesn't support PCU group assignment with database creation.
 ====
 
 Running `astra db create` without any options deploys the database in an available *Free* region and uses `default_keyspace` as the name for the default keyspace.
@@ -2277,7 +2277,7 @@ For more information, see xref:astra-db-serverless:administration:subscription-p
 While in *Maintenance* status, you cannot add or remove regions, truncate tables, or delete keyspaces, tables, or collections.
 However, *Maintenance* status doesn't impact reads and writes.
 
-* **PCU groups**: For organizations on *Enterprise* plans that require use of xref:astra-db-serverless:administration:provisioned-capacity-units.adoc[PCU groups], you must xref:astra-db-serverless:databases:manage-regions.adoc[use the {astra-ui} to add regions] because the {product} doesn't support PCU group assignment when adding a region.
+* **PCU groups**: For organizations on *Enterprise* plans that require use of xref:astra-db-serverless:administration:provisioned-capacity-units.adoc[PCU groups], you must xref:astra-db-serverless:databases:manage-regions.adoc[use the {astra-ui} or {devops-api} to add regions] because the {product} doesn't support PCU group assignment when adding a region.
 ====
 
 Use the `astra db create-region` command to add a region to a database:
