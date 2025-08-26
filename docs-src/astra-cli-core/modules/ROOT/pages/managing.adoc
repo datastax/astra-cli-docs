@@ -13,6 +13,9 @@ You can use `**DATABASE_NAME**` instead of `**DATABASE_ID**` in all `astra db` c
 
 == Create a database
 
+The {product} can create {db-serverless} and {db-serverless-vector} databases only.
+It cannot create {db-classic} databases; however, you can use the {product} to <<get-database-details,get information>> about your existing {db-classic} databases.
+
 Use the `astra db create` command to create a new {db-serverless} database:
 
 [source,bash,subs="+quotes"]
@@ -52,12 +55,6 @@ astra db create **DATABASE_NAME** --vector
 [INFO]  Database 'my_vector_db' has status 'ACTIVE' (took 142712 millis)
 [OK]    Database 'my_vector_db' is ready.
 ----
-====
-
-[NOTE]
-====
-You cannot create {db-classic} databases with the {product}.
-However, you can use the {product} to <<get-database-details,get information>> about existing {db-classic} databases.
 ====
 
 Running `astra db create` without any options deploys the database in an available *Free* region and uses `default_keyspace` as the name for the default keyspace.
@@ -461,7 +458,7 @@ Use the `astra db create-collection` command to create a new collection in a {db
 Bring my own embeddings::
 +
 --
-Use this option if you plan to generate your own embeddings and import them when you load data into your collection.
+Use these options if you plan to generate your own embeddings and import them when you load data into your collection:
 
 [source,bash,subs="+quotes"]
 ----
@@ -497,28 +494,6 @@ astra db create-collection 58747660-464b-4085-bef2-c3f3e5401e3d \
 [OK]    Database '58747660-464b-4085-bef2-c3f3e5401e3d' is ready.
 ----
 ====
-
-[NOTE]
-=====
-To create a collection that is _not_ vector-enabled, omit the `-d` and `-m` options.
-
-[source,bash,subs="+quotes"]
-----
-astra db create-collection **DATABASE_ID** -c **COLLECTION_NAME**
-----
-
-.Result
-[%collapsible]
-====
-[source,console]
-----
-[OK]    Collection 'my_collection' as been created from db '58747660-464b-4085-bef2-c3f3e5401e3d' on keyspace  'default_keyspace'
-[OK]    Database '58747660-464b-4085-bef2-c3f3e5401e3d' is ready.
-----
-====
-
-You cannot load vector data into a non-vector collection.
-=====
 --
 
 Use an {astra}-hosted provider::
@@ -526,6 +501,8 @@ Use an {astra}-hosted provider::
 --
 To automatically generate embeddings with xref:astra-db-serverless:databases:embedding-generation.adoc[{astra_db} vectorize], add an embedding provider integration to your collection.
 Embedding provider integrations are either {astra}-hosted or external.
+
+This option uses an {astra}-hosted provider:
 
 [source,bash,subs="+quotes"]
 ----
@@ -576,7 +553,7 @@ Use an external provider::
 To automatically generate embeddings with xref:astra-db-serverless:databases:embedding-generation.adoc[{astra_db} vectorize], add an embedding provider integration to your collection.
 Embedding provider integrations are either {astra}-hosted or external.
 
-To use an external embedding provider, you must add an xref:astra-db-serverless:databases:embedding-generation.adoc#supported-embedding-providers[embedding provider integration] to your {astra_db} organization, and then you can select that embedding provider when you create a collection.
+To use an external embedding provider, you must add an xref:astra-db-serverless:databases:embedding-generation.adoc#supported-embedding-providers[embedding provider integration] to your {astra_db} organization, and then you can select that embedding provider when you create a collection:
 
 [source,bash,subs="+quotes"]
 ----
@@ -611,6 +588,28 @@ astra db create-collection 58747660-464b-4085-bef2-c3f3e5401e3d \
     --embedding-key my_openai_key \
     -d 1024 \
     -m dot_product
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
+[OK]    Collection 'my_collection' as been created from db '58747660-464b-4085-bef2-c3f3e5401e3d' on keyspace  'default_keyspace'
+[OK]    Database '58747660-464b-4085-bef2-c3f3e5401e3d' is ready.
+----
+====
+--
+
+Non-vector collection::
++
+--
+To create a collection that is _not_ vector-enabled, omit the `-d` and `-m` options.
+Be aware that non-vector collections don't support vector-dependent functionality like vector search.
+
+[source,bash,subs="+quotes"]
+----
+astra db create-collection **DATABASE_ID** -c **COLLECTION_NAME**
 ----
 
 .Result
@@ -1132,12 +1131,10 @@ astra db delete-collection **DATABASE_ID** \
 [#manage-tables]
 == Manage tables
 
-xref:astra-db-serverless:databases:manage-collections.adoc[Tables] store structured data, in the form of rows, in {db-serverless-vector} and {db-serverless} databases.
+xref:astra-db-serverless:databases:manage-collections.adoc[Tables] store structured data, as rows and columns, instead of documents.
 
-[NOTE]
-====
-The commands described in this section apply only to {db-serverless-vector} databases.
-====
+You can create tables in {db-serverless-vector} and {db-serverless} databases.
+However, the commands described in this section apply only to {db-serverless-vector} databases.
 
 Use the `astra db list-tables` command to get a list of the tables in a {db-serverless-vector} database:
 
@@ -1158,7 +1155,6 @@ astra db list-tables **DATABASE_ID**
 +---------------------+
 ----
 ====
-
 
 Use the `astra db describe-table` command to get information about a specific table:
 
@@ -2260,37 +2256,17 @@ OPTIONS
 [#configure-multiple-regions]
 == Configure multiple regions
 
-You can configure a database to replicate data across multiple regions.
-Some benefits of multi-region databases include better data locality and higher availability for multi-region application architectures.
-For more information, see xref:astra-db-serverless:databases:manage-regions.adoc[].
-
-[IMPORTANT]
-====
-Multi-region databases are a premium feature.
-Each region added to a database increases the database's costs.
-This includes a one-time data replication fee for the new region, and charges for replicating data to all database regions.
-For more information, see xref:astra-db-serverless:administration:subscription-plans.adoc[].
-====
-
-Use the `astra db create-region` command to add a region to a database:
+Use the `astra db create-region` command to deploy a database to an additional region:
 
 [source,bash,subs="+quotes"]
 ----
 astra db create-region **DATABASE_ID** -r **REGION**
 ----
 
-Replace `**REGION**` with the region you want to add to your database.
-The following restrictions apply:
+The database enters *Maintenance* status while provisioning and replicating data to the new region.
+Some functions are limited while in *Maintenance* status.
 
-* You can add only one region at a time.
-
-* You cannot select a region that the database already uses.
-
-* You must select a region in the same cloud provider as the database's other regions.
-Multi-region databases cannot span multiple cloud providers.
-
-* For {db-serverless-vector} databases, you must select a region that supports that database type.
-For more information, see xref:astra-db-serverless:databases:regions.adoc[].
+For more information, including requirements and costs for additional regions, see xref:astra-db-serverless:databases:manage-regions.adoc[].
 
 ////
 // TODO: The command is not working as expected. Must investigate and figure out why it is reporting the following error: [ERROR] UNAVAILABLE: Database 'my_serverless_db' has been found but operation cannot be processed due to invalid state (ACTIVE) expected (ACTIVE)
@@ -2303,15 +2279,6 @@ For more information, see xref:astra-db-serverless:databases:regions.adoc[].
 ----
 ====
 ////
-
-[NOTE]
-====
-The database enters *Maintenance* status while provisioning and replicating data to the new region.
-
-While in *Maintenance* status, you cannot add or remove regions, truncate tables, or delete keyspaces, tables, or collections.
-
-*Maintenance* status doesn't impact reads and writes.
-====
 
 Use the `astra db list-regions` command to list the regions where a database is deployed:
 
@@ -2351,21 +2318,12 @@ astra db delete-region **DATABASE_ID** -r **REGION**
 ----
 ====
 
-[NOTE]
-====
-The database enters *Maintenance* status while deleting the region.
-
-While in *Maintenance* status, you cannot add or remove regions, truncate tables, or delete keyspaces, tables, or collections.
-
-*Maintenance* status doesn't impact reads and writes.
-====
-
 [IMPORTANT]
 ====
 You cannot remove the primary (default) region, which is the first region selected when you created the database.
 
 When you remove a region, any connections to the deleted region are also removed.
-However, to avoid data loss, all data is replicated before the region is deleted.
+However, to avoid data loss, all data is replicated to the other regions before the region is deleted.
 ====
 
 === `db create-region` options
@@ -2957,7 +2915,7 @@ Type `exit` or `quit;` and press kbd:[Return] to exit `cqlsh`.
 The first time you use the `astra db cqlsh` command, the {product} downloads and installs the `cqlsh` utility to the {product} installation directory (`~/.astra/cqlsh-astra`).
 The {product} also downloads the {scb-long} for each database you connect to and stores the {scb} zip files in the `~/.astra/scb` directory.
 
-[NOTE]
+[TIP]
 ======
 If the {product} reports `ModuleNotFoundError`, check that you have a supported version of Python available in your terminal:
 
@@ -3167,12 +3125,15 @@ astra db cqlsh **DATABASE_ID** -e "SOURCE 'sample.cql'"
 ====
 ======
 
-== Use DataStax Bulk Loader (DSBulk)
+== Use DataStax Bulk Loader
 
-The xref:dsbulk:overview:dsbulk-about.adoc[DataStax Bulk Loader] (DSBulk) lets you load, unload, and count data in your database tables.
+The xref:dsbulk:overview:dsbulk-about.adoc[DataStax Bulk Loader (DSBulk)] lets you load, unload, and count data in your database tables.
 The {product} provides built-in DSBulk support by downloading, installing, configuring, and wapping the `dsbulk` utility.
 
 The {product} exposes DSBulk functionality through the `astra db load`, `astra db unload`, and `astra db count` commands.
+
+The first time you run `astra db load`, `astra db unload`, or `astra db count` commands, the {product} downloads and installs the `dsbulk` utility to the {product} installation directory (`~/.astra/dsbulk-*`).
+The {product} also downloads the {scb-long} for each database you connect to and stores the {scb} zip files in the `~/.astra/scb` directory.
 
 Use the `astra db load` command to load data from a file into a database table:
 
@@ -3309,12 +3270,6 @@ To resume the current operation, re-run it with the same settings, and add the f
 --dsbulk.log.checkpoint.file=/Users/USERNAME/logs/COUNT_20250123-021120-127216/checkpoint.csv
 134574
 ----
-====
-
-[NOTE]
-====
-The first time you use one of the `astra db load`, `astra db unload`, or `astra db count` commands, the {product} downloads and installs the `dsbulk` utility to the {product} installation directory (`~/.astra/dsbulk-*`).
-The {product} also downloads the {scb-long} for each database you connect to and stores the {scb} zip files in the `~/.astra/scb` directory.
 ====
 
 === `db load` options
@@ -3611,7 +3566,7 @@ OPTIONS
 ----
 ====
 
-=== End-to-end example
+=== Complete DSBulk example
 
 The following end-to-end example shows how to use the {product}'s built-in DSBulk support to load data into a database, get information about the data, and unload the data into CSV files:
 
@@ -4076,7 +4031,7 @@ OPTIONS
 ----
 ====
 
-=== End-to-end example
+=== Complete CDC configuration example
 
 The following end-to-end example shows how to use the {product} to create a CDC connection for a table in a {db-serverless} database:
 
