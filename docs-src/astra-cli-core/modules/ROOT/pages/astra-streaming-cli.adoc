@@ -24,8 +24,8 @@ https://api.astra.datastax.com/v2/streaming/tenants/my-streaming-tenant
 
 Running `astra streaming create` without any options deploys the tenant in the default cloud provider (`aws`), region (`useast2`), plan (`free`) and namespace (`default`).
 
-[NOTE]
-======
+=== Tenant names must be unique
+
 All tenant names in {astra_stream} must be unique.
 If the tenant name is already in use, the command fails with with the following error message:
 
@@ -67,7 +67,6 @@ https://api.astra.datastax.com/v2/streaming/tenants/my-streaming-tenant
 [OK]    Tenant 'my-streaming-tenant' exists.
 ----
 ====
-======
 
 === `streaming create` options
 
@@ -1087,6 +1086,9 @@ The {scb} contains sensitive information that establishes a connection to your d
 
 === `streaming create-dotenv` options
 
+The directory must already exist before you run the `streaming create-dotenv` command.
+If the directory doesn't exist, the command fails with the error `INVALID_ARGUMENT: Destination folder has not been found`.
+
 .Expand to see all `streaming create-dotenv` options
 [%collapsible]
 ====
@@ -1152,10 +1154,4 @@ astra streaming create-dotenv **TENANT_NAME** -d ~/tmp
 ----
 [OK]    File '/Users/USERNAME/tmp/.env' has been created/amended
 ----
-====
-
-[NOTE]
-====
-The directory must already exist before you run the command.
-If the directory doesn't exist, the {product} will report the following error: `INVALID_ARGUMENT: Destination folder has not been found`.
 ====

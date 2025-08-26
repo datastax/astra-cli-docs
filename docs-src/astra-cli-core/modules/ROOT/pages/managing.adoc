@@ -4406,6 +4406,9 @@ The {scb} contains sensitive information that establishes a connection to your d
 
 === `db create-dotenv` options
 
+The directory must already exist before you run the `db create-dotenv` command.
+If the directory doesn't exist, the command fails with the error `INVALID_ARGUMENT: Destination folder has not been found`.
+
 .Expand to see all `db create-dotenv` options
 [%collapsible]
 ====
@@ -4479,10 +4482,3 @@ astra db create-dotenv **DATABASE_ID** -d ~/tmp
 [OK]    File '/Users/USERNAME/tmp/.env' has been created/amended
 ----
 ====
-
-[NOTE]
-====
-The directory must already exist before you run the command.
-If the directory doesn't exist, the {product} will report the following error: `INVALID_ARGUMENT: Destination folder has not been found`.
-====
-

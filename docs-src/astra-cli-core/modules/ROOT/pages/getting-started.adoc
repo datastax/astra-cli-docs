@@ -75,9 +75,9 @@ Application tokens are stored in plain text in the `~/.astrarc` file.
 Your application tokens are like passwords, therefore you should take precautions to secure the configuration file.
 ====
 
-== Display help information
+== Print help information
 
-Use `astra help` to display the main help information:
+Use `astra help` to print general {product} help information:
 
 [source,bash]
 ----
@@ -85,7 +85,7 @@ astra help
 ----
 
 .Result
-[%collapsible%open]
+[%collapsible]
 ====
 [source,console]
 ----
@@ -108,7 +108,7 @@ See 'astra help <command>' for more information on a specific command.
 ----
 ====
 
-Append a command name to display help information about an individual command.
+Append a command name to print help information about an individual command.
 For example:
 
 [source,bash]
@@ -235,6 +235,8 @@ SYNOPSIS
 ----
 ====
 
+Append a subcommand for further specificity:
+
 [source,bash]
 ----
 astra help db list
@@ -305,15 +307,18 @@ astra kbd:[Tab] kbd:[Tab]
 == Manage the {product} configuration
 
 When you run the `astra setup` command during <<initialize,initialization>>, the {product} stores your application token as the default configuration in the `~/.astrarc` configuration file.
+
 You can create additional configurations, each with their own application token, to make it easier to manage different types of resources across one or more organizations.
 
-Use `astra config list` to list all current configurations:
+=== Get and set configurations
 
+. Use `astra config list` to list all current configurations:
++
 [source,bash]
 ----
 astra config list
 ----
-
++
 .Result
 [%collapsible]
 ====
@@ -326,13 +331,13 @@ astra config list
 +----------------------------+
 ====
 
-Use `astra config create` to create a new configuration:
-
+. Use `astra config create` to create a new configuration:
++
 [source,bash,subs="+quotes"]
 ----
 astra config create "**CONFIG_NAME**" --token **APPLICATION_TOKEN**
 ----
-
++
 .Result
 [%collapsible]
 ====
@@ -342,13 +347,13 @@ astra config create "**CONFIG_NAME**" --token **APPLICATION_TOKEN**
 ----
 ====
 
-Use `astra config use` to change the default configuration that {product} uses when executing commands:
-
+. Use `astra config use` to change the default configuration that {product} uses when executing commands:
++
 [source,bash,subs="+quotes"]
 ----
 astra config use "**CONFIG_NAME**"
 ----
-
++
 .Result
 [%collapsible]
 ====
@@ -356,14 +361,15 @@ astra config use "**CONFIG_NAME**"
 ----
 [OK]    Section '**CONFIG_NAME**' is set as default.
 ----
-
-Use `astra config list` to confirm that the selected configuration is now the default.
 ====
 
-[TIP]
-====
+. Optional: Rerun `astra config list` to verify that the new default configuration is set.
+
+=== Set the configuration for a single run
+
 Every {product} command supports the `--config` option.
 This option lets you use a different configuration when running a command without changing the default configuration.
+For example:
 
 [source,bash,subs="+quotes"]
 ----
@@ -372,12 +378,14 @@ astra user list --config "**CONFIG_NAME**"
 
 Alternatively, you can use the `--token` option to supply an application token when running a command.
 This option lets you use a different application token without having to create a new configuration.
+For example:
 
 [source,bash,subs="+quotes"]
 ----
 astra user list --token "**APPLICATION_TOKEN**"
 ----
-====
+
+=== Delete a configuration
 
 Use `astra config delete` to delete a configuration:
 
@@ -393,17 +401,17 @@ astra config delete "**CONFIG_NAME**"
 ----
 [OK]    Section '**CONFIG_NAME**' has been deleted.
 ----
-
-Use `astra config list` to confirm that the selected configuration is now the default.
 ====
 
-[NOTE]
+[IMPORTANT]
 ====
-If you delete the default configuration, the {product} does _not_ automatically select a new default configuration.
+If you delete the default configuration, the {product} _doesn't_ automatically select a new default configuration.
 Use the `astra config use` command to select a new default configuration.
 ====
 
 === `config` options
+
+The following options are available for the `astra config` command:
 
 [source,console]
 ----
@@ -436,7 +444,9 @@ SYNOPSIS
         See 'astra help config <command>' for more information on a specific command.
 ----
 
-.Expand to see all `config create` options
+See the following sections for `config` subcommand options:
+
+.`config create` options
 [%collapsible]
 ====
 [source,console]
@@ -479,7 +489,7 @@ OPTIONS
 ----
 ====
 
-.Expand to see all `config delete` options
+.`config delete` options
 [%collapsible]
 ====
 [source,console]
@@ -515,7 +525,7 @@ OPTIONS
 ----
 ====
 
-.Expand to see all `config describe` options
+.`config describe` options
 [%collapsible]
 ====
 [source,console]
@@ -555,7 +565,7 @@ OPTIONS
 ----
 ====
 
-.Expand to see all `config get` options
+.`config get` options
 [%collapsible]
 ====
 [source,console]
@@ -595,7 +605,7 @@ OPTIONS
 ----
 ====
 
-.Expand to see all `config list` options
+.`config list` options
 [%collapsible]
 ====
 [source,console]
@@ -623,7 +633,7 @@ OPTIONS
 ----
 ====
 
-.Expand to see all `config use` options
+.`config use` options
 [%collapsible]
 ====
 [source,console]
