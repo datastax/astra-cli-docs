@@ -64,7 +64,7 @@ Running `astra db create` without any options deploys the database in an availab
 
 If the database already exists but is currently xref:astra-db-serverless:databases:database-statuses.adoc[hibernated], the `astra db create` command <<resume-database,resumes>> the database.
 
-include::ROOT:partial$async-option.adoc[tags=active]
+include::ROOT:partial$async-option-active.adoc[]
 
 === `db create` options
 
@@ -210,7 +210,7 @@ astra db create-keyspace **DATABASE_ID** -k **KEYSPACE_NAME**
 The database enters *Maintenance* status while creating the keyspace.
 When the database returns to *Active* status, you can use the new keyspace.
 
-include::ROOT:partial$async-option.adoc[tags=active]
+include::ROOT:partial$async-option-active.adoc[]
 
 [TIP]
 ======
@@ -281,7 +281,7 @@ Deleting a keyspace permanently deletes all collections, tables, and data in the
 
 The database enters *Maintenance* status while it deletes the keyspace along with any collections, tables, and data within the keyspace.
 
-include::ROOT:partial$async-option.adoc[tags=active]
+include::ROOT:partial$async-option-active.adoc[]
 
 If you delete the default keyspace, {astra_db} automatically selects another keyspace to be the default keyspace.
 
@@ -2563,7 +2563,7 @@ astra db resume **DATABASE_ID**
 
 Resuming the database may take a few minutes.
 
-include::ROOT:partial$async-option.adoc[tags=active]
+include::ROOT:partial$async-option-active.adoc[]
 
 === `db resume` options
 
@@ -2650,7 +2650,8 @@ astra db delete **DATABASE_ID**
 
 The database enters *Terminating* status while deletion occurs.
 
-include::ROOT:partial$async-option.adoc[tags=terminated]
+By default, the command runs synchronously and doesn't return the command prompt until the database reaches *Terminated* or *Error* status.
+To run the command _asynchronously_, add the `--async` option.
 
 === `db delete` options
 
