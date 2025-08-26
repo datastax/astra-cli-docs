@@ -540,43 +540,15 @@ OPTIONS
 
 == Get a list of available {astra_stream} regions
 
-Use the `astra streaming list-regions` command to get a list of available cloud provider regions that support {astra_stream}:
+Use the `astra streaming list-regions` command to get a list of available regions that support {astra_stream}:
 
 [source,bash]
 ----
 astra streaming list-regions
 ----
 
-.Result
-[%collapsible]
-======
-[source,console]
-----
-+-----------------+---------------------+-------------------------------+
-| Cloud Provider  | Region              | Full Name                     |
-+-----------------+---------------------+-------------------------------+
-| aws             | apsouth1            |                               |
-| aws             | apsoutheast1        |                               |
-| aws             | apsoutheast2        |                               |
-| aws             | eucentral1          |                               |
-| aws             | euwest1             |                               |
-| aws             | useast1             |                               |
-| aws             | useast2             |                               |
-| aws             | uswest2             |                               |
-| azure           | australiaeast       |                               |
-| azure           | eastus              |                               |
-| azure           | westeurope          |                               |
-| azure           | westus2             |                               |
-| gcp             | australiase1        |                               |
-| gcp             | europewest1         |                               |
-| gcp             | uscentral1          |                               |
-| gcp             | useast1             |                               |
-| gcp             | useast4             |                               |
-+-----------------+---------------------+-------------------------------+
-----
-
-include::ROOT:partial$regions-change-admonition.adoc[]
-======
+The result is a table with `Cloud Provider`, `Region`, and `Full Name` columns.
+`Full Name` can be empty or contain the region's name and location (city, state, or country).
 
 === `streaming list-regions` options
 

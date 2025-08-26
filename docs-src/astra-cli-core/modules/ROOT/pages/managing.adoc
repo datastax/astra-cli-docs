@@ -1455,6 +1455,9 @@ astra db list-embedding-providers **DATABASE_ID**
 .Result
 [%collapsible]
 ======
+The following result is for example purposes only.
+Supported embedding providers and options can change.
+
 [source,console]
 ----
 +----------------------+--------------------------+--------+------------+---------+----------+
@@ -1473,8 +1476,6 @@ astra db list-embedding-providers **DATABASE_ID**
 | mistral              | Mistral AI               | 1      | 0          | ■       | ■        |
 +----------------------+--------------------------+--------+------------+---------+----------+
 ----
-
-include::ROOT:partial$ep-change-admonition.adoc[]
 ======
 
 Use the `astra db describe-embedding-provider` command to get information about a specific embedding provider integration:
@@ -1489,6 +1490,9 @@ The `**PROVIDER_NAME**` is the name listed in the `Key` column in the output of 
 .Result
 [%collapsible]
 ======
+The following result is for example purposes only.
+Supported embedding providers and options can change.
+
 [source,console]
 ----
 +-------------------+---------------------------------------------------------------------------------------------+
@@ -1517,8 +1521,6 @@ The `**PROVIDER_NAME**` is the name listed in the `Key` column in the output of 
 
 [OK]    Database '58747660-464b-4085-bef2-c3f3e5401e3d' is ready.
 ----
-
-include::ROOT:partial$ep-change-admonition.adoc[]
 ======
 
 === `db list-embedding-providers` options
@@ -1918,66 +1920,12 @@ OPTIONS
 
 == Get a list of available {astra_db} regions
 
-Use the `astra db list-regions-serverless` command to get a list of available cloud provider regions that support {db-serverless} databases:
+Use the `astra db list-regions-serverless` command to get a list of available regions that support {db-serverless} databases:
 
 [source,bash]
 ----
 astra db list-regions-serverless
 ----
-
-.Result
-[%collapsible]
-======
-[source,console]
-----
-+-----------------+-------------------------+---------------------------------------+
-| Cloud Provider  | Region                  | Full Name                             |
-+-----------------+-------------------------+---------------------------------------+
-| aws             | ap-east-1               | Asia Pacific (Hong Kong)              |
-| aws             | ap-south-1              | Asia Pacific (Mumbai)                 |
-| aws             | ap-southeast-1          | Asia Pacific (Singapore)              |
-| aws             | ap-southeast-2          | Asia Pacific (Sydney)                 |
-| aws             | ca-central-1            | Canada (Central)                      |
-| aws             | ca-west-1               | Canada West (Calgary)                 |
-| aws             | eu-central-1            | Europe (Frankfurt)                    |
-| aws             | eu-west-1               | Europe (Ireland)                      |
-| aws             | eu-west-2               | Europe (London)                       |
-| aws             | me-central-1            | Middle East (UAE)                     |
-| aws             | sa-east-1               | South America (Sao Paulo)             |
-| aws             | us-east-1               | US East (N. Virginia)                 |
-| aws             | us-east-2               | US East (Ohio)                        |
-| aws             | us-west-2               | US West (Oregon)                      |
-| azure           | australiaeast           | Australia East                        |
-| azure           | brazilsouth             | Brazil South (Sao Paulo)              |
-| azure           | canadacentral           | Canada Central (Toronto)              |
-| azure           | centralindia            | Central India (Pune)                  |
-| azure           | centralus               | (US) Central US                       |
-| azure           | eastus                  | US East                               |
-| azure           | eastus2                 | US East 2 (Virginia)                  |
-| azure           | northeurope             | Northern Europe (Ireland)             |
-| azure           | westeurope              | West Europe                           |
-| azure           | westus2                 | US West (Washington)                  |
-| azure           | westus3                 | US West 3                             |
-| gcp             | asia-northeast1         | Asia Northeast1 (Tokyo, Japan)        |
-| gcp             | asia-northeast2         | Osaka, Japan, APAC                    |
-| gcp             | asia-south1             | Mumbai, India                         |
-| gcp             | australia-southeast1    | Sydney, Australia, APAC               |
-| gcp             | europe-west1            | St. Ghislain, Belgium                 |
-| gcp             | europe-west2            | West Europe2 (London, England, UK)    |
-| gcp             | europe-west3            | West Europe3 (Frankfurt, Germany)     |
-| gcp             | europe-west4            | West Europe4 (Eemshaven, Netherlands) |
-| gcp             | northamerica-northeast1 | Montreal, Quebec                      |
-| gcp             | northamerica-northeast2 | Toronto, Ontario                      |
-| gcp             | us-central1             | Council Bluffs, Iowa                  |
-| gcp (free-tier) | us-east1                | Moncks Corner, South Carolina         |
-| gcp             | us-east4                | Ashburn, Virginia                     |
-| gcp             | us-west1                | The Dalles, Oregon                    |
-| gcp             | us-west4                | US West (Las Vegas, USA)              |
-+-----------------+-------------------------+---------------------------------------+
-----
-
-include::ROOT:partial$regions-change-admonition.adoc[]
-======
 
 Use the `astra db list-regions-vector` command to get a list of available cloud provider regions that support {db-serverless-vector} databases:
 
@@ -1986,33 +1934,6 @@ Use the `astra db list-regions-vector` command to get a list of available cloud 
 astra db list-regions-vector
 ----
 
-.Result
-[%collapsible]
-======
-[source,console]
-----
-+-----------------+-------------------------+------------------------------------+
-| Cloud Provider  | Region                  | Full Name                          |
-+-----------------+-------------------------+------------------------------------+
-| aws             | ap-south-1              | Asia Pacific (Mumbai)              |
-| aws             | ap-southeast-2          | Asia Pacific (Sydney)              |
-| aws             | eu-west-1               | Europe (Ireland)                   |
-| aws             | us-east-1               | US East (N. Virginia)              |
-| aws             | us-east-2               | US East (Ohio)                     |
-| azure           | australiaeast           | Australia East                     |
-| azure           | centralindia            | Central India (Pune)               |
-| azure           | westeurope              | West Europe                        |
-| azure           | westus3                 | US West 3                          |
-| gcp             | europe-west2            | West Europe2 (London, England, UK) |
-| gcp             | northamerica-northeast1 | Montreal, Quebec                   |
-| gcp (free-tier) | us-east1                | Moncks Corner, South Carolina      |
-| gcp             | us-east4                | Ashburn, Virginia                  |
-+-----------------+-------------------------+------------------------------------+
-----
-
-include::ROOT:partial$regions-change-admonition.adoc[]
-======
-
 Use the `astra db list-regions-classic` command to get a list of available cloud provider regions that support {db-classic} databases:
 
 [source,bash]
@@ -2020,54 +1941,8 @@ Use the `astra db list-regions-classic` command to get a list of available cloud
 astra db list-regions-classic
 ----
 
-.Result
-[%collapsible]
-======
-[source,console]
-----
-+-----------------+-------------------------+-------------------------------+
-| Cloud Provider  | Region                  | Full Name                     |
-+-----------------+-------------------------+-------------------------------+
-| aws             | af-south-1              | Africa (Cape Town)            |
-| aws             | ap-east-1               | Hong Kong                     |
-| aws             | ap-south-1              | Asia Pacific (Mumbai)         |
-| aws             | ap-southeast-1          | Asia Pacific (Singapore)      |
-| aws             | ap-southeast-2          | Asia Pacific (Sydney)         |
-| aws             | ca-central-1            | Canada (Central)              |
-| aws             | ca-west-1               | Canada West (Calgary)         |
-| aws             | eu-central-1            | Europe (Frankfurt)            |
-| aws             | eu-west-1               | EU West 1 (Ireland)           |
-| aws             | eu-west-2               | Europe (London)               |
-| aws             | me-central-1            | Middle East (UAE)             |
-| aws             | sa-east-1               | Sao Paulo                     |
-| aws             | us-east-1               | US East (N. Virginia)         |
-| aws             | us-east-2               | US East (Ohio)                |
-| aws             | us-west-2               | US West (Oregon)              |
-| azure           | australiaeast           | Australia East                |
-| azure           | brazilsouth             | Brazil South                  |
-| azure           | canadacentral           | Canada Central (Toronto)      |
-| azure           | centralindia            | Central India                 |
-| azure           | centralus               | (US) Central US               |
-| azure           | eastus2                 | East US 2 (Virginia)          |
-| azure           | northeurope             | North Europe                  |
-| azure           | southcentralus          | South Central US              |
-| azure           | westeurope              | West Europe                   |
-| azure           | westus2                 | West US 2 (Washington)        |
-| azure           | westus3                 | West US 3                     |
-| gcp             | asia-northeast2         | Osaka, Japan, APAC            |
-| gcp             | asia-south1             | Mumbai, India                 |
-| gcp             | europe-west1            | St. Ghislain, Belgium         |
-| gcp             | northamerica-northeast1 | NA Northeast 1 (Montreal)     |
-| gcp             | southamerica-east1      | Osasco, Sao Paulo, Brazil     |
-| gcp             | us-central1             | US Central (Iowa)             |
-| gcp (free-tier) | us-east1                | US East (South Carolina)      |
-| gcp             | us-east4                | US East 4 (Virginia)          |
-| gcp             | us-west1                | The Dalles, Oregon            |
-+-----------------+-------------------------+-------------------------------+-+
-----
-
-include::ROOT:partial$regions-change-admonition.adoc[]
-======
+The result for each of the preceding commands is a table with `Cloud Provider`, `Region`, and `Full Name` columns.
+`Full Name` can be empty or contain the region's name and location (city, state, or country).
 
 === `db list-regions-serverless` options
 
