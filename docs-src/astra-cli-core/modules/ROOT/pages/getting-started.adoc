@@ -1,7 +1,5 @@
 = Get started with the {product}
 :navtitle: Get started
-// include::astra-db-serverless:ROOT:partial$astra-role-attributes.adoc[]
-// include::astra-db-serverless:ROOT:partial$astra-permission-attributes.adoc[]
 
 Initialize the {product} and run your first commands.
 
