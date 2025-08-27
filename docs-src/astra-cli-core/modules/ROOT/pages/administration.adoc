@@ -1,11 +1,11 @@
-= Manage your Astra organization with the {product}
-:navtitle: Manage Astra administration
+= Manage your {product-short} organization with the {product}
+:navtitle: Manage {product-short} administration
 
-Use the {product} to manage your Astra organization.
+Use the {product} to manage your {product-short} organization.
 
 == Get organization details
 
-Use the `astra org` command to get information about the current Astra organization:
+Use the `astra org` command to get information about the current {product-short} organization:
 
 [source,bash]
 ----
@@ -49,7 +49,7 @@ SYNOPSIS
 
 == List users
 
-Use the `astra user list` command to list all users in your Astra organization:
+Use the `astra user list` command to list all users in your {product-short} organization:
 
 [source,bash]
 ----
@@ -113,7 +113,7 @@ OPTIONS
 
 == Add a user
 
-Use the `astra user invite` command to invite a new user to your Astra organization:
+Use the `astra user invite` command to invite a new user to your {product-short} organization:
 
 [source,bash,subs="+quotes"]
 ----
@@ -218,7 +218,7 @@ astra user invite alice@example.com -r "Organization Administrator"
 
 == Get user details
 
-Use the `astra user get` or `astra user describe` command to get information about a specific user in your Astra organization:
+Use the `astra user get` or `astra user describe` command to get information about a specific user in your {product-short} organization:
 
 [source,bash,subs="+quotes"]
 ----
@@ -358,7 +358,7 @@ The user can still access their personal {astra_db} account, if they have access
 If your organization uses SSO, make sure that you also remove the user from your IdP, if necessary.
 ====
 
-Use the `astra user delete` command to remove a user or revoke their invitation from your Astra organization:
+Use the `astra user delete` command to remove a user or revoke their invitation from your {product-short} organization:
 
 [source,bash,subs="+quotes"]
 ----
@@ -427,7 +427,7 @@ OPTIONS
 [#list-roles]
 == List roles
 
-Use the `astra role list` command to list all xref:astra-db-serverless:administration:manage-database-access.adoc#default-roles[default roles] and xref:astra-db-serverless:administration:manage-database-access.adoc#custom-roles[custom roles] in your Astra organization:
+Use the `astra role list` command to list all xref:astra-db-serverless:administration:manage-database-access.adoc#default-roles[default roles] and xref:astra-db-serverless:administration:manage-database-access.adoc#custom-roles[custom roles] in your {product-short} organization:
 
 [source,bash]
 ----
@@ -505,7 +505,7 @@ OPTIONS
 
 == Get role details
 
-Use the `astra role get` or `astra role describe` command to get information about a specific role in your Astra organization:
+Use the `astra role get` or `astra role describe` command to get information about a specific role in your {product-short} organization:
 
 [source,bash,subs="+quotes"]
 ----
@@ -680,7 +680,7 @@ OPTIONS
 [#list-tokens]
 == Get a list of tokens
 
-Use the `astra token list` command to list all of the application tokens in your Astra organization:
+Use the `astra token list` command to list all of the application tokens in your {product-short} organization:
 
 [source,bash]
 ----
@@ -741,7 +741,7 @@ OPTIONS
 
 == Create an application token
 
-Use the `astra token create` command to create a new application token in your Astra organization:
+Use the `astra token create` command to create a new application token in your {product-short} organization:
 
 [source,bash,subs="+quotes"]
 ----
@@ -875,7 +875,7 @@ OPTIONS
 Application tokens never expire.
 ====
 
-Use the `astra token delete` or `astra token revoke` command to delete an application token from your Astra organization:
+Use the `astra token delete` or `astra token revoke` command to delete an application token from your {product-short} organization:
 
 [source,bash,subs="+quotes"]
 ----

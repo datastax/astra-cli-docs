@@ -13,6 +13,11 @@ You can use `**DATABASE_NAME**` instead of `**DATABASE_ID**` in all `astra db` c
 
 == Create a database
 
+The {product} can create only {db-serverless} and {db-serverless-vector} on on-demand (non-PCU) capacity.
+It cannot create {db-classic} databases; however, you can use the {product} to <<get-database-details,get information>> about your existing {db-classic} databases.
+
+For organizations on *Enterprise* plans that require new databases to belong to a xref:astra-db-serverless:administration:provisioned-capacity-units.adoc[PCU group], you must xref:astra-db-serverless:databases:create-database.adoc[use the {astra-ui} or {devops-api} to create databases] because the {product} doesn't support PCU group assignment with database creation.
+
 Use the `astra db create` command to create a new {db-serverless} database:
 
 [source,bash,subs="+quotes"]
@@ -52,14 +57,6 @@ astra db create **DATABASE_NAME** --vector
 [INFO]  Database 'my_vector_db' has status 'ACTIVE' (took 142712 millis)
 [OK]    Database 'my_vector_db' is ready.
 ----
-====
-
-[IMPORTANT]
-====
-* **{db-classic} databases**: You cannot create {db-classic} databases with the {product}.
-However, you can use the {product} to <<get-database-details,get information>> about existing {db-classic} databases.
-
-* **PCU groups**: For organizations on *Enterprise* plans that require new databases to belong to a xref:astra-db-serverless:administration:provisioned-capacity-units.adoc[PCU group], you must xref:astra-db-serverless:databases:create-database.adoc[use the {astra-ui} or {devops-api} to create databases] because the {product} doesn't support PCU group assignment with database creation.
 ====
 
 Running `astra db create` without any options deploys the database in an available *Free* region and uses `default_keyspace` as the name for the default keyspace.
@@ -523,11 +520,11 @@ You cannot load vector data into a non-vector collection.
 =====
 --
 
-Use an Astra-hosted provider::
+Use an {product-short}-hosted provider::
 +
 --
 To automatically generate embeddings with xref:astra-db-serverless:databases:embedding-generation.adoc[{astra_db} vectorize], add an embedding provider integration to your collection.
-Embedding provider integrations are either Astra-hosted or external.
+Embedding provider integrations are either {product-short}-hosted or external.
 
 [source,bash,subs="+quotes"]
 ----
@@ -542,7 +539,7 @@ astra db create-collection **DATABASE_ID** \
 Replace the following:
 
 * `**COLLECTION_NAME**`: The name of the collection you want to create.
-* `**PROVIDER_NAME**`: The name of the Astra-hosted embedding provider.
+* `**PROVIDER_NAME**`: The name of the {product-short}-hosted embedding provider.
 * `**MODEL_NAME**`: The name of the embedding model that you want to use to generate embeddings.
 * (Optional) `**DIMENSION**`: The number of dimensions that you want the generated vectors to have.
 You can only set the dimensions if the chosen model supports a range of dimensions.
@@ -576,7 +573,7 @@ Use an external provider::
 +
 --
 To automatically generate embeddings with xref:astra-db-serverless:databases:embedding-generation.adoc[{astra_db} vectorize], add an embedding provider integration to your collection.
-Embedding provider integrations are either Astra-hosted or external.
+Embedding provider integrations are either {product-short}-hosted or external.
 
 To use an external embedding provider, you must add an xref:astra-db-serverless:databases:embedding-generation.adoc#supported-embedding-providers[embedding provider integration] to your {astra_db} organization, and then you can select that embedding provider when you create a collection.
 
@@ -594,7 +591,7 @@ astra db create-collection **DATABASE_ID** \
 Replace the following:
 
 * `**COLLECTION_NAME**`: The name of the collection you want to create.
-* `**PROVIDER_NAME**`: The name of the Astra-hosted embedding provider.
+* `**PROVIDER_NAME**`: The name of the {product-short}-hosted embedding provider.
 * `**MODEL_NAME**`: The name of the embedding model that you want to use to generate embeddings.
 * (Optional) `**PROVIDER_KEY_NAME**`: The name of the provider key that you want to use to authenticate with the external embedding provider.
 * (Optional) `**DIMENSION**`: The number of dimensions that you want the generated vectors to have.
@@ -2262,43 +2259,19 @@ OPTIONS
 [#configure-multiple-regions]
 == Configure multiple regions
 
-You can configure a database to replicate data across multiple regions.
-Some benefits of multi-region databases include better data locality and higher availability for multi-region application architectures.
-For more information, see xref:astra-db-serverless:databases:manage-regions.adoc[].
-
-[IMPORTANT]
-====
-* **Premium feature**: Multi-region databases are a premium feature.
-Each region added to a database increases the database's costs.
-This includes a one-time data replication fee for the new region, and charges for replicating data to all database regions.
-For more information, see xref:astra-db-serverless:administration:subscription-plans.adoc[].
-
-* **Status change**: The database enters *Maintenance* status while provisioning and replicating data to the new region.
-While in *Maintenance* status, you cannot add or remove regions, truncate tables, or delete keyspaces, tables, or collections.
-However, *Maintenance* status doesn't impact reads and writes.
-
-* **PCU groups**: For organizations on *Enterprise* plans that require use of xref:astra-db-serverless:administration:provisioned-capacity-units.adoc[PCU groups], you must xref:astra-db-serverless:databases:manage-regions.adoc[use the {astra-ui} or {devops-api} to add regions] because the {product} doesn't support PCU group assignment when adding a region.
-====
-
-Use the `astra db create-region` command to add a region to a database:
+Use the `astra db create-region` command to deploy a database to an additional region:
 
 [source,bash,subs="+quotes"]
 ----
 astra db create-region **DATABASE_ID** -r **REGION**
 ----
 
-Replace `**REGION**` with the region you want to add to your database.
-The following restrictions apply:
+The database enters *Maintenance* status while provisioning and replicating data to the new region.
+Some functions are limited while in *Maintenance* status.
 
-* You can add only one region at a time.
+For more information, including requirements and costs for additional regions, see xref:astra-db-serverless:databases:manage-regions.adoc[].
 
-* You cannot select a region that the database already uses.
-
-* You must select a region in the same cloud provider as the database's other regions.
-Multi-region databases cannot span multiple cloud providers.
-
-* For {db-serverless-vector} databases, you must select a region that supports that database type.
-For more information, see xref:astra-db-serverless:databases:regions.adoc[].
+For organizations on *Enterprise* plans that require use of xref:astra-db-serverless:administration:provisioned-capacity-units.adoc[PCU groups], you must xref:astra-db-serverless:databases:manage-regions.adoc[use the {astra-ui} or {devops-api} to add regions] because the {product} doesn't support PCU group assignment when adding a region.
 
 ////
 // TODO: The command is not working as expected. Must investigate and figure out why it is reporting the following error: [ERROR] UNAVAILABLE: Database 'my_serverless_db' has been found but operation cannot be processed due to invalid state (ACTIVE) expected (ACTIVE)
@@ -2348,15 +2321,6 @@ astra db delete-region **DATABASE_ID** -r **REGION**
 [INFO]  Region 'us-west1' is deleting.
 [OK]    Region us-west1 has been deleted
 ----
-====
-
-[NOTE]
-====
-The database enters *Maintenance* status while deleting the region.
-
-While in *Maintenance* status, you cannot add or remove regions, truncate tables, or delete keyspaces, tables, or collections.
-
-*Maintenance* status doesn't impact reads and writes.
 ====
 
 [IMPORTANT]
@@ -4397,7 +4361,7 @@ ASTRA_ORG_TOKEN="AstraCS:FZm..."
 
 [WARNING]
 ====
-The generated `.env` files contains sensitive information, including the application token that the {product} uses to connect to Astra.
+The generated `.env` files contains sensitive information, including the application token that the {product} uses to connect to {product-short}.
 
 The {scb-short} contains sensitive information that establishes a connection to your database, including key pairs and certificates.
 ====
