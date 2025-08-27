@@ -2788,7 +2788,7 @@ token@cqlsh>
 Type `exit` or `quit;` and press kbd:[Return] to exit `cqlsh`.
 
 The first time you use the `astra db cqlsh` command, the {product} downloads and installs the `cqlsh` utility to the {product} installation directory (`~/.astra/cqlsh-astra`).
-The {product} also downloads the {scb-long} for each database you connect to and stores the {scb} zip files in the `~/.astra/scb` directory.
+The {product} also downloads the {scb} for each database you connect to and stores the {scb-short} zip files in the `~/.astra/scb` directory.
 
 [TIP]
 ======
@@ -3008,7 +3008,7 @@ The {product} provides built-in DSBulk support by downloading, installing, confi
 The {product} exposes DSBulk functionality through the `astra db load`, `astra db unload`, and `astra db count` commands.
 
 The first time you run `astra db load`, `astra db unload`, or `astra db count` commands, the {product} downloads and installs the `dsbulk` utility to the {product} installation directory (`~/.astra/dsbulk-*`).
-The {product} also downloads the {scb-long} for each database you connect to and stores the {scb} zip files in the `~/.astra/scb` directory.
+The {product} also downloads the {scb} for each database you connect to and stores the {scb-short} zip files in the `~/.astra/scb` directory.
 
 Use the `astra db load` command to load data from a file into a database table:
 
@@ -4058,11 +4058,11 @@ astra streaming list-cdc cdc-demo-tenant
 
 After you enable CDC on your {db-serverless} database, you can xref:astra-db-serverless:databases:change-data-capture.adoc#connect-a-sink[connect a sink].
 
-== Download the {scb-cap}
+== Download the {scb-brief}
 
 The xref:astra-db-serverless:drivers:secure-connect-bundle.adoc[] is a zip file containing security credentials and certificates required for secure mutual TLS (mTLS) connection to your database.
 
-Use the `astra db download-scb` command to download the {scb-long} for a database:
+Use the `astra db download-scb` command to download the {scb} for a database:
 
 [source,bash,subs="+quotes"]
 ----
@@ -4079,15 +4079,15 @@ astra db download-scb **DATABASE_ID** -r **REGION_NAME**
 ====
 
 The `-r **REGION_NAME**` option is required for <<configure-multiple-regions,multi-region databases>>.
-If your database is configured with multiple regions, replace `**REGION_NAME**` with the name of the region you want to download the {scb} for.
+If your database is configured with multiple regions, replace `**REGION_NAME**` with the name of the region you want to download the {scb-short} for.
 
-By default, the {product} downloads the {scb} to the directory where you run the command and saves the file with the following naming pattern: `scb_**DATABASE-ID**_**REGION-NAME**.zip`.
+By default, the {product} downloads the {scb-short} to the directory where you run the command and saves the file with the following naming pattern: `scb_**DATABASE-ID**_**REGION-NAME**.zip`.
 
 [WARNING]
 ====
-Treat the {scb} the same way you would any other sensitive values, such as passwords or tokens.
+Treat the {scb-short} the same way you would any other sensitive values, such as passwords or tokens.
 
-The {scb} contains sensitive information that establishes a connection to your database, including key pairs and certificates.
+The {scb-short} contains sensitive information that establishes a connection to your database, including key pairs and certificates.
 ====
 
 === `db download-scb` options
@@ -4146,7 +4146,7 @@ OPTIONS
 ----
 ====
 
-Use the `-r` / `--region` option to download the {scb} for a specific region:
+Use the `-r` / `--region` option to download the {scb-short} for a specific region:
 
 [source,bash,subs="+quotes"]
 ----
@@ -4168,7 +4168,7 @@ Use the `astra db list-regions` command to get a list of the region names where 
 For more information, see <<configure-multiple-regions>>.
 ====
 
-Use the `-f` / `--output-file` option to download the {scb} to a specific location and filename:
+Use the `-f` / `--output-file` option to download the {scb-short} to a specific location and filename:
 
 [source,bash,subs="+quotes"]
 ----
@@ -4231,7 +4231,7 @@ ASTRA_ORG_TOKEN="AstraCS:FZm..."
 ====
 The generated `.env` files contains sensitive information, including the application token that the {product} uses to connect to {product-short}.
 
-The {scb} contains sensitive information that establishes a connection to your database, including key pairs and certificates.
+The {scb-short} contains sensitive information that establishes a connection to your database, including key pairs and certificates.
 ====
 
 === `db create-dotenv` options
