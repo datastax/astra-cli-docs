@@ -496,13 +496,13 @@ astra db create-collection 58747660-464b-4085-bef2-c3f3e5401e3d \
 ====
 --
 
-Use an {astra}-hosted provider::
+Use an {product-short}-hosted provider::
 +
 --
 To automatically generate embeddings with xref:astra-db-serverless:databases:embedding-generation.adoc[{astra_db} vectorize], add an embedding provider integration to your collection.
-Embedding provider integrations are either {astra}-hosted or external.
+Embedding provider integrations are either {product-short}-hosted or external.
 
-This option uses an {astra}-hosted provider:
+This option uses an {product-short}-hosted provider:
 
 [source,bash,subs="+quotes"]
 ----
@@ -517,7 +517,7 @@ astra db create-collection **DATABASE_ID** \
 Replace the following:
 
 * `**COLLECTION_NAME**`: The name of the collection you want to create.
-* `**PROVIDER_NAME**`: The name of the {astra}-hosted embedding provider.
+* `**PROVIDER_NAME**`: The name of the {product-short}-hosted embedding provider.
 * `**MODEL_NAME**`: The name of the embedding model that you want to use to generate embeddings.
 * (Optional) `**DIMENSION**`: The number of dimensions that you want the generated vectors to have.
 You can only set the dimensions if the chosen model supports a range of dimensions.
@@ -551,7 +551,7 @@ Use an external provider::
 +
 --
 To automatically generate embeddings with xref:astra-db-serverless:databases:embedding-generation.adoc[{astra_db} vectorize], add an embedding provider integration to your collection.
-Embedding provider integrations are either {astra}-hosted or external.
+Embedding provider integrations are either {product-short}-hosted or external.
 
 To use an external embedding provider, you must add an xref:astra-db-serverless:databases:embedding-generation.adoc#supported-embedding-providers[embedding provider integration] to your {astra_db} organization, and then you can select that embedding provider when you create a collection:
 
@@ -569,7 +569,7 @@ astra db create-collection **DATABASE_ID** \
 Replace the following:
 
 * `**COLLECTION_NAME**`: The name of the collection you want to create.
-* `**PROVIDER_NAME**`: The name of the {astra}-hosted embedding provider.
+* `**PROVIDER_NAME**`: The name of the {product-short}-hosted embedding provider.
 * `**MODEL_NAME**`: The name of the embedding model that you want to use to generate embeddings.
 * (Optional) `**PROVIDER_KEY_NAME**`: The name of the provider key that you want to use to authenticate with the external embedding provider.
 * (Optional) `**DIMENSION**`: The number of dimensions that you want the generated vectors to have.
@@ -4229,7 +4229,7 @@ ASTRA_ORG_TOKEN="AstraCS:FZm..."
 
 [WARNING]
 ====
-The generated `.env` files contains sensitive information, including the application token that the {product} uses to connect to Astra.
+The generated `.env` files contains sensitive information, including the application token that the {product} uses to connect to {product-short}.
 
 The {scb} contains sensitive information that establishes a connection to your database, including key pairs and certificates.
 ====

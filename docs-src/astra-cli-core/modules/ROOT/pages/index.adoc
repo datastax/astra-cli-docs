@@ -1,10 +1,10 @@
 = {product}
 :page-layout: landing
 
-The {product} is a free utility that you can use to create and manage Astra resources.
-You can use the {product} to perform common platform tasks for {astra_db} and {astra_stream} from the command line or with automation to control your Astra resources at scale.
+The {product} is a free utility that you can use to create and manage {product-short} resources.
+You can use the {product} to perform common platform tasks for {astra_db} and {astra_stream} from the command line or with automation to control your {product-short} resources at scale.
 
-To make it even easier to integrate Astra into your applications and workflows, the {product} provides seamless integration with the following external tools:
+To make it even easier to integrate {product-short} into your applications and workflows, the {product} provides seamless integration with the following external tools:
 
 * DSBulk
 * cqlsh

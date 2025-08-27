@@ -1051,7 +1051,7 @@ ASTRA_STREAMING_WEBSOCKET_URL="wss://pulsar-aws-useast2.streaming.datastax.com:8
 
 [WARNING]
 ====
-The generated `.env` files contains sensitive information, including the application token that the {product} uses to connect to Astra.
+The generated `.env` files contains sensitive information, including the application token that the {product} uses to connect to {product-short}.
 
 The {scb} contains sensitive information that establishes a connection to your database, including key pairs and certificates.
 ====
