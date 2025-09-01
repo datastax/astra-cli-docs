@@ -1941,8 +1941,21 @@ Use the `astra db list-regions-classic` command to get a list of available cloud
 astra db list-regions-classic
 ----
 
-The result for each of the preceding commands is a table with `Cloud Provider`, `Region`, and `Full Name` columns.
+.Result
+[%collapsible]
+====
+The result for each `list-regions-*` command is a table with `Cloud Provider`, `Region`, and `Full Name` columns.
 `Full Name` can be empty or contain the region's name and location (city, state, or country).
+
+[source,console,subs="+quotes"]
+----
++-----------------+---------------------+-------------------------------+
+| Cloud Provider  | Region              | Full Name                     |
++-----------------+---------------------+-------------------------------+
+| **PROVIDER**    | **REGION**          | **NAME**                      |
++-----------------+---------------------+-------------------------------+
+----
+====
 
 === `db list-regions-serverless` options
 

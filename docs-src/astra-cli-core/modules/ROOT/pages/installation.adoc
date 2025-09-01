@@ -274,6 +274,8 @@ docker --version
 .Result
 [%collapsible]
 ====
+The command returns the Docker version that is installed:
+
 [source,console]
 ----
 Docker version 27.1.1, build 6312585
@@ -322,7 +324,7 @@ docker run -rm datastax/astra-cli --version
 .Result
 [%collapsible]
 ====
-The command in this example returns the {product} version that is installed:
+The command returns the {product} version that is installed:
 
 [source,console,subs="+attributes"]
 ----
@@ -470,6 +472,8 @@ astra --version
 .Result
 [%collapsible]
 ====
+The command returns the {product} version that is installed:
+
 [source,console,subs="+attributes"]
 ----
 {product-version}
@@ -499,6 +503,8 @@ astra --version
 .Result
 [%collapsible]
 ====
+The command returns the {product} version that is installed:
+
 [source,console,subs="+attributes"]
 ----
 {product-version}

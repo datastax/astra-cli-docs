@@ -24,7 +24,9 @@ https://api.astra.datastax.com/v2/streaming/tenants/my-streaming-tenant
 
 Running `astra streaming create` without any options deploys the tenant in the default cloud provider (`aws`), region (`useast2`), plan (`free`) and namespace (`default`).
 
-=== Tenant names must be unique
+[TIP]
+====
+Tenant names must be unique
 
 All tenant names in {astra_stream} must be unique.
 If the tenant name is already in use, the command fails with with the following error message:
@@ -40,6 +42,7 @@ You can use the `--if-not-exist` option to only create the tenant if it doesn't 
 ----
 astra streaming create **TENANT_NAME** --if-not-exist
 ----
+====
 
 .Result
 [%collapsible]
@@ -547,8 +550,21 @@ Use the `astra streaming list-regions` command to get a list of available region
 astra streaming list-regions
 ----
 
+.Result
+[%collapsible]
+====
 The result is a table with `Cloud Provider`, `Region`, and `Full Name` columns.
 `Full Name` can be empty or contain the region's name and location (city, state, or country).
+
+[source,console,subs="+quotes"]
+----
++-----------------+---------------------+-------------------------------+
+| Cloud Provider  | Region              | Full Name                     |
++-----------------+---------------------+-------------------------------+
+| **PROVIDER**    | **REGION**          | **NAME**                      |
++-----------------+---------------------+-------------------------------+
+----
+====
 
 === `streaming list-regions` options
 

@@ -446,7 +446,7 @@ SYNOPSIS
 
 See the following sections for `config` subcommand options:
 
-.`config create` options
+.Expand to see all `config create` options
 [%collapsible]
 ====
 [source,console]
@@ -489,7 +489,7 @@ OPTIONS
 ----
 ====
 
-.`config delete` options
+.Expand to see all `config delete` options
 [%collapsible]
 ====
 [source,console]
@@ -525,7 +525,7 @@ OPTIONS
 ----
 ====
 
-.`config describe` options
+.Expand to see all `config describe` options
 [%collapsible]
 ====
 [source,console]
@@ -565,7 +565,7 @@ OPTIONS
 ----
 ====
 
-.`config get` options
+.Expand to see all `config get` options
 [%collapsible]
 ====
 [source,console]
@@ -605,7 +605,7 @@ OPTIONS
 ----
 ====
 
-.`config list` options
+.Expand to see all `config list` options
 [%collapsible]
 ====
 [source,console]
@@ -633,7 +633,7 @@ OPTIONS
 ----
 ====
 
-.`config use` options
+.Expand to see all `config use` options
 [%collapsible]
 ====
 [source,console]
