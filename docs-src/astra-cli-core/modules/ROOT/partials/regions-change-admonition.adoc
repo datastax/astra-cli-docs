@@ -1,4 +1,0 @@
-[NOTE]
-====
-Supported regions are subject to change and may be different from the sample result.
-====

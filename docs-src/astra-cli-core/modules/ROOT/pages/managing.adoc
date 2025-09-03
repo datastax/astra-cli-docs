@@ -13,6 +13,9 @@ You can use `**DATABASE_NAME**` instead of `**DATABASE_ID**` in all `astra db` c
 
 == Create a database
 
+The {product} can create {db-serverless} and {db-serverless-vector} databases only.
+It cannot create {db-classic} databases; however, you can use the {product} to <<get-database-details,get information>> about your existing {db-classic} databases.
+
 Use the `astra db create` command to create a new {db-serverless} database:
 
 [source,bash,subs="+quotes"]
@@ -54,17 +57,11 @@ astra db create **DATABASE_NAME** --vector
 ----
 ====
 
-[NOTE]
-====
-You cannot create {db-classic} databases with the {product}.
-However, you can use the {product} to <<get-database-details,get information>> about existing {db-classic} databases.
-====
-
 Running `astra db create` without any options deploys the database in an available *Free* region and uses `default_keyspace` as the name for the default keyspace.
 
 If the database already exists but is currently xref:astra-db-serverless:databases:database-statuses.adoc[hibernated], the `astra db create` command <<resume-database,resumes>> the database.
 
-include::ROOT:partial$async-option.adoc[tags=active]
+include::ROOT:partial$async-option-active.adoc[]
 
 === `db create` options
 
@@ -210,7 +207,7 @@ astra db create-keyspace **DATABASE_ID** -k **KEYSPACE_NAME**
 The database enters *Maintenance* status while creating the keyspace.
 When the database returns to *Active* status, you can use the new keyspace.
 
-include::ROOT:partial$async-option.adoc[tags=active]
+include::ROOT:partial$async-option-active.adoc[]
 
 [TIP]
 ======
@@ -281,7 +278,7 @@ Deleting a keyspace permanently deletes all collections, tables, and data in the
 
 The database enters *Maintenance* status while it deletes the keyspace along with any collections, tables, and data within the keyspace.
 
-include::ROOT:partial$async-option.adoc[tags=active]
+include::ROOT:partial$async-option-active.adoc[]
 
 If you delete the default keyspace, {astra_db} automatically selects another keyspace to be the default keyspace.
 
@@ -461,7 +458,7 @@ Use the `astra db create-collection` command to create a new collection in a {db
 Bring my own embeddings::
 +
 --
-Use this option if you plan to generate your own embeddings and import them when you load data into your collection.
+Use these options if you plan to generate your own embeddings and import them when you load data into your collection:
 
 [source,bash,subs="+quotes"]
 ----
@@ -497,35 +494,15 @@ astra db create-collection 58747660-464b-4085-bef2-c3f3e5401e3d \
 [OK]    Database '58747660-464b-4085-bef2-c3f3e5401e3d' is ready.
 ----
 ====
-
-[NOTE]
-=====
-To create a collection that is _not_ vector-enabled, omit the `-d` and `-m` options.
-
-[source,bash,subs="+quotes"]
-----
-astra db create-collection **DATABASE_ID** -c **COLLECTION_NAME**
-----
-
-.Result
-[%collapsible]
-====
-[source,console]
-----
-[OK]    Collection 'my_collection' as been created from db '58747660-464b-4085-bef2-c3f3e5401e3d' on keyspace  'default_keyspace'
-[OK]    Database '58747660-464b-4085-bef2-c3f3e5401e3d' is ready.
-----
-====
-
-You cannot load vector data into a non-vector collection.
-=====
 --
 
-Use an {astra}-hosted provider::
+Use an {product-short}-hosted provider::
 +
 --
 To automatically generate embeddings with xref:astra-db-serverless:databases:embedding-generation.adoc[{astra_db} vectorize], add an embedding provider integration to your collection.
-Embedding provider integrations are either {astra}-hosted or external.
+Embedding provider integrations are either {product-short}-hosted or external.
+
+This option uses an {product-short}-hosted provider:
 
 [source,bash,subs="+quotes"]
 ----
@@ -540,7 +517,7 @@ astra db create-collection **DATABASE_ID** \
 Replace the following:
 
 * `**COLLECTION_NAME**`: The name of the collection you want to create.
-* `**PROVIDER_NAME**`: The name of the {astra}-hosted embedding provider.
+* `**PROVIDER_NAME**`: The name of the {product-short}-hosted embedding provider.
 * `**MODEL_NAME**`: The name of the embedding model that you want to use to generate embeddings.
 * (Optional) `**DIMENSION**`: The number of dimensions that you want the generated vectors to have.
 You can only set the dimensions if the chosen model supports a range of dimensions.
@@ -574,9 +551,9 @@ Use an external provider::
 +
 --
 To automatically generate embeddings with xref:astra-db-serverless:databases:embedding-generation.adoc[{astra_db} vectorize], add an embedding provider integration to your collection.
-Embedding provider integrations are either {astra}-hosted or external.
+Embedding provider integrations are either {product-short}-hosted or external.
 
-To use an external embedding provider, you must add an xref:astra-db-serverless:databases:embedding-generation.adoc#supported-embedding-providers[embedding provider integration] to your {astra_db} organization, and then you can select that embedding provider when you create a collection.
+To use an external embedding provider, you must add an xref:astra-db-serverless:databases:embedding-generation.adoc#supported-embedding-providers[embedding provider integration] to your {astra_db} organization, and then you can select that embedding provider when you create a collection:
 
 [source,bash,subs="+quotes"]
 ----
@@ -592,7 +569,7 @@ astra db create-collection **DATABASE_ID** \
 Replace the following:
 
 * `**COLLECTION_NAME**`: The name of the collection you want to create.
-* `**PROVIDER_NAME**`: The name of the {astra}-hosted embedding provider.
+* `**PROVIDER_NAME**`: The name of the {product-short}-hosted embedding provider.
 * `**MODEL_NAME**`: The name of the embedding model that you want to use to generate embeddings.
 * (Optional) `**PROVIDER_KEY_NAME**`: The name of the provider key that you want to use to authenticate with the external embedding provider.
 * (Optional) `**DIMENSION**`: The number of dimensions that you want the generated vectors to have.
@@ -611,6 +588,28 @@ astra db create-collection 58747660-464b-4085-bef2-c3f3e5401e3d \
     --embedding-key my_openai_key \
     -d 1024 \
     -m dot_product
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
+[OK]    Collection 'my_collection' as been created from db '58747660-464b-4085-bef2-c3f3e5401e3d' on keyspace  'default_keyspace'
+[OK]    Database '58747660-464b-4085-bef2-c3f3e5401e3d' is ready.
+----
+====
+--
+
+Non-vector collection::
++
+--
+To create a collection that is _not_ vector-enabled, omit the `-d` and `-m` options.
+Be aware that non-vector collections don't support vector-dependent functionality like vector search.
+
+[source,bash,subs="+quotes"]
+----
+astra db create-collection **DATABASE_ID** -c **COLLECTION_NAME**
 ----
 
 .Result
@@ -1132,12 +1131,10 @@ astra db delete-collection **DATABASE_ID** \
 [#manage-tables]
 == Manage tables
 
-xref:astra-db-serverless:databases:manage-collections.adoc[Tables] store structured data, in the form of rows, in {db-serverless-vector} and {db-serverless} databases.
+xref:astra-db-serverless:databases:manage-collections.adoc[Tables] store structured data, as rows and columns, instead of documents.
 
-[NOTE]
-====
-The commands described in this section apply only to {db-serverless-vector} databases.
-====
+You can create tables in {db-serverless-vector} and {db-serverless} databases.
+However, the commands described in this section apply only to {db-serverless-vector} databases.
 
 Use the `astra db list-tables` command to get a list of the tables in a {db-serverless-vector} database:
 
@@ -1158,7 +1155,6 @@ astra db list-tables **DATABASE_ID**
 +---------------------+
 ----
 ====
-
 
 Use the `astra db describe-table` command to get information about a specific table:
 
@@ -1459,6 +1455,9 @@ astra db list-embedding-providers **DATABASE_ID**
 .Result
 [%collapsible]
 ======
+The following result is for example purposes only.
+Supported embedding providers and options can change.
+
 [source,console]
 ----
 +----------------------+--------------------------+--------+------------+---------+----------+
@@ -1477,8 +1476,6 @@ astra db list-embedding-providers **DATABASE_ID**
 | mistral              | Mistral AI               | 1      | 0          | ■       | ■        |
 +----------------------+--------------------------+--------+------------+---------+----------+
 ----
-
-include::ROOT:partial$ep-change-admonition.adoc[]
 ======
 
 Use the `astra db describe-embedding-provider` command to get information about a specific embedding provider integration:
@@ -1493,6 +1490,9 @@ The `**PROVIDER_NAME**` is the name listed in the `Key` column in the output of 
 .Result
 [%collapsible]
 ======
+The following result is for example purposes only.
+Supported embedding providers and options can change.
+
 [source,console]
 ----
 +-------------------+---------------------------------------------------------------------------------------------+
@@ -1521,8 +1521,6 @@ The `**PROVIDER_NAME**` is the name listed in the `Key` column in the output of 
 
 [OK]    Database '58747660-464b-4085-bef2-c3f3e5401e3d' is ready.
 ----
-
-include::ROOT:partial$ep-change-admonition.adoc[]
 ======
 
 === `db list-embedding-providers` options
@@ -1922,66 +1920,12 @@ OPTIONS
 
 == Get a list of available {astra_db} regions
 
-Use the `astra db list-regions-serverless` command to get a list of available cloud provider regions that support {db-serverless} databases:
+Use the `astra db list-regions-serverless` command to get a list of available regions that support {db-serverless} databases:
 
 [source,bash]
 ----
 astra db list-regions-serverless
 ----
-
-.Result
-[%collapsible]
-======
-[source,console]
-----
-+-----------------+-------------------------+---------------------------------------+
-| Cloud Provider  | Region                  | Full Name                             |
-+-----------------+-------------------------+---------------------------------------+
-| aws             | ap-east-1               | Asia Pacific (Hong Kong)              |
-| aws             | ap-south-1              | Asia Pacific (Mumbai)                 |
-| aws             | ap-southeast-1          | Asia Pacific (Singapore)              |
-| aws             | ap-southeast-2          | Asia Pacific (Sydney)                 |
-| aws             | ca-central-1            | Canada (Central)                      |
-| aws             | ca-west-1               | Canada West (Calgary)                 |
-| aws             | eu-central-1            | Europe (Frankfurt)                    |
-| aws             | eu-west-1               | Europe (Ireland)                      |
-| aws             | eu-west-2               | Europe (London)                       |
-| aws             | me-central-1            | Middle East (UAE)                     |
-| aws             | sa-east-1               | South America (Sao Paulo)             |
-| aws             | us-east-1               | US East (N. Virginia)                 |
-| aws             | us-east-2               | US East (Ohio)                        |
-| aws             | us-west-2               | US West (Oregon)                      |
-| azure           | australiaeast           | Australia East                        |
-| azure           | brazilsouth             | Brazil South (Sao Paulo)              |
-| azure           | canadacentral           | Canada Central (Toronto)              |
-| azure           | centralindia            | Central India (Pune)                  |
-| azure           | centralus               | (US) Central US                       |
-| azure           | eastus                  | US East                               |
-| azure           | eastus2                 | US East 2 (Virginia)                  |
-| azure           | northeurope             | Northern Europe (Ireland)             |
-| azure           | westeurope              | West Europe                           |
-| azure           | westus2                 | US West (Washington)                  |
-| azure           | westus3                 | US West 3                             |
-| gcp             | asia-northeast1         | Asia Northeast1 (Tokyo, Japan)        |
-| gcp             | asia-northeast2         | Osaka, Japan, APAC                    |
-| gcp             | asia-south1             | Mumbai, India                         |
-| gcp             | australia-southeast1    | Sydney, Australia, APAC               |
-| gcp             | europe-west1            | St. Ghislain, Belgium                 |
-| gcp             | europe-west2            | West Europe2 (London, England, UK)    |
-| gcp             | europe-west3            | West Europe3 (Frankfurt, Germany)     |
-| gcp             | europe-west4            | West Europe4 (Eemshaven, Netherlands) |
-| gcp             | northamerica-northeast1 | Montreal, Quebec                      |
-| gcp             | northamerica-northeast2 | Toronto, Ontario                      |
-| gcp             | us-central1             | Council Bluffs, Iowa                  |
-| gcp (free-tier) | us-east1                | Moncks Corner, South Carolina         |
-| gcp             | us-east4                | Ashburn, Virginia                     |
-| gcp             | us-west1                | The Dalles, Oregon                    |
-| gcp             | us-west4                | US West (Las Vegas, USA)              |
-+-----------------+-------------------------+---------------------------------------+
-----
-
-include::ROOT:partial$regions-change-admonition.adoc[]
-======
 
 Use the `astra db list-regions-vector` command to get a list of available cloud provider regions that support {db-serverless-vector} databases:
 
@@ -1989,33 +1933,6 @@ Use the `astra db list-regions-vector` command to get a list of available cloud 
 ----
 astra db list-regions-vector
 ----
-
-.Result
-[%collapsible]
-======
-[source,console]
-----
-+-----------------+-------------------------+------------------------------------+
-| Cloud Provider  | Region                  | Full Name                          |
-+-----------------+-------------------------+------------------------------------+
-| aws             | ap-south-1              | Asia Pacific (Mumbai)              |
-| aws             | ap-southeast-2          | Asia Pacific (Sydney)              |
-| aws             | eu-west-1               | Europe (Ireland)                   |
-| aws             | us-east-1               | US East (N. Virginia)              |
-| aws             | us-east-2               | US East (Ohio)                     |
-| azure           | australiaeast           | Australia East                     |
-| azure           | centralindia            | Central India (Pune)               |
-| azure           | westeurope              | West Europe                        |
-| azure           | westus3                 | US West 3                          |
-| gcp             | europe-west2            | West Europe2 (London, England, UK) |
-| gcp             | northamerica-northeast1 | Montreal, Quebec                   |
-| gcp (free-tier) | us-east1                | Moncks Corner, South Carolina      |
-| gcp             | us-east4                | Ashburn, Virginia                  |
-+-----------------+-------------------------+------------------------------------+
-----
-
-include::ROOT:partial$regions-change-admonition.adoc[]
-======
 
 Use the `astra db list-regions-classic` command to get a list of available cloud provider regions that support {db-classic} databases:
 
@@ -2026,52 +1943,19 @@ astra db list-regions-classic
 
 .Result
 [%collapsible]
-======
-[source,console]
-----
-+-----------------+-------------------------+-------------------------------+
-| Cloud Provider  | Region                  | Full Name                     |
-+-----------------+-------------------------+-------------------------------+
-| aws             | af-south-1              | Africa (Cape Town)            |
-| aws             | ap-east-1               | Hong Kong                     |
-| aws             | ap-south-1              | Asia Pacific (Mumbai)         |
-| aws             | ap-southeast-1          | Asia Pacific (Singapore)      |
-| aws             | ap-southeast-2          | Asia Pacific (Sydney)         |
-| aws             | ca-central-1            | Canada (Central)              |
-| aws             | ca-west-1               | Canada West (Calgary)         |
-| aws             | eu-central-1            | Europe (Frankfurt)            |
-| aws             | eu-west-1               | EU West 1 (Ireland)           |
-| aws             | eu-west-2               | Europe (London)               |
-| aws             | me-central-1            | Middle East (UAE)             |
-| aws             | sa-east-1               | Sao Paulo                     |
-| aws             | us-east-1               | US East (N. Virginia)         |
-| aws             | us-east-2               | US East (Ohio)                |
-| aws             | us-west-2               | US West (Oregon)              |
-| azure           | australiaeast           | Australia East                |
-| azure           | brazilsouth             | Brazil South                  |
-| azure           | canadacentral           | Canada Central (Toronto)      |
-| azure           | centralindia            | Central India                 |
-| azure           | centralus               | (US) Central US               |
-| azure           | eastus2                 | East US 2 (Virginia)          |
-| azure           | northeurope             | North Europe                  |
-| azure           | southcentralus          | South Central US              |
-| azure           | westeurope              | West Europe                   |
-| azure           | westus2                 | West US 2 (Washington)        |
-| azure           | westus3                 | West US 3                     |
-| gcp             | asia-northeast2         | Osaka, Japan, APAC            |
-| gcp             | asia-south1             | Mumbai, India                 |
-| gcp             | europe-west1            | St. Ghislain, Belgium         |
-| gcp             | northamerica-northeast1 | NA Northeast 1 (Montreal)     |
-| gcp             | southamerica-east1      | Osasco, Sao Paulo, Brazil     |
-| gcp             | us-central1             | US Central (Iowa)             |
-| gcp (free-tier) | us-east1                | US East (South Carolina)      |
-| gcp             | us-east4                | US East 4 (Virginia)          |
-| gcp             | us-west1                | The Dalles, Oregon            |
-+-----------------+-------------------------+-------------------------------+-+
-----
+====
+The result for each `list-regions-*` command is a table with `Cloud Provider`, `Region`, and `Full Name` columns.
+`Full Name` can be empty or contain the region's name and location (city, state, or country).
 
-include::ROOT:partial$regions-change-admonition.adoc[]
-======
+[source,console,subs="+quotes"]
+----
++-----------------+---------------------+-------------------------------+
+| Cloud Provider  | Region              | Full Name                     |
++-----------------+---------------------+-------------------------------+
+| **PROVIDER**    | **REGION**          | **NAME**                      |
++-----------------+---------------------+-------------------------------+
+----
+====
 
 === `db list-regions-serverless` options
 
@@ -2260,37 +2144,17 @@ OPTIONS
 [#configure-multiple-regions]
 == Configure multiple regions
 
-You can configure a database to replicate data across multiple regions.
-Some benefits of multi-region databases include better data locality and higher availability for multi-region application architectures.
-For more information, see xref:astra-db-serverless:databases:manage-regions.adoc[].
-
-[IMPORTANT]
-====
-Multi-region databases are a premium feature.
-Each region added to a database increases the database's costs.
-This includes a one-time data replication fee for the new region, and charges for replicating data to all database regions.
-For more information, see xref:astra-db-serverless:administration:subscription-plans.adoc[].
-====
-
-Use the `astra db create-region` command to add a region to a database:
+Use the `astra db create-region` command to deploy a database to an additional region:
 
 [source,bash,subs="+quotes"]
 ----
 astra db create-region **DATABASE_ID** -r **REGION**
 ----
 
-Replace `**REGION**` with the region you want to add to your database.
-The following restrictions apply:
+The database enters *Maintenance* status while provisioning and replicating data to the new region.
+Some functions are limited while in *Maintenance* status.
 
-* You can add only one region at a time.
-
-* You cannot select a region that the database already uses.
-
-* You must select a region in the same cloud provider as the database's other regions.
-Multi-region databases cannot span multiple cloud providers.
-
-* For {db-serverless-vector} databases, you must select a region that supports that database type.
-For more information, see xref:astra-db-serverless:databases:regions.adoc[].
+For more information, including requirements and costs for additional regions, see xref:astra-db-serverless:databases:manage-regions.adoc[].
 
 ////
 // TODO: The command is not working as expected. Must investigate and figure out why it is reporting the following error: [ERROR] UNAVAILABLE: Database 'my_serverless_db' has been found but operation cannot be processed due to invalid state (ACTIVE) expected (ACTIVE)
@@ -2303,15 +2167,6 @@ For more information, see xref:astra-db-serverless:databases:regions.adoc[].
 ----
 ====
 ////
-
-[NOTE]
-====
-The database enters *Maintenance* status while provisioning and replicating data to the new region.
-
-While in *Maintenance* status, you cannot add or remove regions, truncate tables, or delete keyspaces, tables, or collections.
-
-*Maintenance* status doesn't impact reads and writes.
-====
 
 Use the `astra db list-regions` command to list the regions where a database is deployed:
 
@@ -2351,21 +2206,12 @@ astra db delete-region **DATABASE_ID** -r **REGION**
 ----
 ====
 
-[NOTE]
-====
-The database enters *Maintenance* status while deleting the region.
-
-While in *Maintenance* status, you cannot add or remove regions, truncate tables, or delete keyspaces, tables, or collections.
-
-*Maintenance* status doesn't impact reads and writes.
-====
-
 [IMPORTANT]
 ====
 You cannot remove the primary (default) region, which is the first region selected when you created the database.
 
 When you remove a region, any connections to the deleted region are also removed.
-However, to avoid data loss, all data is replicated before the region is deleted.
+However, to avoid data loss, all data is replicated to the other regions before the region is deleted.
 ====
 
 === `db create-region` options
@@ -2563,7 +2409,7 @@ astra db resume **DATABASE_ID**
 
 Resuming the database may take a few minutes.
 
-include::ROOT:partial$async-option.adoc[tags=active]
+include::ROOT:partial$async-option-active.adoc[]
 
 === `db resume` options
 
@@ -2650,7 +2496,8 @@ astra db delete **DATABASE_ID**
 
 The database enters *Terminating* status while deletion occurs.
 
-include::ROOT:partial$async-option.adoc[tags=terminated]
+By default, the command runs synchronously and doesn't return the command prompt until the database reaches *Terminated* or *Error* status.
+To run the command _asynchronously_, add the `--async` option.
 
 === `db delete` options
 
@@ -2954,9 +2801,9 @@ token@cqlsh>
 Type `exit` or `quit;` and press kbd:[Return] to exit `cqlsh`.
 
 The first time you use the `astra db cqlsh` command, the {product} downloads and installs the `cqlsh` utility to the {product} installation directory (`~/.astra/cqlsh-astra`).
-The {product} also downloads the {scb-long} for each database you connect to and stores the {scb} zip files in the `~/.astra/scb` directory.
+The {product} also downloads the {scb} for each database you connect to and stores the {scb-short} zip files in the `~/.astra/scb` directory.
 
-[NOTE]
+[TIP]
 ======
 If the {product} reports `ModuleNotFoundError`, check that you have a supported version of Python available in your terminal:
 
@@ -3166,12 +3013,15 @@ astra db cqlsh **DATABASE_ID** -e "SOURCE 'sample.cql'"
 ====
 ======
 
-== Use DataStax Bulk Loader (DSBulk)
+== Use DataStax Bulk Loader
 
-The xref:dsbulk:overview:dsbulk-about.adoc[DataStax Bulk Loader] (DSBulk) lets you load, unload, and count data in your database tables.
+The xref:dsbulk:overview:dsbulk-about.adoc[DataStax Bulk Loader (DSBulk)] lets you load, unload, and count data in your database tables.
 The {product} provides built-in DSBulk support by downloading, installing, configuring, and wapping the `dsbulk` utility.
 
 The {product} exposes DSBulk functionality through the `astra db load`, `astra db unload`, and `astra db count` commands.
+
+The first time you run `astra db load`, `astra db unload`, or `astra db count` commands, the {product} downloads and installs the `dsbulk` utility to the {product} installation directory (`~/.astra/dsbulk-*`).
+The {product} also downloads the {scb} for each database you connect to and stores the {scb-short} zip files in the `~/.astra/scb` directory.
 
 Use the `astra db load` command to load data from a file into a database table:
 
@@ -3308,12 +3158,6 @@ To resume the current operation, re-run it with the same settings, and add the f
 --dsbulk.log.checkpoint.file=/Users/USERNAME/logs/COUNT_20250123-021120-127216/checkpoint.csv
 134574
 ----
-====
-
-[NOTE]
-====
-The first time you use one of the `astra db load`, `astra db unload`, or `astra db count` commands, the {product} downloads and installs the `dsbulk` utility to the {product} installation directory (`~/.astra/dsbulk-*`).
-The {product} also downloads the {scb-long} for each database you connect to and stores the {scb} zip files in the `~/.astra/scb` directory.
 ====
 
 === `db load` options
@@ -3610,7 +3454,7 @@ OPTIONS
 ----
 ====
 
-=== End-to-end example
+=== Complete DSBulk example
 
 The following end-to-end example shows how to use the {product}'s built-in DSBulk support to load data into a database, get information about the data, and unload the data into CSV files:
 
@@ -4075,7 +3919,7 @@ OPTIONS
 ----
 ====
 
-=== End-to-end example
+=== Complete CDC configuration example
 
 The following end-to-end example shows how to use the {product} to create a CDC connection for a table in a {db-serverless} database:
 
@@ -4227,11 +4071,11 @@ astra streaming list-cdc cdc-demo-tenant
 
 After you enable CDC on your {db-serverless} database, you can xref:astra-db-serverless:databases:change-data-capture.adoc#connect-a-sink[connect a sink].
 
-== Download the {scb-cap}
+== Download the {scb-brief}
 
 The xref:astra-db-serverless:drivers:secure-connect-bundle.adoc[] is a zip file containing security credentials and certificates required for secure mutual TLS (mTLS) connection to your database.
 
-Use the `astra db download-scb` command to download the {scb-long} for a database:
+Use the `astra db download-scb` command to download the {scb} for a database:
 
 [source,bash,subs="+quotes"]
 ----
@@ -4248,15 +4092,15 @@ astra db download-scb **DATABASE_ID** -r **REGION_NAME**
 ====
 
 The `-r **REGION_NAME**` option is required for <<configure-multiple-regions,multi-region databases>>.
-If your database is configured with multiple regions, replace `**REGION_NAME**` with the name of the region you want to download the {scb} for.
+If your database is configured with multiple regions, replace `**REGION_NAME**` with the name of the region you want to download the {scb-short} for.
 
-By default, the {product} downloads the {scb} to the directory where you run the command and saves the file with the following naming pattern: `scb_**DATABASE-ID**_**REGION-NAME**.zip`.
+By default, the {product} downloads the {scb-short} to the directory where you run the command and saves the file with the following naming pattern: `scb_**DATABASE-ID**_**REGION-NAME**.zip`.
 
 [WARNING]
 ====
-Treat the {scb} the same way you would any other sensitive values, such as passwords or tokens.
+Treat the {scb-short} the same way you would any other sensitive values, such as passwords or tokens.
 
-The {scb} contains sensitive information that establishes a connection to your database, including key pairs and certificates.
+The {scb-short} contains sensitive information that establishes a connection to your database, including key pairs and certificates.
 ====
 
 === `db download-scb` options
@@ -4315,7 +4159,7 @@ OPTIONS
 ----
 ====
 
-Use the `-r` / `--region` option to download the {scb} for a specific region:
+Use the `-r` / `--region` option to download the {scb-short} for a specific region:
 
 [source,bash,subs="+quotes"]
 ----
@@ -4337,7 +4181,7 @@ Use the `astra db list-regions` command to get a list of the region names where 
 For more information, see <<configure-multiple-regions>>.
 ====
 
-Use the `-f` / `--output-file` option to download the {scb} to a specific location and filename:
+Use the `-f` / `--output-file` option to download the {scb-short} to a specific location and filename:
 
 [source,bash,subs="+quotes"]
 ----
@@ -4398,12 +4242,15 @@ ASTRA_ORG_TOKEN="AstraCS:FZm..."
 
 [WARNING]
 ====
-The generated `.env` files contains sensitive information, including the application token that the {product} uses to connect to Astra.
+The generated `.env` files contains sensitive information, including the application token that the {product} uses to connect to {product-short}.
 
-The {scb} contains sensitive information that establishes a connection to your database, including key pairs and certificates.
+The {scb-short} contains sensitive information that establishes a connection to your database, including key pairs and certificates.
 ====
 
 === `db create-dotenv` options
+
+The directory must already exist before you run the `db create-dotenv` command.
+If the directory doesn't exist, the command fails with the error `INVALID_ARGUMENT: Destination folder has not been found`.
 
 .Expand to see all `db create-dotenv` options
 [%collapsible]
@@ -4478,10 +4325,3 @@ astra db create-dotenv **DATABASE_ID** -d ~/tmp
 [OK]    File '/Users/USERNAME/tmp/.env' has been created/amended
 ----
 ====
-
-[NOTE]
-====
-The directory must already exist before you run the command.
-If the directory doesn't exist, the {product} will report the following error: `INVALID_ARGUMENT: Destination folder has not been found`.
-====
-
