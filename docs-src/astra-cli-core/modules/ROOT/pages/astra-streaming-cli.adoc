@@ -24,8 +24,10 @@ https://api.astra.datastax.com/v2/streaming/tenants/my-streaming-tenant
 
 Running `astra streaming create` without any options deploys the tenant in the default cloud provider (`aws`), region (`useast2`), plan (`free`) and namespace (`default`).
 
-[NOTE]
-======
+[TIP]
+====
+Tenant names must be unique
+
 All tenant names in {astra_stream} must be unique.
 If the tenant name is already in use, the command fails with with the following error message:
 
@@ -40,6 +42,7 @@ You can use the `--if-not-exist` option to only create the tenant if it doesn't 
 ----
 astra streaming create **TENANT_NAME** --if-not-exist
 ----
+====
 
 .Result
 [%collapsible]
@@ -67,7 +70,6 @@ https://api.astra.datastax.com/v2/streaming/tenants/my-streaming-tenant
 [OK]    Tenant 'my-streaming-tenant' exists.
 ----
 ====
-======
 
 === `streaming create` options
 
@@ -541,7 +543,7 @@ OPTIONS
 
 == Get a list of available {astra_stream} regions
 
-Use the `astra streaming list-regions` command to get a list of available cloud provider regions that support {astra_stream}:
+Use the `astra streaming list-regions` command to get a list of available regions that support {astra_stream}:
 
 [source,bash]
 ----
@@ -550,34 +552,19 @@ astra streaming list-regions
 
 .Result
 [%collapsible]
-======
-[source,console]
+====
+The result is a table with `Cloud Provider`, `Region`, and `Full Name` columns.
+`Full Name` can be empty or contain the region's name and location (city, state, or country).
+
+[source,console,subs="+quotes"]
 ----
 +-----------------+---------------------+-------------------------------+
 | Cloud Provider  | Region              | Full Name                     |
 +-----------------+---------------------+-------------------------------+
-| aws             | apsouth1            |                               |
-| aws             | apsoutheast1        |                               |
-| aws             | apsoutheast2        |                               |
-| aws             | eucentral1          |                               |
-| aws             | euwest1             |                               |
-| aws             | useast1             |                               |
-| aws             | useast2             |                               |
-| aws             | uswest2             |                               |
-| azure           | australiaeast       |                               |
-| azure           | eastus              |                               |
-| azure           | westeurope          |                               |
-| azure           | westus2             |                               |
-| gcp             | australiase1        |                               |
-| gcp             | europewest1         |                               |
-| gcp             | uscentral1          |                               |
-| gcp             | useast1             |                               |
-| gcp             | useast4             |                               |
+| **PROVIDER**    | **REGION**          | **NAME**                      |
 +-----------------+---------------------+-------------------------------+
 ----
-
-include::ROOT:partial$regions-change-admonition.adoc[]
-======
+====
 
 === `streaming list-regions` options
 
@@ -1087,6 +1074,9 @@ The {scb} contains sensitive information that establishes a connection to your d
 
 === `streaming create-dotenv` options
 
+The directory must already exist before you run the `streaming create-dotenv` command.
+If the directory doesn't exist, the command fails with the error `INVALID_ARGUMENT: Destination folder has not been found`.
+
 .Expand to see all `streaming create-dotenv` options
 [%collapsible]
 ====
@@ -1152,10 +1142,4 @@ astra streaming create-dotenv **TENANT_NAME** -d ~/tmp
 ----
 [OK]    File '/Users/USERNAME/tmp/.env' has been created/amended
 ----
-====
-
-[NOTE]
-====
-The directory must already exist before you run the command.
-If the directory doesn't exist, the {product} will report the following error: `INVALID_ARGUMENT: Destination folder has not been found`.
 ====

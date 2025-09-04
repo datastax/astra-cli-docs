@@ -32,11 +32,11 @@ Install the {product} using your preferred method:
 Homebrew::
 +
 --
-You can use Homebrew to install the {product} on macOS and Linux.
+You can use Homebrew to install the {product} on macOS and Linux:
 
-.Prerequisites
-* You must have https://brew.sh/[Homebrew] installed.
-* On macOS, you must set your macOS app security settings to https://support.apple.com/en-us/102445#openanyway[Allow applications from App Store & Known Developers].
+. On macOS, set your macOS app security settings to https://support.apple.com/en-us/102445#openanyway[Allow applications from App Store & Known Developers].
+
+. Make sure https://brew.sh/[Homebrew] is installed.
 
 . Make sure Homebrew is up to date:
 +
@@ -66,7 +66,7 @@ Already downloaded: /Users/USERNAME/Library/Caches/Homebrew/downloads/ca763b5f44
 ------------------------
   ENABLE AUTOCOMPLETION
 -------------------------
-To enable Bash completion for Astra CLI (and other brew formulae when enable, add the following to your shell configuration file (e.g. ~/.zshrc):
+To enable Bash completion for Astra CLI (and other brew formulae when enabled), add the following to your shell configuration file (e.g. ~/.zshrc):
 
 if [ -f  /opt/homebrew/etc/bash_completion.d ]; then
   .  /opt/homebrew/etc/bash_completion.d
@@ -103,17 +103,17 @@ astra --version
 .Result
 [%collapsible]
 ====
+The command returns the {product} version that is installed:
+
 [source,console,subs="+attributes"]
 ----
 {product-version}
 ----
 ====
 +
-The command returns the {product} version that is installed.
-+
 include::ROOT:partial$macos-security-notice.adoc[]
 
-. (Optional) If you haven't done so already, enable https://docs.brew.sh/Shell-Completion[`brew` shell completion].
+. Optional: If you haven't done so already, enable https://docs.brew.sh/Shell-Completion[`brew` shell completion].
 +
 The {product} Homebrew formula installs a completion file named `astra` in the Homebrew-managed completions directory.
 If you have shell completion enabled in Homebrew, your terminal will automatically suggest and complete {product} commands and options as you type them.
@@ -122,7 +122,7 @@ If you have shell completion enabled in Homebrew, your terminal will automatical
 curl::
 +
 --
-You can use `curl` to install the {product} on Linux, macOS, and Windows Subsystem for Linux (WSL).
+You can use `curl` to install the {product} on Linux, macOS, and Windows Subsystem for Linux (WSL):
 
 . Install the {product}:
 +
@@ -190,13 +190,13 @@ astra --version
 .Result
 [%collapsible]
 ====
+The command returns the {product} version that is installed:
+
 [source,console,subs="+attributes"]
 ----
 {product-version}
 ----
 ====
-+
-The command returns the {product} version that is installed.
 +
 include::ROOT:partial$macos-security-notice.adoc[]
 --
@@ -240,15 +240,15 @@ java -jar astra-cli.jar --version
 .Result
 [%collapsible]
 ====
+The command returns the {product} version that is installed:
+
 [source,console,subs="+attributes"]
 ----
 {product-version}
 ----
 ====
-+
-The command returns the {product} version that is installed.
 
-You can use all options and suffixes on this command when running the JAR file.
+You can use all options and suffixes on commands when running the JAR file.
 For example:
 
 [source,bash]
@@ -274,18 +274,25 @@ docker --version
 .Result
 [%collapsible]
 ====
+The command returns the Docker version that is installed:
+
 [source,console]
 ----
 Docker version 27.1.1, build 6312585
 ----
 ====
 
-. Pull the latest {product} Docker image:
+. Pull the latest {product} Docker image (`datastax/astra-cli:latest`):
 +
 [source,bash,subs="+attributes"]
 ----
 docker pull datastax/astra-cli
 ----
++
+[TIP]
+====
+To pull a specific version of the Docker image, run `docker pull datastax/astra-cli:**TAG**`, replacing `**TAG**` with the version tag of the Docker image you want to pull.
+====
 +
 .Result
 [%collapsible]
@@ -306,20 +313,6 @@ What's next:
     View a summary of image vulnerabilities and recommendations → docker scout quickview datastax/astra-cli
 ----
 ====
-+
-[NOTE]
-====
-When you run `docker pull datastax/astra-cli`, Docker automatically pulls the latest version of the Docker image (`datastax/astra-cli:latest`).
-
-To pull a specific version of the Docker image, run the following command:
-
-[source,bash,subs="+quotes"]
-----
-docker pull datastax/astra-cli:**TAG**
-----
-
-Replace `**TAG**` with the version tag of the Docker image you want to pull.
-====
 
 . Confirm that you can successfully run the {product} in a Docker container:
 +
@@ -331,15 +324,15 @@ docker run -rm datastax/astra-cli --version
 .Result
 [%collapsible]
 ====
+The command returns the {product} version that is installed:
+
 [source,console,subs="+attributes"]
 ----
 {product-version}
 ----
 ====
-+
-The command returns the {product} version that is installed.
 
-. (Optional) Run the {product} with a configuration file:
+. Optional: Run the {product} with a configuration file:
 +
 [source,bash,subs="+quotes"]
 ----
@@ -357,7 +350,7 @@ docker run -rm -v ~/.astrarc:/work/.astrarc datastax/astra-cli --version
 This command mounts the `~/.astrarc` file from your local machine to the `/work/.astrarc` file in the Docker container.
 This lets you use your local configuration file when running the {product} in a Docker container.
 
-. (Optional) Create a shell alias for running the {product} in a Docker container.
+. Optional: Create a shell alias for running the {product} in a Docker container.
 +
 You can create a shell alias to eliminate the need to include the `docker run` command whenever you want to run the {product} in a Docker container.
 For example, the following command creates an alias named `astra`:
@@ -384,7 +377,6 @@ To set up a new configuration and run your first commands, see xref:getting-star
 === Installation file locations
 
 The {product} and its configuration are installed in the following locations:
-
 
 [cols="1,2"]
 |===
@@ -443,7 +435,7 @@ brew upgrade datastax/astra-cli/astra-cli
 ------------------------
   ENABLE AUTOCOMPLETION
 -------------------------
-To enable Bash completion for Astra CLI (and other brew formulae when enable, add the following to your shell configuration file (e.g. ~/.zshrc):
+To enable Bash completion for Astra CLI (and other brew formulae when enabled), add the following to your shell configuration file (e.g. ~/.zshrc):
 
 if [ -f  /opt/homebrew/etc/bash_completion.d ]; then
   .  /opt/homebrew/etc/bash_completion.d
@@ -480,13 +472,13 @@ astra --version
 .Result
 [%collapsible]
 ====
+The command returns the {product} version that is installed:
+
 [source,console,subs="+attributes"]
 ----
 {product-version}
 ----
 ====
-+
-The command returns the {product} version that is installed.
 +
 include::ROOT:partial$macos-security-notice.adoc[]
 --
@@ -511,6 +503,8 @@ astra --version
 .Result
 [%collapsible]
 ====
+The command returns the {product} version that is installed:
+
 [source,console,subs="+attributes"]
 ----
 {product-version}
@@ -551,7 +545,7 @@ Uninstalling /opt/homebrew/Cellar/astra-cli/{product-version}... (4 files, 61.7M
 rm -R ~/.astra
 ----
 
-. (Optional) Delete the {product} configuration file:
+. Optional: Delete the {product} configuration file:
 +
 [source,bash]
 ----
@@ -569,14 +563,14 @@ curl::
 rm -R ~/.astra
 ----
 
-. (Optional) Delete the {product} configuration file:
+. Optional: Delete the {product} configuration file:
 +
 [source,bash]
 ----
 rm ~/.astrarc
 ----
 
-. (Optional) Remove the {product} from your shell configuration file (for example, `.zshrc` or `.bashrc`).
+. Optional: Remove the {product} from your shell configuration file, such as `.zshrc` or `.bashrc`:
 
 .. Open your shell configuration file in a text editor.
 For example:
