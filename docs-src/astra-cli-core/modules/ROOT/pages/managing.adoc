@@ -16,7 +16,7 @@ You can use `**DATABASE_NAME**` instead of `**DATABASE_ID**` in all `astra db` c
 The {product} can create {db-serverless} and {db-serverless-vector} databases with on-demand (non-PCU) capacity only.
 It cannot create {db-classic} databases; however, you can use the {product} to <<get-database-details,get information>> about your existing {db-classic} databases.
 
-For organizations on *Enterprise* plans that require new databases to belong to a xref:astra-db-serverless:administration:provisioned-capacity-units.adoc[PCU group], you must xref:astra-db-serverless:databases:create-database.adoc[use the {astra-ui} or {devops-api} to create databases] because the {product} doesn't support PCU group assignment with database creation.
+If your organization requires that new databases to belong to a xref:astra-db-serverless:administration:provisioned-capacity-units.adoc[PCU group], you must xref:astra-db-serverless:databases:create-database.adoc[use the {astra-ui} or {devops-api} to create databases] because the {product} doesn't support PCU group assignment with database creation.
 
 Use the `astra db create` command to create a new {db-serverless} database:
 
@@ -2156,7 +2156,7 @@ astra db create-region **DATABASE_ID** -r **REGION**
 The database enters *Maintenance* status while provisioning and replicating data to the new region.
 Some functions are limited while in *Maintenance* status.
 
-For organizations on *Enterprise* plans that require use of xref:astra-db-serverless:administration:provisioned-capacity-units.adoc[PCU groups], you must xref:astra-db-serverless:databases:manage-regions.adoc[use the {astra-ui} or {devops-api} to add regions] because the {product} doesn't support PCU group assignment when adding a region.
+If your organization requires use of xref:astra-db-serverless:administration:provisioned-capacity-units.adoc[PCU groups], you must xref:astra-db-serverless:databases:manage-regions.adoc[use the {astra-ui} or {devops-api} to add regions] because the {product} doesn't support PCU group assignment when adding a region.
 
 For more information, including requirements and costs for additional regions, see xref:astra-db-serverless:databases:manage-regions.adoc[].
 
