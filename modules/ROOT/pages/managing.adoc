@@ -1,5 +1,4 @@
-= Manage {astra_db} with the {product}
-:navtitle: Manage {astra_db}
+= {astra_db} commands
 :embedding-provider-name: NVIDIA
 :embedding-provider-name-api: nvidia
 :embedding-provider-model-name-api: NV-Embed-QA

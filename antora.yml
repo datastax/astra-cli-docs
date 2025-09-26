@@ -19,7 +19,7 @@ asciidoc:
     astra-db: 'Astra DB'
     product: 'Astra CLI'
     product-short: 'Astra'
-    product-version: '0.6'
+    product-version: '1.0'
     db-serverless: 'Serverless (Non-Vector)'
     db-serverless-vector: 'Serverless (Vector)'
     db-classic: 'Classic'

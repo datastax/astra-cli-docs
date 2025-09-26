@@ -7,7 +7,7 @@ Initialize the {product} and run your first commands.
 
 To configure the {product}:
 
-*  xref:ROOT:installation.adoc[Install the {product}].
+*  xref:ROOT:install.adoc[Install the {product}].
 
 * You must have an active {astra-url}[{product-short} account^].
 

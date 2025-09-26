@@ -1,7 +1,22 @@
-* xref:installation.adoc[]
-* xref:getting-started.adoc[]
-* xref:managing.adoc[]
-* xref:astra-streaming-cli.adoc[]
-* xref:administration.adoc[]
-* https://github.com/datastax/astra-cli[GitHub repo]
+.Get started
+* xref:install.adoc[]
+* xref:use-cli.adoc[]
+* xref:upgrade.adoc[]
+* xref:uninstall.adoc[]
+
+.Commands
+* xref:commands:astra.adoc[]
+* xref:commands:astra-setup.adoc[]
+* xref:commands:astra-config.adoc[]
+* xref:commands:astra-db.adoc[]
+* xref:commands:astra-org.adoc[]
+* xref:commands:astra-role.adoc[]
+* xref:commands:astra-streaming.adoc[]
+* xref:commands:astra-token.adoc[]
+* xref:commands:astra-user.adoc[]
+* xref:commands:astra-upgrade.adoc[]
+* xref:commands:astra-nuke.adoc[]
+
+
+.Release notes
 * https://github.com/datastax/astra-cli/releases[Release notes]

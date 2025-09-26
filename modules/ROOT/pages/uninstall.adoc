@@ -1,0 +1,81 @@
+= Uninstall the {product}
+:navtitle: Uninstall the CLI
+
+To uninstall the {product}, follow the procedure for the method you used to originally install the {product}:
+
+[tabs]
+======
+Homebrew::
++
+--
+. Uninstall the {product}:
++
+[source,bash]
+----
+brew uninstall datastax/astra-cli/astra-cli
+----
++
+.Result
+[%collapsible]
+====
+[source,console,subs="+attributes"]
+----
+Uninstalling /opt/homebrew/Cellar/astra-cli/{product-version}... (4 files, 61.7MB)
+----
+====
+
+. Delete the {product} and its associated installation files:
++
+[source,bash]
+----
+rm -R ~/.astra
+----
+
+. Optional: Delete the {product} configuration file:
++
+[source,bash]
+----
+rm ~/.astrarc
+----
+--
+
+curl::
++
+--
+. Delete the {product} and its associated installation files:
++
+[source,bash]
+----
+rm -R ~/.astra
+----
+
+. Optional: Delete the {product} configuration file:
++
+[source,bash]
+----
+rm ~/.astrarc
+----
+
+. Optional: Remove the {product} from your shell configuration file, such as `.zshrc` or `.bashrc`:
+
+.. Open your shell configuration file in a text editor.
+For example:
++
+[source,bash]
+----
+nano ~/.zshrc
+----
+
+.. Remove any lines that reference the {product}.
+For example:
++
+[source,bash]
+----
+#THIS MUST BE AT THE END OF THE FILE FOR ASTRA_CLI TO WORK!!!
+export ASTRADIR="/Users/USERNAME/.astra/cli"
+[[ -s "/Users/USERNAME/.astra/cli/astra-init.sh" ]] && source "/Users/USERNAME/.astra/cli/astra-init.sh"
+----
+
+.. Save and close the file.
+--
+======

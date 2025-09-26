@@ -1,5 +1,4 @@
-= Manage your {product-short} organization with the {product}
-:navtitle: Manage {product-short} administration
+= {product-short} administration commands
 
 Use the {product} to manage your {product-short} organization.
 

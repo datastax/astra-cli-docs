@@ -1,0 +1,103 @@
+= astra db
+
+Manage your Astra databases.
+
+== Usage
+
+[source,console]
+----
+astra db [-hqv] [--[no-]color] [--no-input] [--[no-]spinner] [--vector]
+                [--dump-logs[=FILE]] [-o=FORMAT] [[[-cf=PATH] [-p=NAME]] |
+                [--token=TOKEN [--env=ENV]]] [COMMAND]
+----
+
+== Options
+
+`-cf`, `--config-file=PATH`::
+The astrarc file to use (default: ~/.astrarc)
+
+`--[no-]color`::
+Force colored output
+
+`--dump-logs[=FILE]`::
+Write all logs to an optionally specified file (default: ~/.astra/logs/<file>.log)
+
+`--env=ENV`::
+Override the target astra environment
+
+`-h`, `--help`::
+Show this help message and exit.
+
+`--no-input`::
+Never ask for user input (e.g. confirmation prompts)
+
+`-o`, `--output=FORMAT`::
+One of: human, json, csv
+
+`-p`, `--profile=NAME`::
+The astrarc profile to use
+
+`-q`, `--quiet`::
+Suppress informational output
+
+`--[no-]spinner`::
+Enable/disable the loading spinner
+
+`--token=TOKEN`::
+Override the default astra token
+
+`-v`, `--verbose`::
+Enable verbose logging output
+
+`--vector`::
+Only show vector-enabled databases
+
+== Commands
+
+* list
+* get, describe
+* create
+* delete
+* status
+* cqlsh
+* dsbulk
+* create-dotenv
+* download-scb
+* resume
+* list-keyspaces
+* create-keyspace
+* delete-keyspace
+* list-collections
+* create-collection
+* describe-collection
+* delete-collection
+* truncate-collection
+* list-tables
+* describe-table
+* delete-table
+* truncate-table
+* list-embedding-providers
+* list-cdcs
+* create-cdc
+* delete-cdc
+* create-region
+* delete-region
+* list-regions
+* list-regions-classic
+* list-regions-serverless
+* list-regions-vector
+* list-clouds
+* get-endpoint-swagger
+* get-endpoint-api
+* get-endpoint-playground
+
+== Examples
+
+[source,console]
+----
+# List all your Astra databases
+$ astra db
+
+# List only vector-enabled Astra databases
+$ astra db --vector
+----

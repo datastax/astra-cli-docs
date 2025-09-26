@@ -1,5 +1,4 @@
-= Manage {astra_stream} with the {product}
-:navtitle: Manage {astra_stream}
+= {astra_stream} commands
 
 Use the {product} to manage your {astra_stream} deployments.
 

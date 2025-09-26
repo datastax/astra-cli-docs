@@ -26,11 +26,11 @@ To make it even easier to integrate {product-short} into your applications and w
     <!-- <p>Placeholder text.</p> -->
 
     <div class="landing-a">
-        xref:installation.adoc[]
+        xref:install.adoc[]
     </div>
 
     <div class="landing-a">
-        xref:getting-started.adoc[]
+        xref:use-cli.adoc[]
     </div>
 
   </div>

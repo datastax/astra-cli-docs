@@ -1,0 +1,113 @@
+= Upgrade the {product}
+:navtitle: Upgrade the CLI
+
+To update the {product}, follow the procedure for the method you used to originally install the {product}:
+
+[tabs]
+======
+Homebrew::
++
+--
+. Make sure Homebrew is up to date:
++
+[source,bash]
+----
+brew update
+----
+
+. Update the {product}:
++
+[source,bash]
+----
+brew upgrade datastax/astra-cli/astra-cli
+----
++
+.Result
+[%collapsible]
+====
+[source,console]
+----
+==> Upgrading datastax/astra-cli/astra-cli
+  0.5 -> 0.6
+==> Pouring astra-cli-0.6.arm64_sonoma.bottle.tar.gz
+==> Caveats
+------------------------
+  ENABLE AUTOCOMPLETION
+-------------------------
+To enable Bash completion for Astra CLI (and other brew formulae when enabled), add the following to your shell configuration file (e.g. ~/.zshrc):
+
+if [ -f  /opt/homebrew/etc/bash_completion.d ]; then
+  .  /opt/homebrew/etc/bash_completion.d
+fi
+
+Once added, reload your shell or run:
+
+source /opt/homebrew/etc/bash_completion.d
+
+This will ensure the Bash completion script for Astra CLI is loaded.
+
+-------------------
+ SPECIAL COMMANDS
+-------------------
+
+- CQLSH: You must have python 3.7+ but less than 3.12, cqlsh is still not compatible with 3.12, downgrade if needed
+- DSBULK: You must have java11+ installm the cli is pulling regular dsbulk
+
+==> Summary
+🍺  /opt/homebrew/Cellar/astra-cli/0.6: 4 files, 44.4MB
+==> Running `brew cleanup astra-cli`...
+Removing: /opt/homebrew/Cellar/astra-cli/0.5... (4 files, 61.7MB)
+Removing: /Users/USERNAME/Library/Caches/Homebrew/astra-cli--0.5.arm64_sonoma.bottle.tar.gz... (24.4MB)
+----
+====
+
+. Confirm that the latest version of the {product} is installed:
++
+[source,bash]
+----
+astra --version
+----
++
+.Result
+[%collapsible]
+====
+The command returns the {product} version that is installed:
+
+[source,console,subs="+attributes"]
+----
+{product-version}
+----
+====
++
+include::ROOT:partial$macos-security-notice.adoc[]
+--
+
+curl::
++
+--
+. Update the {product}:
++
+[source,bash]
+----
+curl -Ls "https://dtsx.io/get-astra-cli" | bash
+----
+
+. Confirm that the latest version of the {product} is installed:
++
+[source,bash]
+----
+astra --version
+----
++
+.Result
+[%collapsible]
+====
+The command returns the {product} version that is installed:
+
+[source,console,subs="+attributes"]
+----
+{product-version}
+----
+====
+--
+======
