@@ -1,7 +1,7 @@
 = Uninstall the {product}
 :navtitle: Uninstall the CLI
 
-To uninstall the {product}, follow the procedure for the method you used to originally install the {product}:
+Follow the instructions for your original installation method to uninstall the {product}.
 
 [tabs]
 ======

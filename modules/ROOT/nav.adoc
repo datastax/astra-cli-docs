@@ -17,6 +17,5 @@
 * xref:commands:astra-upgrade.adoc[]
 * xref:commands:astra-nuke.adoc[]
 
-
 .Release notes
 * https://github.com/datastax/astra-cli/releases[Release notes]
