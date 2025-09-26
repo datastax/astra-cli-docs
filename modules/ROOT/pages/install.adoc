@@ -20,8 +20,6 @@ The {product} supports the following operating systems:
 
 |Microsoft Windows
 |x86_64
-
-_Requires https://learn.microsoft.com/en-us/windows/wsl/install[Windows Subsystem for Linux (WSL)]_
 |===
 
 == Install the {product}
@@ -49,35 +47,26 @@ TBD
 ----
 ====
 
-. Confirm that the {product} is installed:
+. Run the `astra` command from any directory to verify successful installation:
 +
 [source,bash]
 ----
-astra --version
+astra
 ----
 +
-.Result
-[%collapsible]
-====
-The command returns the {product} version that is installed:
-
-[source,console,subs="+attributes"]
-----
-{product-version}
-----
-====
+The response includes available commands and options for the {product}.
 --
 
 macOS::
 +
---
 Select one of the following installation methods to install the {product} on macOS without using Homebrew:
-
++
 [tabs]
 =====
-Scripted install (recommended)::
+Scripted installation (recommended)::
 +
-. Run the following shell script to install the {product}:
+--
+. Run the following Bash script to install the {product}:
 +
 [source,bash]
 ----
@@ -87,39 +76,8 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/toptobes/astra-cli-pico/ma
 .Result
 [%collapsible]
 ====
-[source,console]
-----
-TBD
-----
-
-. When prompted about where to install the {product}, press kbd:[Return] to accept the default location (`~/.astra/cli/`).
-+
-To install 
-====
-
-Manual install::
-+
-=====
---
-
-curl::
-+
---
-You can use `curl` to install the {product} on Linux, macOS, and Windows Subsystem for Linux (WSL):
-
-. Install the {product}:
-+
-[source,bash]
-----
-curl -Ls "https://dtsx.io/get-astra-cli" | bash
-----
-+
-.Result
-[%collapsible]
-====
 [source,console,subs="+attributes"]
 ----
-
     _____            __
    /  _  \   _______/  |_____________
   /  /_\  \ /  ___/\   __\_  __ \__  \
@@ -127,230 +85,202 @@ curl -Ls "https://dtsx.io/get-astra-cli" | bash
  \____|__  /____  > |__|  |__|  (____  /
          \/     \/                   \/
 
-Installing Astra Cli {product-version}  please wait...
+                    Installer: {product-version}
 
-Checking prerequisites:
-[OK] - Ready to install.
-[OK] - unzip command is available
-[OK] - curl command is available
+→ Required tools are available.
+→ No existing installation found.
 
-Preparing directories:
-[OK] - Created /home/USERNAME/.astra/tmp
-[OK] - Created /home/USERNAME/.astra/cli
-[OK] - Created /home/USERNAME/.astra/scb
+Ready to install Astra CLI ✅
 
-Downloading archive:
-######################################################################## 100.0%
-[OK] - File downloaded
-[OK] - Integrity of the archive checked
+Do you want to install Astra CLI to ~/.astra/cli/? [Y]es/[d]ifferent path/[c]ancel
+>
+----
+====
 
-Extracting and installation:
-[OK] - Extraction is successful
-[OK] - File moved to /home/USERNAME/.astra/cli
-[OK] - Installation cleaned up
-[OK] - astra added to /home/USERNAME/.bashrc
-[OK] - astra added to /home/USERNAME/.zshrc
-[OK] - Installation Successful
+. When prompted to specify the installation location, press kbd:[Return] to accept the default (`~/.astra/cli/`).
++
+.Result
+[%collapsible]
+====
+[source,console,subs="+attributes"]
+----
+→ Using installation dir ~/.astra/cli/.
+→ Archive downloaded.
+→ Archive verified and extracted.
 
-Open A NEW TERMINAL and run: astra setup
+Astra CLI installed successfully! 🎉
 
-You can close this window.
+Next steps:
+
+# Append the following to your shell profile (e.g. ~/.bashrc, ~/.zshrc, etc.)
+$ eval "$(~/.astra/cli/astra shellenv)"
+
+# Run the following to get started!
+$ astra setup
 ----
 ====
 +
-The `~/.astra/cli` folder is added to the `PATH` environment variable.
-See <<file-locations>> for more information.
+To install the {product} to a different location, use the binary installation method.
 
-. Open a new terminal or restart your existing terminal.
-
-. Confirm that the {product} is installed:
+. Add the following lines to your shell profile (for example, `~/.zshrc` or `~/.bashrc`) to make the `astra` command executable from any directory:
 +
 [source,bash]
 ----
-astra --version
+# Astra CLI shell configuration
+eval "$(~/.astra/cli/astra shellenv)"
+----
+
+. Reload your shell profile or open a new terminal window.
+
+. Run the `astra` command from any directory to verify successful installation:
++
+[source,bash]
+----
+astra
+----
++
+The response includes available commands and options for the {product}.
+--
+
+Binary installation::
++
+--
+. Download the latest `macos` archive file for your CPU architecture from https://github.com/toptobes/astra-cli-pico/releases[GitHub].
+
+. Extract the archive into the directory where you want to install the {product}:
++
+[source,bash,subs="+quotes"]
+----
+sudo tar -xzvf astra-macos-**ARCHITECTURE**.tar.gz -C **INSTALLATION_DIRECTORY**
+----
+
+. Add the following lines to your shell profile (for example, `~/.zshrc` or `~/.bashrc`) to make the `astra` command executable from any directory:
++
+[source,bash,subs="+quotes"]
+----
+# Astra CLI shell configuration
+eval "$(**PATH_TO_EXEC** shellenv)"
+----
++
+Replace `**PATH_TO_EXEC**` with the full path to the `astra` executable in the installation directory.
+
+. Reload your shell profile or open a new terminal window.
+
+. Run the following command to de-quarantine the binary:
++
+[source,bash]
+----
+xattr -d com.apple.quarantine $(which astra)
+----
++
+For more information
+
+. Run the `astra` command from any directory to verify successful installation:
++
+[source,bash]
+----
+astra
+----
++
+The response includes available commands and options for the {product}.
+--
+=====
+
+Windows::
++
+Select one of the following installation methods to install the {product} on Windows:
++
+[tabs]
+=====
+Scripted installation (recommended)::
++
+--
+. Run the following PowerShell script to install the {product}:
++
+[source,powershell]
+----
+powershell -c "irm https://raw.githubusercontent.com/toptobes/astra-cli-pico/master/scripts/install.ps1 | iex"
 ----
 +
 .Result
 [%collapsible]
 ====
-The command returns the {product} version that is installed:
-
 [source,console,subs="+attributes"]
 ----
-{product-version}
+TBD
 ----
 ====
-+
-include::ROOT:partial$macos-security-notice.adoc[]
---
 
-JVM::
-+
---
-The {product} is available as a packaged Java application that you can use on any machine running a JVM.
-
-To run the {product} in a JVM, you must have Java 17+ installed.
-You can install Java by downloading and installing the latest https://www.oracle.com/java/technologies/downloads/[Oracle JDK]
-
-. Verify that Java is version 17 or higher:
-+
-[source,bash]
-----
-java --version
-----
-
-. Download the latest release of https://github.com/datastax/astra-cli/releases[astra-cli] image:https://img.shields.io/github/v/release/datastax/astra-cli?label=latest&color=green[alt="Latest astra-cli release on GitHub",link="https://github.com/datastax/astra-cli/releases"]:
-+
-[source,bash,subs="+attributes"]
-----
-curl -L -o astra-cli-{product-version}.zip https://github.com/datastax/astra-cli/releases/download/{product-version}/astra-cli-{product-version}.zip
-----
-
-. Unzip the archive:
-+
-[source,bash,subs="+attributes"]
-----
-unzip astra-cli-{product-version}.zip -d ./astra-cli-{product-version} && cd astra-cli-{product-version}
-----
-
-. Confirm that you can successfully run the {product}:
-+
-[source,bash]
-----
-java -jar astra-cli.jar --version
-----
+. When prompted to specify the installation location, press kbd:[Return] to accept the default (`~\AppData\Local\.astra\cli`).
 +
 .Result
 [%collapsible]
 ====
-The command returns the {product} version that is installed:
-
 [source,console,subs="+attributes"]
 ----
-{product-version}
+TBD
 ----
 ====
++
+To install the {product} to a different location, use the binary installation method.
 
-You can use all options and suffixes on commands when running the JAR file.
-For example:
+. Add the following lines to your PowerShell profile to make the `astra` command executable from any directory:
++
+[source,powershell]
+----
+TBD
+----
 
+. Reload your shell profile or open a new command prompt.
+
+. Run the `astra` command from any directory to verify successful installation:
++
 [source,bash]
 ----
-java -jar ./astra-cli.jar db list --token AstraCS:FZm...
+astra
 ----
++
+The response includes available commands and options for the {product}.
+--
+
+Binary installation::
++
+--
+. Download the latest `windows` zip file from https://github.com/toptobes/astra-cli-pico/releases[GitHub].
+
+. Extract the zip file into the directory where you want to install the {product}:
++
+[source,powershell,subs="+quotes"]
+----
+powershell -Command "Expand-Archive -Path astra-windows-x86_64.zip -DestinationPath **INSTALLATION_DIRECTORY** -Force"
+----
+
+. Add the path to the unzipped `astra.exe` file to your `PATH` environment variable.
+To learn how to update environment variables, see the https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_environment_variables[Microsoft PowerShell documentation].
+
+. Reload your shell profile or open a new terminal window.
+
+. Run the `astra` command from any directory to verify successful installation:
++
+[source,bash]
+----
+astra
+----
++
+The response includes available commands and options for the {product}.
+--
+=====
+
+Linux::
++
+--
+TBD
 --
 
 Docker::
 +
 --
-The {product} is available as an https://hub.docker.com/r/datastax/astra-cli[official Docker image] that you can run in a container.
-
-To install the {product} using Docker, you must have https://docs.docker.com/engine/install/[Docker engine] or https://www.docker.com/products/docker-desktop[Docker desktop] installed.
-
-. Confirm that Docker is installed and running:
-+
-[source,bash]
-----
-docker --version
-----
-+
-.Result
-[%collapsible]
-====
-The command returns the Docker version that is installed:
-
-[source,console]
-----
-Docker version 27.1.1, build 6312585
-----
-====
-
-. Pull the latest {product} Docker image (`datastax/astra-cli:latest`):
-+
-[source,bash,subs="+attributes"]
-----
-docker pull datastax/astra-cli
-----
-+
-[TIP]
-====
-To pull a specific version of the Docker image, run `docker pull datastax/astra-cli:**TAG**`, replacing `**TAG**` with the version tag of the Docker image you want to pull.
-====
-+
-.Result
-[%collapsible]
-====
-[source,console]
-----
-Using default tag: latest
-latest: Pulling from datastax/astra-cli
-7890eb226106: Pull complete
-f4455e290156: Pull complete
-e6c3f5cd9c43: Pull complete
-322cfd5270ff: Pull complete
-Digest: sha256:8dcba8115cbae7bcabfc579341611f30860239ee5edbca3938edea4542ca06fb
-Status: Downloaded newer image for datastax/astra-cli:latest
-docker.io/datastax/astra-cli:latest
-
-What's next:
-    View a summary of image vulnerabilities and recommendations → docker scout quickview datastax/astra-cli
-----
-====
-
-. Confirm that you can successfully run the {product} in a Docker container:
-+
-[source,bash]
-----
-docker run -rm datastax/astra-cli --version
-----
-+
-.Result
-[%collapsible]
-====
-The command returns the {product} version that is installed:
-
-[source,console,subs="+attributes"]
-----
-{product-version}
-----
-====
-
-. Optional: Run the {product} with a configuration file:
-+
-[source,bash,subs="+quotes"]
-----
-docker run -rm -v **CONFIG_FILE**:/work/.astrarc datastax/astra-cli --version
-----
-+
-Replace `**CONFIG_FILE**`with the path to your {product} configuration file.
-For example:
-+
-[source,bash]
-----
-docker run -rm -v ~/.astrarc:/work/.astrarc datastax/astra-cli --version
-----
-+
-This command mounts the `~/.astrarc` file from your local machine to the `/work/.astrarc` file in the Docker container.
-This lets you use your local configuration file when running the {product} in a Docker container.
-
-. Optional: Create a shell alias for running the {product} in a Docker container.
-+
-You can create a shell alias to eliminate the need to include the `docker run` command whenever you want to run the {product} in a Docker container.
-For example, the following command creates an alias named `astra`:
-+
-[source,bash]
-----
-alias astra='docker run -rm -v ~/.astrarc:/work/.astrarc datastax/astra-cli'
-----
-+
-You can run this command in your terminal to create a temporary alias for the current session, or you can add it to your shell configuration file so that the alias is available in every new terminal session.
-+
-After you add the alias, you can use it to run {product} commands in a Docker container using the same syntax as the `astra` binary:
-+
-[source,bash]
-----
-astra --version
-----
+TBD
 --
 ======
 
@@ -382,7 +312,4 @@ For <<install-homebrew,Homebrew-based installations>>, the `astra` executable an
 
 _This file is *not* deleted when you update or re-install the {product}._
 |===
-
-[#install-custom-location]
-== Install the {product} to a custom location
 
