@@ -1,11 +1,9 @@
-= Get started with the {product}
-:navtitle: Get started
+= Connect and configure the {product}
+:navtitle: Connect and configure
 
 Initialize the {product} and run your first commands.
 
 == Prerequisites
-
-To configure the {product}:
 
 *  xref:ROOT:install.adoc[Install the {product}].
 
@@ -18,6 +16,33 @@ To configure the {product}:
 ** *Production organizations*: If you're using {product-short} in production, {company} recommends that you use a xref:astra-db-serverless:administration:manage-database-access.adoc#custom-roles[custom role] to grant your application token the bare minimum xref:astra-db-serverless:administration:manage-database-access.adoc#about-permissions[permissions] required to perform the required tasks with the {product}.
 
 * If you plan to manage an {astra_db} database that has restricted public access, then you must xref:astra-db-serverless:administration:manage-database-ip-access-list.adoc#add-ip-access-list-entries[add your IP address to the database's access list].
+
+[#file-locations]
+== Installation file locations
+
+The {product} and its configuration are installed in the following locations:
+
+[cols="1,2"]
+|===
+|File location |Description
+
+|`~/.astra`
+a|The {product} installation directory.
+
+For <<install-curl,curl-based installations>>, the `astra` executable and `astra-init.sh` auto-completion script are located in `~/.astra/cli`.
+The `~/.astra/cli` folder is added to the `PATH` environment variable.
+_This folder is deleted and recreated when you update or re-install the {product}._
+
+For <<install-homebrew,Homebrew-based installations>>, the `astra` executable and auto-completion script are located in https://docs.brew.sh/FAQ#why-should-i-install-homebrew-in-the-default-location[Homebrew's default prefix] at the following locations:
+
+* Executable: `HOMEBREW_PREFIX/Cellar/astra-cli/VERSION/bin/astra`
+* Auto-completion script: `HOMEBREW_PREFIX/Cellar/astra-cli/VERSION/etc/bash_completion.d/astra`
+
+|`~/.astrarc`
+|The {product} configuration file.
+
+_This file is *not* deleted when you update or re-install the {product}._
+|===
 
 [#initialize]
 == Initialize the {product}

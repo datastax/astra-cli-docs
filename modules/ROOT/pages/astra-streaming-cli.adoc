@@ -755,7 +755,7 @@ default(pulsar-aws-useast2.streaming.datastax.com)>
 ----
 ====
 
-Type `exit` and press kbd:[Return] to exit the Pulsar shell.
+Type `exit` and press kbd:[Enter] to exit the Pulsar shell.
 
 The first time you use the `astra streaming pulsar-shell` commands, the {product} downloads and installs the `pulsar-shell` utility to the {product} installation directory (`~/.astra/lunastreaming-shell-*`).
 

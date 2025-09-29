@@ -3,7 +3,7 @@
 
 Follow the instructions for your original installation method to uninstall the {product}.
 
-[tabs]
+[tabs,sync-group-id=platforms]
 ======
 Homebrew::
 +
@@ -39,43 +39,23 @@ rm ~/.astrarc
 ----
 --
 
-curl::
+macOS::
 +
 --
-. Delete the {product} and its associated installation files:
+--
+
+Windows::
 +
-[source,bash]
-----
-rm -R ~/.astra
-----
+--
+--
 
-. Optional: Delete the {product} configuration file:
+Linux::
 +
-[source,bash]
-----
-rm ~/.astrarc
-----
+--
+--
 
-. Optional: Remove the {product} from your shell configuration file, such as `.zshrc` or `.bashrc`:
-
-.. Open your shell configuration file in a text editor.
-For example:
+Docker::
 +
-[source,bash]
-----
-nano ~/.zshrc
-----
-
-.. Remove any lines that reference the {product}.
-For example:
-+
-[source,bash]
-----
-#THIS MUST BE AT THE END OF THE FILE FOR ASTRA_CLI TO WORK!!!
-export ASTRADIR="/Users/USERNAME/.astra/cli"
-[[ -s "/Users/USERNAME/.astra/cli/astra-init.sh" ]] && source "/Users/USERNAME/.astra/cli/astra-init.sh"
-----
-
-.. Save and close the file.
+--
 --
 ======

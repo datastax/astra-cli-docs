@@ -2,9 +2,10 @@
 :navtitle: Upgrade the CLI
 
 Keep the {product} up to date to access new features, improvements, and security updates.
-Follow the instructions for your original installation method to upgrade the CLI.
 
-[tabs]
+Follow the instructions for your original installation method to upgrade the {product}.
+
+[tabs,sync-group-id=platforms]
 ======
 Homebrew::
 +
@@ -25,18 +26,20 @@ brew install datastax/astra-cli/astra-cli@**VERSION**
 +
 You can also use this command to downgrade to a previous version.
 
-. Verify that the desired version of the {product} is installed:
+. Check the {product} version to verify that the upgrade was successful:
 +
 [source,bash]
 ----
 astra --version
 ----
++
+The response returns your {product} version.
 --
 
 macOS::
 +
 --
-. Run the `astra upgrade` command to upgrade to the latest version of the {product}:
+. Run the `xref:commands:astra-upgrade.adoc[]` command to upgrade to the latest version of the {product}:
 +
 [source,bash]
 ----
@@ -52,18 +55,20 @@ astra upgrade --version **VERSION**
 +
 You can also use this command to downgrade to a previous version.
 
-. Verify that the desired version of the {product} is installed:
+. Check the {product} version to verify that the upgrade was successful:
 +
 [source,bash]
 ----
 astra --version
 ----
++
+The response returns your {product} version.
 --
 
 Windows::
 +
 --
-. Run the `astra upgrade` command to upgrade to the latest version of the {product}:
+. Run the `xref:commands:astra-upgrade.adoc[]` command to upgrade to the latest version of the {product}:
 +
 [source,powershell]
 ----
@@ -79,11 +84,25 @@ astra upgrade --version **VERSION**
 +
 You can also use this command to downgrade to a previous version.
 
-. Verify that the desired version of the {product} is installed:
+. Check the {product} version to verify that the upgrade was successful:
 +
 [source,bash]
 ----
 astra --version
 ----
++
+The response returns your {product} version.
+--
+
+Linux::
++
+--
+TBD
+--
+
+Docker::
++
+--
+TBD
 --
 ======

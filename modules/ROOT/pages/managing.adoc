@@ -2801,7 +2801,7 @@ token@cqlsh>
 ----
 ====
 
-Type `exit` or `quit;` and press kbd:[Return] to exit `cqlsh`.
+Type `exit` or `quit;` and press kbd:[Enter] to exit `cqlsh`.
 
 The first time you use the `astra db cqlsh` command, the {product} downloads and installs the `cqlsh` utility to the {product} installation directory (`~/.astra/cqlsh-astra`).
 The {product} also downloads the {scb} for each database you connect to and stores the {scb-short} zip files in the `~/.astra/scb` directory.
@@ -3516,7 +3516,7 @@ token@cqlsh:dsbulk_demo_keyspace>
 ----
 ====
 +
-.. Copy and paste the following CQL command into the `cqlsh` prompt and press kbd:[Return]:
+.. Copy and paste the following CQL command into the `cqlsh` prompt and press kbd:[Enter]:
 +
 [source,cql]
 ----
@@ -3538,7 +3538,7 @@ CREATE TABLE cities_by_country (
 +
 This command creates a table named `cities_by_country` with the appropriate schema for the `cities.csv` dataset.
 +
-.. Type `exit` or `quit;` and press kbd:[Return] to exit `cqlsh`.
+.. Type `exit` or `quit;` and press kbd:[Enter] to exit `cqlsh`.
 
 . Load the data from the `cities.csv` file into the `cities_by_country` table that you just created in your database:
 +
