@@ -3680,7 +3680,7 @@ This command unloads row data from the `cities_by_country` table, and stores it 
 [IMPORTANT]
 ====
 CDC for {astra_db} incurs billed charges based on your {astra_stream} usage.
-For more information, see https://www.datastax.com/pricing/astra-streaming[{astra_stream} pricing] and https://www.datastax.com/products/datastax-astra/cdc-for-astra-db[CDC metering rates].
+For more information, see https://www.ibm.com/docs/en/astra-streaming?topic=astra-streaming-annual-price-plans[{astra_stream} pricing].
 ====
 
 CDC for {astra_db} automatically captures changes in real time, de-duplicates the changes, and then streams the clean set of changed data into xref:astra-streaming:ROOT:index.adoc[{astra_stream}] where it can be processed by client applications or sent to downstream systems.
