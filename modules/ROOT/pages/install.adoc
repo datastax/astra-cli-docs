@@ -35,17 +35,8 @@ Homebrew::
 +
 [source,bash]
 ----
-brew install datastax/astra-cli/astra-cli
+brew install datastax/astra-cli/astra
 ----
-+
-.Result
-[%collapsible]
-====
-[source,console,subs="+attributes"]
-----
-TBD
-----
-====
 
 . Run the `astra` command from any directory to verify successful installation:
 +
@@ -59,7 +50,7 @@ The response includes available commands and options for the {product}.
 
 macOS::
 +
-Select one of the following installation methods to install the {product} on macOS without using Homebrew:
+Select one of the following installation methods to install the {product} on macOS _without_ using Homebrew:
 +
 [tabs]
 =====
@@ -70,55 +61,10 @@ Scripted installation (recommended)::
 +
 [source,bash]
 ----
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/toptobes/astra-cli-pico/master/scripts/install.sh)"
+sh -c "$(curl -sSL https://ibm.biz/astra-cli)"
 ----
-+
-.Result
-[%collapsible]
-====
-[source,console,subs="+attributes"]
-----
-    _____            __
-   /  _  \   _______/  |_____________
-  /  /_\  \ /  ___/\   __\_  __ \__  \
- /    |    \___ \  |  |  |  | \// __ \_
- \____|__  /____  > |__|  |__|  (____  /
-         \/     \/                   \/
 
-                    Installer: {product-version}
-
-→ Required tools are available.
-→ No existing installation found.
-
-Ready to install Astra CLI ✅
-
-Do you want to install Astra CLI to ~/.astra/cli/? [Y]es/[d]ifferent path/[c]ancel
->
-----
-====
-
-. When prompted to specify the installation location, press kbd:[Enter] to accept the default (`~/.astra/cli/`).
-+
-.Result
-[%collapsible]
-====
-[source,console,subs="+attributes"]
-----
-→ Using installation dir ~/.astra/cli/.
-→ Archive downloaded.
-→ Archive verified and extracted.
-
-Astra CLI installed successfully! 🎉
-
-Next steps:
-
-# Append the following to your shell profile (e.g. ~/.bashrc, ~/.zshrc, etc.)
-$ eval "$(~/.astra/cli/astra shellenv)"
-
-# Run the following to get started!
-$ astra setup
-----
-====
+. When prompted to specify the installation location, press kbd:[Enter] to accept the default location (`~/.astra/cli/`).
 +
 To install the {product} to a different location, use the binary installation method instead.
 
@@ -145,7 +91,7 @@ The response includes available commands and options for the {product}.
 Binary installation::
 +
 --
-. Download the `macos` archive file for your CPU architecture from https://github.com/toptobes/astra-cli-pico/releases[GitHub].
+. Download the `macos` archive file for your CPU architecture from https://github.com/datastax/astra-cli/releases[GitHub].
 
 . Extract the archive into the directory where you want to install the {product}:
 +
@@ -198,41 +144,23 @@ Scripted installation (recommended)::
 --
 . Run the following PowerShell script to install the latest version of the {product}:
 +
-[source,powershell]
+[source,shell]
 ----
-powershell -c "irm https://raw.githubusercontent.com/toptobes/astra-cli-pico/master/scripts/install.ps1 | iex"
+powershell -c "irm https://ibm.biz/astra-cli-win | iex"
 ----
-+
-.Result
-[%collapsible]
-====
-[source,console,subs="+attributes"]
-----
-TBD
-----
-====
 
-. When prompted to specify the installation location, press kbd:[Enter] to accept the default (`~\AppData\Local\.astra\cli`).
-+
-.Result
-[%collapsible]
-====
-[source,console,subs="+attributes"]
-----
-TBD
-----
-====
+. When prompted to specify the installation location, press kbd:[Enter] to accept the default location (`~\AppData\Local\.astra\cli`).
 +
 To install the {product} to a different location, use the binary installation method instead.
 
-. Add the following lines to your PowerShell profile to make the `astra` command executable from any directory:
+. Add the following lines to your shell profile to make the `astra` command executable from any directory:
 +
-[source,powershell]
+[source,shell]
 ----
 TBD
 ----
 
-. Reload your shell profile or open a new command prompt.
+. Reload your shell profile or open a new terminal window.
 
 . Run the `astra` command from any directory to verify successful installation:
 +
@@ -247,13 +175,13 @@ The response includes available commands and options for the {product}.
 Binary installation::
 +
 --
-. Download the `windows` zip file from https://github.com/toptobes/astra-cli-pico/releases[GitHub].
+. Download the `windows` zip file from https://github.com/datastax/astra-cli/releases[GitHub].
 
 . Extract the zip file into the directory where you want to install the {product}:
 +
-[source,powershell,subs="+quotes"]
+[source,shell,subs="+quotes"]
 ----
-powershell -Command "Expand-Archive -Path astra-windows-x86_64.zip -DestinationPath **INSTALLATION_DIRECTORY** -Force"
+powershell -C "Expand-Archive -Path astra-windows-x86_64.zip -DestinationPath **INSTALLATION_DIRECTORY** -Force"
 ----
 
 . Add the path to the unzipped `astra.exe` file to your `PATH` environment variable.
@@ -274,91 +202,79 @@ The response includes available commands and options for the {product}.
 
 Linux::
 +
---
-TBD
---
-
-Docker::
+Select one of the following installation methods to install the {product} on Linux _without_ using Homebrew:
++
+[tabs]
+=====
+Scripted installation (recommended)::
 +
 --
-TBD
+. Run the following Bash script to install the latest version of the {product}:
++
+[source,bash]
+----
+sh -c "$(curl -sSL https://ibm.biz/astra-cli)"
+----
+
+. When prompted to specify the installation location, press kbd:[Enter] to accept the default location (`~/.astra/cli/`).
++
+To install the {product} to a different location, use the binary installation method instead.
+
+. Add the following lines to your shell profile (for example, `~/.zshrc` or `~/.bashrc`) to make the `astra` command executable from any directory:
++
+[source,bash]
+----
+# Astra CLI shell configuration
+eval "$(~/.astra/cli/astra shellenv)"
+----
+
+. Reload your shell profile or open a new terminal window.
+
+. Run the `astra` command from any directory to verify successful installation:
++
+[source,bash]
+----
+astra
+----
++
+The response includes available commands and options for the {product}.
 --
+
+Binary installation::
++
+--
+. Download the `linux` archive file for your CPU architecture from https://github.com/datastax/astra-cli/releases[GitHub].
+
+. Extract the archive into the directory where you want to install the {product}:
++
+[source,bash,subs="+quotes"]
+----
+sudo tar -xzvf astra-linux-**ARCHITECTURE**.tar.gz -C **INSTALLATION_DIRECTORY**
+----
+
+. Add the following lines to your shell profile (for example, `~/.zshrc` or `~/.bashrc`) to make the `astra` command executable from any directory:
++
+[source,bash,subs="+quotes"]
+----
+# Astra CLI shell configuration
+eval "$(**PATH_TO_BINARY** shellenv)"
+----
++
+Replace `**PATH_TO_BINARY**` with the full path to the `astra` executable in the installation directory.
+
+. Reload your shell profile or open a new terminal window.
+
+. Run the `astra` command from any directory to verify successful installation:
++
+[source,bash]
+----
+astra
+----
++
+The response includes available commands and options for the {product}.
+--
+=====
 ======
-
-== Connect to {product-short}
-
-Follow these steps to set up your first connection profile:
-
-. {astra-url}[Sign in or create an {product-short} account.^]
-
-. Generate an xref:astra-db-serverless:administration:manage-application-tokens.adoc[application token] with a role that has adequate permissions to perform the tasks you want to accomplish with the {product}.
-+
---
-* *Non-production organizations*: If your {product-short} organization has no databases or streaming tenants that handle sensitive information, you can grant your application token the `Organization Administrator` role to try out all of the {product} features.
-
-* *Production organizations*: If you're using {product-short} in production, {company} recommends that you use a more limited xref:astra-db-serverless:administration:manage-database-access.adoc#built-in-organization-roles[built-in role] or xref:astra-db-serverless:administration:manage-database-access.adoc#custom-roles[custom role] to grant your application token the bare minimum permissions required to perform your desired tasks with the {product}.
---
-
-. Run the `astra setup` command to to create your first connection profile:
-+
-[source,bash]
-----
-astra setup
-----
-+
-.Result
-[%collapsible]
-====
-[source,console,subs="+attributes"]
-----
-     _____            __
-    /  _  \   _______/  |_____________
-   /  /_\  \ /  ___/\   __\_  __ \__  \
-  /    |    \\___ \  |  |  |  | \ //__ \_
-  \____|__  /____  > |__|  |__|  (____  /
-          \/     \/                   \/
-
-                       Version: {product-version}
-
-Welcome to the Astra CLI setup!
-
-A configuration file with your profile will be created at /Users/USERNAME/.astrarc
-
-If you'd prefer to provide credentials on a per-command basis rather than storing them in a file, you can either:
-- Use the per-command --token flag to pass your existing AstraCS token directly.
-- Use the per-command --config-file flag to specify an existing .astrarc file.
-
-# Example:
-$ astra db list --token <your_token>
-
-Press Enter to continue, or use Ctrl+C to cancel.
-----
-====
-
-. When prompted, enter your {product-short} application token and press kbd:[Enter].
-
-. Enter a name for your connection profile or press kbd:[Enter] to accept the default (your organization name).
-+
-.Result
-[%collapsible]
-====
-[source,console,subs="+quotes"]
-----
-Profile PROFILE_NAME successfully created.
-
-It has been set as the default profile.
-----
-====
-
-. Test your connection by running a simple command, such as listing your databases:
-+
-[source,bash]
-----
-astra db list
-----
-+
-If the command succeeds, your connection is configured correctly.
-If your command fails, see the xref:commands:astra-setup.adoc[astra setup command] documentation for troubleshooting tips.
 
 == Next steps
 

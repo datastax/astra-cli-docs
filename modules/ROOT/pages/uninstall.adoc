@@ -8,54 +8,63 @@ Follow the instructions for your original installation method to uninstall the {
 Homebrew::
 +
 --
-. Uninstall the {product}:
+. Optional: Run the `xref:commands:astra-nuke.adoc[]` command to delete the {product} home directory and configuration profile (`~/.astra` and `~/.astrarc`):
 +
 [source,bash]
 ----
-brew uninstall datastax/astra-cli/astra-cli
+astra nuke
 ----
 +
-.Result
-[%collapsible]
-====
-[source,console,subs="+attributes"]
-----
-Uninstalling /opt/homebrew/Cellar/astra-cli/{product-version}... (4 files, 61.7MB)
-----
-====
+When prompted to confirm, type kbd:[y] and press kbd:[Enter].
++
+The `astra nuke` command will list any shell profile containing references to the `astra` command.
+Delete these references manually if desired.
 
-. Delete the {product} and its associated installation files:
+. Uninstall the {product} using Homebrew:
 +
 [source,bash]
 ----
-rm -R ~/.astra
-----
-
-. Optional: Delete the {product} configuration file:
-+
-[source,bash]
-----
-rm ~/.astrarc
+brew uninstall datastax/astra-cli/astra
 ----
 --
 
 macOS::
 +
 --
+Run the `xref:commands:astra-nuke.adoc[]` command to uninstall the {product}:
+
+[source,bash]
+----
+astra nuke
+----
+
+When prompted to confirm, type kbd:[y] and press kbd:[Enter].
+
+The `astra nuke` command deletes the {product} home directory and configuration profile (`~/.astra` and `~/.astrarc`).
+It also lists any shell profile containing references to the `astra` command.
+Delete these references manually if desired.
 --
 
 Windows::
 +
 --
+TBD
 --
 
 Linux::
 +
 --
---
+Run the `xref:commands:astra-nuke.adoc[]` command to uninstall the {product}:
 
-Docker::
-+
---
+[source,bash]
+----
+astra nuke
+----
+
+When prompted to confirm, type kbd:[y] and press kbd:[Enter].
+
+The `astra nuke` command deletes the {product} home directory and configuration profile (`~/.astra` and `~/.astrarc`).
+It also lists any shell profile containing references to the `astra` command.
+Delete these references manually if desired.
 --
 ======

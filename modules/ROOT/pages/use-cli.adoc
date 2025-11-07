@@ -3,19 +3,80 @@
 
 Initialize the {product} and run your first commands.
 
-== Prerequisites
+== Connect to {product-short}
 
-*  xref:ROOT:install.adoc[Install the {product}].
+After xref:ROOT:install.adoc[installing the {product}], follow these steps to set up your first connection profile:
 
-* You must have an active {astra-url}[{product-short} account^].
+. {astra-url}[Sign in or create an {product-short} account.^]
 
-* [[get-credentials]]You must have an xref:astra-db-serverless:administration:manage-application-tokens.adoc[application token] that is assigned a _role_ with adequate _permissions_ to perform the tasks you'd like to accomplish with the {product}.
+. Generate an xref:astra-db-serverless:administration:manage-application-tokens.adoc[application token] with a role that has adequate permissions to perform the tasks you want to accomplish with the {product}.
++
+--
+* *Non-production organizations*: If your {product-short} organization has no databases or streaming tenants that handle sensitive information, you can grant your application token the `Organization Administrator` role to try out all of the {product} features.
 
-** *Non-production organizations*: If your {product-short} organization has no databases or streaming tenants that handle sensitive information, you can grant your application token the `Organization Administrator` role to try out all of the {product} features.
+* *Production organizations*: If you're using {product-short} in production, {company} recommends that you use a more limited xref:astra-db-serverless:administration:manage-database-access.adoc#built-in-organization-roles[built-in role] or xref:astra-db-serverless:administration:manage-database-access.adoc#custom-roles[custom role] to grant your application token the bare minimum permissions required to perform your desired tasks with the {product}.
+--
 
-** *Production organizations*: If you're using {product-short} in production, {company} recommends that you use a xref:astra-db-serverless:administration:manage-database-access.adoc#custom-roles[custom role] to grant your application token the bare minimum xref:astra-db-serverless:administration:manage-database-access.adoc#about-permissions[permissions] required to perform the required tasks with the {product}.
+. Run the `astra setup` command to to create your first connection profile:
++
+[source,bash]
+----
+astra setup
+----
++
+.Result
+[%collapsible]
+====
+[source,console,subs="+attributes"]
+----
+     _____            __
+    /  _  \   _______/  |_____________
+   /  /_\  \ /  ___/\   __\_  __ \__  \
+  /    |    \\___ \  |  |  |  | \ //__ \_
+  \____|__  /____  > |__|  |__|  (____  /
+          \/     \/                   \/
 
-* If you plan to manage an {astra_db} database that has restricted public access, then you must xref:astra-db-serverless:administration:manage-database-ip-access-list.adoc#add-ip-access-list-entries[add your IP address to the database's access list].
+                       Version: {product-version}
+
+Welcome to the Astra CLI setup!
+
+A configuration file with your profile will be created at /Users/USERNAME/.astrarc
+
+If you'd prefer to provide credentials on a per-command basis rather than storing them in a file, you can either:
+- Use the per-command --token flag to pass your existing AstraCS token directly.
+- Use the per-command --config-file flag to specify an existing .astrarc file.
+
+# Example:
+$ astra db list --token <your_token>
+
+Press Enter to continue, or use Ctrl+C to cancel.
+----
+====
+
+. When prompted, enter your {product-short} application token and press kbd:[Enter].
+
+. Enter a name for your connection profile or press kbd:[Enter] to accept the default (your organization name).
++
+.Result
+[%collapsible]
+====
+[source,console,subs="+quotes"]
+----
+Profile PROFILE_NAME successfully created.
+
+It has been set as the default profile.
+----
+====
+
+. Test your connection by running a simple command, such as listing your databases:
++
+[source,bash]
+----
+astra db list
+----
++
+If the command succeeds, your connection is configured correctly.
+If your command fails, see the xref:commands:astra-setup.adoc[astra setup command] documentation for troubleshooting tips.
 
 [#file-locations]
 == Installation file locations
@@ -43,62 +104,6 @@ For <<install-homebrew,Homebrew-based installations>>, the `astra` executable an
 
 _This file is *not* deleted when you update or re-install the {product}._
 |===
-
-[#initialize]
-== Initialize the {product}
-
-After installation, initialize the {product} and connect it to an existing {product-short} account.
-
-. Use the `astra setup` command to initialize the {product} with your xref:astra-db-serverless:administration:manage-application-tokens.adoc[application token]:
-+
-[source,bash,subs="+quotes"]
-----
-astra setup --token *APPLICATION_TOKEN*
-----
-+
-Replace `*APPLICATION_TOKEN*` with your application token.
-The token format is `AstraCS:` followed by a unique token string.
-+
-.Result
-[%collapsible]
-====
-[source,console]
-----
-[OK]    Configuration has been saved.
-[OK]    Setup completed.
-[INFO]  Enter 'astra help' to list available commands.
-----
-====
-
-. List the {product} configuration to confirm that your token is in use:
-+
-[source,bash]
-----
-astra config list
-----
-+
-.Result
-[%collapsible]
-====
-[source,console]
-----
-+--------------------------------+
-| configuration                  |
-+--------------------------------+
-| alex@altostrat.com (in use)    |
-+--------------------------------+
-----
-====
-
-The {product} is initialized and your application token is set as the default configuration.
-The {product} stores configurations and their associated application tokens in the `~/.astrarc` file.
-To create additional configurations, see <<manage-configuration>>.
-
-[IMPORTANT]
-====
-Application tokens are stored in plain text in the `~/.astrarc` file.
-Your application tokens are like passwords, therefore you should take precautions to secure the configuration file.
-====
 
 == Print help information
 

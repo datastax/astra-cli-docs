@@ -14,14 +14,14 @@ Homebrew::
 +
 [source,bash]
 ----
-brew upgrade datastax/astra-cli/astra-cli
+brew upgrade datastax/astra-cli/astra
 ----
 
 . Optional: Upgrade to a specific version of the {product}:
 +
 [source,bash,subs="+quotes"]
 ----
-brew install datastax/astra-cli/astra-cli@**VERSION**
+brew install datastax/astra-cli/astra@**VERSION**
 ----
 +
 You can also use this command to downgrade to a previous version.
@@ -97,12 +97,30 @@ The response returns your {product} version.
 Linux::
 +
 --
-TBD
+. Run the `xref:commands:astra-upgrade.adoc[]` command to upgrade to the latest version of the {product}:
++
+[source,bash]
+----
+astra upgrade
+----
+
+. Optional: Upgrade to a specific version of the {product}:
++
+[source,bash,subs="+quotes"]
+----
+astra upgrade --version **VERSION**
+----
++
+You can also use this command to downgrade to a previous version.
+
+. Check the {product} version to verify that the upgrade was successful:
++
+[source,bash]
+----
+astra --version
+----
++
+The response returns your {product} version.
 --
 
-Docker::
-+
---
-TBD
---
 ======
