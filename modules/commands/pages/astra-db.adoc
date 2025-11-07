@@ -1,99 +1,78 @@
 = astra db
 
-Manage your Astra databases.
-
-== Usage
-
-[source,console]
+[source,shell]
 ----
-astra db [-hqv] [--[no-]color] [--no-input] [--[no-]spinner] [--vector]
-                [--dump-logs[=FILE]] [-o=FORMAT] [[[-cf=PATH] [-p=NAME]] |
-                [--token=TOKEN [--env=ENV]]] [COMMAND]
+astra db [-qvV] [--no-input] [--[no-]spinner] [--dump-logs[=FILE]]
+         [--color=WHEN] [-o=FORMAT] [[[-cf=PATH] [-p=NAME]] | [--token=TOKEN
+         [--env=ENV]]] [COMMAND]
+
 ----
+
+
+Manage your Astra databases
+
+
+**Alias of `astra db list`**
+
+
+== Subcommands
+
+* xref:astra-db-list.adoc[astra db list]
+* xref:astra-db-get.adoc[astra db get]
+* xref:astra-db-create.adoc[astra db create]
+* xref:astra-db-delete.adoc[astra db delete]
+* xref:astra-db-status.adoc[astra db status]
+* xref:astra-db-cqlsh.adoc[astra db cqlsh]
+* xref:astra-db-dsbulk.adoc[astra db dsbulk]
+* xref:astra-db-create-dotenv.adoc[astra db create-dotenv]
+* xref:astra-db-download-scb.adoc[astra db download-scb]
+* xref:astra-db-resume.adoc[astra db resume]
+* xref:astra-db-list-keyspaces.adoc[astra db list-keyspaces]
+* xref:astra-db-create-keyspace.adoc[astra db create-keyspace]
+* xref:astra-db-delete-keyspace.adoc[astra db delete-keyspace]
+* xref:astra-db-list-collections.adoc[astra db list-collections]
+* xref:astra-db-create-collection.adoc[astra db create-collection]
+* xref:astra-db-describe-collection.adoc[astra db describe-collection]
+* xref:astra-db-delete-collection.adoc[astra db delete-collection]
+* xref:astra-db-truncate-collection.adoc[astra db truncate-collection]
+* xref:astra-db-list-tables.adoc[astra db list-tables]
+* xref:astra-db-describe-table.adoc[astra db describe-table]
+* xref:astra-db-delete-table.adoc[astra db delete-table]
+* xref:astra-db-truncate-table.adoc[astra db truncate-table]
+* xref:astra-db-list-embedding-providers.adoc[astra db list-embedding-providers]
+* xref:astra-db-list-cdcs.adoc[astra db list-cdcs]
+* xref:astra-db-create-cdc.adoc[astra db create-cdc]
+* xref:astra-db-delete-cdc.adoc[astra db delete-cdc]
+* xref:astra-db-create-region.adoc[astra db create-region]
+* xref:astra-db-delete-region.adoc[astra db delete-region]
+* xref:astra-db-list-regions.adoc[astra db list-regions]
+* xref:astra-db-list-regions-classic.adoc[astra db list-regions-classic]
+* xref:astra-db-list-regions-serverless.adoc[astra db list-regions-serverless]
+* xref:astra-db-list-regions-vector.adoc[astra db list-regions-vector]
+* xref:astra-db-list-clouds.adoc[astra db list-clouds]
+* xref:astra-db-get-endpoint-swagger.adoc[astra db get-endpoint-swagger]
+* xref:astra-db-get-endpoint-api.adoc[astra db get-endpoint-api]
+* xref:astra-db-get-endpoint-playground.adoc[astra db get-endpoint-playground]
+
 
 == Options
 
-`-cf`, `--config-file=PATH`::
-The astrarc file to use (default: ~/.astrarc)
+`-v`, `--vector`:: Only show vector-enabled databases
+`-o`, `--output`:: One of: human, json, csv
+`-V`, `--verbose`:: Enable verbose logging output
+`-q`, `--quiet`:: Only output essential information
+`--spinner`:: Enable/disable loading spinners
+`--no-input`:: Don't ask for user input (e.g. confirmation prompts)
+`--color`:: One of: auto, never, always
+`--dump-logs`:: Write all logs to an optionally specified file
+`-cf`, `--config-file`:: The ``.astrarc`` file to use for this command
+`-p`, `--profile`:: The ``.astrarc`` profile to use for this command
+`--token`:: The astra token to use for this command. Use the ``--token @file`` syntax to read the token from a file, to avoid potential leaks.
+`--env`:: Override the target astra environment
 
-`--[no-]color`::
-Force colored output
-
-`--dump-logs[=FILE]`::
-Write all logs to an optionally specified file (default: ~/.astra/logs/<file>.log)
-
-`--env=ENV`::
-Override the target astra environment
-
-`-h`, `--help`::
-Show this help message and exit.
-
-`--no-input`::
-Never ask for user input (e.g. confirmation prompts)
-
-`-o`, `--output=FORMAT`::
-One of: human, json, csv
-
-`-p`, `--profile=NAME`::
-The astrarc profile to use
-
-`-q`, `--quiet`::
-Suppress informational output
-
-`--[no-]spinner`::
-Enable/disable the loading spinner
-
-`--token=TOKEN`::
-Override the default astra token
-
-`-v`, `--verbose`::
-Enable verbose logging output
-
-`--vector`::
-Only show vector-enabled databases
-
-== Commands
-
-* list
-* get, describe
-* create
-* delete
-* status
-* cqlsh
-* dsbulk
-* create-dotenv
-* download-scb
-* resume
-* list-keyspaces
-* create-keyspace
-* delete-keyspace
-* list-collections
-* create-collection
-* describe-collection
-* delete-collection
-* truncate-collection
-* list-tables
-* describe-table
-* delete-table
-* truncate-table
-* list-embedding-providers
-* list-cdcs
-* create-cdc
-* delete-cdc
-* create-region
-* delete-region
-* list-regions
-* list-regions-classic
-* list-regions-serverless
-* list-regions-vector
-* list-clouds
-* get-endpoint-swagger
-* get-endpoint-api
-* get-endpoint-playground
 
 == Examples
-
-[source,console]
+[source,bash]
 ----
 # List all your Astra databases
 $ astra db
@@ -101,3 +80,5 @@ $ astra db
 # List only vector-enabled Astra databases
 $ astra db --vector
 ----
+
+

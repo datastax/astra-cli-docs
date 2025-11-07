@@ -1,60 +1,57 @@
 = astra config
 
-Manage your Astra CLI configuration profiles.
-
-== Usage
-
-[source,console]
+[source,shell]
 ----
-astra config [-hqv] [--[no-]color] [--no-input] [--[no-]spinner]
-                    [--dump-logs[=FILE]] [-cf=PATH] [-o=FORMAT] [COMMAND]
+astra config [-qV] [--no-input] [--[no-]spinner] [--dump-logs[=FILE]]
+             [-cf=PATH] [--color=WHEN] [-e=ENV] [-o=FORMAT] [COMMAND]
+
 ----
+
+
+Manage your Astra CLI configuration profiles
+
+
+**Alias of `astra config list`**
+
+
+== Subcommands
+
+* xref:astra-config-list.adoc[astra config list]
+* xref:astra-config-create.adoc[astra config create]
+* xref:astra-config-get.adoc[astra config get]
+* xref:astra-config-delete.adoc[astra config delete]
+* xref:astra-config-use.adoc[astra config use]
+* xref:astra-config-path.adoc[astra config path]
+* xref:astra-config-home.adoc[astra config home]
+
 
 == Options
 
-`-cf`, `--config-file=PATH`::
-The astrarc file to use
+`-cf`, `--config-file`:: The .astrarc file to work with. See ``@{cli.name} config path -h`` for how this is resolved.
+`-e`, `--env`:: Filter by Astra environment
+`-o`, `--output`:: One of: human, json, csv
+`-V`, `--verbose`:: Enable verbose logging output
+`-q`, `--quiet`:: Only output essential information
+`--spinner`:: Enable/disable loading spinners
+`--no-input`:: Don't ask for user input (e.g. confirmation prompts)
+`--color`:: One of: auto, never, always
+`--dump-logs`:: Write all logs to an optionally specified file
 
-`--[no-]color`::
-Force colored output
-
-`--dump-logs[=FILE]`::
-Write all logs to an optionally specified file (default: ~/.astra/logs/<file>.log)
-
-`-h`, `--help`::
-Show this help message and exit.
-
-`--no-input`::
-Never ask for user input (e.g. confirmation prompts)
-
-`-o`, `--output=FORMAT`::
-One of: human, json, csv
-
-`-q`, `--quiet`::
-Suppress informational output
-
-`--[no-]spinner`::
-Enable/disable the loading spinner
-
-`-v`, `--verbose`::
-Enable verbose logging output
-
-== Commands
-
-* list
-* create
-* get, describe
-* use
-* path
-* home
 
 == Examples
-
-[source,console]
+[source,bash]
 ----
-# List your Astra CLI profiles.
+# List your configuration profiles
 $ astra config
 
-# Create a new Astra CLI profile.
-$ astra config create --token @token.txt --name prod
+# Interactively create a new configuration profile
+$ astra config setup
+
+# Programmatically create a new configuration profile
+$ astra config create my_profile --token @token.txt
+
+# Set an existing configuration profile as default
+$ astra config use my_profile
 ----
+
+

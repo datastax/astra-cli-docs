@@ -1,1 +1,53 @@
 = astra streaming
+
+[source,shell]
+----
+astra streaming [-qV] [--no-input] [--[no-]spinner] [--dump-logs[=FILE]]
+                [--color=WHEN] [-o=FORMAT] [[[-cf=PATH] [-p=NAME]] |
+                [--token=TOKEN [--env=ENV]]] [COMMAND]
+
+----
+
+
+Manage Astra streaming tenants
+
+
+**Alias of `astra streaming list`**
+
+
+== Subcommands
+
+* xref:astra-streaming-list.adoc[astra streaming list]
+* xref:astra-streaming-get.adoc[astra streaming get]
+* xref:astra-streaming-create.adoc[astra streaming create]
+* xref:astra-streaming-delete.adoc[astra streaming delete]
+* xref:astra-streaming-exist.adoc[astra streaming exist]
+* xref:astra-streaming-status.adoc[astra streaming status]
+* xref:astra-streaming-pulsar.adoc[astra streaming pulsar]
+* xref:astra-streaming-pulsar-token.adoc[astra streaming pulsar-token]
+* xref:astra-streaming-list-regions.adoc[astra streaming list-regions]
+* xref:astra-streaming-list-clouds.adoc[astra streaming list-clouds]
+
+
+== Options
+
+`-o`, `--output`:: One of: human, json, csv
+`-V`, `--verbose`:: Enable verbose logging output
+`-q`, `--quiet`:: Only output essential information
+`--spinner`:: Enable/disable loading spinners
+`--no-input`:: Don't ask for user input (e.g. confirmation prompts)
+`--color`:: One of: auto, never, always
+`--dump-logs`:: Write all logs to an optionally specified file
+`-cf`, `--config-file`:: The ``.astrarc`` file to use for this command
+`-p`, `--profile`:: The ``.astrarc`` profile to use for this command
+`--token`:: The astra token to use for this command. Use the ``--token @file`` syntax to read the token from a file, to avoid potential leaks.
+`--env`:: Override the target astra environment
+
+
+== Examples
+[source,bash]
+----
+
+----
+
+

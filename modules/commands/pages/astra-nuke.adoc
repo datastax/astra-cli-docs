@@ -1,1 +1,59 @@
 = astra nuke
+
+[source,shell]
+----
+astra nuke [-qVy] [--dry-run] [--no-input] [--[no-]preserve-astrarc] [--[no-]
+           spinner] [--dump-logs[=FILE]] [--color=WHEN] [-o=FORMAT]
+
+----
+
+
+Entirely delete Astra CLI from your system
+
+This command may be used to delete any files associated with Astra CLI, including:
+
+ * The home folder,
+
+ * The ``.astrarc`` file,
+
+ * and the binary itself.
+
+This will also detect any shell rc files which need ``astra``-related lines removed.
+
+**Note:** Depending on how Astra CLI was installed, the binary itself may need to be deleted manually. In such cases, instructions will be provided in the command output.
+
+
+
+
+
+== Options
+
+`--dry-run`:: Simulate the nuke operation without deleting any files
+`--preserve-astrarc`:: Preserve the ``.astrarc`` file in your home directory
+`-y`, `--yes`:: Whether to nuke without confirmation (if not a dry run)
+`-o`, `--output`:: One of: human, json, csv
+`-V`, `--verbose`:: Enable verbose logging output
+`-q`, `--quiet`:: Only output essential information
+`--spinner`:: Enable/disable loading spinners
+`--no-input`:: Don't ask for user input (e.g. confirmation prompts)
+`--color`:: One of: auto, never, always
+`--dump-logs`:: Write all logs to an optionally specified file
+
+
+== Examples
+[source,bash]
+----
+# Nuke Astra CLI from your system
+$ astra nuke
+
+# Perform a dry run of the nuke operation
+$ astra nuke --dry-run
+
+# Nuke Astra CLI without confirmation
+$ astra nuke --yes
+
+# Nuke Astra CLI but preserve the ``.astrarc`` file
+$ astra nuke --preserve-astrarc
+----
+
+

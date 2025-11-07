@@ -1,0 +1,53 @@
+= astra db delete-keyspace
+
+[source,shell]
+----
+astra db delete-keyspace [-qV] [--[no-]async] [--if-exists] [--no-input] [--
+                         [no-]spinner] [--dump-logs[=FILE]] [--color=WHEN]
+                         [-k=KEYSPACE] [-o=FORMAT] [--timeout=<timeout>]
+                         [[[-cf=PATH] [-p=NAME]] | [--token=TOKEN [--env=ENV]]]
+                         [DB]
+
+----
+
+
+Delete a keyspace from the specified database
+
+
+
+
+
+== Options
+
+`DB`:: The name or ID of the Astra database to operate on
+`-k`, `--keyspace`:: The keyspace to use
+`--if-exists`:: Do not fail if keyspace does not exist
+`--async`:: Do not wait for the database to become active
+`--timeout`:: How long the command should wait for the database to become active
+`-o`, `--output`:: One of: human, json, csv
+`-V`, `--verbose`:: Enable verbose logging output
+`-q`, `--quiet`:: Only output essential information
+`--spinner`:: Enable/disable loading spinners
+`--no-input`:: Don't ask for user input (e.g. confirmation prompts)
+`--color`:: One of: auto, never, always
+`--dump-logs`:: Write all logs to an optionally specified file
+`-cf`, `--config-file`:: The ``.astrarc`` file to use for this command
+`-p`, `--profile`:: The ``.astrarc`` profile to use for this command
+`--token`:: The astra token to use for this command. Use the ``--token @file`` syntax to read the token from a file, to avoid potential leaks.
+`--env`:: Override the target astra environment
+
+
+== Examples
+[source,bash]
+----
+# Delete a keyspace
+$ astra db delete-keyspace my_db -k my_keyspace
+
+# Delete a keyspace without failing if it doesn't exist
+$ astra db delete-keyspace my_db -k my_keyspace --if-exists
+
+# Delete a keyspace without waiting for the database to become active
+$ astra db delete-keyspace my_db -k my_keyspace --async
+----
+
+

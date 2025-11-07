@@ -1,0 +1,43 @@
+= astra config list
+
+[source,shell]
+----
+astra config list [-qV] [--no-input] [--[no-]spinner] [--dump-logs[=FILE]]
+                  [-cf=PATH] [--color=WHEN] [-e=ENV] [-o=FORMAT]
+
+----
+
+
+List your Astra CLI configurations.
+
+== Aliases
+
+`astra config`
+
+
+
+
+== Options
+
+`-cf`, `--config-file`:: The .astrarc file to work with. See ``@{cli.name} config path -h`` for how this is resolved.
+`-e`, `--env`:: Filter by Astra environment
+`-o`, `--output`:: One of: human, json, csv
+`-V`, `--verbose`:: Enable verbose logging output
+`-q`, `--quiet`:: Only output essential information
+`--spinner`:: Enable/disable loading spinners
+`--no-input`:: Don't ask for user input (e.g. confirmation prompts)
+`--color`:: One of: auto, never, always
+`--dump-logs`:: Write all logs to an optionally specified file
+
+
+== Examples
+[source,bash]
+----
+# List your Astra CLI configurations.
+$ astra config list
+
+# List your Astra CLI configurations for a specific Astra environment.
+$ astra config list --env dev
+----
+
+

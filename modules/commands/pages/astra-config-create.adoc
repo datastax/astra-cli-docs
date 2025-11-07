@@ -1,0 +1,56 @@
+= astra config create
+
+[source,shell]
+----
+astra config create [-dqV] [--no-input] [--[no-]overwrite] [--[no-]spinner]
+                    [--dump-logs[=FILE]] [-cf=PATH] [--color=WHEN] [-e=ENV]
+                    [-o=FORMAT] -t=TOKEN [NAME]
+
+----
+
+
+Create a new configuration profile to store your Astra credentials.
+
+Use the ``--token @<file>`` syntax to securely read the token from a file, without leaking the token to your shell history, where the file contains only the token as plain text or a JSON string.
+
+
+
+
+
+== Options
+
+`NAME`:: Unique name for the profile
+`-cf`, `--config-file`:: The .astrarc file to work with. See ``@{cli.name} config path -h`` for how this is resolved.
+`-t`, `--token`:: Astra token (``AstraCS:...``) or ``@<file>`` to read from file
+`-e`, `--env`:: Astra environment the token targets
+`-d`, `--default`:: Set the created profile as the default profile. Same as 'config use <profile>'
+`--overwrite`:: Overwrite any existing profile with the same name
+`-o`, `--output`:: One of: human, json, csv
+`-V`, `--verbose`:: Enable verbose logging output
+`-q`, `--quiet`:: Only output essential information
+`--spinner`:: Enable/disable loading spinners
+`--no-input`:: Don't ask for user input (e.g. confirmation prompts)
+`--color`:: One of: auto, never, always
+`--dump-logs`:: Write all logs to an optionally specified file
+
+
+== Examples
+[source,bash]
+----
+# (Recommended) Interactively create a new profile
+$ astra setup
+
+# (Recommended) Securely create a new profile with the token provided from a file
+$ astra config create my_profile -t @token.txt
+
+# Programmatically create a new profile
+$ astra config create my_profile -t AstraCS:...
+
+# Create a new profile with the default name (organization name)
+$ astra config create -t AstraCS:...
+
+# Create a new profile and set it as the default profile
+$ astra config create my_profile -t AstraCS:... --default
+----
+
+

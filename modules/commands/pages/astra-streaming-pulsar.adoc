@@ -1,0 +1,38 @@
+= astra streaming pulsar
+
+[source,shell]
+----
+astra streaming pulsar [COMMAND]
+
+----
+
+
+Apache Pulsar operations for your Astra streaming tenants
+
+
+
+== Subcommands
+
+* xref:astra-streaming-pulsar-shell.adoc[astra streaming pulsar shell]
+* xref:astra-streaming-pulsar-version.adoc[astra streaming pulsar version]
+* xref:astra-streaming-pulsar-path.adoc[astra streaming pulsar path]
+
+
+== Options
+
+
+
+== Examples
+[source,bash]
+----
+# Launch pulsar shell for a tenant
+$ astra streaming pulsar shell my_tenant
+
+# Get pulsar version
+$ astra streaming pulsar version
+
+# Get pulsar executable path
+$ astra streaming pulsar path
+----
+
+

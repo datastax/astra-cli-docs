@@ -1,0 +1,42 @@
+= astra config delete
+
+[source,shell]
+----
+astra config delete [-qV] [--if-exists] [--no-input] [--[no-]spinner]
+                    [--dump-logs[=FILE]] [-cf=PATH] [--color=WHEN] [-o=FORMAT]
+                    [NAME]
+
+----
+
+
+Delete an existing configuration profile.
+
+
+
+
+
+== Options
+
+`NAME`:: Name of the profile to delete
+`-cf`, `--config-file`:: The .astrarc file to work with. See ``@{cli.name} config path -h`` for how this is resolved.
+`--if-exists`:: Do not fail if the profile does not exist
+`-o`, `--output`:: One of: human, json, csv
+`-V`, `--verbose`:: Enable verbose logging output
+`-q`, `--quiet`:: Only output essential information
+`--spinner`:: Enable/disable loading spinners
+`--no-input`:: Don't ask for user input (e.g. confirmation prompts)
+`--color`:: One of: auto, never, always
+`--dump-logs`:: Write all logs to an optionally specified file
+
+
+== Examples
+[source,bash]
+----
+# Delete a profile named 'my_profile'
+$ astra config delete my_profile
+
+# Delete a profile named 'my_profile' without failing if it does not exist
+$ astra config delete my_profile --if-exists
+----
+
+

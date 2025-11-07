@@ -1,0 +1,70 @@
+= astra db create-collection
+
+[source,shell]
+----
+astra db create-collection [-qV] [--if-not-exists] [--no-input] [--[no-]
+                           spinner] [--dump-logs[=FILE]] -c=COLLECTION
+                           [--color=WHEN] [-d=DIMENSION]
+                           [--default-id=DEFAULT_ID]
+                           [--embedding-key=EMBEDDING_KEY]
+                           [--embedding-model=EMBEDDING_MODEL]
+                           [--embedding-provider=EMBEDDING_PROVIDER]
+                           [-k=KEYSPACE] [-m=METRIC] [-o=FORMAT]
+                           [--indexing-allow=INDEXING_ALLOW[,
+                           INDEXING_ALLOW...]]... [--indexing-deny=INDEXING_DENY
+                           [,INDEXING_DENY...]]... [[[-cf=PATH] [-p=NAME]] |
+                           [--token=TOKEN [--env=ENV]]] [DB]
+
+----
+
+
+Create a new Data API collection in the specified database and keyspace
+
+
+
+
+
+== Options
+
+`DB`:: The name or ID of the Astra database to operate on
+`-k`, `--keyspace`:: The keyspace to use
+`-c`, `--collection`:: The collection to use
+`--if-not-exists`:: Will create a new collection only if none with same name
+`-o`, `--output`:: One of: human, json, csv
+`-V`, `--verbose`:: Enable verbose logging output
+`-q`, `--quiet`:: Only output essential information
+`--spinner`:: Enable/disable loading spinners
+`--no-input`:: Don't ask for user input (e.g. confirmation prompts)
+`--color`:: One of: auto, never, always
+`--dump-logs`:: Write all logs to an optionally specified file
+`-cf`, `--config-file`:: The ``.astrarc`` file to use for this command
+`-p`, `--profile`:: The ``.astrarc`` profile to use for this command
+`--token`:: The astra token to use for this command. Use the ``--token @file`` syntax to read the token from a file, to avoid potential leaks.
+`--env`:: Override the target astra environment
+`-d`, `--dimension`:: Dimension of the vector space for this collection
+`--default-id`:: Default identifier to use for the collection
+`-m`, `--metric`:: Distance metric to use for vector similarity searches
+`--indexing-allow`:: List of attributes to add into index (comma separated)
+`--indexing-deny`:: List of attributes to remove from index (comma separated)
+`--embedding-provider`:: Using Vectorize, embedding provider to use
+`--embedding-model`:: Using Vectorize, embedding model to use
+`--embedding-key`:: Using Vectorize, embedding key used for shared secret
+
+
+== Examples
+[source,bash]
+----
+# Create a basic collection
+$ astra db create-collection my_db -c my_collection
+
+# Create a vector collection
+$ astra db create-collection my_db -c my_collection --dimension 2048
+
+# Create a collection in a non-default keyspace
+$ astra db create-collection my_db -k my_keyspace -c my_collection
+
+# Create a collection without failing if it already exists
+$ astra db create-collection my_db -c my_collection --if-not-exists
+----
+
+

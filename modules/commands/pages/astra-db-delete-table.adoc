@@ -1,0 +1,51 @@
+= astra db delete-table
+
+[source,shell]
+----
+astra db delete-table [-qV] [--if-exists] [--no-input] [--[no-]spinner]
+                      [--dump-logs[=FILE]] [--color=WHEN] [-k=KEYSPACE]
+                      [-o=FORMAT] [-t=TABLE] [[[-cf=PATH] [-p=NAME]] |
+                      [--token=TOKEN [--env=ENV]]] [DB]
+
+----
+
+
+Delete an existing table from the specified database and keyspace
+
+
+
+
+
+== Options
+
+`DB`:: The name or ID of the Astra database to operate on
+`-k`, `--keyspace`:: The keyspace to use
+`-t`, `--table`:: The table to use
+`--if-exists`:: Do not fail if table does not exist
+`-o`, `--output`:: One of: human, json, csv
+`-V`, `--verbose`:: Enable verbose logging output
+`-q`, `--quiet`:: Only output essential information
+`--spinner`:: Enable/disable loading spinners
+`--no-input`:: Don't ask for user input (e.g. confirmation prompts)
+`--color`:: One of: auto, never, always
+`--dump-logs`:: Write all logs to an optionally specified file
+`-cf`, `--config-file`:: The ``.astrarc`` file to use for this command
+`-p`, `--profile`:: The ``.astrarc`` profile to use for this command
+`--token`:: The astra token to use for this command. Use the ``--token @file`` syntax to read the token from a file, to avoid potential leaks.
+`--env`:: Override the target astra environment
+
+
+== Examples
+[source,bash]
+----
+# Delete a table
+$ astra db delete-table my_db -t my_table
+
+# Delete a table from a non-default keyspace
+$ astra db delete-table my_db -k my_keyspace -t my_table
+
+# Delete a table without failing if it doesn't exist
+$ astra db delete-table my_db -t my_table --if-exists
+----
+
+

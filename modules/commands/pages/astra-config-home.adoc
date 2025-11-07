@@ -1,0 +1,29 @@
+= astra config home
+
+[source,shell]
+----
+astra config home [COMMAND]
+
+----
+
+
+All things related to the Astra CLI home folder
+
+
+
+== Subcommands
+
+* xref:astra-config-home-path.adoc[astra config home path]
+
+
+== Options
+
+
+
+== Examples
+[source,bash]
+----
+
+----
+
+

@@ -1,0 +1,49 @@
+= astra config get
+
+[source,shell]
+----
+astra config get [-qV] [--no-input] [--[no-]spinner] [--dump-logs[=FILE]]
+                 [-cf=PATH] [--color=WHEN] [-k=KEY] [-o=FORMAT] [NAME]
+
+----
+
+
+Get the configuration of a profile or a specific key.
+
+**Warning:** This command may expose your sensitive Astra token.
+
+== Aliases
+
+`astra config describe`
+
+
+
+
+== Options
+
+`NAME`:: Name of the profile to get
+`-cf`, `--config-file`:: The .astrarc file to work with. See ``@{cli.name} config path -h`` for how this is resolved.
+`-k`, `--key`:: Specific configuration key to retrieve
+`-o`, `--output`:: One of: human, json, csv
+`-V`, `--verbose`:: Enable verbose logging output
+`-q`, `--quiet`:: Only output essential information
+`--spinner`:: Enable/disable loading spinners
+`--no-input`:: Don't ask for user input (e.g. confirmation prompts)
+`--color`:: One of: auto, never, always
+`--dump-logs`:: Write all logs to an optionally specified file
+
+
+== Examples
+[source,bash]
+----
+# Get the configuration of a specific profile
+$ astra config get my_profile
+
+# Prompt for the profile to get the configuration of
+$ astra config get
+
+# Get the value of a specific key in a profile
+$ astra config get my_profile --key ASTRA_DB_APPLICATION_TOKEN
+----
+
+

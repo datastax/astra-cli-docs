@@ -1,0 +1,52 @@
+= astra db create-region
+
+[source,shell]
+----
+astra db create-region [-qV] [--[no-]async] [--if-not-exists] [--no-input] [--
+                       [no-]spinner] [--dump-logs[=FILE]] [--color=WHEN]
+                       [-o=FORMAT] -r=REGION [--timeout=<timeout>] [[[-cf=PATH]
+                       [-p=NAME]] | [--token=TOKEN [--env=ENV]]] DB
+
+----
+
+
+Add a new region to an existing database
+
+
+
+
+
+== Options
+
+`DB`:: The name or ID of the Astra database to operate on
+`-r`, `--region`:: The region to use
+`--async`:: Do not wait for the database to become active
+`--if-not-exists`:: Do not fail if the region already exists
+`--timeout`:: How long the command should wait for the database to become active
+`-o`, `--output`:: One of: human, json, csv
+`-V`, `--verbose`:: Enable verbose logging output
+`-q`, `--quiet`:: Only output essential information
+`--spinner`:: Enable/disable loading spinners
+`--no-input`:: Don't ask for user input (e.g. confirmation prompts)
+`--color`:: One of: auto, never, always
+`--dump-logs`:: Write all logs to an optionally specified file
+`-cf`, `--config-file`:: The ``.astrarc`` file to use for this command
+`-p`, `--profile`:: The ``.astrarc`` profile to use for this command
+`--token`:: The astra token to use for this command. Use the ``--token @file`` syntax to read the token from a file, to avoid potential leaks.
+`--env`:: Override the target astra environment
+
+
+== Examples
+[source,bash]
+----
+# Create a region in a database
+$ astra db create-region my_db -r us-west-2
+
+# Create a region without failing if it already exists
+$ astra db create-region my_db -r us-west-2 --if-not-exists
+
+# Create a region without waiting for the database to become active
+$ astra db create-region my_db -r us-west-2 --async
+----
+
+

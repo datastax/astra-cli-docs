@@ -1,0 +1,41 @@
+= astra config home path
+
+[source,shell]
+----
+astra config home path [-pqV] [--no-input] [--[no-]spinner] [--dump-logs
+                       [=FILE]] [--color=WHEN] [-o=FORMAT]
+
+----
+
+
+Prints the expected path of the astra home folder, even if does not exist.
+
+Checks ``ASTRA_HOME`` __(ASTRA_HOME=~/my_folder)__ -> ``XDG_DATA_HOME`` __($XDG_DATA_HOME/astra)__ -> ``HOME`` __(~/.astra)__.
+
+
+
+
+
+== Options
+
+`-p`, `--plain`:: Print only the path to the home folder, without additional information
+`-o`, `--output`:: One of: human, json, csv
+`-V`, `--verbose`:: Enable verbose logging output
+`-q`, `--quiet`:: Only output essential information
+`--spinner`:: Enable/disable loading spinners
+`--no-input`:: Don't ask for user input (e.g. confirmation prompts)
+`--color`:: One of: auto, never, always
+`--dump-logs`:: Write all logs to an optionally specified file
+
+
+== Examples
+[source,bash]
+----
+# Get information about the path to the astra home folder
+$ astra config home path
+
+# Print only the path to the home folder, without additional information
+$ astra config home path -p
+----
+
+

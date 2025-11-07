@@ -1,0 +1,47 @@
+= astra pcu associate
+
+[source,shell]
+----
+astra pcu associate [-qV] [--if-not-exists] [--no-input] [--[no-]spinner]
+                    [--dump-logs[=FILE]] [--color=WHEN] [-o=FORMAT]
+                    [[[-cf=PATH] [-p=NAME]] | [--token=TOKEN [--env=ENV]]]
+                    GROUP TARGET
+
+----
+
+
+Associate a PCU group to a datacenter
+
+
+
+
+
+== Options
+
+`GROUP`:: The name or ID of the PCU group to operate on
+`TARGET`:: PCU association target (database name/id or datacenter id)
+`--if-not-exists`:: Don't error if the association already exists
+`-o`, `--output`:: One of: human, json, csv
+`-V`, `--verbose`:: Enable verbose logging output
+`-q`, `--quiet`:: Only output essential information
+`--spinner`:: Enable/disable loading spinners
+`--no-input`:: Don't ask for user input (e.g. confirmation prompts)
+`--color`:: One of: auto, never, always
+`--dump-logs`:: Write all logs to an optionally specified file
+`-cf`, `--config-file`:: The ``.astrarc`` file to use for this command
+`-p`, `--profile`:: The ``.astrarc`` profile to use for this command
+`--token`:: The astra token to use for this command. Use the ``--token @file`` syntax to read the token from a file, to avoid potential leaks.
+`--env`:: Override the target astra environment
+
+
+== Examples
+[source,bash]
+----
+# Associate a specific datacenter to a PCU group
+$ astra pcu associate my_pcu ee6991af-7783-4de9-8da0-c7fa250c89e2-1
+
+# Associate a database with a single datacenter to a PCU group
+$ astra pcu associate my_pcu my_database
+----
+
+

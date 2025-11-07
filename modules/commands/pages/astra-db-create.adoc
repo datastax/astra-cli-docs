@@ -1,0 +1,69 @@
+= astra db create
+
+[source,shell]
+----
+astra db create [-qV] [--[no-]async] [--no-input] [--non-vector] [--[no-]
+                spinner] [--dump-logs[=FILE]] [-c=CLOUD]
+                [--capacity-units=CAPACITY UNITS] [--color=WHEN] [-k=KEYSPACE]
+                [-o=FORMAT] [-r=REGION] [--tier=TIER] [--timeout=<timeout>]
+                [[[-cf=PATH] [-p=NAME]] | [--token=TOKEN [--env=ENV]]]
+                [--if-not-exists | --allow-duplicate-names] DB
+
+----
+
+
+Create a new Astra database
+
+
+
+
+
+== Options
+
+`DB`:: The name or ID of the Astra database to operate on
+`--async`:: Do not wait for the database to become active
+`--timeout`:: How long the command should wait for the database to become active
+`-o`, `--output`:: One of: human, json, csv
+`-V`, `--verbose`:: Enable verbose logging output
+`-q`, `--quiet`:: Only output essential information
+`--spinner`:: Enable/disable loading spinners
+`--no-input`:: Don't ask for user input (e.g. confirmation prompts)
+`--color`:: One of: auto, never, always
+`--dump-logs`:: Write all logs to an optionally specified file
+`-cf`, `--config-file`:: The ``.astrarc`` file to use for this command
+`-p`, `--profile`:: The ``.astrarc`` profile to use for this command
+`--token`:: The astra token to use for this command. Use the ``--token @file`` syntax to read the token from a file, to avoid potential leaks.
+`--env`:: Override the target astra environment
+`--if-not-exists`:: Don't error if the database already exists
+`--allow-duplicate-names`:: Allow multiple databases with the same name
+`-r`, `--region`:: Cloud provider region to provision. **Use one of the `astra db list-regions-*` commands to see available regions.**
+`-c`, `--cloud`:: The cloud provider where the db should be created. Inferred from the region if not provided.
+`-k`, `--keyspace`:: Default keyspace for the database
+`--tier`:: Tier to create the database in
+`--capacity-units`:: Capacity units to create the database with
+`--non-vector`:: Create a classic non-vector database
+
+
+== Examples
+[source,bash]
+----
+# Create a basic Astra vector database in the 'us-east1' region
+$ astra db create my_db --region us-east1
+
+# Specify a specific default keyspace for the database
+$ astra db create my_db --region us-east1 -k my_keyspace
+
+# Create a classic non-vector database
+$ astra db create my_db --region us-east1 --non-vector
+
+# Create a database without waiting for it to become active
+$ astra db create my_db --async
+
+# Create a database if it doesn't already exist
+$ astra db create my_db --region us-east1 --if-not-exists
+
+# List available vector database regions for creating a database
+$ astra db list-regions-vector
+----
+
+

@@ -1,1 +1,48 @@
 = astra user
+
+[source,shell]
+----
+astra user [-qV] [--no-input] [--[no-]spinner] [--dump-logs[=FILE]]
+           [--color=WHEN] [-o=FORMAT] [[[-cf=PATH] [-p=NAME]] | [--token=TOKEN
+           [--env=ENV]]] [COMMAND]
+
+----
+
+
+Manage users in your organization
+
+
+**Alias of `astra user list`**
+
+
+== Subcommands
+
+* xref:astra-user-list.adoc[astra user list]
+* xref:astra-user-get.adoc[astra user get]
+* xref:astra-user-invite.adoc[astra user invite]
+* xref:astra-user-delete.adoc[astra user delete]
+
+
+== Options
+
+`-o`, `--output`:: One of: human, json, csv
+`-V`, `--verbose`:: Enable verbose logging output
+`-q`, `--quiet`:: Only output essential information
+`--spinner`:: Enable/disable loading spinners
+`--no-input`:: Don't ask for user input (e.g. confirmation prompts)
+`--color`:: One of: auto, never, always
+`--dump-logs`:: Write all logs to an optionally specified file
+`-cf`, `--config-file`:: The ``.astrarc`` file to use for this command
+`-p`, `--profile`:: The ``.astrarc`` profile to use for this command
+`--token`:: The astra token to use for this command. Use the ``--token @file`` syntax to read the token from a file, to avoid potential leaks.
+`--env`:: Override the target astra environment
+
+
+== Examples
+[source,bash]
+----
+# List all your Astra users
+$ astra user
+----
+
+

@@ -1,0 +1,46 @@
+= astra db resume
+
+[source,shell]
+----
+astra db resume [-qV] [--[no-]async] [--no-input] [--[no-]spinner] [--dump-logs
+                [=FILE]] [--color=WHEN] [-o=FORMAT] [--timeout=<timeout>]
+                [[[-cf=PATH] [-p=NAME]] | [--token=TOKEN [--env=ENV]]] [DB]
+
+----
+
+
+Resume a database that is in a stopped state. If the database is already active, no action is taken.
+
+
+
+
+
+== Options
+
+`DB`:: The name or ID of the Astra database to operate on
+`--async`:: Do not wait for the database to become active
+`--timeout`:: How long the command should wait for the database to become active
+`-o`, `--output`:: One of: human, json, csv
+`-V`, `--verbose`:: Enable verbose logging output
+`-q`, `--quiet`:: Only output essential information
+`--spinner`:: Enable/disable loading spinners
+`--no-input`:: Don't ask for user input (e.g. confirmation prompts)
+`--color`:: One of: auto, never, always
+`--dump-logs`:: Write all logs to an optionally specified file
+`-cf`, `--config-file`:: The ``.astrarc`` file to use for this command
+`-p`, `--profile`:: The ``.astrarc`` profile to use for this command
+`--token`:: The astra token to use for this command. Use the ``--token @file`` syntax to read the token from a file, to avoid potential leaks.
+`--env`:: Override the target astra environment
+
+
+== Examples
+[source,bash]
+----
+# Resume a database
+$ astra db resume my_db
+
+# Resume a database, without waiting for it to become active
+$ astra db resume my_db --async
+----
+
+

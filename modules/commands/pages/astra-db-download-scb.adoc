@@ -1,0 +1,50 @@
+= astra db download-scb
+
+[source,shell]
+----
+astra db download-scb [-qV] [--no-input] [--[no-]spinner] [--dump-logs[=FILE]]
+                      [--color=WHEN] [-f=DEST] [-o=FORMAT] [-r=REGION]
+                      [[[-cf=PATH] [-p=NAME]] | [--token=TOKEN [--env=ENV]]]
+                      [DB]
+
+----
+
+
+Download secure connect bundle for a database
+
+
+
+
+
+== Options
+
+`DB`:: The name or ID of the Astra database to operate on
+`-r`, `--region`:: The cloud provider region to target. Defaults to the default region of the database.
+`-f`, `--file`:: Destination file. Defaults to `~/.astra/scb/scb_<name/id>_<region>.zip`
+`-o`, `--output`:: One of: human, json, csv
+`-V`, `--verbose`:: Enable verbose logging output
+`-q`, `--quiet`:: Only output essential information
+`--spinner`:: Enable/disable loading spinners
+`--no-input`:: Don't ask for user input (e.g. confirmation prompts)
+`--color`:: One of: auto, never, always
+`--dump-logs`:: Write all logs to an optionally specified file
+`-cf`, `--config-file`:: The ``.astrarc`` file to use for this command
+`-p`, `--profile`:: The ``.astrarc`` profile to use for this command
+`--token`:: The astra token to use for this command. Use the ``--token @file`` syntax to read the token from a file, to avoid potential leaks.
+`--env`:: Override the target astra environment
+
+
+== Examples
+[source,bash]
+----
+# Download the SCB for a database, targeting the default region
+$ astra db download-scb my_db
+
+# Download the SCB for a database, targeting a specific region
+$ astra db download-scb my_db -r us-east1
+
+# Download the SCB for a database, saving it to a specific file
+$ astra db download-scb my_db -f /path/to/scb.zip
+----
+
+

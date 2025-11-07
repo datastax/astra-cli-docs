@@ -1,0 +1,67 @@
+= astra db create-dotenv
+
+[source,shell]
+----
+astra db create-dotenv [-qV] [--no-input] [--[no-]overwrite] [--print] [--[no-]
+                       spinner] [--dump-logs[=FILE]] [--color=WHEN]
+                       [--file=FILE] [-k=KEYSPACE] [-o=FORMAT] [-r=REGION]
+                       [[[-cf=PATH] [-p=NAME]] | [--token=TOKEN [--env=ENV]]]
+                       [--keys=KEYS[,KEYS...] [--keys=KEYS[,KEYS...]]... |
+                       --preset=PRESETS[,PRESETS...] [--preset=PRESETS[,
+                       PRESETS...]]...] [DB]
+
+----
+
+
+Create a env file to help you connect to your Astra DB instance.
+
+
+
+
+
+== Options
+
+`DB`:: The name or ID of the Astra database to operate on
+`--print`:: Output the .env file to stdout instead of saving it to the .env file.
+`--overwrite`:: Whether to existing duplicate keys in the .env file. If false, the command will attempt to prompt the user before overwriting any existing keys, or fail if it can't.
+`--file`:: The file to append the .env content to. If not specified, defaults to .env. If --print is true, the --file option will be used as the initial content; otherwise it will print a new .env file.
+`-k`, `--keyspace`:: The keyspace to use. Uses the db's default keyspace if not specified.
+`-r`, `--region`:: The region to use. Uses the db's default region if not specified.
+`-o`, `--output`:: One of: human, json, csv
+`-V`, `--verbose`:: Enable verbose logging output
+`-q`, `--quiet`:: Only output essential information
+`--spinner`:: Enable/disable loading spinners
+`--no-input`:: Don't ask for user input (e.g. confirmation prompts)
+`--color`:: One of: auto, never, always
+`--dump-logs`:: Write all logs to an optionally specified file
+`-cf`, `--config-file`:: The ``.astrarc`` file to use for this command
+`-p`, `--profile`:: The ``.astrarc`` profile to use for this command
+`--token`:: The astra token to use for this command. Use the ``--token @file`` syntax to read the token from a file, to avoid potential leaks.
+`--env`:: Override the target astra environment
+`--keys`:: Comma-separated list of keys to include in the .env file. If not specified, all keys will be included.
+`--preset`:: The preset(s) to use for the .env file. If not specified, all keys (or the keys from `--keys`) will be used.
+
+
+== Examples
+[source,bash]
+----
+# Create a fully-populated .env file, updating the existing one if it exists
+$ astra db create-dotenv
+
+# Create a .env file specifying the keys to include
+$ astra db create-dotenv --keys ASTRA_DB_APPLICATION_TOKEN,ASTRA_DB_API_ENDPOINT
+
+# Create a .env file with a preset specifying the keys to include
+$ astra db create-dotenv --preset data_api_client
+
+# Create a .env file specifying the keyspace and/or region to target
+$ astra db create-dotenv -k my_keyspace -r us-east1
+
+# Print the .env file to stdout instead of saving it to a file
+$ astra db create-dotenv --print
+
+# Specify the file to create/update
+$ astra db create-dotenv -f .env.local
+----
+
+

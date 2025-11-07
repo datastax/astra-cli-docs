@@ -1,1 +1,51 @@
 = astra upgrade
+
+[source,shell]
+----
+astra upgrade [-qVy] [--no-input] [--[no-]spinner] [--dump-logs[=FILE]]
+              [--color=WHEN] [-o=FORMAT] [-v=TAG | --pre]
+
+----
+
+
+Upgrade your Astra CLI installation
+
+Update notifications may occur periodically when a new version is available.
+
+To opt out of Update notifications, set ``ASTRA_NO_UPDATE_NOTIFIER=true``, or, even better, use the ``--no-update-notifier`` flag on the ``astra shellenv`` invocation in your shell profile (if it's set up).
+
+
+
+
+
+== Options
+
+`-y`, `--yes`:: Install the upgrade without any confirmation prompting
+`-o`, `--output`:: One of: human, json, csv
+`-V`, `--verbose`:: Enable verbose logging output
+`-q`, `--quiet`:: Only output essential information
+`--spinner`:: Enable/disable loading spinners
+`--no-input`:: Don't ask for user input (e.g. confirmation prompts)
+`--color`:: One of: auto, never, always
+`--dump-logs`:: Write all logs to an optionally specified file
+`-v`, `--version`:: Version to upgrade to (default: latest)
+`--pre`, `--prerelease`:: Include pre-releases when looking for the latest version
+
+
+== Examples
+[source,bash]
+----
+# Upgrade to the latest stable version
+$ astra upgrade
+
+# Upgrade to the latest version, including pre-releases
+$ astra upgrade --pre
+
+# Upgrade (or downgrade!) to a specific version
+$ astra upgrade --version 1.1.0
+
+# Opt out of upgrade notifications permanently in your shell profile
+$ eval "$(/path/to/astra shellenv --no-update-notifier)"
+----
+
+

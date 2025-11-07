@@ -1,0 +1,48 @@
+= astra token delete
+
+[source,shell]
+----
+astra token delete [-qV] [--if-exists] [--no-input] [--[no-]spinner]
+                   [--dump-logs[=FILE]] [--color=WHEN] [-o=FORMAT] [[[-cf=PATH]
+                   [-p=NAME]] | [--token=TOKEN [--env=ENV]]] TOKEN
+
+----
+
+
+Delete a token
+
+== Aliases
+
+`astra token revoke`
+
+
+
+
+== Options
+
+`TOKEN`:: Token identifier
+`--if-exists`:: Do not fail if token does not exist
+`-o`, `--output`:: One of: human, json, csv
+`-V`, `--verbose`:: Enable verbose logging output
+`-q`, `--quiet`:: Only output essential information
+`--spinner`:: Enable/disable loading spinners
+`--no-input`:: Don't ask for user input (e.g. confirmation prompts)
+`--color`:: One of: auto, never, always
+`--dump-logs`:: Write all logs to an optionally specified file
+`-cf`, `--config-file`:: The ``.astrarc`` file to use for this command
+`-p`, `--profile`:: The ``.astrarc`` profile to use for this command
+`--token`:: The astra token to use for this command. Use the ``--token @file`` syntax to read the token from a file, to avoid potential leaks.
+`--env`:: Override the target astra environment
+
+
+== Examples
+[source,bash]
+----
+# Delete a specific token
+$ astra token delete <client_id>
+
+# Delete a token without failing if it doesn't exist
+$ astra token delete <client_id> --if-exists
+----
+
+

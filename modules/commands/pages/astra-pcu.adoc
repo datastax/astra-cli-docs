@@ -1,0 +1,56 @@
+= astra pcu
+
+[source,shell]
+----
+astra pcu [-qV] [--no-input] [--[no-]spinner] [--dump-logs[=FILE]]
+          [--color=WHEN] [-o=FORMAT] [[[-cf=PATH] [-p=NAME]] | [--token=TOKEN
+          [--env=ENV]]] [COMMAND]
+
+----
+
+
+Manage your PCU groups and associations
+
+
+**Alias of `astra pcu list`**
+
+
+== Subcommands
+
+* xref:astra-pcu-list.adoc[astra pcu list]
+* xref:astra-pcu-get.adoc[astra pcu get]
+* xref:astra-pcu-status.adoc[astra pcu status]
+* xref:astra-pcu-park.adoc[astra pcu park]
+* xref:astra-pcu-unpark.adoc[astra pcu unpark]
+* xref:astra-pcu-create.adoc[astra pcu create]
+* xref:astra-pcu-update.adoc[astra pcu update]
+* xref:astra-pcu-delete.adoc[astra pcu delete]
+* xref:astra-pcu-associate.adoc[astra pcu associate]
+* xref:astra-pcu-disassociate.adoc[astra pcu disassociate]
+* xref:astra-pcu-list-associations.adoc[astra pcu list-associations]
+* xref:astra-pcu-transfer-association.adoc[astra pcu transfer-association]
+
+
+== Options
+
+`-o`, `--output`:: One of: human, json, csv
+`-V`, `--verbose`:: Enable verbose logging output
+`-q`, `--quiet`:: Only output essential information
+`--spinner`:: Enable/disable loading spinners
+`--no-input`:: Don't ask for user input (e.g. confirmation prompts)
+`--color`:: One of: auto, never, always
+`--dump-logs`:: Write all logs to an optionally specified file
+`-cf`, `--config-file`:: The ``.astrarc`` file to use for this command
+`-p`, `--profile`:: The ``.astrarc`` profile to use for this command
+`--token`:: The astra token to use for this command. Use the ``--token @file`` syntax to read the token from a file, to avoid potential leaks.
+`--env`:: Override the target astra environment
+
+
+== Examples
+[source,bash]
+----
+# List all your PCU groups
+$ astra pcu
+----
+
+

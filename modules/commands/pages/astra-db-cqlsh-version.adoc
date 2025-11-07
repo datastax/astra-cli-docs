@@ -1,0 +1,45 @@
+= astra db cqlsh version
+
+[source,shell]
+----
+astra db cqlsh version [-qV] [--debug] [--no-input] [--[no-]spinner]
+                       [--dump-logs[=FILE]] [--color=WHEN]
+                       [--connect-timeout=TIMEOUT] [--encoding=ENCODING]
+                       [-o=FORMAT] [[[-cf=PATH] [-p=NAME]] | [--token=TOKEN
+                       [--env=ENV]]]
+
+----
+
+
+Display the currently installed cqlsh's version
+
+
+
+
+
+== Options
+
+`--debug`:: Show additional debugging information
+`--encoding`:: Output encoding (default: utf8)
+`--connect-timeout`:: Connection timeout in seconds
+`-o`, `--output`:: One of: human, json, csv
+`-V`, `--verbose`:: Enable verbose logging output
+`-q`, `--quiet`:: Only output essential information
+`--spinner`:: Enable/disable loading spinners
+`--no-input`:: Don't ask for user input (e.g. confirmation prompts)
+`--color`:: One of: auto, never, always
+`--dump-logs`:: Write all logs to an optionally specified file
+`-cf`, `--config-file`:: The ``.astrarc`` file to use for this command
+`-p`, `--profile`:: The ``.astrarc`` profile to use for this command
+`--token`:: The astra token to use for this command. Use the ``--token @file`` syntax to read the token from a file, to avoid potential leaks.
+`--env`:: Override the target astra environment
+
+
+== Examples
+[source,bash]
+----
+# Display cqlsh's version information
+$ astra db cqlsh version
+----
+
+

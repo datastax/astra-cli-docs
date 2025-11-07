@@ -1,0 +1,49 @@
+= astra pcu delete
+
+[source,shell]
+----
+astra pcu delete [-qV] [--if-exists] [--no-input] [--[no-]spinner] [--yes]
+                 [--dump-logs[=FILE]] [--color=WHEN] [-o=FORMAT] [[[-cf=PATH]
+                 [-p=NAME]] | [--token=TOKEN [--env=ENV]]] [GROUP]
+
+----
+
+
+Delete an existing Pcu group
+
+
+
+
+
+== Options
+
+`GROUP`:: The name or ID of the PCU group to work with
+`--if-exists`:: Do not fail if PCU group does not exist
+`--yes`:: Force deletion of PCU group without prompting
+`-o`, `--output`:: One of: human, json, csv
+`-V`, `--verbose`:: Enable verbose logging output
+`-q`, `--quiet`:: Only output essential information
+`--spinner`:: Enable/disable loading spinners
+`--no-input`:: Don't ask for user input (e.g. confirmation prompts)
+`--color`:: One of: auto, never, always
+`--dump-logs`:: Write all logs to an optionally specified file
+`-cf`, `--config-file`:: The ``.astrarc`` file to use for this command
+`-p`, `--profile`:: The ``.astrarc`` profile to use for this command
+`--token`:: The astra token to use for this command. Use the ``--token @file`` syntax to read the token from a file, to avoid potential leaks.
+`--env`:: Override the target astra environment
+
+
+== Examples
+[source,bash]
+----
+# Delete an existing Pcu group
+$ astra pcu delete my_pcu
+
+# Delete an existing Pcu group without confirmation (required for non-interactive shells)
+$ astra pcu delete my_pcu --yes
+
+# Delete an existing Pcu group without failing if it does not exist
+$ astra pcu delete my_pcu --if-exists
+----
+
+
