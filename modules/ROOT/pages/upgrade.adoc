@@ -7,36 +7,7 @@ Follow the instructions for your original installation method to upgrade the {pr
 
 [tabs,sync-group-id=platforms]
 ======
-Homebrew::
-+
---
-. Run the following command to upgrade to the latest version of the {product}:
-+
-[source,bash]
-----
-brew upgrade datastax/astra-cli/astra
-----
-
-. Optional: Upgrade to a specific version of the {product}:
-+
-[source,bash,subs="+quotes"]
-----
-brew install datastax/astra-cli/astra@**VERSION**
-----
-+
-You can also use this command to downgrade to a previous version.
-
-. Check the {product} version to verify that the upgrade was successful:
-+
-[source,bash]
-----
-astra --version
-----
-+
-The response returns your {product} version.
---
-
-macOS::
+macOS and Linux::
 +
 --
 . Run the `xref:commands:astra-upgrade.adoc[]` command to upgrade to the latest version of the {product}:
@@ -123,4 +94,23 @@ astra --version
 The response returns your {product} version.
 --
 
+Homebrew::
++
+--
+. Run the following command to upgrade to the latest version of the {product}:
++
+[source,bash]
+----
+brew upgrade datastax/astra-cli/astra
+----
+
+. Check the {product} version to verify that the upgrade was successful:
++
+[source,bash]
+----
+astra --version
+----
++
+The response returns your {product} version.
+--
 ======

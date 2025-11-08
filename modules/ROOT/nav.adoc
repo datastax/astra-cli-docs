@@ -1,13 +1,10 @@
+.Get Started
 * xref:install.adoc[]
 * xref:use-cli.adoc[]
 * xref:upgrade.adoc[]
 * xref:uninstall.adoc[]
 
-* Commands
-+
---
-include::partial$partial-nav.adoc[]
---
+include::ROOT:partial$partial-nav.adoc[]
 
-* https://github.com/datastax/astra-cli[GitHub repo]
+.Release notes
 * https://github.com/datastax/astra-cli/releases[Release notes]

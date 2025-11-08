@@ -28,29 +28,10 @@ Select one of the following installation methods and follow the steps to install
 
 [tabs,sync-group-id=platforms]
 ======
-Homebrew::
+macOS and Linux::
 +
---
-. Install the latest version of the {product} using https://brew.sh/[Homebrew]:
-+
-[source,bash]
-----
-brew install datastax/astra-cli/astra
-----
-
-. Run the `astra` command from any directory to verify successful installation:
-+
-[source,bash]
-----
-astra
-----
-+
-The response includes available commands and options for the {product}.
---
-
-macOS::
-+
-Select one of the following installation methods to install the {product} on macOS _without_ using Homebrew:
+Select one of the following installation methods to install the {product} on macOS and Linux.
+If you prefer to use a package manager, follow the Homebrew instructions instead.
 +
 [tabs]
 =====
@@ -61,14 +42,14 @@ Scripted installation (recommended)::
 +
 [source,bash]
 ----
-sh -c "$(curl -sSL https://ibm.biz/astra-cli)"
+curl -sSL ibm.biz/astra-cli | sh
 ----
 
 . When prompted to specify the installation location, press kbd:[Enter] to accept the default location (`~/.astra/cli/`).
 +
 To install the {product} to a different location, use the binary installation method instead.
 
-. Add the following lines to your shell profile (for example, `~/.zshrc` or `~/.bashrc`) to make the `astra` command executable from any directory:
+. Add the following lines to your shell profile (for example, `~/.zprofile` or `~/.bash_profile`) to make the `astra` command executable from any directory:
 +
 [source,bash]
 ----
@@ -91,16 +72,17 @@ The response includes available commands and options for the {product}.
 Binary installation::
 +
 --
-. Download the `macos` archive file for your CPU architecture from https://github.com/datastax/astra-cli/releases[GitHub].
+. Download the appropriate binary archive for your OS and CPU architecture from https://github.com/datastax/astra-cli/releases[GitHub].
 
-. Extract the archive into the directory where you want to install the {product}:
+. Extract the archive into the directory where you want to install the {product}.
+For example:
 +
 [source,bash,subs="+quotes"]
 ----
-sudo tar -xzvf astra-macos-**ARCHITECTURE**.tar.gz -C **INSTALLATION_DIRECTORY**
+sudo tar -xzvf astra-macos-arm64.tar.gz -C **INSTALLATION_DIRECTORY**
 ----
 
-. Add the following lines to your shell profile (for example, `~/.zshrc` or `~/.bashrc`) to make the `astra` command executable from any directory:
+. Add the following lines to your shell profile (for example, `~/.zprofile` or `~/.bash_profile`) to make the `astra` command executable from any directory:
 +
 [source,bash,subs="+quotes"]
 ----
@@ -112,15 +94,14 @@ Replace `**PATH_TO_BINARY**` with the full path to the `astra` executable in the
 
 . Reload your shell profile or open a new terminal window.
 
-. Delete the `com.apple.quarantine` attribute from the `astra` binary to remove https://support.apple.com/guide/security/gatekeeper-and-runtime-protection-sec5599b66df/web[macOS Gatekeeper restrictions]:
+. On macOS: Delete the `com.apple.quarantine` attribute from the `astra` binary to remove https://support.apple.com/guide/security/gatekeeper-and-runtime-protection-sec5599b66df/web[macOS Gatekeeper restrictions]:
 +
 [source,bash]
 ----
 xattr -d com.apple.quarantine $(which astra)
 ----
 +
-You can also remove these restrictions in your macOS System Settings.
-See the https://support.apple.com/en-us/102445#openanyway[Apple support documentation] for more information.
+Alternatively, you can remove these restrictions in your https://support.apple.com/en-us/102445#openanyway[macOS System Settings].
 
 . Run the `astra` command from any directory to verify successful installation:
 +
@@ -200,35 +181,15 @@ The response includes available commands and options for the {product}.
 --
 =====
 
-Linux::
-+
-Select one of the following installation methods to install the {product} on Linux _without_ using Homebrew:
-+
-[tabs]
-=====
-Scripted installation (recommended)::
+Homebrew::
 +
 --
-. Run the following Bash script to install the latest version of the {product}:
+. Install the latest version of the {product} using https://brew.sh/[Homebrew]:
 +
 [source,bash]
 ----
-sh -c "$(curl -sSL https://ibm.biz/astra-cli)"
+brew install datastax/astra-cli/astra
 ----
-
-. When prompted to specify the installation location, press kbd:[Enter] to accept the default location (`~/.astra/cli/`).
-+
-To install the {product} to a different location, use the binary installation method instead.
-
-. Add the following lines to your shell profile (for example, `~/.zshrc` or `~/.bashrc`) to make the `astra` command executable from any directory:
-+
-[source,bash]
-----
-# Astra CLI shell configuration
-eval "$(~/.astra/cli/astra shellenv)"
-----
-
-. Reload your shell profile or open a new terminal window.
 
 . Run the `astra` command from any directory to verify successful installation:
 +
@@ -239,43 +200,8 @@ astra
 +
 The response includes available commands and options for the {product}.
 --
-
-Binary installation::
-+
---
-. Download the `linux` archive file for your CPU architecture from https://github.com/datastax/astra-cli/releases[GitHub].
-
-. Extract the archive into the directory where you want to install the {product}:
-+
-[source,bash,subs="+quotes"]
-----
-sudo tar -xzvf astra-linux-**ARCHITECTURE**.tar.gz -C **INSTALLATION_DIRECTORY**
-----
-
-. Add the following lines to your shell profile (for example, `~/.zshrc` or `~/.bashrc`) to make the `astra` command executable from any directory:
-+
-[source,bash,subs="+quotes"]
-----
-# Astra CLI shell configuration
-eval "$(**PATH_TO_BINARY** shellenv)"
-----
-+
-Replace `**PATH_TO_BINARY**` with the full path to the `astra` executable in the installation directory.
-
-. Reload your shell profile or open a new terminal window.
-
-. Run the `astra` command from any directory to verify successful installation:
-+
-[source,bash]
-----
-astra
-----
-+
-The response includes available commands and options for the {product}.
---
-=====
 ======
 
 == Next steps
 
-To set up a new configuration and run your first commands, see xref:use-cli.adoc[].
+To connect to {product-short} run your first commands, see xref:use-cli.adoc[].
