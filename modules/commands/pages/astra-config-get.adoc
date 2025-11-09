@@ -22,7 +22,7 @@ Get the configuration of a profile or a specific key.
 == Options
 
 `NAME`:: Name of the profile to get
-`-cf`, `--config-file`:: The .astrarc file to work with. See ``@{cli.name} config path -h`` for how this is resolved.
+`-cf`, `--config-file`:: The .astrarc file to work with. See ``astra config path -h`` for how this is resolved.
 `-k`, `--key`:: Specific configuration key to retrieve
 `-o`, `--output`:: One of: human, json, csv
 `-V`, `--verbose`:: Enable verbose logging output

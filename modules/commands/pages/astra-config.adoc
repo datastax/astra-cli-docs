@@ -27,7 +27,7 @@ Manage your Astra CLI configuration profiles
 
 == Options
 
-`-cf`, `--config-file`:: The .astrarc file to work with. See ``@{cli.name} config path -h`` for how this is resolved.
+`-cf`, `--config-file`:: The .astrarc file to work with. See ``astra config path -h`` for how this is resolved.
 `-e`, `--env`:: Filter by Astra environment
 `-o`, `--output`:: One of: human, json, csv
 `-V`, `--verbose`:: Enable verbose logging output

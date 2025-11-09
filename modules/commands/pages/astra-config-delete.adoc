@@ -18,7 +18,7 @@ Delete an existing configuration profile.
 == Options
 
 `NAME`:: Name of the profile to delete
-`-cf`, `--config-file`:: The .astrarc file to work with. See ``@{cli.name} config path -h`` for how this is resolved.
+`-cf`, `--config-file`:: The .astrarc file to work with. See ``astra config path -h`` for how this is resolved.
 `--if-exists`:: Do not fail if the profile does not exist
 `-o`, `--output`:: One of: human, json, csv
 `-V`, `--verbose`:: Enable verbose logging output

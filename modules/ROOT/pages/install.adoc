@@ -38,16 +38,14 @@ If you prefer to use a package manager, follow the Homebrew instructions instead
 Scripted installation (recommended)::
 +
 --
-. Run the following Bash script to install the latest version of the {product}:
+. Run the following Bash script to install the latest version of the {product} to the default location:
 +
 [source,bash]
 ----
 curl -sSL ibm.biz/astra-cli | sh
 ----
-
-. When prompted to specify the installation location, press kbd:[Enter] to accept the default location (`~/.astra/cli/`).
 +
-To install the {product} to a different location, use the binary installation method instead.
+To install the {product} to a custom location, export the `ASTRA_HOME` environment variable first.
 
 . Add the following lines to your shell profile (for example, `~/.zprofile` or `~/.bash_profile`) to make the `astra` command executable from any directory:
 +
@@ -123,25 +121,16 @@ Select one of the following installation methods to install the {product} on Win
 Scripted installation (recommended)::
 +
 --
-. Run the following PowerShell script to install the latest version of the {product}:
+. Run the following PowerShell script to install the latest version of the {product} to the default location:
 +
 [source,shell]
 ----
-powershell -c "irm https://ibm.biz/astra-cli-win | iex"
+powershell -c "irm ibm.biz/astra-cli-win | iex"
 ----
-
-. When prompted to specify the installation location, press kbd:[Enter] to accept the default location (`~\AppData\Local\.astra\cli`).
 +
-To install the {product} to a different location, use the binary installation method instead.
+To install the {product} to a custom location, export the `ASTRA_HOME` environment variable first.
 
-. Add the following lines to your shell profile to make the `astra` command executable from any directory:
-+
-[source,shell]
-----
-TBD
-----
-
-. Reload your shell profile or open a new terminal window.
+. Start a new PowerShell session by opening a new terminal window.
 
 . Run the `astra` command from any directory to verify successful installation:
 +
@@ -168,7 +157,7 @@ powershell -C "Expand-Archive -Path astra-windows-x86_64.zip -DestinationPath **
 . Add the path to the unzipped `astra.exe` file to your `PATH` environment variable.
 To learn how to update environment variables, see the https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_environment_variables[Microsoft PowerShell documentation].
 
-. Reload your shell profile or open a new terminal window.
+. Start a new PowerShell session by opening a new terminal window.
 
 . Run the `astra` command from any directory to verify successful installation:
 +
@@ -204,4 +193,4 @@ The response includes available commands and options for the {product}.
 
 == Next steps
 
-To connect to {product-short} run your first commands, see xref:use-cli.adoc[].
+To connect to {product-short} and run your first commands, see xref:use-cli.adoc[].

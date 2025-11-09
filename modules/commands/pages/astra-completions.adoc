@@ -7,7 +7,7 @@ astra completions [-n=<$cliName>]
 ----
 
 
-See the help for the ``@{cli.name} shellenv`` command to setup completions in your shell.
+See the help for the ``astra shellenv`` command to setup completions in your shell.
 
 == Aliases
 

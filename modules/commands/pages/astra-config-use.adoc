@@ -17,7 +17,7 @@ Sets an existing profile to be used as the default for all commands. Use the ``-
 == Options
 
 `NAME`:: Profile to set as default
-`-cf`, `--config-file`:: The .astrarc file to work with. See ``@{cli.name} config path -h`` for how this is resolved.
+`-cf`, `--config-file`:: The .astrarc file to work with. See ``astra config path -h`` for how this is resolved.
 `-o`, `--output`:: One of: human, json, csv
 `-V`, `--verbose`:: Enable verbose logging output
 `-q`, `--quiet`:: Only output essential information
