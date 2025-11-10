@@ -2,8 +2,8 @@
 
 [source,shell]
 ----
-astra upgrade [-qVy] [--no-input] [--[no-]spinner] [--dump-logs[=FILE]]
-              [--color=WHEN] [-o=FORMAT] [-v=TAG | --pre]
+astra upgrade [-qVy] [--allow-reinstall] [--no-input] [--[no-]spinner]
+              [--dump-logs[=FILE]] [--color=WHEN] [-o=FORMAT] [-v=TAG | --pre]
 
 ----
 
@@ -21,6 +21,7 @@ To opt out of Update notifications, set ``ASTRA_NO_UPDATE_NOTIFIER=true``, or, e
 == Options
 
 `-y`, `--yes`:: Install the upgrade without any confirmation prompting
+`--allow-reinstall`:: Allow re-installing the same version
 `-o`, `--output`:: One of: human, json, csv
 `-V`, `--verbose`:: Enable verbose logging output
 `-q`, `--quiet`:: Only output essential information

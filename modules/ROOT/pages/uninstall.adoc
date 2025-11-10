@@ -7,6 +7,12 @@ Follow the instructions for your original installation method to uninstall the {
 ======
 macOS and Linux::
 +
+Select one of the following methods to uninstall the {product} on macOS and Linux:
++
+[tabs]
+=====
+Nuke command (recommended)::
++
 --
 Run the `xref:commands:astra-nuke.adoc[]` command to uninstall the {product}:
 
@@ -17,21 +23,110 @@ astra nuke
 
 When prompted to confirm, type kbd:[y] and press kbd:[Enter].
 
-The `astra nuke` command deletes the {product} home directory and configuration profile (`~/.astra` and `~/.astrarc`).
+The `astra nuke` command deletes the {product} home directory and optionally the configuration file (`https://github.com/datastax/astra-cli?tab=readme-ov-file#home-folder-location[~/.astra]` and `https://github.com/datastax/astra-cli?tab=readme-ov-file#astrarc-location[~/.astrarc]`).
 It also lists any shell profile containing references to the `astra` command.
 Delete these references manually if desired.
 --
 
-Windows::
+Manual removal::
 +
 --
-TBD
+. Optional: Remove the `https://github.com/datastax/astra-cli?tab=readme-ov-file#astrarc-location[.astrarc]` file if you don't need your credentials anymore:
++
+[source,bash]
+----
+rm $(astra config path -p)
+----
+
+. Delete the https://github.com/datastax/astra-cli?tab=readme-ov-file#home-folder-location[{product} home directory]
++
+[source,bash]
+----
+rm -rf $(astra config home path -p)
+----
+
+. Remove the `astra` binary if it still exists
++
+[source,bash]
+----
+rm -f $(which astra)
+----
+
+. Remove any references to the `astra` command from your shell profile (for example, `~/.zprofile` or `~/.bash_profile`).
 --
+=====
+
+Windows::
++
+Select one of the following methods to uninstall the {product} on Windows:
++
+[tabs]
+=====
+Uninstaller (recommended)::
++
+--
+*Note:* This method assumes you installed the {product} using the xref:install.adoc#_install_the_astra_cli[scripted installer].
+
+. Optional: Remove the `https://github.com/datastax/astra-cli?tab=readme-ov-file#astrarc-location[.astrarc]` file if you don't need your credentials anymore:
++
+[source,powershell]
+----
+rm -f $(astra config path -p)
+----
+. Navigate to the https://support.microsoft.com/en-us/windows/uninstall-or-remove-apps-and-programs-in-windows-4b55f974-2cc6-2d2b-d092-5905080eaf98[Add or Remove Programs] settings page.
+. Locate {product} in the list of installed applications.
+. Select {product} and click kbd:[Uninstall].
+--
+
+Nuke command::
++
+--
+Run the `xref:commands:astra-nuke.adoc[]` command to uninstall the {product}:
+
+[source,powershell]
+----
+astra nuke
+----
+
+When prompted to confirm, type kbd:[y] and press kbd:[Enter].
+
+The `astra nuke` command deletes the {product} home directory and optionally the configuration file (`https://github.com/datastax/astra-cli?tab=readme-ov-file#home-folder-location[~/.astra]` and `https://github.com/datastax/astra-cli?tab=readme-ov-file#astrarc-location[~/.astrarc]`).
+
+You will still need to remove `astra` from your system PATH manually.
+--
+
+Manual removal::
++
+--
+. Optional: Remove the `https://github.com/datastax/astra-cli?tab=readme-ov-file#astrarc-location[.astrarc]` file if you don't need your credentials anymore:
++
+[source,powershell]
+----
+rm -f $(astra config path -p)
+----
+
+. Delete the https://github.com/datastax/astra-cli?tab=readme-ov-file#home-folder-location[{product} home directory]
++
+[source,powershell]
+----
+rm -r -f $(astra config home path -p)
+----
+
+. Remove the `astra` binary if it still exists
++
+[source,powershell]
+----
+rm -f (Get-Command astra).Source
+----
+
+. Remove `astra` from your system PATH.
+--
+=====
 
 Homebrew::
 +
 --
-. Optional: Run the `xref:commands:astra-nuke.adoc[]` command to delete the {product} home directory and configuration profile (`~/.astra` and `~/.astrarc`):
+. Optional: Run the `xref:commands:astra-nuke.adoc[]` command to delete the {product} home directory and optionally the configuration file (`https://github.com/datastax/astra-cli?tab=readme-ov-file#home-folder-location[~/.astra]` and `https://github.com/datastax/astra-cli?tab=readme-ov-file#astrarc-location[~/.astrarc]`):
 +
 [source,bash]
 ----
@@ -39,9 +134,7 @@ astra nuke
 ----
 +
 When prompted to confirm, type kbd:[y] and press kbd:[Enter].
-+
-The `astra nuke` command will list any shell profile containing references to the `astra` command.
-Delete these references manually if desired.
+
 
 . Uninstall the {product} using Homebrew:
 +

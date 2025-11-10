@@ -10,7 +10,7 @@ astra setup [-qV] [--no-input] [--[no-]spinner] [--dump-logs[=FILE]]
 
 Interactively set up the Astra CLI and create profiles
 
-See ``@{cli.name} config create`` for a programmatic way to create profiles without interaction.
+See ``astra config create`` for a programmatic way to create profiles without interaction.
 
 
 

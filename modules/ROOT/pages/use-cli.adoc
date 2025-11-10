@@ -107,11 +107,11 @@ _This file is *not* deleted when you update or re-install the {product}._
 
 == Print help information
 
-Use `astra help` to print general {product} help information:
+Simply print `astra` to print general {product} help information:
 
 [source,bash]
 ----
-astra help
+astra
 ----
 
 .Result
@@ -119,149 +119,174 @@ astra help
 ====
 [source,console]
 ----
-usage: astra <command> [ <args> ]
 
-Commands are:
-    ?           Display this help version
-    help        Display help information
-    login       Authenticate against Astra.
-    setup       Initialize configuration file
-    config      Manage configuration file
-    db          Manage databases
-    org         Display Organization Info
-    role        Manage roles
-    streaming   Manage Streaming tenants
-    token       Manage tokens
-    user        Manage users
+     _____            __
+    /  _  \   _______/  |_____________
+   /  /_\  \ /  ___/\   __\_  __ \__  \
+  /    |    \\___ \  |  |  |  | \ //__ \_
+  \____|__  /____  > |__|  |__|  (____  /
+          \/     \/                   \/
 
-See 'astra help <command>' for more information on a specific command.
+                       Version: 1.0.0-rc.4
+
+Documentation: https://docs.datastax.com/en/astra-cli
+
+Usage: astra [-qVv] [--no-input] [--[no-]spinner] [--dump-logs[=FILE]]
+             [--color=WHEN] [-o=FORMAT] [COMMAND]
+
+  -v, --version            Print version information and exit.
+                             (default: false)
+
+Common Options:
+      --color=WHEN         One of: auto, never, always
+                             (default: auto)
+      --dump-logs[=FILE]   Write all logs to an optionally specified file
+                             (default: ~/.astra-dev/logs/<file>.log)
+      --no-input           Don't ask for user input (e.g. confirmation prompts)
+  -o, --output=FORMAT      One of: human, json, csv
+                             (default: human)
+  -q, --quiet              Only output essential information
+      --[no-]spinner       Enable/disable loading spinners
+                             (default: enabled if tty)
+  -V, --verbose            Enable verbose logging output
+
+Commands:
+  setup      Interactively set up the Astra CLI and create profiles
+  config     Manage your Astra CLI configuration profiles
+  db         Manage your Astra databases
+  pcu        Manage your PCU groups and associations
+  org        Get organization information
+  role       Discover Astra roles
+  streaming  Manage Astra streaming tenants
+  token      Manage your Astra tokens
+  user       Manage users in your organization
+  upgrade    Upgrade your Astra CLI installation
+  shellenv   Completions, configuration, and more
+  nuke       Entirely delete Astra CLI from your system
+
+Examples:
+  # Create a new profile
+  $ astra setup
+
+  # List databases
+  $ astra db list
+
+  # Create a vector database
+  $ astra db create demo -r us-east1
+
+See 'astra <command> <subcommand> --help' for help on a specific subcommand.
 ----
 ====
 
-Append a command name to print help information about an individual command.
-For example:
+Use the `--help` (or `-h`) flag to print help information and examples for an individual command:
 
-[source,bash]
-----
-astra help db
-----
 
 .Result
 [%collapsible]
 ====
 [source,console]
 ----
-NAME
-        astra db - Manage databases
+Usage: astra db [-qvV] [--no-input] [--[no-]spinner] [--dump-logs[=FILE]]
+                [--color=WHEN] [-o=FORMAT] [[[-cf=PATH] [-p=NAME]] |
+                [--token=TOKEN [--env=ENV]]] [COMMAND]
 
-SYNOPSIS
-        astra db { count | cqlsh | create | create-cdc | create-collection |
-                create-dotenv | create-keyspace | create-region | delete |
-                delete-cdc | delete-collection | delete-keyspace |
-                delete-region | describe | download-scb | get |
-                get-endpoint-api | get-endpoint-playground |
-                get-endpoint-swagger | list* | list-cdc | list-clouds |
-                list-collections | list-keyspaces | list-regions |
-                list-regions-classic | list-regions-serverless |
-                list-regions-vector | load | resume | status | unload } [--]
-                [ --token <AUTH_TOKEN> ] [ --no-color ] [ {-v | --verbose} ]
-                [ {-conf | --config} <CONFIG_SECTION> ]
-                [ {-cf | --config-file} <CONFIG_FILE> ] [ --env <Environment> ]
-                [ {-o | --output} <FORMAT> ] [cmd-options] <cmd-args>
+Manage your Astra databases
 
-        Where command-specific options [cmd-options] are:
-            count: [ {-k | --keyspace} <KEYSPACE> ] [ -encoding <ENCODING> ] [ {-t | --table} <TABLE> ]
-                    [ {-query | --schema.query} <QUERY> ] [ --dsbulk-config <DSBULK_CONF_FILE> ]
-                    [ -maxConcurrentQueries <maxConcurrentQueries> ] [ -logDir <log directory> ]
-            cqlsh: [ --debug ] [ {-f | --file} <FILE> ] [ {-k | --keyspace} <KEYSPACE> ]
-                    [ --version ] [ --connect-timeout <TIMEOUT> ] [ {-e | --execute} <STATEMENT> ]
-                    [ --request-timeout <TIMEOUT> ] [ --encoding <ENCODING> ]
-            create: [ {-c | --cloud} <cloud> ] [ {-k | --keyspace} <KEYSPACE> ]
-                    [ --vector ] [ --timeout <timeout> ] [ {-r | --region} <DB_REGION> ]
-                    [ {--if-not-exist | --if-not-exists} ] [ --async ] [ --tier <TIER> ]
-                    [ --capacity-units <CAPACITY UNITS> ]
-            create-cdc: [ {-k | --keyspace} <KEYSPACE> ] [ --tenant <TENANT> ]
-                    [ -p, --partition <PARTITION TOKEN> ] [ --table <TABLE> ]
-            create-collection: [ {-m | --metric} <METRIC> ] {-c | --collection}
-                    <COLLECTION> [ {-d | --dimension} <DIMENSION> ]
-            create-dotenv: [ {-k | --keyspace} <KEYSPACE> ] [ {-d | --directory} <DIRECTORY> ]
-                    [ {-r | --region} <DB_REGION> ]
-            create-keyspace: {-k | --keyspace} <KEYSPACE> [ --if-not-exist ] [ --wait ]
-            create-region: [ {-c | --cloud} <CLOUD> ] [ --timeout <timeout> ]
-                    {-r | --region} <REGION> [ --wait ] [ {-t | --tier} <CLOUD> ]
-                    [ --async ] [ --if-not-exist ]
-            delete: [ --async ] [ --timeout <timeout> ] [ --wait ]
-            delete-cdc: [ {-k | --keyspace} <KEYSPACE> ] [ -id <CDC_ID> ] [ --tenant <TENANT> ]
-                    [ --table <TABLE> ]
-            delete-collection: {-c | --collection} <COLLECTION>
-            delete-keyspace: {-k | --keyspace} <KEYSPACE>
-            delete-region: [ --async ] [ --timeout <timeout> ] {-r | --region}
-                    <REGION> [ --wait ]
-            describe: [ {-k | --key} <Key> ]
-            download-scb: [ {-f | --output-file} <DEST> ] [ {-r | --region} <DB_REGION> ]
-            get: [ {-k | --key} <Key> ]
-            get-endpoint-api: [ {-r | --region} <DB_REGION> ]
-            get-endpoint-playground: [ {-r | --region} <DB_REGION> ]
-            get-endpoint-swagger: [ {-r | --region} <DB_REGION> ]
-            list: [ --vector ]
-            list-cdc:
-            list-clouds:
-            list-collections:
-            list-keyspaces:
-            list-regions:
-            list-regions-classic: [ {-c | --cloud} <CLOUD> ] [ {-f | --filter} <filter> ]
-            list-regions-serverless: [ {-c | --cloud} <CLOUD> ] [ {-f | --filter} <filter> ]
-            list-regions-vector: [ {-c | --cloud} <CLOUD> ] [ {-f | --filter} <filter> ]
-            load: [ {-k | --keyspace} <KEYSPACE> ] [ -maxErrors <maxErrors> ] [ -encoding <ENCODING> ]
-                    [ {-t | --table} <TABLE> ] [ {-query | --schema.query} <QUERY> ]
-                    [ -skipRecords <skipRecords> ] [ --schema.allowMissingFields <allowMissingFields> ]
-                    -url <url> [ --dsbulk-config <DSBULK_CONF_FILE> ] [ -dryRun ]
-                    [ -header <header> ] [ -delim <delim> ] [ -maxConcurrentQueries <maxConcurrentQueries> ]
-                    [ -logDir <log directory> ] [ {-m | --schema.mapping} <mapping> ]
-            resume: [ --async ] [ --timeout <timeout> ] [ --wait ]
-            status:
-            unload: [ {-k | --keyspace} <KEYSPACE> ] [ -maxErrors <maxErrors> ]
-                    [ -encoding <ENCODING> ] [ {-t | --table} <TABLE> ] [ {-query | --schema.query} <QUERY> ]
-                    [ -skipRecords <skipRecords> ] [ -url <url> ] [ --dsbulk-config <DSBULK_CONF_FILE> ]
-                    [ -header <header> ] [ -delim <delim> ] [ -maxConcurrentQueries <maxConcurrentQueries> ]
-                    [ -logDir <log directory> ] [ {-m | --schema.mapping} <mapping> ]
+  -v, --vector             Only show vector-enabled databases
+                             (default: false)
 
-        Where command-specific arguments <cmd-args> are:
-            count: <DB>
-            cqlsh: <DB>
-            create: <DB>
-            create-cdc: <DB>
-            create-collection: <DB>
-            create-dotenv: <DB>
-            create-keyspace: <DB>
-            create-region: <DB>
-            delete: <DB>
-            delete-cdc: <DB>
-            delete-collection: <DB>
-            delete-keyspace: <DB>
-            delete-region: <DB>
-            describe: <DB>
-            download-scb: <DB>
-            get: <DB>
-            get-endpoint-api: <DB>
-            get-endpoint-playground: <DB>
-            get-endpoint-swagger: <DB>
-            list:
-            list-cdc: <DB>
-            list-clouds:
-            list-collections: <DB>
-            list-keyspaces: <DB>
-            list-regions: <DB>
-            list-regions-classic:
-            list-regions-serverless:
-            list-regions-vector:
-            load: <DB>
-            resume: <DB>
-            status: <DB>
-            unload: <DB>
+Common Options:
+      --color=WHEN         One of: auto, never, always
+                             (default: auto)
+      --dump-logs[=FILE]   Write all logs to an optionally specified file
+                             (default: ~/.astra-dev/logs/<file>.log)
+      --no-input           Don't ask for user input (e.g. confirmation prompts)
+  -o, --output=FORMAT      One of: human, json, csv
+                             (default: human)
+  -q, --quiet              Only output essential information
+      --[no-]spinner       Enable/disable loading spinners
+                             (default: enabled if tty)
+  -V, --verbose            Enable verbose logging output
 
-        Where * indicates the default command(s)
-        See 'astra help db <command>' for more information on a specific command.
+Connection Options:
+      -cf, --config-file=PATH
+                           The .astrarc file to use for this command
+                             (default: ~/.astrarc-dev)
+      --env=ENV            Override the target astra environment
+  -p, --profile=NAME       The .astrarc profile to use for this command
+      --token=TOKEN        The astra token to use for this command. Use the
+                             --token @file syntax to read the token from a
+                             file, to avoid potential leaks.
+
+Commands:
+  list                      List your non-terminated Astra databases.
+  get, describe             Get information about a specific database.
+  create                    Create a new Astra database
+  delete                    Delete an existing Astra database
+  status                    Get the current status of a database.
+  cqlsh                     Connect to your Astra database using cqlsh
+  dsbulk                    Use dsbulk to interface with your Astra DB database
+  create-dotenv             Create a env file to help you connect to your Astra
+                              DB instance.
+  download-scb              Download secure connect bundle for a database
+  resume                    Resume a database that is in a stopped state. If
+                              the database is already active, no action is
+                              taken.
+  list-keyspaces            List all keyspaces in the specified database
+  create-keyspace           Create a new keyspace in the specified database
+  delete-keyspace           Delete a keyspace from the specified database
+  list-collections          List the collections in the specified database and
+                              keyspace
+  create-collection         Create a new Data API collection in the specified
+                              database and keyspace
+  describe-collection       Describe an existing Data API collection with
+                              detailed information including vector
+                              configuration and indexing options
+  delete-collection         Delete an existing Data API collection from the
+                              specified database and keyspace
+  truncate-collection       Atomically delete all documents in a Data API
+                              collection
+  list-tables               List the tables in the specified database and
+                              keyspace
+  describe-table            Describe an existing table with detailed
+                              information including columns and primary key
+                              structure
+  delete-table              Delete an existing table from the specified
+                              database and keyspace
+  truncate-table            Atomically delete all rows in a table
+  list-embedding-providers  Find all available embedding providers for a given
+                              database
+  list-cdcs                 List all CDC (Change Data Capture) connections for
+                              the specified database
+  create-cdc                Create a CDC (Change Data Capture) for a table in a
+                              specific keyspace and tenant.
+  delete-cdc                Delete a CDC (Change Data Capture) from the database
+  create-region             Add a new region to an existing database
+  delete-region             Delete a region from an existing database
+  list-regions              List the regions for the given database
+  list-regions-classic      List all available regions for classic Astra DB
+                              databases
+  list-regions-serverless   List all available regions for serverless Astra DB
+                              databases
+  list-regions-vector       List all available regions for vector Astra DB
+                              databases
+  list-clouds               List all cloud providers with regions available for
+                              Astra DB
+  get-endpoint-swagger      Get the SwaggerUI endpoint for the specified
+                              database
+  get-endpoint-api          Get the API endpoint to interact with the specified
+                              database
+  get-endpoint-playground   Get the GraphQL Playground for the specified
+                              database
+
+Examples:
+  # List all your Astra databases
+  $ astra db
+
+  # List only vector-enabled Astra databases
+  $ astra db --vector
+
+See 'astra <command> <subcommand> --help' for help on a specific subcommand.
 ----
 ====
 
@@ -269,7 +294,7 @@ Append a subcommand for further specificity:
 
 [source,bash]
 ----
-astra help db list
+astra db list --help
 ----
 
 .Result
@@ -277,45 +302,54 @@ astra help db list
 ====
 [source,console]
 ----
-NAME
-        astra db list - Display the list of Databases in an organization
+Usage: astra db list [-qvV] [--no-input] [--[no-]spinner] [--dump-logs[=FILE]]
+                     [--color=WHEN] [-o=FORMAT] [[[-cf=PATH] [-p=NAME]] |
+                     [--token=TOKEN [--env=ENV]]]
 
-SYNOPSIS
-        astra db list [ {-cf | --config-file} <CONFIG_FILE> ]
-                [ {-conf | --config} <CONFIG_SECTION> ] [ --env <Environment> ]
-                [ --no-color ] [ {-o | --output} <FORMAT> ]
-                [ --token <AUTH_TOKEN> ] [ {-v | --verbose} ] [ --vector ]
+List your non-terminated Astra databases.
 
-OPTIONS
-        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
-            Configuration file (default = ~/.astrarc)
+  -v, --vector             Only show vector-enabled databases
+                             (default: false)
 
-        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
-            Section in configuration file (default = ~/.astrarc)
+Common Options:
+      --color=WHEN         One of: auto, never, always
+                             (default: auto)
+      --dump-logs[=FILE]   Write all logs to an optionally specified file
+                             (default: ~/.astra-dev/logs/<file>.log)
+      --no-input           Don't ask for user input (e.g. confirmation prompts)
+  -o, --output=FORMAT      One of: human, json, csv
+                             (default: human)
+  -q, --quiet              Only output essential information
+      --[no-]spinner       Enable/disable loading spinners
+                             (default: enabled if tty)
+  -V, --verbose            Enable verbose logging output
 
-        --env <Environment>
-            Astra Environment to use
+Connection Options:
+      -cf, --config-file=PATH
+                           The .astrarc file to use for this command
+                             (default: ~/.astrarc-dev)
+      --env=ENV            Override the target astra environment
+  -p, --profile=NAME       The .astrarc profile to use for this command
+      --token=TOKEN        The astra token to use for this command. Use the
+                             --token @file syntax to read the token from a
+                             file, to avoid potential leaks.
 
-        --no-color
-            Remove all colors in output
+Examples:
+  # List all your Astra databases
+  $ astra db list
 
-        -o <FORMAT>, --output <FORMAT>
-            Output format, valid values are: human,json,csv
+  # List only vector-enabled Astra databases
+  $ astra db list --vector
 
-        --token <AUTH_TOKEN>
-            Key to use authenticate each call.
-
-        -v, --verbose
-            Verbose mode with log in console
-
-        --vector
-            Create a database with vector search enabled
+See 'astra <command> <subcommand> --help' for help on a specific subcommand.
 ----
 ====
 
-== Set up auto-completion
+== Using auto-completion
 
 The {product} provides Bash auto-completion for `bash` and `zsh` shells.
+
+See the xref:install.adoc[installation instructions] for your platform to enable auto-completion.
 
 To use auto-completion, type the `astra` command and then press kbd:[Tab] twice to get a list of available options.
 
@@ -329,20 +363,39 @@ astra kbd:[Tab] kbd:[Tab]
 ====
 [source,console]
 ----
- --no-color  config      db          help        role        setup       shell       user
+config     nuke       pcu        setup      streaming  upgrade
+db         org        role       shellenv   token      user
+----
+====
+
+Certain dynamic arguments, such as database names, also support auto-completion once the CLI discovers them.
+
+For example, after running `astra db list`, type a `astra db get` followed by kbd:[Tab] twice to see a list of your database names.
+
+[source,bash,subs="macros"]
+----
+astra db get kbd:[Tab] kbd:[Tab]
+----
+
+.Result
+[%collapsible%open]
+====
+[source,console]
+----
+prod_db    test_db    playground_db
 ----
 ====
 
 [#manage-configuration]
-== Manage the {product} configuration
+== Manage your {product} configuration
 
 When you run the `astra setup` command during <<initialize,initialization>>, the {product} stores your application token as the default configuration in the `~/.astrarc` configuration file.
 
-You can create additional configurations, each with their own application token, to make it easier to manage different types of resources across one or more organizations.
+You can create additional configuration profiless, each with their own application token, to make it easier to manage different types of resources across one or more organizations.
 
 === Get and set configurations
 
-. Use `astra config list` to list all current configurations:
+. Use `astra config list` to list all current configuration profiles:
 +
 [source,bash]
 ----
@@ -353,15 +406,17 @@ astra config list
 [%collapsible]
 ====
 [source,console]
-+----------------------------+
-| configuration              |
-+----------------------------+
-| Organization 1 (in use)    |
-| Organization 2             |
-+----------------------------+
+----
+┌───────────────────────────────────┐
+│ configuration                     │
+├───────────────────────────────────┤
+│ Production (in use)               │
+│ Testing                           │
+└───────────────────────────────────┘
+----
 ====
 
-. Use `astra config create` to create a new configuration:
+. Use `astra config create` or `astra setup` again to create a new configuration profile:
 +
 [source,bash,subs="+quotes"]
 ----
@@ -371,9 +426,14 @@ astra config create "**CONFIG_NAME**" --token **APPLICATION_TOKEN**
 .Result
 [%collapsible]
 ====
-[source,console]
+[source,console,subs="+quotes"]
 ----
-[OK]    Configuration has been saved.
+Configuration profile '**CONFIG_NAME**' successfully created.
+
+(Hint: Use 'astra setup' for an interactive profile creation experience!)
+
+# Set it as the default profile:
+$ astra config use **CONFIG_NAME**
 ----
 ====
 
@@ -389,7 +449,7 @@ astra config use "**CONFIG_NAME**"
 ====
 [source,console,subs="+quotes"]
 ----
-[OK]    Section '**CONFIG_NAME**' is set as default.
+Default profile set to '**CONFIG_NAME**'.
 ----
 ====
 
@@ -397,8 +457,8 @@ astra config use "**CONFIG_NAME**"
 
 === Set the configuration for a single run
 
-Every {product} command supports the `--config` option.
-This option lets you use a different configuration when running a command without changing the default configuration.
+Every {product} command supports the `--profile` option.
+This option lets you use a different configuration profile when running a command without changing the default configuration profile.
 For example:
 
 [source,bash,subs="+quotes"]
@@ -415,9 +475,9 @@ For example:
 astra user list --token "**APPLICATION_TOKEN**"
 ----
 
-=== Delete a configuration
+=== Delete a configuration profile
 
-Use `astra config delete` to delete a configuration:
+Use `astra config delete` to delete a configuration profile:
 
 [source,bash,subs="+quotes"]
 ----
@@ -429,7 +489,7 @@ astra config delete "**CONFIG_NAME**"
 ====
 [source,console,subs="+quotes"]
 ----
-[OK]    Section '**CONFIG_NAME**' has been deleted.
+Profile 'tem' deleted successfully.
 ----
 ====
 
@@ -437,266 +497,6 @@ astra config delete "**CONFIG_NAME**"
 ====
 If you delete the default configuration, the {product} _doesn't_ automatically select a new default configuration.
 Use the `astra config use` command to select a new default configuration.
-====
-
-=== `config` options
-
-The following options are available for the `astra config` command:
-
-[source,console]
-----
-NAME
-        astra config - Manage configuration file
-
-SYNOPSIS
-        astra config { create | delete | describe | get | list* | use } [--]
-                [ {-cf | --config-file} <CONFIG_FILE> ] [ --no-color ]
-                [ {-v | --verbose} ] [ {-o | --output} <FORMAT> ] [cmd-options]
-                <cmd-args>
-
-        Where command-specific options [cmd-options] are:
-            create: [ {-e | --env} <Environment> ] [ {-t | --token} <AuthToken> ]
-            delete:
-            describe: [ {-k | --key} <Key in the section> ]
-            get: [ {-k | --key} <Key in the section> ]
-            list:
-            use:
-
-        Where command-specific arguments <cmd-args> are:
-            create: [ <sectionName> ]
-            delete: <sectionName>
-            describe: <sectionName>
-            get: <sectionName>
-            list:
-            use: <sectionName>
-
-        Where * indicates the default command(s)
-        See 'astra help config <command>' for more information on a specific command.
-----
-
-See the following sections for `config` subcommand options:
-
-.Expand to see all `config create` options
-[%collapsible]
-====
-[source,console]
-----
-NAME
-        astra config create - Create a new section in configuration
-
-SYNOPSIS
-        astra config create [ {-cf | --config-file} <CONFIG_FILE> ]
-                [ {-e | --env} <Environment> ] [ --no-color ]
-                [ {-o | --output} <FORMAT> ] [ {-t | --token} <AuthToken> ]
-                [ {-v | --verbose} ] [--] [ <sectionName> ]
-
-OPTIONS
-        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
-            Configuration file (default = ~/.astrarc)
-
-        -e <Environment>, --env <Environment>
-            Environment to use for this section.
-
-        --no-color
-            Remove all colors in output
-
-        -o <FORMAT>, --output <FORMAT>
-            Output format, valid values are: human,json,csv
-
-        -t <AuthToken>, --token <AuthToken>
-            Key to use authenticate each call.
-
-        -v, --verbose
-            Verbose mode with log in console
-
-        --
-            This option can be used to separate command-line options from the
-            list of arguments (useful when arguments might be mistaken for
-            command-line options)
-
-        <sectionName>
-            Section in configuration file to as as default.
-----
-====
-
-.Expand to see all `config delete` options
-[%collapsible]
-====
-[source,console]
-----
-NAME
-        astra config delete - Delete section in configuration
-
-SYNOPSIS
-        astra config delete [ {-cf | --config-file} <CONFIG_FILE> ]
-                [ --no-color ] [ {-o | --output} <FORMAT> ]
-                [ {-v | --verbose} ] [--] <sectionName>
-
-OPTIONS
-        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
-            Configuration file (default = ~/.astrarc)
-
-        --no-color
-            Remove all colors in output
-
-        -o <FORMAT>, --output <FORMAT>
-            Output format, valid values are: human,json,csv
-
-        -v, --verbose
-            Verbose mode with log in console
-
-        --
-            This option can be used to separate command-line options from the
-            list of arguments (useful when arguments might be mistaken for
-            command-line options)
-
-        <sectionName>
-            Section in configuration file to as as default.
-----
-====
-
-.Expand to see all `config describe` options
-[%collapsible]
-====
-[source,console]
-----
-NAME
-        astra config describe - Show details for a configuration.
-
-SYNOPSIS
-        astra config describe [ {-cf | --config-file} <CONFIG_FILE> ]
-                [ {-k | --key} <Key in the section> ] [ --no-color ]
-                [ {-o | --output} <FORMAT> ] [ {-v | --verbose} ] [--]
-                <sectionName>
-
-OPTIONS
-        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
-            Configuration file (default = ~/.astrarc)
-
-        -k <Key in the section>, --key <Key in the section>
-            If provided return only value for a key.
-
-        --no-color
-            Remove all colors in output
-
-        -o <FORMAT>, --output <FORMAT>
-            Output format, valid values are: human,json,csv
-
-        -v, --verbose
-            Verbose mode with log in console
-
-        --
-            This option can be used to separate command-line options from the
-            list of arguments (useful when arguments might be mistaken for
-            command-line options)
-
-        <sectionName>
-            Section in configuration file to as as default.
-----
-====
-
-.Expand to see all `config get` options
-[%collapsible]
-====
-[source,console]
-----
-NAME
-        astra config get - Show details for a configuration.
-
-SYNOPSIS
-        astra config get [ {-cf | --config-file} <CONFIG_FILE> ]
-                [ {-k | --key} <Key in the section> ] [ --no-color ]
-                [ {-o | --output} <FORMAT> ] [ {-v | --verbose} ] [--]
-                <sectionName>
-
-OPTIONS
-        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
-            Configuration file (default = ~/.astrarc)
-
-        -k <Key in the section>, --key <Key in the section>
-            If provided return only value for a key.
-
-        --no-color
-            Remove all colors in output
-
-        -o <FORMAT>, --output <FORMAT>
-            Output format, valid values are: human,json,csv
-
-        -v, --verbose
-            Verbose mode with log in console
-
-        --
-            This option can be used to separate command-line options from the
-            list of arguments (useful when arguments might be mistaken for
-            command-line options)
-
-        <sectionName>
-            Section in configuration file to as as default.
-----
-====
-
-.Expand to see all `config list` options
-[%collapsible]
-====
-[source,console]
-----
-NAME
-        astra config list - Show the list of available configurations.
-
-SYNOPSIS
-        astra config list [ {-cf | --config-file} <CONFIG_FILE> ]
-                [ --no-color ] [ {-o | --output} <FORMAT> ]
-                [ {-v | --verbose} ]
-
-OPTIONS
-        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
-            Configuration file (default = ~/.astrarc)
-
-        --no-color
-            Remove all colors in output
-
-        -o <FORMAT>, --output <FORMAT>
-            Output format, valid values are: human,json,csv
-
-        -v, --verbose
-            Verbose mode with log in console
-----
-====
-
-.Expand to see all `config use` options
-[%collapsible]
-====
-[source,console]
-----
-NAME
-        astra config use - Make a section the one used by default
-
-SYNOPSIS
-        astra config use [ {-cf | --config-file} <CONFIG_FILE> ] [ --no-color ]
-                [ {-o | --output} <FORMAT> ] [ {-v | --verbose} ] [--]
-                <sectionName>
-
-OPTIONS
-        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
-            Configuration file (default = ~/.astrarc)
-
-        --no-color
-            Remove all colors in output
-
-        -o <FORMAT>, --output <FORMAT>
-            Output format, valid values are: human,json,csv
-
-        -v, --verbose
-            Verbose mode with log in console
-
-        --
-            This option can be used to separate command-line options from the
-            list of arguments (useful when arguments might be mistaken for
-            command-line options)
-
-        <sectionName>
-            Section in configuration file to as as default.
-----
 ====
 
 == Next steps

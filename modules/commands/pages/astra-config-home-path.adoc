@@ -2,15 +2,23 @@
 
 [source,shell]
 ----
-astra config home path [-pqV] [--no-input] [--[no-]spinner] [--dump-logs
-                       [=FILE]] [--color=WHEN] [-o=FORMAT]
+astra config home path [-qV] [--no-input] [--[no-]spinner] [--dump-logs[=FILE]]
+                       [--color=WHEN] [-o=FORMAT] [-p | -i]
 
 ----
 
 
 Prints the expected path of the astra home folder, even if does not exist.
 
-Checks ``ASTRA_HOME`` __(ASTRA_HOME=~/my_folder)__ -> ``XDG_DATA_HOME`` __($XDG_DATA_HOME/astra)__ -> ``HOME`` __(~/.astra)__.
+The folder is resolved in the following order:
+
+ 1. The ``ASTRA_HOME`` environment variable __(e.g. ASTRA_HOME=~/my_folder)__
+
+ 2. The ``XDG_DATA_HOME`` spec __(e.g. $XDG_DATA_HOME/astra)__
+
+ 3. The default home directory __(e.g. ~/.astra)__
+
+By default, shows informational output when running in a TTY (interactive terminal), and plain path output when piped or redirected.
 
 
 
@@ -18,7 +26,6 @@ Checks ``ASTRA_HOME`` __(ASTRA_HOME=~/my_folder)__ -> ``XDG_DATA_HOME`` __($XDG_
 
 == Options
 
-`-p`, `--plain`:: Print only the path to the home folder, without additional information
 `-o`, `--output`:: One of: human, json, csv
 `-V`, `--verbose`:: Enable verbose logging output
 `-q`, `--quiet`:: Only output essential information
@@ -26,6 +33,8 @@ Checks ``ASTRA_HOME`` __(ASTRA_HOME=~/my_folder)__ -> ``XDG_DATA_HOME`` __($XDG_
 `--no-input`:: Don't ask for user input (e.g. confirmation prompts)
 `--color`:: One of: auto, never, always
 `--dump-logs`:: Write all logs to an optionally specified file
+`-p`, `--plain`:: Print only the path to the home folder, without additional information (always)
+`-i`, `--info`:: Print informational output with context about the path (always)
 
 
 == Examples
@@ -34,8 +43,11 @@ Checks ``ASTRA_HOME`` __(ASTRA_HOME=~/my_folder)__ -> ``XDG_DATA_HOME`` __($XDG_
 # Get information about the path to the astra home folder
 $ astra config home path
 
-# Print only the path to the home folder, without additional information
+# Force only the plain path to the .astrarc file, without additional information
 $ astra config home path -p
+
+# Force informational output even when piped or redirected
+$ astra config home path -i
 ----
 
 
