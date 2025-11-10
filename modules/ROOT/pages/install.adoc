@@ -38,14 +38,25 @@ If you prefer to use a package manager, follow the Homebrew instructions instead
 Scripted installation (recommended)::
 +
 --
-. Run the following Bash script to install the latest version of the {product} to the default location:
+. Run the following command to install the latest version of the {product} to the default location:
 +
-[source,bash]
+[source,shell]
 ----
 curl -sSL ibm.biz/astra-cli | sh
 ----
 +
-To install the {product} to a custom location, export the `ASTRA_HOME` environment variable first.
+.Install to a custom location
+[%collapsible]
+====
+To install the {product} to a custom location, export the `ASTRA_HOME` environment variable before running the installation command:
+
+[source,bash,subs="+quotes"]
+----
+export ASTRA_HOME=**INSTALLATION_DIRECTORY**
+----
+
+Replace `**INSTALLATION_DIRECTORY**` with the full path to your preferred installation directory.
+====
 
 . Add the following lines to your shell profile (for example, `~/.zprofile` or `~/.bash_profile`) to make the `astra` command executable from any directory:
 +
@@ -59,7 +70,7 @@ eval "$(~/.astra/cli/astra shellenv)"
 
 . Run the `astra` command from any directory to verify successful installation:
 +
-[source,bash]
+[source,shell]
 ----
 astra
 ----
@@ -75,10 +86,16 @@ Binary installation::
 . Extract the archive into the directory where you want to install the {product}.
 For example:
 +
-[source,bash,subs="+quotes"]
+[source,shell,subs="+quotes"]
 ----
-sudo tar -xzvf astra-macos-arm64.tar.gz -C **INSTALLATION_DIRECTORY**
+sudo tar -xzvf astra-**OS**-**ARCHITECTURE**.tar.gz -C **INSTALLATION_DIRECTORY**
 ----
++
+Replace the following:
++
+* `**OS**`: Your operating system (`macos` or `linux`).
+* `**ARCHITECTURE**`: Your CPU architecture (`x86_64` or `arm64`).
+* `**INSTALLATION_DIRECTORY**`: The full path to your preferred installation directory.
 
 . Add the following lines to your shell profile (for example, `~/.zprofile` or `~/.bash_profile`) to make the `astra` command executable from any directory:
 +
@@ -90,20 +107,22 @@ eval "$(**PATH_TO_BINARY** shellenv)"
 +
 Replace `**PATH_TO_BINARY**` with the full path to the `astra` executable in the installation directory.
 
-. Reload your shell profile or open a new terminal window.
-
 . On macOS: Delete the `com.apple.quarantine` attribute from the `astra` binary to remove https://support.apple.com/guide/security/gatekeeper-and-runtime-protection-sec5599b66df/web[macOS Gatekeeper restrictions]:
 +
-[source,bash]
+[source,shell]
 ----
 xattr -d com.apple.quarantine $(which astra)
 ----
 +
 Alternatively, you can remove these restrictions in your https://support.apple.com/en-us/102445#openanyway[macOS System Settings].
++
+If you don't remove the restrictions, you will receive a security alert stating `“astra” Not Opened` when you run the `astra` command.
+
+. Reload your shell profile or open a new terminal window.
 
 . Run the `astra` command from any directory to verify successful installation:
 +
-[source,bash]
+[source,shell]
 ----
 astra
 ----
@@ -121,20 +140,31 @@ Select one of the following installation methods to install the {product} on Win
 Scripted installation (recommended)::
 +
 --
-. Run the following PowerShell script to install the latest version of the {product} to the default location:
+. Run the following command to install the latest version of the {product} to the default location:
 +
-[source,shell]
+[source,powershell]
 ----
 powershell -c "irm ibm.biz/astra-cli-win | iex"
 ----
 +
-To install the {product} to a custom location, export the `ASTRA_HOME` environment variable first.
+.Install to a custom location
+[%collapsible]
+====
+To install the {product} to a custom location, export the `ASTRA_HOME` environment variable before running the installation command:
 
-. Start a new PowerShell session by opening a new terminal window.
+[source,powershell,subs="+quotes"]
+----
+$env:ASTRA_HOME = "C:\path\to\your\custom\directory"
+----
+
+Replace `**INSTALLATION_DIRECTORY**` with the full path to your preferred installation directory.
+====
+
+. Reload your shell profile or open a new terminal window.
 
 . Run the `astra` command from any directory to verify successful installation:
 +
-[source,bash]
+[source,powershell]
 ----
 astra
 ----
@@ -145,14 +175,19 @@ The response includes available commands and options for the {product}.
 Binary installation::
 +
 --
-. Download the `windows` zip file from https://github.com/datastax/astra-cli/releases[GitHub].
+. Download the appropriate `windows` zip file for your CPU architecture from https://github.com/datastax/astra-cli/releases[GitHub].
 
 . Extract the zip file into the directory where you want to install the {product}:
 +
-[source,shell,subs="+quotes"]
+[source,powershell,subs="+quotes"]
 ----
-powershell -C "Expand-Archive -Path astra-windows-x86_64.zip -DestinationPath **INSTALLATION_DIRECTORY** -Force"
+powershell -C "Expand-Archive -Path astra-windows-**ARCHITECTURE**.zip -DestinationPath **INSTALLATION_DIRECTORY** -Force"
 ----
++
+Replace the following:
++
+* `**ARCHITECTURE**`: Your CPU architecture (`x86_64` or `arm64`).
+* `**INSTALLATION_DIRECTORY**`: The full path to your preferred installation directory.
 
 . Add the path to the unzipped `astra.exe` file to your `PATH` environment variable.
 To learn how to update environment variables, see the https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_environment_variables[Microsoft PowerShell documentation].
@@ -161,7 +196,7 @@ To learn how to update environment variables, see the https://learn.microsoft.co
 
 . Run the `astra` command from any directory to verify successful installation:
 +
-[source,bash]
+[source,powershell]
 ----
 astra
 ----
@@ -175,14 +210,14 @@ Homebrew::
 --
 . Install the latest version of the {product} using https://brew.sh/[Homebrew]:
 +
-[source,bash]
+[source,shell]
 ----
 brew install datastax/astra-cli/astra
 ----
 
 . Run the `astra` command from any directory to verify successful installation:
 +
-[source,bash]
+[source,shell]
 ----
 astra
 ----
