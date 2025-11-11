@@ -13,12 +13,13 @@ xref:astra-db-serverless:administration:manage-application-tokens.adoc#org-token
 
 [TIP]
 ====
-If this is your first time using the {product}, {company} recommends that you connect it to a non-production organization first.
+If this is your first time using the {product}, {company} recommends that you connect to a non-production organization first.
 That way, you can assign your application token a more expansive role, such as *Organization Administrator*, to try out all of the {product}'s features without putting production data at risk.
 
-If you're using the{product} in production, {company} strongly recommends that you assign your application token only the bare minimum permissions required to perform the intended tasks.
+If you're using the {product} in production, {company} strongly recommends that you assign your application token only the bare minimum permissions required to perform the intended tasks.
 ====
 
+[#connect-to-astra]
 == Connect the {product}
 
 You can configure the {product} to authenticate in the following ways:
@@ -43,9 +44,9 @@ See <<authenticate-individual-command>>.
 
 The following procedure describes how to create your first configuration profile interactively, and is recommended for users who are new to the {product}.
 
-For more advanced methods of creating and using configuration profiles, see <<manage-configuration-profiles>>.
+For more advanced methods of creating and managing configuration profiles, see <<manage-configuration-profiles>>.
 
-. Run the `xref:commands:astra-setup.adoc[astra setup]` command:
+. Run the `xref:commands:astra-setup.adoc[]` command:
 +
 [source,shell]
 ----
@@ -126,22 +127,23 @@ astra db list-clouds
 +
 If the command succeeds, your connection is configured correctly.
 
-
-
 [#authenticate-individual-command]
 === Authenticate an individual command
 
 Every command lets you supply an application token using the `--token` option.
-This method is useful if you want to run a command without having to create a configuration profile.
+This option is useful if you want to run a command without having to create a configuration profile.
 
 For example:
 
 [source,shell,subs="+quotes"]
 ----
-astra user list --token "**APPLICATION_TOKEN**"
+astra user list --token **APPLICATION_TOKEN**
 ----
 
 The `--token` option bypasses the default configuration profile (if one exists) and uses the supplied application token for that command only.
+
+Alternatively, if you have multiple application tokens saved in different configuration profiles, you can specify a configuration profile for an individual command.
+See <<specify-configuration-profile-individual-command>>.
 
 == Get command help
 
@@ -370,22 +372,35 @@ prod_db    test_db    playground_db
 ----
 ====
 
+== Use resource names that contain space characters
+
+If the name of a resource contains one or more space characters, you must wrap the entire name in single quotes (''), otherwise the {product} will return an `Unmatched argument` or other similar error.
+
+For example, when creating a token with the role `Organization Administrator`, you must wrap the role name in single quotes:
+
+[source,shell,subs="+quotes"]
+----
+astra token create --role **'Organization Administrator'**
+----
+
 [#manage-configuration-profiles]
 == Manage configuration profiles
 
-If you ran the `astra setup` command to <<create-first-configuration-profile,create your first configuration profile>>, the {product} automatically sets it as the default configuration profile. stores your application token as the default configuration in the `~/.astrarc` configuration file.
+Configuration profiles provide a convenient way to save and manage application tokens for <<connect-to-astra,connecting the {product}>>.
+Configuration profiles consist of a name and an application token and are stored in the `<<file-locations,.astrarc>>` configuration file.
 
-You can create additional configuration profiless, each with their own application token, to make it easier to manage different types of resources across one or more organizations.
+If you ran the `xref:commands:astra-setup.adoc[]` command to <<create-first-configuration-profile,create your first configuration profile>>, the {product} automatically sets it as the default configuration profile.
+You can create additional configuration profiles, each with their own application token, to make it easier to manage different types of resources across one or more organizations.
 
-=== Get and set configurations
+=== List your configuration profiles
 
-. Use `astra config list` to list all current configuration profiles:
-+
+Use the `xref:commands:astra-config-list.adoc[]` command to list all of your configuration profiles:
+
 [source,shell]
 ----
 astra config list
 ----
-+
+
 .Result
 [%collapsible]
 ====
@@ -400,63 +415,91 @@ astra config list
 ----
 ====
 
-. Use `astra config create` or `astra setup` again to create a new configuration profile:
-+
+The default configuration profile is indicated by `(in use)`.
+
+Configuration profiles are stored in the `<<file-locations,.astrarc>>` file in the following format:
+
+[source,ini,subs="+quotes"]
+----
+[Production]
+ASTRA_DB_APPLICATION_TOKEN=AstraCS:**IGXWg...**
+
+[default]
+ASTRA_DB_APPLICATION_TOKEN=AstraCS:**IGXWg...**
+
+[Testing]
+ASTRA_DB_APPLICATION_TOKEN=AstraCS:WeaYR...
+----
+
+The `[default]` profile references the application token of the default configuration profile.
+
+=== Create a new configuration profile
+
+Use the `xref:commands:astra-config-create.adoc[]` command to create a new configuration profile:
+
 [source,shell,subs="+quotes"]
 ----
-astra config create "**CONFIG_NAME**" --token **APPLICATION_TOKEN**
+astra config create '**CONFIG_NAME**' --token **APPLICATION_TOKEN**
 ----
-+
+
 .Result
 [%collapsible]
 ====
-[source,console,subs="+quotes"]
+[source,console]
 ----
-Configuration profile '**CONFIG_NAME**' successfully created.
+Configuration profile Development successfully created.
 
-(Hint: Use 'astra setup' for an interactive profile creation experience!)
+(Hint: Use astra setup for an interactive profile creation experience!)
 
 # Set it as the default profile:
-$ astra config use **CONFIG_NAME**
+$ astra config use Development
 ----
 ====
 
-. Use `astra config use` to change the default configuration that {product} uses when executing commands:
-+
+You can also use the `xref:commands:astra-setup.adoc[]` command again to create additional configuration profiles interactively.
+
+=== Set the default configuration profile
+
+Use the `xref:commands:astra-config-use.adoc[]` command to change the default configuration that the {product} uses when executing commands:
+
 [source,shell,subs="+quotes"]
 ----
-astra config use "**CONFIG_NAME**"
+astra config use '**CONFIG_NAME**'
 ----
-+
+
 .Result
 [%collapsible]
 ====
-[source,console,subs="+quotes"]
+[source,console]
 ----
-Default profile set to '**CONFIG_NAME**'.
+Default profile set to Development.
 ----
 ====
 
-. Optional: Rerun `astra config list` to verify that the new default configuration is set.
+[#specify-configuration-profile-individual-command]
+=== Specify a configuration profile for an individual command
 
-=== Set the configuration for a single run
+Every command lets you specify a configuration profile using the `-p`/`--profile` option.
+This method is useful if you want to run a command using a different configuration profile without changing the default configuration profile.
 
-Every {product} command supports the `--profile` option.
-This option lets you use a different configuration profile when running a command without changing the default configuration profile.
 For example:
 
 [source,shell,subs="+quotes"]
 ----
-astra user list --config "**CONFIG_NAME**"
+astra user list --profile '**CONFIG_NAME**'
 ----
+
+The `--profile` option bypasses the default configuration profile and uses the supplied configuration profile for that command only.
+
+If you want to run a command using an application token directly, without having to create a new profile, see <<authenticate-individual-command>>.
 
 === Delete a configuration profile
 
-Use `astra config delete` to delete a configuration profile:
+Use the `xref:commands:astra-config-delete.adoc[]` command to delete a configuration profile:
 
 [source,shell,subs="+quotes"]
 ----
-astra config delete "**CONFIG_NAME**"
+astra config delete '**CONFIG_NAME**'
 ----
 
 .Result
@@ -464,14 +507,14 @@ astra config delete "**CONFIG_NAME**"
 ====
 [source,console,subs="+quotes"]
 ----
-Profile 'tem' deleted successfully.
+Profile Development deleted successfully.
 ----
 ====
 
-[IMPORTANT]
+[NOTE]
 ====
-If you delete the default configuration, the {product} _doesn't_ automatically select a new default configuration.
-Use the `astra config use` command to select a new default configuration.
+If you delete the default configuration profile, the {product} _doesn't_ automatically select a new default configuration profile.
+You must use the `xref:commands:astra-config-use.adoc[]` command to set a new default configuration profile.
 ====
 
 [#file-locations]
@@ -491,7 +534,7 @@ _Default location_: `~/.astra` (macOS and Linux), `%USERPROFILE%\.astra` (Window
 The {product} stores the following items in this directory:
 
 * The {product} executable (scripted installations only)
-* Accessory executables for commands like `xref:commands:astra-db-cqlsh.adoc[]` and `xref:commands:astra-db-dsbulk.adoc[]`
+* Accessory executables downloaded by certain commands, such as `xref:commands:astra-db-cqlsh.adoc[]` and `xref:commands:astra-db-dsbulk.adoc[]`
 * Cache files for <<command-auto-completion,command auto-completion>>
 * Logs
 
