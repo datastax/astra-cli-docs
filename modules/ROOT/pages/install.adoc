@@ -4,7 +4,7 @@
 
 Install the {product} to create and manage {astra_db} databases and {astra_stream} tenants from the command line.
 
-== Platform compatibility
+== Supported platforms
 
 The {product} supports the following operating systems:
 
