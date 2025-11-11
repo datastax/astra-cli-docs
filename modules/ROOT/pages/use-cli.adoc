@@ -219,7 +219,7 @@ Append the `-h`/`--help` option to any command or subcommand to get specific hel
 
 [source,shell]
 ----
-astra org --help
+astra org -h
 ----
 
 .Result
@@ -277,8 +277,6 @@ Examples:
 See 'astra <command> <subcommand> --help' for help on a specific subcommand.
 ----
 ====
-
-Append a subcommand for further specificity:
 
 [source,shell]
 ----
