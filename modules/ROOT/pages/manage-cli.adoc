@@ -7,7 +7,7 @@ Author's note: The following pages used to serve as de facto command references:
 
 ROOT:managing.adoc, ROOT:astra-streaming-cli.adoc, ROOT:administration.adoc
 
-However, since the new command reference pages are auto-generated, there isn't a good place to redirect them to (yet).
+However, since the new command reference pages are programmatically generated, there isn't a good place to redirect them to (yet).
 Once we have quickstarts for Astra DB, Astra Streaming, and Astra administration, we can move the page aliases.
 ////
 

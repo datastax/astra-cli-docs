@@ -23,7 +23,7 @@ The {product} supports the following operating systems:
 |`x86_64`
 |===
 
-== Install the {product}
+== Install the CLI
 
 Select one of the following installation methods and follow the steps to install the {product}.
 
