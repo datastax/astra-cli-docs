@@ -14,14 +14,11 @@ The {product} also downloads the {scb} for each database you connect to and stor
 
 == Load data
 
-Use the `astra db load` command to load data from a file into a database table:
+Use the `xref:commands:astra-db-dsbulk-load.adoc[]` command to load data from a file into a database table:
 
 [source,shell,subs="+quotes"]
 ----
-astra db load **DB_ID** \
-  -k **KEYSPACE_NAME** \
-  -t **TABLE_NAME** \
-  --url **FILE_LOCATION**
+astra db dsbulk load **DB_ID** -k **KEYSPACE_NAME** -t **TABLE_NAME** --url **FILE_LOCATION**
 ----
 
 .Result
@@ -50,12 +47,11 @@ To resume the current operation, re-run it with the same settings, and add the f
 
 [TIP]
 ======
-You can use the `cqlsh` command to check that the data imported successfully:
+You can use the `xref:commands:astra-db-cqlsh-exec.adoc[]` command to check that the data imported successfully:
 
 [source,shell,subs="+quotes"]
 ----
-astra db cqlsh **DB_ID** -e \
-"SELECT * FROM **KEYSPACE_NAME**.**TABLE_NAME** LIMIT 20;"
+astra db cqlsh exec **DB_ID** "SELECT * FROM **KEYSPACE_NAME**.**TABLE_NAME** LIMIT 20;"
 ----
 
 .Result
@@ -95,14 +91,11 @@ astra db cqlsh **DB_ID** -e \
 
 == Unload data
 
-Use the `astra db unload` command to unload database table rows into a file:
+Use the `xref:commands:astra-db-dsbulk-unload.adoc[]` command to unload database table rows into a file:
 
 [source,shell,subs="+quotes"]
 ----
-astra db unload **DB_ID** \
-    -k **KEYSPACE_NAME** \
-    -t **TABLE_NAME** \
-    --url **FILE_LOCATION**
+astra db dsbulk unload **DB_ID** -k **KEYSPACE_NAME** -t **TABLE_NAME** --url **FILE_LOCATION**
 ----
 
 .Result
@@ -126,13 +119,11 @@ To resume the current operation, re-run it with the same settings, and add the f
 
 == Count data
 
-Use the `astra db count` command to get information about loaded data:
+Use the `xref:commands:astra-db-dsbulk-count.adoc[]` command to get information about loaded data:
 
 [source,shell,subs="+quotes"]
 ----
-astra db count **DB_ID** \
-    -k **KEYSPACE_NAME** \
-    -t **TABLE_NAME**
+astra db dsbulk count **DB_ID** -k **KEYSPACE_NAME** -t **TABLE_NAME**
 ----
 
 .Result
@@ -240,10 +231,7 @@ This CQL statement creates a table named `cities_by_country` with the appropriat
 +
 [source,shell]
 ----
-astra db load dsbulk_demo_db \
-  -k dsbulk_demo_keyspace \
-  -t cities_by_country \
-  --url cities.csv
+astra db dsbulk load dsbulk_demo_db -k dsbulk_demo_keyspace -t cities_by_country --url cities.csv
 ----
 +
 .Result
@@ -272,8 +260,7 @@ To resume the current operation, re-run it with the same settings, and add the f
 +
 [source,shell]
 ----
-astra db cqlsh dsbulk_demo_db -e \
-"select * from dsbulk_demo_keyspace.cities_by_country LIMIT 20;"
+astra db cqlsh exec dsbulk_demo_db "select * from dsbulk_demo_keyspace.cities_by_country LIMIT 20;"
 ----
 +
 .Result
@@ -314,9 +301,7 @@ astra db cqlsh dsbulk_demo_db -e \
 +
 [source,shell]
 ----
-astra db count dsbulk_demo_db \
-    -k dsbulk_demo_keyspace \
-    -t cities_by_country
+astra db dsbulk count dsbulk_demo_db -k dsbulk_demo_keyspace -t cities_by_country
 ----
 +
 .Result
@@ -343,10 +328,7 @@ To resume the current operation, re-run it with the same settings, and add the f
 +
 [source,shell]
 ----
-astra db unload dsbulk_demo_db \
-    -k dsbulk_demo_keyspace \
-    -t cities_by_country \
-    --url unloaded_data
+astra db dsbulk unload dsbulk_demo_db -k dsbulk_demo_keyspace -t cities_by_country --url unloaded_data
 ----
 +
 .Result
