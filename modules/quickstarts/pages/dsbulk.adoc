@@ -1,0 +1,369 @@
+= Run DataStax Bulk Loader (DSBulk) commands
+
+The xref:dsbulk:overview:dsbulk-about.adoc[DataStax Bulk Loader (DSBulk)] lets you load, unload, and count data in your database tables.
+The {product} provides built-in DSBulk support by downloading, installing, configuring, and wrapping the `dsbulk` utility.
+
+The {product} exposes DSBulk functionality through the `astra db load`, `astra db unload`, and `astra db count` commands.
+
+The first time you run `astra db load`, `astra db unload`, or `astra db count` commands, the {product} downloads and installs the `dsbulk` utility to the {product} installation directory (`~/.astra/dsbulk-*`).
+The {product} also downloads the {scb} for each database you connect to and stores the {scb-short} zip files in the `~/.astra/scb` directory.
+
+== Load data
+
+Use the `astra db load` command to load data from a file into a database table:
+
+[source,bash,subs="+quotes"]
+----
+astra db load **DATABASE_ID** \
+  -k **KEYSPACE_NAME** \
+  -t **TABLE_NAME** \
+  -url **FILE_LOCATION**
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
+[INFO]  Downloading Dsbulk, please wait...
+[INFO]  Installing  archive, please wait...
+[INFO]  RUNNING: /Users/USERNAME/.astra/dsbulk-1.11.0/bin/dsbulk load -u token -p AstraCS:FZm... -b /Users/USERNAME/.astra/scb/scb_91b35105-a5aa-4cd5-a93b-900ac58452ba_us-east1.zip -k dsbulk_demo_keyspace -t cities_by_country -logDir ./logs --log.verbosity normal --schema.allowMissingFields true -maxConcurrentQueries AUTO -delim , -url cities.csv -header true -encoding UTF-8 -skipRecords 0 -maxErrors 100
+[INFO]  DSBulk is starting please wait ...
+Username and password provided but auth provider not specified, inferring PlainTextAuthProvider
+A cloud secure connect bundle was provided: ignoring all explicit contact points.
+A cloud secure connect bundle was provided and selected operation performs writes: changing default consistency level to LOCAL_QUORUM.
+Operation directory: /Users/USERNAME/logs/LOAD_20250123-020734-995267
+Setting executor.maxPerSecond not set when connecting to DataStax Astra: applying a limit of 27,000 ops/second based on the number of coordinators (9).
+If your Astra database has higher limits, please define executor.maxPerSecond explicitly.
+  total | failed | rows/s |  p50ms |  p99ms | p999ms | batches
+148,266 |      0 | 19,588 | 240.82 | 771.75 | 964.69 |   30.72
+Operation LOAD_20250123-020734-995267 completed successfully in 7 seconds.
+Checkpoints for the current operation were written to checkpoint.csv.
+To resume the current operation, re-run it with the same settings, and add the following command line flag:
+--dsbulk.log.checkpoint.file=/Users/USERNAME/logs/LOAD_20250123-020734-995267/checkpoint.csv
+----
+====
+
+[TIP]
+======
+You can use the `cqlsh` command to check that the data imported successfully:
+
+[source,bash,subs="+quotes"]
+----
+astra db cqlsh **DATABASE_ID** -e \
+"SELECT * FROM **KEYSPACE_NAME**.**TABLE_NAME** LIMIT 20;"
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
+[INFO]  Cqlsh is starting, please wait for connection establishment...
+
+ country_name | name                | country_code | country_id | id   | latitude | longitude | state_code | state_id | state_name          | wikidataid
+--------------+---------------------+--------------+------------+------+----------+-----------+------------+----------+---------------------+------------
+   Bangladesh |             Azimpur |           BD |         19 | 8454 |  23.7298 |   90.3854 |         13 |      771 |      Dhaka District |       null
+   Bangladesh |           Badarganj |           BD |         19 | 8455 | 25.67419 |  89.05377 |         55 |      759 |    Rangpur District |       null
+   Bangladesh |            Bagerhat |           BD |         19 | 8456 |     22.4 |     89.75 |         27 |      811 |     Khulna District |       null
+   Bangladesh |           Bandarban |           BD |         19 | 8457 |       22 |  92.33333 |          B |      803 | Chittagong Division |       null
+   Bangladesh |          Baniachang |           BD |         19 | 8458 | 24.51863 |  91.35787 |         60 |      767 |     Sylhet District |       null
+   Bangladesh |             Barguna |           BD |         19 | 8459 | 22.13333 |  90.13333 |         06 |      818 |    Barisal District |       null
+   Bangladesh |             Barisal |           BD |         19 | 8460 |     22.8 |      90.5 |         06 |      818 |    Barisal District |       null
+   Bangladesh |                Bera |           BD |         19 | 8462 | 24.07821 |  89.63262 |         54 |      813 |   Rajshahi District |       null
+   Bangladesh |       Bhairab Bāzār |           BD |         19 | 8463 |  24.0524 |   90.9764 |         13 |      771 |      Dhaka District |       null
+   Bangladesh |           Bherāmāra |           BD |         19 | 8464 | 24.02452 |  88.99234 |         27 |      811 |     Khulna District |       null
+   Bangladesh |               Bhola |           BD |         19 | 8465 | 22.36667 |  90.81667 |         06 |      818 |    Barisal District |       null
+   Bangladesh |           Bhāndāria |           BD |         19 | 8466 | 22.48898 |  90.06273 |         06 |      818 |    Barisal District |       null
+   Bangladesh | Bhātpāra Abhaynagar |           BD |         19 | 8467 | 23.01472 |  89.43936 |         27 |      811 |     Khulna District |       null
+   Bangladesh |           Bibir Hat |           BD |         19 | 8468 | 22.68347 |  91.79058 |          B |      803 | Chittagong Division |       null
+   Bangladesh |               Bogra |           BD |         19 | 8469 | 24.78333 |     89.35 |         54 |      813 |   Rajshahi District |       null
+   Bangladesh |        Brahmanbaria |           BD |         19 | 8470 | 23.98333 |  91.16667 |          B |      803 | Chittagong Division |       null
+   Bangladesh |         Burhānuddin |           BD |         19 | 8471 | 22.49518 |  90.72391 |         06 |      818 |    Barisal District |       null
+   Bangladesh |            Bājitpur |           BD |         19 | 8472 | 24.21623 |  90.95002 |         13 |      771 |      Dhaka District |       null
+   Bangladesh |            Chandpur |           BD |         19 | 8474 |    23.25 |  90.83333 |          B |      803 | Chittagong Division |       null
+   Bangladesh |    Chapai Nababganj |           BD |         19 | 8475 | 24.68333 |     88.25 |         54 |      813 |   Rajshahi District |       null
+
+(20 rows)
+----
+====
+======
+
+== Unload data
+
+Use the `astra db unload` command to unload database table rows into a file:
+
+[source,bash,subs="+quotes"]
+----
+astra db unload **DATABASE_ID** \
+    -k **KEYSPACE_NAME** \
+    -t **TABLE_NAME** \
+    -url **FILE_LOCATION**
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
+[INFO]  RUNNING: /Users/USERNAME/.astra/dsbulk-1.11.0/bin/dsbulk unload -u token -p AstraCS:FZm... -b /Users/USERNAME/.astra/scb/scb_91b35105-a5aa-4cd5-a93b-900ac58452ba_us-east1.zip -k dsbulk_demo_keyspace -t cities_by_country -logDir ./logs --log.verbosity normal --schema.allowMissingFields true -maxConcurrentQueries AUTO -delim , -url unloaded_data -header true -encoding UTF-8 -skipRecords 0 -maxErrors 100
+[INFO]  DSBulk is starting please wait ...
+Username and password provided but auth provider not specified, inferring PlainTextAuthProvider
+A cloud secure connect bundle was provided: ignoring all explicit contact points.
+Operation directory: /Users/USERNAME/logs/UNLOAD_20250123-021231-557959
+  total | failed | rows/s |  p50ms |  p99ms | p999ms
+134,574 |      0 | 29,767 | 281.25 | 591.40 | 591.40
+Operation UNLOAD_20250123-021231-557959 completed successfully in 4 seconds.
+Checkpoints for the current operation were written to checkpoint.csv.
+To resume the current operation, re-run it with the same settings, and add the following command line flag:
+--dsbulk.log.checkpoint.file=/Users/USERNAME/logs/UNLOAD_20250123-021231-557959/checkpoint.csv
+----
+====
+
+== Count data
+
+Use the `astra db count` command to get information about loaded data:
+
+[source,bash,subs="+quotes"]
+----
+astra db count **DATABASE_ID** \
+    -k **KEYSPACE_NAME** \
+    -t **TABLE_NAME**
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
+[INFO]  RUNNING: /Users/USERNAME/.astra/dsbulk-1.11.0/bin/dsbulk count -u token -p AstraCS:FZm... -b /Users/USERNAME/.astra/scb/scb_91b35105-a5aa-4cd5-a93b-900ac58452ba_us-east1.zip -k dsbulk_demo_keyspace -t cities_by_country -logDir ./logs --log.verbosity normal --schema.allowMissingFields true -maxConcurrentQueries AUTO
+[INFO]  DSBulk is starting please wait ...
+Username and password provided but auth provider not specified, inferring PlainTextAuthProvider
+A cloud secure connect bundle was provided: ignoring all explicit contact points.
+Operation directory: /Users/USERNAME/logs/COUNT_20250123-021120-127216
+  total | failed | rows/s |  p50ms |  p99ms | p999ms
+134,574 |      0 | 65,674 | 213.18 | 329.25 | 329.25
+Operation COUNT_20250123-021120-127216 completed successfully in 1 second.
+Checkpoints for the current operation were written to checkpoint.csv.
+To resume the current operation, re-run it with the same settings, and add the following command line flag:
+--dsbulk.log.checkpoint.file=/Users/USERNAME/logs/COUNT_20250123-021120-127216/checkpoint.csv
+134574
+----
+====
+
+== Complete DSBulk example
+
+The following end-to-end example shows how to use the {product}'s built-in DSBulk support to load data into a database, get information about the data, and unload the data into CSV files:
+
+. Create an {astra_db} {db-serverless} database:
++
+[source,bash]
+----
+astra db create dsbulk_demo_db -k dsbulk_demo_keyspace
+----
++
+.Result
+[%collapsible]
+====
+[source,console]
+----
+[INFO]  Database 'dsbulk_demo_db' does not exist. Creating database 'dsbulk_demo_db' with keyspace 'dsbulk_demo_keyspace'
+[INFO]  Database 'dsbulk_demo_db' and keyspace 'dsbulk_demo_keyspace' are being created.
+[INFO]  Database 'dsbulk_demo_db' has status 'PENDING' waiting to be 'ACTIVE' ...
+[INFO]  Database 'dsbulk_demo_db' has status 'ACTIVE' (took 471460 millis)
+[OK]    Database 'dsbulk_demo_db' is ready.
+----
+====
+
+. Download the xref:ROOT:attachment$cities.csv[cities.csv] file and move it to the directory where you run {product} commands.
++
+The `cities.csv` dataset contains information about cities around the world:
++
+.cities.csv
+[source,csv]
+----
+id,name,state_id,state_code,state_name,country_id,country_code,country_name,latitude,longitude,wikiDataId
+52,Ashkāsham,3901,BDS,Badakhshan,1,AF,Afghanistan,36.68333000,71.53333000,Q4805192
+68,Fayzabad,3901,BDS,Badakhshan,1,AF,Afghanistan,37.11664000,70.58002000,Q156558
+...
+----
+
+. Create a table in your database to store your data.
++
+.. Start `cqlsh` in interactive mode:
++
+[source,bash]
+----
+astra db cqlsh dsbulk_demo_db -k dsbulk_demo_keyspace
+----
++
+.Result
+[%collapsible]
+====
+[source,console]
+----
+[INFO]  Cqlsh is starting, please wait for connection establishment...
+Connected to cndb at 127.0.0.1:9042.
+[cqlsh 6.8.0 | Cassandra 4.0.0.6816 | CQL spec 3.4.5 | Native protocol v4]
+Use HELP for help.
+token@cqlsh:dsbulk_demo_keyspace>
+----
+====
++
+.. Copy and paste the following CQL command into the `cqlsh` prompt and press kbd:[Enter]:
++
+[source,cql]
+----
+CREATE TABLE cities_by_country (
+    country_name text,
+    name text,
+    id int,
+    state_id text,
+    state_code text,
+    state_name text,
+    country_id text,
+    country_code text,
+    latitude double,
+    longitude double,
+    wikiDataId text,
+    PRIMARY KEY ((country_name), name)
+);
+----
++
+This command creates a table named `cities_by_country` with the appropriate schema for the `cities.csv` dataset.
++
+.. Type `exit` or `quit;` and press kbd:[Enter] to exit `cqlsh`.
+
+. Load the data from the `cities.csv` file into the `cities_by_country` table that you just created in your database:
++
+[source,bash]
+----
+astra db load dsbulk_demo_db \
+  -k dsbulk_demo_keyspace \
+  -t cities_by_country \
+  -url cities.csv
+----
++
+.Result
+[%collapsible]
+====
+[source,console]
+----
+[INFO]  RUNNING: /Users/USERNAME/.astra/dsbulk-1.11.0/bin/dsbulk load -u token -p AstraCS:FZm... -b /Users/USERNAME/.astra/scb/scb_91b35105-a5aa-4cd5-a93b-900ac58452ba_us-east1.zip -k dsbulk_demo_keyspace -t cities_by_country -logDir ./logs --log.verbosity normal --schema.allowMissingFields true -maxConcurrentQueries AUTO -delim , -url cities.csv -header true -encoding UTF-8 -skipRecords 0 -maxErrors 100
+[INFO]  DSBulk is starting please wait ...
+Username and password provided but auth provider not specified, inferring PlainTextAuthProvider
+A cloud secure connect bundle was provided: ignoring all explicit contact points.
+A cloud secure connect bundle was provided and selected operation performs writes: changing default consistency level to LOCAL_QUORUM.
+Operation directory: /Users/USERNAME/logs/LOAD_20250123-020734-995267
+Setting executor.maxPerSecond not set when connecting to DataStax Astra: applying a limit of 27,000 ops/second based on the number of coordinators (9).
+If your Astra database has higher limits, please define executor.maxPerSecond explicitly.
+  total | failed | rows/s |  p50ms |  p99ms | p999ms | batches
+148,266 |      0 | 19,588 | 240.82 | 771.75 | 964.69 |   30.72
+Operation LOAD_20250123-020734-995267 completed successfully in 7 seconds.
+Checkpoints for the current operation were written to checkpoint.csv.
+To resume the current operation, re-run it with the same settings, and add the following command line flag:
+--dsbulk.log.checkpoint.file=/Users/USERNAME/logs/LOAD_20250123-020734-995267/checkpoint.csv
+----
+====
+
+. Confirm that the data loaded successfully:
++
+[source,bash]
+----
+astra db cqlsh dsbulk_demo_db -e \
+"select * from dsbulk_demo_keyspace.cities_by_country LIMIT 20;"
+----
++
+.Result
+[%collapsible]
+====
+[source,console]
+----
+[INFO]  Cqlsh is starting, please wait for connection establishment...
+
+ country_name | name                | country_code | country_id | id   | latitude | longitude | state_code | state_id | state_name          | wikidataid
+--------------+---------------------+--------------+------------+------+----------+-----------+------------+----------+---------------------+------------
+   Bangladesh |             Azimpur |           BD |         19 | 8454 |  23.7298 |   90.3854 |         13 |      771 |      Dhaka District |       null
+   Bangladesh |           Badarganj |           BD |         19 | 8455 | 25.67419 |  89.05377 |         55 |      759 |    Rangpur District |       null
+   Bangladesh |            Bagerhat |           BD |         19 | 8456 |     22.4 |     89.75 |         27 |      811 |     Khulna District |       null
+   Bangladesh |           Bandarban |           BD |         19 | 8457 |       22 |  92.33333 |          B |      803 | Chittagong Division |       null
+   Bangladesh |          Baniachang |           BD |         19 | 8458 | 24.51863 |  91.35787 |         60 |      767 |     Sylhet District |       null
+   Bangladesh |             Barguna |           BD |         19 | 8459 | 22.13333 |  90.13333 |         06 |      818 |    Barisal District |       null
+   Bangladesh |             Barisal |           BD |         19 | 8460 |     22.8 |      90.5 |         06 |      818 |    Barisal District |       null
+   Bangladesh |                Bera |           BD |         19 | 8462 | 24.07821 |  89.63262 |         54 |      813 |   Rajshahi District |       null
+   Bangladesh |       Bhairab Bāzār |           BD |         19 | 8463 |  24.0524 |   90.9764 |         13 |      771 |      Dhaka District |       null
+   Bangladesh |           Bherāmāra |           BD |         19 | 8464 | 24.02452 |  88.99234 |         27 |      811 |     Khulna District |       null
+   Bangladesh |               Bhola |           BD |         19 | 8465 | 22.36667 |  90.81667 |         06 |      818 |    Barisal District |       null
+   Bangladesh |           Bhāndāria |           BD |         19 | 8466 | 22.48898 |  90.06273 |         06 |      818 |    Barisal District |       null
+   Bangladesh | Bhātpāra Abhaynagar |           BD |         19 | 8467 | 23.01472 |  89.43936 |         27 |      811 |     Khulna District |       null
+   Bangladesh |           Bibir Hat |           BD |         19 | 8468 | 22.68347 |  91.79058 |          B |      803 | Chittagong Division |       null
+   Bangladesh |               Bogra |           BD |         19 | 8469 | 24.78333 |     89.35 |         54 |      813 |   Rajshahi District |       null
+   Bangladesh |        Brahmanbaria |           BD |         19 | 8470 | 23.98333 |  91.16667 |          B |      803 | Chittagong Division |       null
+   Bangladesh |         Burhānuddin |           BD |         19 | 8471 | 22.49518 |  90.72391 |         06 |      818 |    Barisal District |       null
+   Bangladesh |            Bājitpur |           BD |         19 | 8472 | 24.21623 |  90.95002 |         13 |      771 |      Dhaka District |       null
+   Bangladesh |            Chandpur |           BD |         19 | 8474 |    23.25 |  90.83333 |          B |      803 | Chittagong Division |       null
+   Bangladesh |    Chapai Nababganj |           BD |         19 | 8475 | 24.68333 |     88.25 |         54 |      813 |   Rajshahi District |       null
+
+(20 rows)
+----
+====
+
+. Count the loaded data:
++
+[source,bash]
+----
+astra db count dsbulk_demo_db \
+    -k dsbulk_demo_keyspace \
+    -t cities_by_country
+----
++
+.Result
+[%collapsible]
+====
+[source,console]
+----
+[INFO]  RUNNING: /Users/USERNAME/.astra/dsbulk-1.11.0/bin/dsbulk count -u token -p AstraCS:FZm... -b /Users/USERNAME/.astra/scb/scb_91b35105-a5aa-4cd5-a93b-900ac58452ba_us-east1.zip -k dsbulk_demo_keyspace -t cities_by_country -logDir ./logs --log.verbosity normal --schema.allowMissingFields true -maxConcurrentQueries AUTO
+[INFO]  DSBulk is starting please wait ...
+Username and password provided but auth provider not specified, inferring PlainTextAuthProvider
+A cloud secure connect bundle was provided: ignoring all explicit contact points.
+Operation directory: /Users/USERNAME/logs/COUNT_20250123-021120-127216
+  total | failed | rows/s |  p50ms |  p99ms | p999ms
+134,574 |      0 | 65,674 | 213.18 | 329.25 | 329.25
+Operation COUNT_20250123-021120-127216 completed successfully in 1 second.
+Checkpoints for the current operation were written to checkpoint.csv.
+To resume the current operation, re-run it with the same settings, and add the following command line flag:
+--dsbulk.log.checkpoint.file=/Users/USERNAME/logs/COUNT_20250123-021120-127216/checkpoint.csv
+134574
+----
+====
+
+. Unload the data into CSV files:
++
+[source,bash]
+----
+astra db unload dsbulk_demo_db \
+    -k dsbulk_demo_keyspace \
+    -t cities_by_country \
+    -url unloaded_data
+----
++
+.Result
+[%collapsible]
+====
+[source,console]
+----
+[INFO]  RUNNING: /Users/USERNAME/.astra/dsbulk-1.11.0/bin/dsbulk unload -u token -p AstraCS:FZm... -b /Users/USERNAME/.astra/scb/scb_91b35105-a5aa-4cd5-a93b-900ac58452ba_us-east1.zip -k dsbulk_demo_keyspace -t cities_by_country -logDir ./logs --log.verbosity normal --schema.allowMissingFields true -maxConcurrentQueries AUTO -delim , -url unloaded_data -header true -encoding UTF-8 -skipRecords 0 -maxErrors 100
+[INFO]  DSBulk is starting please wait ...
+Username and password provided but auth provider not specified, inferring PlainTextAuthProvider
+A cloud secure connect bundle was provided: ignoring all explicit contact points.
+Operation directory: /Users/USERNAME/logs/UNLOAD_20250123-021231-557959
+  total | failed | rows/s |  p50ms |  p99ms | p999ms
+134,574 |      0 | 29,767 | 281.25 | 591.40 | 591.40
+Operation UNLOAD_20250123-021231-557959 completed successfully in 4 seconds.
+Checkpoints for the current operation were written to checkpoint.csv.
+To resume the current operation, re-run it with the same settings, and add the following command line flag:
+--dsbulk.log.checkpoint.file=/Users/USERNAME/logs/UNLOAD_20250123-021231-557959/checkpoint.csv
+----
+====
++
+This command unloads row data from the `cities_by_country` table, and stores it as CSV files within a subsirectory names `unloaded_data` in the same directory where you ran the command.

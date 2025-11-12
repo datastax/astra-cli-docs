@@ -2772,7 +2772,7 @@ OPTIONS
 == Use cqlsh
 
 `cqlsh` is an interface that you can use to issue xref:astra@cql:ROOT:index.adoc[{cass-short} Query Language (CQL)] commands to your database.
-The {product} provides built-in `cqlsh` support by downloading, installing, configuring, and wapping the `cqlsh` utility.
+The {product} provides built-in `cqlsh` support by downloading, installing, configuring, and wrapping the `cqlsh` utility.
 This can act as a convenient alternative to installing and configuring a xref:astra-db-serverless:cql:develop-with-cql.adoc#connect-to-the-cql-shell[standalone cqlsh].
 
 To use `cqlsh` commands, you must have a supported version of Python installed on your system.
@@ -3020,7 +3020,7 @@ astra db cqlsh **DATABASE_ID** -e "SOURCE 'sample.cql'"
 == Use DataStax Bulk Loader
 
 The xref:dsbulk:overview:dsbulk-about.adoc[DataStax Bulk Loader (DSBulk)] lets you load, unload, and count data in your database tables.
-The {product} provides built-in DSBulk support by downloading, installing, configuring, and wapping the `dsbulk` utility.
+The {product} provides built-in DSBulk support by downloading, installing, configuring, and wrapping the `dsbulk` utility.
 
 The {product} exposes DSBulk functionality through the `astra db load`, `astra db unload`, and `astra db count` commands.
 

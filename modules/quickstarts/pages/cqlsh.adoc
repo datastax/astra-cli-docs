@@ -2,7 +2,7 @@
 
 `cqlsh` is an interface that you can use to issue xref:astra@cql:ROOT:index.adoc[{cass-short} Query Language (CQL)] commands to your database.
 
-The {product} provides built-in `cqlsh` support by downloading, installing, configuring, and wapping the `cqlsh` utility.
+The {product} provides built-in `cqlsh` support by downloading, installing, configuring, and wrapping the `cqlsh` utility.
 This can act as a convenient alternative to installing and configuring a xref:astra-db-serverless:cql:develop-with-cql.adoc#connect-to-the-cql-shell[standalone cqlsh].
 
 == Prerequisites
