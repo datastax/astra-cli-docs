@@ -1,23 +1,27 @@
 = Run DataStax Bulk Loader (DSBulk) commands
 
-The xref:dsbulk:overview:dsbulk-about.adoc[DataStax Bulk Loader (DSBulk)] lets you load, unload, and count data in your database tables.
-The {product} provides built-in DSBulk support by downloading, installing, configuring, and wrapping the `dsbulk` utility.
+xref:dsbulk:overview:dsbulk-about.adoc[DataStax Bulk Loader (DSBulk)] is a utility that you can use to load, unload, and count data in your database tables.
+The {product} provides embedded DSBulk support by downloading, installing, configuring, and wrapping the `dsbulk` utility.
 
-The {product} exposes DSBulk functionality through the `astra db load`, `astra db unload`, and `astra db count` commands.
+The {product} exposes DSBulk functionality through the following commands:
 
-The first time you run `astra db load`, `astra db unload`, or `astra db count` commands, the {product} downloads and installs the `dsbulk` utility to the {product} installation directory (`~/.astra/dsbulk-*`).
-The {product} also downloads the {scb} for each database you connect to and stores the {scb-short} zip files in the `~/.astra/scb` directory.
+* `xref:commands:astra-db-dsbulk-load.adoc[]`
+* `xref:commands:astra-db-dsbulk-unload.adoc[]`
+* `xref:commands:astra-db-dsbulk-count.adoc[]`
+
+The first time you use one of these commands, the {product} downloads and installs the `dsbulk` utility to the {product} home directory (`xref:ROOT:manage-cli.adoc#file-locations[~/.astra]`).
+The {product} also downloads the {scb} for each database you connect to and stores the {scb-short} zip files.
 
 == Load data
 
 Use the `astra db load` command to load data from a file into a database table:
 
-[source,bash,subs="+quotes"]
+[source,shell,subs="+quotes"]
 ----
-astra db load **DATABASE_ID** \
+astra db load **DB_ID** \
   -k **KEYSPACE_NAME** \
   -t **TABLE_NAME** \
-  -url **FILE_LOCATION**
+  --url **FILE_LOCATION**
 ----
 
 .Result
@@ -48,9 +52,9 @@ To resume the current operation, re-run it with the same settings, and add the f
 ======
 You can use the `cqlsh` command to check that the data imported successfully:
 
-[source,bash,subs="+quotes"]
+[source,shell,subs="+quotes"]
 ----
-astra db cqlsh **DATABASE_ID** -e \
+astra db cqlsh **DB_ID** -e \
 "SELECT * FROM **KEYSPACE_NAME**.**TABLE_NAME** LIMIT 20;"
 ----
 
@@ -93,12 +97,12 @@ astra db cqlsh **DATABASE_ID** -e \
 
 Use the `astra db unload` command to unload database table rows into a file:
 
-[source,bash,subs="+quotes"]
+[source,shell,subs="+quotes"]
 ----
-astra db unload **DATABASE_ID** \
+astra db unload **DB_ID** \
     -k **KEYSPACE_NAME** \
     -t **TABLE_NAME** \
-    -url **FILE_LOCATION**
+    --url **FILE_LOCATION**
 ----
 
 .Result
@@ -124,9 +128,9 @@ To resume the current operation, re-run it with the same settings, and add the f
 
 Use the `astra db count` command to get information about loaded data:
 
-[source,bash,subs="+quotes"]
+[source,shell,subs="+quotes"]
 ----
-astra db count **DATABASE_ID** \
+astra db count **DB_ID** \
     -k **KEYSPACE_NAME** \
     -t **TABLE_NAME**
 ----
@@ -157,9 +161,9 @@ The following end-to-end example shows how to use the {product}'s built-in DSBul
 
 . Create an {astra_db} {db-serverless} database:
 +
-[source,bash]
+[source,shell]
 ----
-astra db create dsbulk_demo_db -k dsbulk_demo_keyspace
+astra db create dsbulk_demo_db -r us-east1 -k dsbulk_demo_keyspace
 ----
 +
 .Result
@@ -167,11 +171,10 @@ astra db create dsbulk_demo_db -k dsbulk_demo_keyspace
 ====
 [source,console]
 ----
-[INFO]  Database 'dsbulk_demo_db' does not exist. Creating database 'dsbulk_demo_db' with keyspace 'dsbulk_demo_keyspace'
-[INFO]  Database 'dsbulk_demo_db' and keyspace 'dsbulk_demo_keyspace' are being created.
-[INFO]  Database 'dsbulk_demo_db' has status 'PENDING' waiting to be 'ACTIVE' ...
-[INFO]  Database 'dsbulk_demo_db' has status 'ACTIVE' (took 471460 millis)
-[OK]    Database 'dsbulk_demo_db' is ready.
+⠇ Checking if database 2c5f2157-d5b3-4697-97f0-78bcdd0123c1 is status ACTIVE (currently INITIALIZING, elapsed                                                                                                             Database dsbulk_demo_db has been created with id 2c5f2157-d5b3-4697-97f0-78bcdd0123c1. It is now active after waiting 422 seconds.
+
+# Get more information about the new database:
+$ astra db get dsbulk_demo_db
 ----
 ====
 
@@ -192,9 +195,9 @@ id,name,state_id,state_code,state_name,country_id,country_code,country_name,lati
 +
 .. Start `cqlsh` in interactive mode:
 +
-[source,bash]
+[source,shell]
 ----
-astra db cqlsh dsbulk_demo_db -k dsbulk_demo_keyspace
+astra db cqlsh start dsbulk_demo_db -k dsbulk_demo_keyspace
 ----
 +
 .Result
@@ -202,7 +205,6 @@ astra db cqlsh dsbulk_demo_db -k dsbulk_demo_keyspace
 ====
 [source,console]
 ----
-[INFO]  Cqlsh is starting, please wait for connection establishment...
 Connected to cndb at 127.0.0.1:9042.
 [cqlsh 6.8.0 | Cassandra 4.0.0.6816 | CQL spec 3.4.5 | Native protocol v4]
 Use HELP for help.
@@ -210,7 +212,7 @@ token@cqlsh:dsbulk_demo_keyspace>
 ----
 ====
 +
-.. Copy and paste the following CQL command into the `cqlsh` prompt and press kbd:[Enter]:
+.. Copy and paste the following CQL statement into the `cqlsh` prompt and press kbd:[Enter]:
 +
 [source,cql]
 ----
@@ -230,18 +232,18 @@ CREATE TABLE cities_by_country (
 );
 ----
 +
-This command creates a table named `cities_by_country` with the appropriate schema for the `cities.csv` dataset.
+This CQL statement creates a table named `cities_by_country` with the appropriate schema for the `cities.csv` dataset.
 +
 .. Type `exit` or `quit;` and press kbd:[Enter] to exit `cqlsh`.
 
 . Load the data from the `cities.csv` file into the `cities_by_country` table that you just created in your database:
 +
-[source,bash]
+[source,shell]
 ----
 astra db load dsbulk_demo_db \
   -k dsbulk_demo_keyspace \
   -t cities_by_country \
-  -url cities.csv
+  --url cities.csv
 ----
 +
 .Result
@@ -268,7 +270,7 @@ To resume the current operation, re-run it with the same settings, and add the f
 
 . Confirm that the data loaded successfully:
 +
-[source,bash]
+[source,shell]
 ----
 astra db cqlsh dsbulk_demo_db -e \
 "select * from dsbulk_demo_keyspace.cities_by_country LIMIT 20;"
@@ -310,7 +312,7 @@ astra db cqlsh dsbulk_demo_db -e \
 
 . Count the loaded data:
 +
-[source,bash]
+[source,shell]
 ----
 astra db count dsbulk_demo_db \
     -k dsbulk_demo_keyspace \
@@ -339,12 +341,12 @@ To resume the current operation, re-run it with the same settings, and add the f
 
 . Unload the data into CSV files:
 +
-[source,bash]
+[source,shell]
 ----
 astra db unload dsbulk_demo_db \
     -k dsbulk_demo_keyspace \
     -t cities_by_country \
-    -url unloaded_data
+    --url unloaded_data
 ----
 +
 .Result
