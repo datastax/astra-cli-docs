@@ -3,7 +3,7 @@
 
 A fast, reliable command-line tool for working with {company} {product-short}.
 
-{product} gives you full control of your {product-short} resources directly from your terminal.
+The {product} gives you full control of your {product-short} resources directly from your terminal.
 It's designed for developers and operators who prefer automation, scripting, and repeatable workflows over clicking through the {astra-ui} or interfacing directly with the APIs.
 
 [.[&>h2]:!hidden]

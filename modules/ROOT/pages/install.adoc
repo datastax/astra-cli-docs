@@ -225,4 +225,4 @@ The response includes available commands and options for the {product}.
 
 == Next steps
 
-To connect to {product-short} and run your first commands, see xref:use-cli.adoc[].
+To connect to {product-short} and run your first commands, see xref:manage-cli.adoc[].

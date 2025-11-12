@@ -13,7 +13,7 @@ To perform database operations, you need an application token with permission to
 To work within databases, you need an application token with permission to interact with the target database, such as the {database-administrator-role} role.
 ====
 
-When you xref:ROOT:use-cli.adoc[connect the {product}], you provide an application token that authorizes you to run the CLI commands.
+When you xref:ROOT:manage-cli.adoc[connect the {product}], you provide an application token that authorizes you to run the CLI commands.
 
 == Find available regions
 
