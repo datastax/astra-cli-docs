@@ -7,4 +7,5 @@
 include::ROOT:partial$partial-nav.adoc[]
 
 .Release notes
-* https://github.com/datastax/astra-cli/releases[Release notes]
+* https://github.com/datastax/astra-cli?tab=readme-ov-file#whats-changed[Release notes]
+* https://github.com/datastax/astra-cli[GitHub repository]
