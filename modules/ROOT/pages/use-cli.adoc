@@ -360,7 +360,7 @@ config     nuke       pcu        setup      streaming  upgrade
 db         org        role       shellenv   token      user
 ----
 
-Certain dynamic arguments, such as database names, also support auto-completion once the CLI discovers them.
+Certain dynamic arguments, such as database names, also support auto-completion once the {product} discovers them.
 
 For example, after running `astra db list`, type `astra db get` followed by kbd:[Tab] twice to see a list of your database names:
 
@@ -368,17 +368,6 @@ For example, after running `astra db list`, type `astra db get` followed by kbd:
 ----
 % astra db get kbd:[Tab] kbd:[Tab]
 prod_db    test_db    playground_db
-----
-
-== Use resource names that contain space characters
-
-If the name of a resource contains one or more space characters, you must wrap the entire name in single quotes (''), otherwise the {product} will return an `Unmatched argument` or other similar error.
-
-For example, when creating a token with the role `Organization Administrator`, you must wrap the role name in single quotes:
-
-[source,shell,subs="+quotes"]
-----
-astra token create --role **'Organization Administrator'**
 ----
 
 [#manage-configuration-profiles]
@@ -414,8 +403,9 @@ astra config list
 
 The default configuration profile is indicated by `(in use)`.
 
-Configuration profiles are stored in the `<<file-locations,.astrarc>>` file in the following format:
+Configuration profiles are stored in the following format in the `<<file-locations,.astrarc>>` file:
 
+..astrarc
 [source,ini,subs="+quotes"]
 ----
 [Production]
@@ -428,7 +418,8 @@ ASTRA_DB_APPLICATION_TOKEN=AstraCS:**IGXWg...**
 ASTRA_DB_APPLICATION_TOKEN=AstraCS:WeaYR...
 ----
 
-The `[default]` profile references the application token of the default configuration profile.
+The `[default]` profile duplicates the application token of the configuration profile that is currently <<set-default-configuration-profile,set as the default>>.
+In the previous example, you can tell the `Production` profile is the default profile because `[Production]` and `[default]` have the same application token.
 
 === Create a new configuration profile
 
@@ -455,6 +446,23 @@ $ astra config use 'PROFILE_NAME'
 
 You can also use the `xref:commands:astra-setup.adoc[]` command again to create additional configuration profiles interactively.
 
+.Enclose arguments in quotes when they contain spaces
+[TIP]
+====
+When specifying arguments that contain spaces (for example, profile names like `Test 1`), you must wrap the value in single quotes (`''`).
+This ensures the {product} treats the entire phrase as one argument rather than splitting it into separate words.
+
+For example:
+
+[source,shell,subs="+quotes"]
+----
+astra config create **'Test 1'** --token AstraCS:...
+----
+
+Without quotes, the command would interpret `Test` and `1` as two different arguments and cause an `Unmatched argument` or other similar error.
+====
+
+[#set-default-configuration-profile]
 === Set the default configuration profile
 
 Use the `xref:commands:astra-config-use.adoc[]` command to change the default configuration that the {product} uses when executing commands:
@@ -535,10 +543,14 @@ The {product} stores the following items in this directory:
 * Cache files for <<command-auto-completion,command auto-completion>>
 * Logs
 
+For more information about the `ASTRA_HOME` directory, see the {product} https://github.com/datastax/astra-cli?tab=readme-ov-file#home-folder-location[README].
+
 |`.astrarc`
 |The {product} configuration file.
 
 _Default location_: `~/.astrarc` (macOS and Linux), `%USERPROFILE%\.astrarc` (Windows)
 
 This file stores your <<manage-configuration-profiles,configuration profiles>> and their associated application tokens.
+
+For more information about the {product} configuration file, see the {product} https://github.com/datastax/astra-cli?tab=readme-ov-file#astrarc-location[README].
 |===

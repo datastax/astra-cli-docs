@@ -23,7 +23,7 @@ astra nuke
 
 When prompted, type kbd:[y] and press kbd:[Enter] to proceed with the uninstallation.
 
-The `astra nuke` command deletes the {product} home directory and optionally the configuration files (`https://github.com/datastax/astra-cli?tab=readme-ov-file#home-folder-location[~/.astra]` and `https://github.com/datastax/astra-cli?tab=readme-ov-file#astrarc-location[~/.astrarc]`).
+The `astra nuke` command deletes the {product} home directory and optionally the configuration files (`xref:ROOT:use-cli.adoc#file-locations[~/.astra]` and `xref:ROOT:use-cli.adoc#file-locations[~/.astrarc]`).
 It also lists any shell profile containing references to the `astra` command.
 Delete these references manually if desired.
 --
@@ -31,14 +31,14 @@ Delete these references manually if desired.
 Manual removal::
 +
 --
-. Optional: Remove the `https://github.com/datastax/astra-cli?tab=readme-ov-file#astrarc-location[.astrarc]` file if you don't need your credentials anymore:
+. Optional: Remove the `xref:ROOT:use-cli.adoc#file-locations[.astrarc]` file if you don't need your credentials anymore:
 +
 [source,shell]
 ----
 rm $(astra config path -p)
 ----
 
-. Delete the https://github.com/datastax/astra-cli?tab=readme-ov-file#home-folder-location[{product} home directory]
+. Delete the xref:ROOT:use-cli.adoc#file-locations[{product} home directory]
 +
 [source,shell]
 ----
@@ -67,7 +67,7 @@ Uninstaller (recommended)::
 --
 Only use this method if you installed the {product} using the xref:ROOT:install.adoc[scripted installer].
 
-. Optional: Remove the `https://github.com/datastax/astra-cli?tab=readme-ov-file#astrarc-location[.astrarc]` file if you don't need your credentials anymore:
+. Optional: Remove the `xref:ROOT:use-cli.adoc#file-locations[.astrarc]` file if you don't need your credentials anymore:
 +
 [source,powershell]
 ----
@@ -96,7 +96,7 @@ astra nuke
 
 When prompted, type kbd:[y] and press kbd:[Enter] to proceed with the uninstallation.
 
-The `astra nuke` command deletes the {product} home directory and optionally the configuration files (`https://github.com/datastax/astra-cli?tab=readme-ov-file#home-folder-location[~/.astra]` and `https://github.com/datastax/astra-cli?tab=readme-ov-file#astrarc-location[~/.astrarc]`).
+The `astra nuke` command deletes the {product} home directory and optionally the configuration files (`xref:ROOT:use-cli.adoc#file-locations[~/.astra]` and `xref:ROOT:use-cli.adoc#file-locations[~/.astrarc]`).
 
 You must remove `astra` from your system `PATH` manually, if desired.
 For more information, see the https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_environment_variables[Microsoft PowerShell documentation].
@@ -105,14 +105,14 @@ For more information, see the https://learn.microsoft.com/en-us/powershell/modul
 Manual removal::
 +
 --
-. Optional: Remove the `https://github.com/datastax/astra-cli?tab=readme-ov-file#astrarc-location[.astrarc]` file if you don't need your credentials anymore:
+. Optional: Remove the `xref:ROOT:use-cli.adoc#file-locations[.astrarc]` file if you don't need your credentials anymore:
 +
 [source,powershell]
 ----
 rm -f $(astra config path -p)
 ----
 
-. Delete the https://github.com/datastax/astra-cli?tab=readme-ov-file#home-folder-location[{product} home directory]
+. Delete the xref:ROOT:use-cli.adoc#file-locations[{product} home directory]
 +
 [source,powershell]
 ----
@@ -134,7 +134,7 @@ For more information, see the https://learn.microsoft.com/en-us/powershell/modul
 Homebrew::
 +
 --
-. Optional: Run the `xref:commands:astra-nuke.adoc[]` command to delete the {product} home directory and optionally the configuration files (`https://github.com/datastax/astra-cli?tab=readme-ov-file#home-folder-location[~/.astra]` and `https://github.com/datastax/astra-cli?tab=readme-ov-file#astrarc-location[~/.astrarc]`):
+. Optional: Run the `xref:commands:astra-nuke.adoc[]` command to delete the {product} home directory and optionally the configuration files (`xref:ROOT:use-cli.adoc#file-locations[~/.astra]` and `xref:ROOT:use-cli.adoc#file-locations[~/.astrarc]`):
 +
 [source,shell]
 ----
