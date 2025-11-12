@@ -1,0 +1,182 @@
+= Run CQL commands with cqlsh
+
+`cqlsh` is an interface that you can use to issue xref:astra@cql:ROOT:index.adoc[{cass-short} Query Language (CQL)] commands to your database.
+
+The {product} provides built-in `cqlsh` support by downloading, installing, configuring, and wapping the `cqlsh` utility.
+This can act as a convenient alternative to installing and configuring a xref:astra-db-serverless:cql:develop-with-cql.adoc#connect-to-the-cql-shell[standalone cqlsh].
+
+== Prerequisites
+
+To use `cqlsh` commands, you must have a supported version of Python installed on your system.
+
+The underlying `cqlsh` utility requires Python 2.7 (with TLS support) or Python 3.6--3.11.
+Python versions 3.12 and later are not supported.
+For more details, see this https://support.datastax.com/s/article/cqlsh-may-fail-with-A-Python-installation-with-SSL-is-required-to-connect-to-a-cloud-cluster-when-connecting-to-Astra[Support article]
+
+== Start cqlsh
+
+Use the `xref:commands:astra-db-cqlsh.adoc[]` command to start `cqlsh` in interactive mode:
+
+[source,bash,subs="+quotes"]
+----
+astra db cqlsh **DATABASE_ID**
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
+[INFO]  Downloading Cqlshell, please wait...
+[INFO]  Installing  archive, please wait...
+[INFO]  Cqlsh is starting, please wait for connection establishment...
+Connected to cndb at 127.0.0.1:9042.
+[cqlsh 6.8.0 | Cassandra 4.0.0.6816 | CQL spec 3.4.5 | Native protocol v4]
+Use HELP for help.
+token@cqlsh>
+----
+====
+
+Type `exit` or `quit;` and press kbd:[Enter] to exit `cqlsh`.
+
+The first time you use `astra db cqlsh`, the {product} downloads and installs the `cqlsh` utility to the xref:ROOT:manage-cli.adoc#file-locations[{product} home directory].
+The {product} also downloads the {scb} for each database you connect to and stores the {scb-short} zip files in the home directory.
+
+[TIP]
+======
+If the {product} reports `ModuleNotFoundError`, check that you have a supported version of Python available in your terminal:
+
+[source,bash]
+----
+python -V
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
+Python 3.11.10
+----
+====
+======
+
+== Connect to a specific keyspace
+
+Use the `-k` / `--keyspace` option to connect directly to a specific keyspace:
+
+[source,bash,subs="+quotes"]
+----
+astra db cqlsh **DATABASE_ID** -k **KEYSPACE_NAME**
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
+[INFO]  Cqlsh is starting, please wait for connection establishment...
+Connected to cndb at 127.0.0.1:9042.
+[cqlsh 6.8.0 | Cassandra 4.0.0.6816 | CQL spec 3.4.5 | Native protocol v4]
+Use HELP for help.
+token@cqlsh:keyspace2>
+----
+====
+
+== Issue a CQL statement
+
+Use the `-e` / `--execute` option to issue a CQL statement:
+
+[source,bash,subs="+quotes"]
+----
+astra db cqlsh **DATABASE_ID** -e "describe keyspaces;"
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
+[INFO]  Cqlsh is starting, please wait for connection establishment...
+
+system_auth    data_endpoint_auth  system_traces
+datastax_sla   default_keyspace    system_virtual_schema
+system_schema  system              system_views
+----
+====
+
+== Execute a CQL file
+
+Use the `-f` / `--file` option to execute a CQL file:
+
+[source,bash,subs="+quotes"]
+----
+astra db cqlsh **DATABASE_ID** -f sample.cql
+----
+
+.Example CQL file
+[%collapsible]
+====
+.sample.cql
+[source,cql]
+----
+-- Use a specific keyspace
+USE keyspace1;
+
+-- Create a table
+CREATE TABLE IF NOT EXISTS users (
+    id UUID PRIMARY KEY,
+    name TEXT,
+    email TEXT
+);
+
+-- Insert some data
+INSERT INTO users (id, name, email) VALUES (uuid(), 'Alice', 'alice@example.com');
+INSERT INTO users (id, name, email) VALUES (uuid(), 'Bob', 'bob@example.com');
+
+-- Query the data
+SELECT * FROM users;
+----
+====
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
+[INFO]  Cqlsh is starting, please wait for connection establishment...
+
+ id                                   | email             | name
+--------------------------------------+-------------------+-------
+ 62a32f14-5432-4a28-add7-761d3626373e |   bob@example.com |   Bob
+ 0a489e53-0eed-4385-81a6-081143c228f1 | alice@example.com | Alice
+
+(2 rows)
+----
+====
+
+[TIP]
+======
+You can also execute a CQL file using the `xref:astra@cql:reference:cqlsh-commands/source.adoc[]` CQL command:
+
+[source,bash,subs="+quotes"]
+----
+astra db cqlsh **DATABASE_ID** -e "SOURCE 'sample.cql'"
+----
+
+.Result
+[%collapsible]
+====
+[source,cql]
+----
+[INFO]  Cqlsh is starting, please wait for connection establishment...
+
+ id                                   | email             | name
+--------------------------------------+-------------------+-------
+ 62a32f14-5432-4a28-add7-761d3626373e |   bob@example.com |   Bob
+ 0a489e53-0eed-4385-81a6-081143c228f1 | alice@example.com | Alice
+
+(2 rows)
+----
+====
+======

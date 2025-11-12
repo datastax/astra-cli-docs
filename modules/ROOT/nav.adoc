@@ -4,6 +4,9 @@
 * xref:upgrade.adoc[]
 * xref:uninstall.adoc[]
 
+.Quickstarts
+* xref:quickstarts:cqlsh.adoc[]
+
 include::ROOT:partial$partial-nav.adoc[]
 
 .Release notes

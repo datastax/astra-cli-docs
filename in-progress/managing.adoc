@@ -1,3 +1,4 @@
+// Writer's note: This page is no longer published but there is still content that should be retained and reformatted for Astra CLI 1.0.
 = {astra_db} commands
 :embedding-provider-name: NVIDIA
 :embedding-provider-name-api: nvidia
