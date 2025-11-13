@@ -550,7 +550,7 @@ The {product} stores the following items in this directory:
 
 * The {product} executable (scripted installations only)
 * Accessory executables downloaded by certain commands, such as `xref:commands:astra-db-cqlsh.adoc[]` and `xref:commands:astra-db-dsbulk.adoc[]`
-* {scb}s
+* {scb-brief}s
 * Cache files for <<command-auto-completion,command auto-completion>>
 * Logs
 
