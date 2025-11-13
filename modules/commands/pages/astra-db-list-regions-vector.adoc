@@ -22,6 +22,10 @@ List all available regions for vector Astra DB databases
 `-f`, `--filter`:: Comma-separated case-insensitive partial-match filters on the region name
 `-c`, `--cloud`:: Comma-separated list of cloud providers to filter on
 `-z`, `--zone`:: Comma-separated list of zones to include
+
+.Common Options
+[%collapsible]
+====
 `-o`, `--output`:: One of: human, json, csv
 `-V`, `--verbose`:: Enable verbose logging output
 `-q`, `--quiet`:: Only output essential information
@@ -29,10 +33,16 @@ List all available regions for vector Astra DB databases
 `--no-input`:: Don't ask for user input (e.g. confirmation prompts)
 `--color`:: One of: auto, never, always
 `--dump-logs`:: Write all logs to an optionally specified file
+====
+
+.Connection Options
+[%collapsible]
+====
 `-cf`, `--config-file`:: The ``.astrarc`` file to use for this command
 `-p`, `--profile`:: The ``.astrarc`` profile to use for this command
 `--token`:: The astra token to use for this command. Use the ``--token @file`` syntax to read the token from a file, to avoid potential leaks.
 `--env`:: Override the target astra environment
+====
 
 
 == Examples

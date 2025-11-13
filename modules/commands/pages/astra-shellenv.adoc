@@ -28,7 +28,7 @@ Intended to be added to your shell profile (``.zprofile``, ``.bash_profile``, ``
 
 `--home`:: Sets the ``ASTRA_HOME`` env var. See ``astra config home path -h`` for how this is resolved.
 `--rc`:: Sets the ``ASTRARC`` env var. See ``astra config path -h`` for how this is resolved.
-`--ignore-multiple-paths`:: Ignore warnings about multiple home folders or astrarc files being present. Sets ``ASTRA_IGNORE_MULTIPLE_PATHS=true`` under the hood.
+`--ignore-multiple-paths`:: Ignore warnings about multiple astra home folders or astrarc files being present. Sets ``ASTRA_IGNORE_MULTIPLE_PATHS=true`` under the hood.
 `--no-update-notifier`:: Disables background update checks notifications. Sets ``ASTRA_NO_UPDATE_NOTIFIER=true`` under the hood.
 
 
@@ -47,7 +47,7 @@ $ eval "$(/path/to/astra shellenv --rc /path/to/astrarc)"
 # Disable update notifications
 $ eval "$(/path/to/astra shellenv --no-update-notifier)"
 
-# Ignore warnings about multiple home folders or astrarc files
+# Ignore warnings about multiple astra home folders or astrarc files
 $ eval "$(/path/to/astra shellenv --ignore-multiple-paths)"
 ----
 

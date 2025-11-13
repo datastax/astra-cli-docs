@@ -1,15 +1,14 @@
-= astra config delete
+= astra config rename
 
 [source,shell]
 ----
-astra config delete [-qV] [--if-exists] [--no-input] [--[no-]spinner]
-                    [--dump-logs[=FILE]] [-cf=PATH] [--color=WHEN] [-o=FORMAT]
-                    [NAME]
+astra config rename [-qV] [--no-input] [--[no-]spinner] [--dump-logs[=FILE]]
+                    [-cf=PATH] [--color=WHEN] [-o=FORMAT] [NAME] NAME
 
 ----
 
 
-Delete an existing configuration profile.
+Rename an existing configuration profile.
 
 
 
@@ -17,9 +16,9 @@ Delete an existing configuration profile.
 
 == Options
 
-`NAME`:: Name of the profile to delete
+`NAME`:: Name of the profile to rename
+`NAME`:: New name for the profile
 `-cf`, `--config-file`:: The .astrarc file to work with. See ``astra config path -h`` for how this is resolved.
-`--if-exists`:: Do not fail if the profile does not exist
 
 .Common Options
 [%collapsible]
@@ -37,11 +36,11 @@ Delete an existing configuration profile.
 == Examples
 [source,bash]
 ----
-# Delete a profile named 'my_profile'
-$ astra config delete my_profile
+# Rename a profile from 'old_name' to 'new_name'
+$ astra config rename old_name new_name
 
-# Delete a profile named 'my_profile' without failing if it does not exist
-$ astra config delete my_profile --if-exists
+# Interactively rename a profile
+$ astra config rename
 ----
 
 

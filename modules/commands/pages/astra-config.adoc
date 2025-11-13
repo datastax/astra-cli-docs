@@ -20,6 +20,7 @@ Manage your Astra CLI configuration profiles
 * xref:astra-config-create.adoc[astra config create]
 * xref:astra-config-get.adoc[astra config get]
 * xref:astra-config-delete.adoc[astra config delete]
+* xref:astra-config-rename.adoc[astra config rename]
 * xref:astra-config-use.adoc[astra config use]
 * xref:astra-config-path.adoc[astra config path]
 * xref:astra-config-home.adoc[astra config home]
@@ -29,6 +30,10 @@ Manage your Astra CLI configuration profiles
 
 `-cf`, `--config-file`:: The .astrarc file to work with. See ``astra config path -h`` for how this is resolved.
 `-e`, `--env`:: Filter by Astra environment
+
+.Common Options
+[%collapsible]
+====
 `-o`, `--output`:: One of: human, json, csv
 `-V`, `--verbose`:: Enable verbose logging output
 `-q`, `--quiet`:: Only output essential information
@@ -36,6 +41,7 @@ Manage your Astra CLI configuration profiles
 `--no-input`:: Don't ask for user input (e.g. confirmation prompts)
 `--color`:: One of: auto, never, always
 `--dump-logs`:: Write all logs to an optionally specified file
+====
 
 
 == Examples

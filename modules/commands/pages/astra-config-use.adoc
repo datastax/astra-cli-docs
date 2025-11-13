@@ -18,6 +18,10 @@ Sets an existing profile to be used as the default for all commands. Use the ``-
 
 `NAME`:: Profile to set as default
 `-cf`, `--config-file`:: The .astrarc file to work with. See ``astra config path -h`` for how this is resolved.
+
+.Common Options
+[%collapsible]
+====
 `-o`, `--output`:: One of: human, json, csv
 `-V`, `--verbose`:: Enable verbose logging output
 `-q`, `--quiet`:: Only output essential information
@@ -25,6 +29,7 @@ Sets an existing profile to be used as the default for all commands. Use the ``-
 `--no-input`:: Don't ask for user input (e.g. confirmation prompts)
 `--color`:: One of: auto, never, always
 `--dump-logs`:: Write all logs to an optionally specified file
+====
 
 
 == Examples

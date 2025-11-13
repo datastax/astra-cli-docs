@@ -12,7 +12,7 @@ Entirely delete Astra CLI from your system
 
 This command may be used to delete any files associated with Astra CLI, including:
 
- * The home folder,
+ * The ``.astra`` home folder,
 
  * The ``.astrarc`` file,
 
@@ -31,6 +31,10 @@ This will also detect any shell rc files which need ``astra``-related lines remo
 `--dry-run`:: Simulate the nuke operation without deleting any files
 `--preserve-astrarc`:: Preserve the ``.astrarc`` file in your home directory
 `-y`, `--yes`:: Whether to nuke without confirmation (if not a dry run)
+
+.Common Options
+[%collapsible]
+====
 `-o`, `--output`:: One of: human, json, csv
 `-V`, `--verbose`:: Enable verbose logging output
 `-q`, `--quiet`:: Only output essential information
@@ -38,6 +42,7 @@ This will also detect any shell rc files which need ``astra``-related lines remo
 `--no-input`:: Don't ask for user input (e.g. confirmation prompts)
 `--color`:: One of: auto, never, always
 `--dump-logs`:: Write all logs to an optionally specified file
+====
 
 
 == Examples

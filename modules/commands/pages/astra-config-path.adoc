@@ -26,6 +26,12 @@ By default, shows informational output when running in a TTY (interactive termin
 
 == Options
 
+`-p`, `--plain`:: Print only the path to the .astrarc file, without additional information (always)
+`-i`, `--info`:: Print informational output with context about the path (always)
+
+.Common Options
+[%collapsible]
+====
 `-o`, `--output`:: One of: human, json, csv
 `-V`, `--verbose`:: Enable verbose logging output
 `-q`, `--quiet`:: Only output essential information
@@ -33,8 +39,7 @@ By default, shows informational output when running in a TTY (interactive termin
 `--no-input`:: Don't ask for user input (e.g. confirmation prompts)
 `--color`:: One of: auto, never, always
 `--dump-logs`:: Write all logs to an optionally specified file
-`-p`, `--plain`:: Print only the path to the .astrarc file, without additional information (always)
-`-i`, `--info`:: Print informational output with context about the path (always)
+====
 
 
 == Examples

@@ -21,6 +21,10 @@ Disassociate a PCU group to a datacenter
 `GROUP`:: The name or ID of the PCU group to operate on
 `TARGET`:: PCU association target (database name/id or datacenter id)
 `--if-exists`:: Don't error if the association doesn't exist
+
+.Common Options
+[%collapsible]
+====
 `-o`, `--output`:: One of: human, json, csv
 `-V`, `--verbose`:: Enable verbose logging output
 `-q`, `--quiet`:: Only output essential information
@@ -28,10 +32,16 @@ Disassociate a PCU group to a datacenter
 `--no-input`:: Don't ask for user input (e.g. confirmation prompts)
 `--color`:: One of: auto, never, always
 `--dump-logs`:: Write all logs to an optionally specified file
+====
+
+.Connection Options
+[%collapsible]
+====
 `-cf`, `--config-file`:: The ``.astrarc`` file to use for this command
 `-p`, `--profile`:: The ``.astrarc`` profile to use for this command
 `--token`:: The astra token to use for this command. Use the ``--token @file`` syntax to read the token from a file, to avoid potential leaks.
 `--env`:: Override the target astra environment
+====
 
 
 == Examples

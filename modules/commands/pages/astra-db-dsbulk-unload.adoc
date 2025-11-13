@@ -38,6 +38,12 @@ Unload data leveraging DSBulk
 `--skip-records`:: Number of records to skip from each input file before parsing
 `--max-errors`:: Maximum number of errors to tolerate before aborting the operation
 `-query`, `--schema.query`:: Optional query to unload or count
+`--dsbulk-config`:: Configuration file for DSBulk loader options
+`-F`, `--dsbulk-flags`:: Additional flags to pass to DSBulk loader
+
+.Common Options
+[%collapsible]
+====
 `-o`, `--output`:: One of: human, json, csv
 `-V`, `--verbose`:: Enable verbose logging output
 `-q`, `--quiet`:: Only output essential information
@@ -45,12 +51,16 @@ Unload data leveraging DSBulk
 `--no-input`:: Don't ask for user input (e.g. confirmation prompts)
 `--color`:: One of: auto, never, always
 `--dump-logs`:: Write all logs to an optionally specified file
+====
+
+.Connection Options
+[%collapsible]
+====
 `-cf`, `--config-file`:: The ``.astrarc`` file to use for this command
 `-p`, `--profile`:: The ``.astrarc`` profile to use for this command
 `--token`:: The astra token to use for this command. Use the ``--token @file`` syntax to read the token from a file, to avoid potential leaks.
 `--env`:: Override the target astra environment
-`--dsbulk-config`:: Configuration file for DSBulk loader options
-`-F`, `--dsbulk-flags`:: Additional flags to pass to DSBulk loader
+====
 
 
 == Examples

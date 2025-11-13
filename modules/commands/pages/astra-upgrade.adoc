@@ -2,7 +2,7 @@
 
 [source,shell]
 ----
-astra upgrade [-qVy] [--allow-reinstall] [--no-input] [--[no-]spinner]
+astra upgrade [-qV] [--allow-reinstall] [--no-input] [--[no-]spinner]
               [--dump-logs[=FILE]] [--color=WHEN] [-o=FORMAT] [-v=TAG | --pre]
 
 ----
@@ -20,8 +20,13 @@ To opt out of Update notifications, set ``ASTRA_NO_UPDATE_NOTIFIER=true``, or, e
 
 == Options
 
-`-y`, `--yes`:: Install the upgrade without any confirmation prompting
 `--allow-reinstall`:: Allow re-installing the same version
+`-v`, `--version`:: Version to upgrade to (default: latest)
+`--pre`, `--prerelease`:: Include pre-releases when looking for the latest version
+
+.Common Options
+[%collapsible]
+====
 `-o`, `--output`:: One of: human, json, csv
 `-V`, `--verbose`:: Enable verbose logging output
 `-q`, `--quiet`:: Only output essential information
@@ -29,8 +34,7 @@ To opt out of Update notifications, set ``ASTRA_NO_UPDATE_NOTIFIER=true``, or, e
 `--no-input`:: Don't ask for user input (e.g. confirmation prompts)
 `--color`:: One of: auto, never, always
 `--dump-logs`:: Write all logs to an optionally specified file
-`-v`, `--version`:: Version to upgrade to (default: latest)
-`--pre`, `--prerelease`:: Include pre-releases when looking for the latest version
+====
 
 
 == Examples

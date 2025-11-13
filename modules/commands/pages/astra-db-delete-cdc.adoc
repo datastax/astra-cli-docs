@@ -21,6 +21,14 @@ Delete a CDC (Change Data Capture) from the database
 
 `DB`:: The name or ID of the Astra database to operate on
 `--if-exists`:: Do not fail if CDC does not exist
+`--cdc-id`:: The CDC ID to delete
+`-k`, `--keyspace`:: The keyspace
+`--table`:: The table
+`--tenant`:: The tenant name
+
+.Common Options
+[%collapsible]
+====
 `-o`, `--output`:: One of: human, json, csv
 `-V`, `--verbose`:: Enable verbose logging output
 `-q`, `--quiet`:: Only output essential information
@@ -28,14 +36,16 @@ Delete a CDC (Change Data Capture) from the database
 `--no-input`:: Don't ask for user input (e.g. confirmation prompts)
 `--color`:: One of: auto, never, always
 `--dump-logs`:: Write all logs to an optionally specified file
+====
+
+.Connection Options
+[%collapsible]
+====
 `-cf`, `--config-file`:: The ``.astrarc`` file to use for this command
 `-p`, `--profile`:: The ``.astrarc`` profile to use for this command
 `--token`:: The astra token to use for this command. Use the ``--token @file`` syntax to read the token from a file, to avoid potential leaks.
 `--env`:: Override the target astra environment
-`--cdc-id`:: The CDC ID to delete
-`-k`, `--keyspace`:: The keyspace
-`--table`:: The table
-`--tenant`:: The tenant name
+====
 
 
 == Examples

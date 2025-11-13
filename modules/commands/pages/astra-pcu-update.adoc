@@ -21,17 +21,6 @@ Update an existing PCU group
 
 `GROUP`:: The name or ID of the PCU group to work with
 `--allow-duplicate-names`:: Allow multiple pcus with the same name
-`-o`, `--output`:: One of: human, json, csv
-`-V`, `--verbose`:: Enable verbose logging output
-`-q`, `--quiet`:: Only output essential information
-`--spinner`:: Enable/disable loading spinners
-`--no-input`:: Don't ask for user input (e.g. confirmation prompts)
-`--color`:: One of: auto, never, always
-`--dump-logs`:: Write all logs to an optionally specified file
-`-cf`, `--config-file`:: The ``.astrarc`` file to use for this command
-`-p`, `--profile`:: The ``.astrarc`` profile to use for this command
-`--token`:: The astra token to use for this command. Use the ``--token @file`` syntax to read the token from a file, to avoid potential leaks.
-`--env`:: Override the target astra environment
 `-t`, `--title`:: New title for the PCU group
 `-c`, `--cloud`:: Cloud provider this PCU will work in
 `-r`, `--region`:: Cloud region this PCU will work in. **Use one of the `astra db list-regions-*` commands to see available regions.**
@@ -41,6 +30,27 @@ Update an existing PCU group
 `--min`:: Minimum capacity units for the PCU group
 `--max`:: Maximum capacity units for the PCU group
 `--reserved`:: Reserved capacity units for the PCU group
+
+.Common Options
+[%collapsible]
+====
+`-o`, `--output`:: One of: human, json, csv
+`-V`, `--verbose`:: Enable verbose logging output
+`-q`, `--quiet`:: Only output essential information
+`--spinner`:: Enable/disable loading spinners
+`--no-input`:: Don't ask for user input (e.g. confirmation prompts)
+`--color`:: One of: auto, never, always
+`--dump-logs`:: Write all logs to an optionally specified file
+====
+
+.Connection Options
+[%collapsible]
+====
+`-cf`, `--config-file`:: The ``.astrarc`` file to use for this command
+`-p`, `--profile`:: The ``.astrarc`` profile to use for this command
+`--token`:: The astra token to use for this command. Use the ``--token @file`` syntax to read the token from a file, to avoid potential leaks.
+`--env`:: Override the target astra environment
+====
 
 
 == Examples

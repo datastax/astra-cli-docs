@@ -6,6 +6,7 @@
 ** xref:commands:astra-config-create.adoc[]
 ** xref:commands:astra-config-get.adoc[]
 ** xref:commands:astra-config-delete.adoc[]
+** xref:commands:astra-config-rename.adoc[]
 ** xref:commands:astra-config-use.adoc[]
 ** xref:commands:astra-config-path.adoc[]
 ** xref:commands:astra-config-home.adoc[]

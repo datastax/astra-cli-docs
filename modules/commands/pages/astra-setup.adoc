@@ -21,6 +21,10 @@ See ``astra config create`` for a programmatic way to create profiles without in
 `-t`, `--token`:: Token to use authenticate each call. If not provided, you will be prompted for it
 `-e`, `--env`:: Astra environment for the token to target. If not provided, you will be prompted for it
 `--name`:: Optional name for the profile. If not provided, you will be prompted for it
+
+.Common Options
+[%collapsible]
+====
 `-o`, `--output`:: One of: human, json, csv
 `-V`, `--verbose`:: Enable verbose logging output
 `-q`, `--quiet`:: Only output essential information
@@ -28,6 +32,7 @@ See ``astra config create`` for a programmatic way to create profiles without in
 `--no-input`:: Don't ask for user input (e.g. confirmation prompts)
 `--color`:: One of: auto, never, always
 `--dump-logs`:: Write all logs to an optionally specified file
+====
 
 
 == Examples
