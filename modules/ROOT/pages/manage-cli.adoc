@@ -240,7 +240,7 @@ See 'astra <command> <subcommand> --help' for help on a specific subcommand.
 ----
 ====
 
-Append the `-h`/`--help` option to any command or subcommand to get specific help information and examples:
+Append the `-h` / `--help` option to any command or subcommand to get specific help information and examples:
 
 [source,shell]
 ----
@@ -494,7 +494,7 @@ Default profile set to 'PROFILE_NAME'.
 [#specify-configuration-profile-individual-command]
 === Specify a configuration profile for an individual command
 
-Every command lets you specify a configuration profile using the `-p`/`--profile` option.
+Every command lets you specify a configuration profile using the `-p` / `--profile` option.
 This method is useful if you want to run a command using a different configuration profile without changing the default configuration profile.
 
 For example:
