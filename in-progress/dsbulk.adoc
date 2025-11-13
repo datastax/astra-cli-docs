@@ -1,4 +1,5 @@
 = Run DataStax Bulk Loader (DSBulk) commands
+:navtitle:  DSBulk quickstart
 
 xref:dsbulk:overview:dsbulk-about.adoc[DataStax Bulk Loader (DSBulk)] is a utility that you can use to load, unload, and count data in your database tables.
 The {product} provides embedded DSBulk support by downloading, installing, configuring, and wrapping the `dsbulk` utility.
@@ -162,10 +163,7 @@ astra db create dsbulk_demo_db -r us-east1 -k dsbulk_demo_keyspace
 ====
 [source,console]
 ----
-⠇ Checking if database 2c5f2157-d5b3-4697-97f0-78bcdd0123c1 is status ACTIVE (currently INITIALIZING, elapsed                                                                                                             Database dsbulk_demo_db has been created with id 2c5f2157-d5b3-4697-97f0-78bcdd0123c1. It is now active after waiting 422 seconds.
-
-# Get more information about the new database:
-$ astra db get dsbulk_demo_db
+Database 'dsbulk_demo_db' has been created with id '8b8fea68-404e-4f12-9a79-02079060adfa'. It is now active after waiting 433 seconds.
 ----
 ====
 

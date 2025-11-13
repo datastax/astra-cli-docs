@@ -6,8 +6,6 @@
 
 .Quickstarts
 * xref:quickstarts:cqlsh.adoc[]
-* xref:quickstarts:dsbulk.adoc[]
-* xref:quickstarts:change-data-capture.adoc[]
 
 include::ROOT:partial$partial-nav.adoc[]
 

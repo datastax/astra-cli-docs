@@ -1,13 +1,13 @@
 = Issue CQL commands with cqlsh in the {product}
-:navtitle:  Issue CQL commands with cqlsh
+:navtitle:  CQL quickstart
 
-The {cass-short} Query Language Shell (`cqlsh`) is a utility that you can use to issue xref:astra@cql:reference:cql-quick-reference.adoc[CQL commands] to your {product} database.
+The {cass-short} Query Language Shell (`cqlsh`) is a utility that you can use to issue xref:astra@cql:reference:cql-quick-reference.adoc[CQL commands] to your {astra-db} database.
 
-The {product} provides embedded `cqlsh` support by downloading, installing, configuring, and wrapping the `cqlsh` utility.
+The {product} provides embedded `cqlsh` support by downloading and installing the `cqlsh` utility in the background and exposing it through the `xref:commands:astra-db-cqlsh.adoc[]` commands.
 This can act as a convenient alternative to installing and configuring a xref:astra-db-serverless:cql:develop-with-cql.adoc#connect-to-the-cql-shell[standalone cqlsh].
 
-The first time you use a `astra db cqlsh` command, the {product} downloads and installs the `cqlsh` utility to the {product} home directory (`xref:ROOT:manage-cli.adoc#file-locations[~/.astra]`).
-The {product} also downloads the {scb} for each database you connect to and stores the {scb-short} zip files.
+The {product} doesn't download the `cqlsh` utility until the first time you use an `astra db cqlsh` command.
+When this happens, the {product} downloads and installs the `cqlsh` utility, and the {scb} for each database you connect to, into the {product} home directory (`xref:ROOT:manage-cli.adoc#file-locations[~/.astra]`).
 
 == Prerequisites
 
@@ -15,7 +15,7 @@ To use `cqlsh` commands, you must have a supported version of Python installed o
 
 The underlying `cqlsh` utility requires Python 2.7 (with TLS support) or Python 3.6--3.11.
 Python versions 3.12 and later are not supported.
-For more details, see this https://support.datastax.com/s/article/cqlsh-may-fail-with-A-Python-installation-with-SSL-is-required-to-connect-to-a-cloud-cluster-when-connecting-to-Astra[Support article]
+For more details, see this https://support.datastax.com/s/article/cqlsh-may-fail-with-A-Python-installation-with-SSL-is-required-to-connect-to-a-cloud-cluster-when-connecting-to-Astra[support article]
 
 == Start an interactive cqlsh session
 
@@ -81,7 +81,7 @@ token@cqlsh:my_keyspace>
 ----
 ====
 
-== Issue a CQL statement
+== Issue a CQL statement directly
 
 Use the `xref:commands:astra-db-cqlsh-exec.adoc[]` command to issue a CQL statement directly from your terminal without starting an interactive `cqlsh` session:
 
@@ -161,7 +161,7 @@ astra db cqlsh exec **DB_ID** "SOURCE 'sample.cql'"
 .Result
 [%collapsible]
 ====
-[source,cql]
+[source,console]
 ----
  id                                   | email             | name
 --------------------------------------+-------------------+-------

@@ -1,25 +1,17 @@
-= Change Data Capture (CDC)
+= Configure Change Data Capture (CDC) with the {product}
+:navtitle:  Change Data Capture quickstart
 
-CDC for {astra_db} automatically captures changes in real time, de-duplicates the changes, and then streams the clean set of changed data into xref:astra-streaming:ROOT:index.adoc[{astra_stream}] where it can be processed by client applications or sent to downstream systems.
+Change Data Capture (CDC) for {astra_db} automatically captures changes in real time, de-duplicates the changes, and then streams the clean set of changed data into xref:astra-streaming:ROOT:index.adoc[{astra_stream}] where it can be processed by client applications or sent to downstream systems.
 
-This page describes an end-to-end example showing how to use the {product} to create a CDC connection for a table in a {db-serverless} database.
-
-[IMPORTANT]
-====
-CDC for {astra_db} incurs billed charges based on your {astra_stream} usage.
-For more information, see https://www.ibm.com/docs/en/astra-streaming?topic=astra-streaming-annual-price-plans[{astra_stream} pricing].
-====
+This page provides an end-to-end example that shows you how to use the {product} to enable CDC for an {astra-db} database.
 
 == Create a database
 
-Create an {astra_db} {db-serverless} database:
+Create an {astra_db} database:
 
 [source,shell]
 ----
-astra db create cdc_demo_db \
-    -c aws \
-    -r us-east-1 \
-    -k cdc_demo_keyspace
+astra db create cdc_demo_db -r us-east1 -k cdc_demo_keyspace
 ----
 
 .Result
@@ -27,13 +19,7 @@ astra db create cdc_demo_db \
 ====
 [source,console]
 ----
-REGION OK
-[INFO]  Database 'cdc_demo_db' does not exist. Creating database 'cdc_demo_db' with keyspace 'cdc_demo_keyspace'
-get CLoud provider
-[INFO]  Database 'cdc_demo_db' and keyspace 'cdc_demo_keyspace' are being created.
-[INFO]  Database 'cdc_demo_db' has status 'PENDING' waiting to be 'ACTIVE' ...
-[INFO]  Database 'cdc_demo_db' has status 'ACTIVE' (took 112117 millis)
-[OK]    Database 'cdc_demo_db' is ready.
+Database 'cdc_demo_db' has been created with id 'ce5e563c-3248-4064-b03c-5892433a1347'. It is now active after waiting 422 seconds.
 ----
 ====
 
@@ -43,9 +29,7 @@ Create an {astra_stream} tenant in the same region as your database:
 
 [source,shell]
 ----
-astra streaming create cdc-demo-tenant \
-    -c aws \
-    -r useast1
+astra streaming create cdc-demo-tenant -c gcp -r useast1
 ----
 
 .Result
@@ -60,15 +44,15 @@ https://api.astra.datastax.com/v2/streaming/tenants/cdc-demo-tenant
 
 == Create a table in your database
 
-Use `xref:commands:astra-db-cqlsh.adoc[]` to create a table with a primary key column in your database:
+Use `xref:commands:astra-db-cqlsh-exec.adoc[]` to create a table with a primary key column in your database:
 
 [source,shell]
 ----
-astra db cqlsh cdc_demo_db -e \
-"CREATE TABLE IF NOT EXISTS cdc_demo_keyspace.cdc_demo_table ( \
-    key text PRIMARY KEY, \
-    c1 text \
-);"
+astra db cqlsh exec cdc_demo_db \
+    "CREATE TABLE IF NOT EXISTS cdc_demo_keyspace.cdc_demo_table ( \
+        key text PRIMARY KEY, \
+        c1 text \
+    );"
 ----
 
 .Result
@@ -84,8 +68,8 @@ Confirm table creation:
 +
 [source,shell]
 ----
-astra db cqlsh cdc_demo_db -e \
-"SELECT * FROM cdc_demo_keyspace.cdc_demo_table"
+astra db cqlsh exec cdc_demo_db \
+    "SELECT * FROM cdc_demo_keyspace.cdc_demo_table"
 ----
 
 .Result
