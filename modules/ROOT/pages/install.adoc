@@ -176,7 +176,7 @@ The response includes available commands and options for the {product}.
 Binary installation::
 +
 --
-. Download the appropriate `windows` zip file for your CPU architecture from https://github.com/datastax/astra-cli/releases[GitHub].
+. Download the `windows` zip file from https://github.com/datastax/astra-cli/releases[GitHub].
 
 . Extract the zip file into the directory where you want to install the {product}:
 +
