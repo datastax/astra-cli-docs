@@ -106,7 +106,7 @@ eval "$(**PATH_TO_BINARY** shellenv)"
 +
 Replace `**PATH_TO_BINARY**` with the full path to the `astra` executable in the installation directory.
 
-. Required on macOS: Delete the `com.apple.quarantine` attribute from the `astra` binary to remove https://support.apple.com/guide/security/gatekeeper-and-runtime-protection-sec5599b66df/web[macOS Gatekeeper restrictions]:
+. On macOS: Delete the `com.apple.quarantine` attribute from the `astra` binary to remove https://support.apple.com/guide/security/gatekeeper-and-runtime-protection-sec5599b66df/web[macOS Gatekeeper restrictions]:
 +
 [source,shell]
 ----
