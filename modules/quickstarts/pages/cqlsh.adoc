@@ -44,28 +44,7 @@ token@cqlsh>
 ----
 ====
 
-Type `exit` or `quit;` and press kbd:[Enter] to exit `cqlsh`.
-
-== Connect to a specific keyspace
-
-Use the `-k` / `--keyspace` option with the `xref:commands:astra-db-cqlsh-start.adoc[]` and `xref:commands:astra-db-cqlsh-exec.adoc[]` commands to connect directly to a specific keyspace:
-
-[source,shell,subs="+quotes"]
-----
-astra db cqlsh start **DB_ID** -k **KEYSPACE_NAME**
-----
-
-.Result
-[%collapsible]
-====
-[source,console]
-----
-Connected to cndb at 127.0.0.1:9042.
-[cqlsh 6.8.0 | Cassandra 4.0.0.6816 | CQL spec 3.4.5 | Native protocol v4]
-Use HELP for help.
-token@cqlsh:my_keyspace>
-----
-====
+To exit `cqlsh`, type `exit` or `quit;` and then press kbd:[Enter].
 
 == Issue a CQL statement directly
 
@@ -86,6 +65,8 @@ my_keyspace    system              system_traces     system_virtual_schema
 system_schema  datastax_sla        my_keyspace2
 ----
 ====
+
+CQL statements must be enclosed in double quotes (`""`).
 
 === Execute a CQL file
 
@@ -158,6 +139,45 @@ astra db cqlsh exec **DB_ID** "SOURCE 'sample.cql'"
 ----
 ====
 ======
+
+== Connect to a specific keyspace
+
+Use the `-k` / `--keyspace` option with the `xref:commands:astra-db-cqlsh-start.adoc[]` and `xref:commands:astra-db-cqlsh-exec.adoc[]` commands to connect directly to a specific keyspace:
+
+[source,shell,subs="+quotes"]
+----
+astra db cqlsh start **DB_ID** -k **KEYSPACE_NAME**
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
+Connected to cndb at 127.0.0.1:9042.
+[cqlsh 6.8.0 | Cassandra 4.0.0.6816 | CQL spec 3.4.5 | Native protocol v4]
+Use HELP for help.
+token@cqlsh:my_keyspace>
+----
+====
+
+[source,shell,subs="+quotes"]
+----
+astra db cqlsh exec **DB_ID** -k **KEYSPACE_NAME** "DESC TABLES"
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
+repairs              view_builds_in_progress  paxos           transferred_ranges
+available_ranges     peers                    size_estimates
+batches              compaction_history       built_views
+prepared_statements  sstable_activity         range_xfers
+"IndexInfo"          peer_events              local
+----
+====
 
 ////
 TODO: Consider adding the following sections later:
