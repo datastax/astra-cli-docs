@@ -41,7 +41,7 @@ Scripted installation (recommended)::
 +
 [source,shell]
 ----
-curl -sSL ibm.biz/astra-cli | sh
+curl -sSL https://ibm.biz/astra-cli | sh
 ----
 +
 .Install to a custom location
@@ -57,12 +57,11 @@ export ASTRA_HOME=**INSTALLATION_DIRECTORY**
 Replace `**INSTALLATION_DIRECTORY**` with the full path to your preferred installation directory.
 ====
 
-. Add the following lines to your shell profile (for example, `~/.zprofile` or `~/.bash_profile`) to make the `astra` command executable from any directory:
+. Add the `astra` executable to your `PATH` by running the command supplied after installation:
 +
 [source,bash]
 ----
-# Astra CLI shell configuration
-eval "$(~/.astra/cli/astra shellenv)"
+echo 'eval "$(~/.astra/cli/astra shellenv)"' >> ~/.zprofile
 ----
 
 . Reload your shell profile or open a new terminal window.
@@ -143,7 +142,7 @@ Scripted installation (recommended)::
 +
 [source,powershell]
 ----
-powershell -c "irm ibm.biz/astra-cli-win | iex"
+powershell -c "irm https://ibm.biz/astra-cli-win | iex"
 ----
 +
 .Install to a custom location
