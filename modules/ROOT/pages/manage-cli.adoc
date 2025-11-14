@@ -26,9 +26,11 @@ xref:astra-db-serverless:administration:manage-application-tokens.adoc#org-token
 If this is your first time using the {product}, {company} recommends that you connect to a non-production organization first.
 That way, you can assign your application token a more expansive role, such as *Organization Administrator*, so that you can try out all of the {product}'s features without putting production data at risk.
 
-If you're using the {product} in production, {company} strongly recommends that you assign your application token only the bare minimum permissions required to perform the intended tasks.
+If you're using the {product} in production, {company} strongly recommends that you follow the principle of least privilege: Make sure your application token's role provides only the minimum required permissions.
+For example, don't grant an administrator-level role to a token that won't be used to execute those types of commands.
 ====
 
+//TODO: Turn this section into tabs
 [#connect-to-astra]
 == Connect the {product}
 
@@ -64,7 +66,7 @@ astra setup
 ----
 +
 .Result
-[%collapsible]
+[%collapsible%open]
 ====
 [source,console]
 ----
@@ -88,7 +90,7 @@ Press Enter to continue, or use Ctrl+C to cancel.
 . Press kbd:[Enter] to continue.
 +
 .Result
-[%collapsible]
+[%collapsible%open]
 ====
 [source,console]
 ----
@@ -100,7 +102,7 @@ Press Enter to continue, or use Ctrl+C to cancel.
 . Enter your application token (`AstraCS:...`), and then press kbd:[Enter].
 +
 .Result
-[%collapsible]
+[%collapsible%open]
 ====
 [source,console]
 ----
@@ -380,6 +382,9 @@ For example, after running `astra db list`, type `astra db get` followed by kbd:
 prod_db    test_db    playground_db
 ----
 
+Most dynamic auto-completions are tied to configuration profiles.
+When you switch to a different configuration profile, only resources that have been discovered by that profile are available for auto-completion.
+
 [#manage-configuration-profiles]
 == Manage configuration profiles
 
@@ -460,7 +465,7 @@ You can also use the `xref:commands:astra-setup.adoc[]` command again to create 
 [TIP]
 ====
 When specifying arguments that contain spaces (for example, profile names like `Test 1`), you must wrap the value in single quotes (`''`).
-This ensures the {product} treats the entire phrase as one argument rather than splitting it into separate words.
+This ensures that your shell treats the entire phrase as one argument rather than splitting it into separate words.
 
 For example:
 
@@ -469,7 +474,7 @@ For example:
 astra config create **'Test 1'** --token AstraCS:...
 ----
 
-Without quotes, the command would interpret `Test` and `1` as two different arguments and cause an `Unmatched argument` or other similar error.
+Without quotes, your shell would interpret `Test` and `1` as two different arguments and cause the command to return an `Unmatched argument` or other similar error.
 ====
 
 [#set-default-configuration-profile]
