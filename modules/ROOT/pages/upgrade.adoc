@@ -1,0 +1,90 @@
+= Upgrade the {product}
+:navtitle: Upgrade the CLI
+
+Keep the {product} up to date to access new features, improvements, and security updates.
+
+[IMPORTANT]
+====
+If you used a package manager to install the {product}, such as Homebrew, then you must use the same package manager to upgrade the {product}.
+====
+
+[tabs,sync-group-id=platforms]
+======
+macOS and Linux::
++
+--
+. Run the `xref:commands:astra-upgrade.adoc[]` command to upgrade to the latest version of the {product}:
++
+[source,shell]
+----
+astra upgrade
+----
+
+. Optional: Upgrade to a specific version of the {product}:
++
+[source,shell,subs="+quotes"]
+----
+astra upgrade --version **VERSION**
+----
++
+You can also use this command to downgrade to a previous version.
+
+. Check the {product} version to verify that the upgrade was successful:
++
+[source,shell]
+----
+astra --version
+----
++
+The response returns your {product} version.
+--
+
+Windows::
++
+--
+. Run the `xref:commands:astra-upgrade.adoc[]` command to upgrade to the latest version of the {product}:
++
+[source,powershell]
+----
+astra upgrade
+----
+
+. Optional: Upgrade to a specific version of the {product}:
++
+[source,powershell,subs="+quotes"]
+----
+astra upgrade --version **VERSION**
+----
++
+You can also use this command to downgrade to a previous version.
+
+. Check the {product} version to verify that the upgrade was successful:
++
+[source,powershell]
+----
+astra --version
+----
++
+The response returns your {product} version.
+--
+
+Homebrew::
++
+--
+. Run the following command to upgrade to the latest version of the {product}:
++
+[source,shell]
+----
+brew upgrade datastax/astra-cli/astra
+----
+
+. Check the {product} version to verify that the upgrade was successful:
++
+[source,shell]
+----
+astra --version
+----
++
+The response returns your {product} version.
+--
+======

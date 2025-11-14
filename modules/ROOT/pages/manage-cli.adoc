@@ -1,0 +1,572 @@
+= Connect and manage the {product}
+:navtitle: Connect and manage the CLI
+:page-aliases: ROOT:managing.adoc, ROOT:astra-streaming-cli.adoc, ROOT:administration.adoc
+
+////
+Author's note: The following pages used to serve as de facto command references:
+
+ROOT:managing.adoc, ROOT:astra-streaming-cli.adoc, ROOT:administration.adoc
+
+However, since the new command reference pages are programmatically generated, there isn't a good place to redirect them to (yet).
+Once we have quickstarts for Astra DB, Astra Streaming, and Astra administration, we can move the page aliases.
+////
+
+Learn how to connect and run commands with the {product}.
+
+If you haven't installed the {product} yet, see xref:ROOT:install.adoc[].
+
+== Get an application token
+
+The {product} requires an xref:astra-db-serverless:administration:manage-application-tokens.adoc[application token] to connect to {product-short}.
+
+xref:astra-db-serverless:administration:manage-application-tokens.adoc#org-token[Generate an application token] and copy the token string (`AstraCS:…`) before moving on to the next section.
+
+[TIP]
+====
+If this is your first time using the {product}, {company} recommends that you connect to a non-production organization first.
+That way, you can assign your application token a more expansive role, such as *Organization Administrator*, so that you can try out all of the {product}'s features without putting production data at risk.
+
+If you're using the {product} in production, {company} strongly recommends that you follow the principle of least privilege: Make sure your application token's role provides only the minimum required permissions.
+For example, don't grant an administrator-level role to a token that won't be used to execute those types of commands.
+====
+
+//TODO: Turn this section into tabs
+[#connect-to-astra]
+== Connect the {product}
+
+You can configure the {product} to authenticate in the following ways:
+
+Save configuration profiles::
+Configuration profiles let you save and manage connection information for use in {product} sessions.
++
+Each configuration profile consists of a name and an application token.
+When you set a profile as the default, the {product} authenticates all commands using that profile's application token, unless overridden.
++
+See <<create-first-configuration-profile>>.
+
+Authenticate individual commands::
+You can supply an application token to authenticate individual commands.
++
+This method is useful if you want to run a command without having to create a configuration profile.
++
+See <<authenticate-individual-command>>.
+
+[#create-first-configuration-profile]
+=== Create your first configuration profile
+
+The following procedure describes how to create your first configuration profile interactively, and is recommended for users who are new to the {product}.
+
+For more advanced methods of creating and managing configuration profiles, see <<manage-configuration-profiles>>.
+
+. Run the `xref:commands:astra-setup.adoc[]` command:
++
+[source,shell]
+----
+astra setup
+----
++
+.Result
+[%collapsible%open]
+====
+[source,console]
+----
+     _____            __
+    /  _  \   _______/  |_____________
+   /  /_\  \ /  ___/\   __\_  __ \__  \
+  /    |    \\___ \  |  |  |  | \ //__ \_
+  \____|__  /____  > |__|  |__|  (____  /
+          \/     \/                   \/
+
+                       Version: x.x.x
+
+Welcome to the interactive Astra CLI setup!
+
+Your configuration file will be created at /Users/username/.astrarc
+
+Press Enter to continue, or use Ctrl+C to cancel.
+----
+====
+
+. Press kbd:[Enter] to continue.
++
+.Result
+[%collapsible%open]
+====
+[source,console]
+----
+(Required) Enter your Astra token (it should start with AstraCS)
+> input hidden for security
+----
+====
+
+. Enter your application token (`AstraCS:...`), and then press kbd:[Enter].
++
+.Result
+[%collapsible%open]
+====
+[source,console]
+----
+(Optional) Enter a name for your profile (defaults to your org name)
+>
+----
+====
+
+. Enter a name for your configuration profile, or press kbd:[Enter] to accept the default (your organization name).
++
+.Result
+[%collapsible]
+====
+[source,console]
+----
+Profile 'PROFILE_NAME' successfully created.
+
+It has been set as the default profile.
+----
+====
++
+The {product} automatically sets the configuration profile as the default.
+All subsequent commands use this profile unless you <<specify-configuration-profile-individual-command,override it>>.
+
+. Run a command to test the connection.
+For example:
++
+[source,shell]
+----
+astra db list-clouds
+----
++
+.Result
+[%collapsible]
+====
+[source,console]
+----
+┌─────────────────┐
+│ Cloud Provider  │
+├─────────────────┤
+│ gcp             │
+│ azure           │
+│ aws             │
+└─────────────────┘
+----
+====
++
+If the command succeeds, your connection is configured correctly.
+
+[#authenticate-individual-command]
+=== Authenticate an individual command
+
+Every command lets you supply an application token using the `--token` option.
+This option is useful if you want to run a command without having to create a configuration profile.
+
+For example:
+
+[source,shell,subs="+quotes"]
+----
+astra user list --token **APPLICATION_TOKEN**
+----
+
+The `--token` option bypasses the default configuration profile (if one exists) and uses the supplied application token for that command only.
+
+Alternatively, if you have multiple application tokens saved in different configuration profiles, you can specify a configuration profile for an individual command.
+See <<specify-configuration-profile-individual-command>>.
+
+== Get command help
+
+Run `astra` by itself to print general help information:
+
+[source,shell]
+----
+astra
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
+     _____            __
+    /  _  \   _______/  |_____________
+   /  /_\  \ /  ___/\   __\_  __ \__  \
+  /    |    \\___ \  |  |  |  | \ //__ \_
+  \____|__  /____  > |__|  |__|  (____  /
+          \/     \/                   \/
+
+                       Version: x.x.x
+
+Documentation: https://docs.datastax.com/en/astra-cli
+
+Usage: astra [-qVv] [--no-input] [--[no-]spinner] [--dump-logs[=FILE]]
+             [--color=WHEN] [-o=FORMAT] [COMMAND]
+
+  -v, --version            Print version information and exit.
+                             (default: false)
+
+Common Options:
+      --color=WHEN         One of: auto, never, always
+                             (default: auto)
+      --dump-logs[=FILE]   Write all logs to an optionally specified file
+                             (default: ~/.astra/logs/<file>.log)
+      --no-input           Don't ask for user input (e.g. confirmation prompts)
+  -o, --output=FORMAT      One of: human, json, csv
+                             (default: human)
+  -q, --quiet              Only output essential information
+      --[no-]spinner       Enable/disable loading spinners
+                             (default: enabled if tty)
+  -V, --verbose            Enable verbose logging output
+
+Commands:
+  setup      Interactively set up the Astra CLI and create profiles
+  config     Manage your Astra CLI configuration profiles
+  db         Manage your Astra databases
+  pcu        Manage your PCU groups and associations
+  org        Get organization information
+  role       Discover Astra roles
+  streaming  Manage Astra streaming tenants
+  token      Manage your Astra tokens
+  user       Manage users in your organization
+  upgrade    Upgrade your Astra CLI installation
+  shellenv   Completions, configuration, and more
+  nuke       Entirely delete Astra CLI from your system
+
+Examples:
+  # Create a new profile
+  $ astra setup
+
+  # List databases
+  $ astra db list
+
+  # Create a vector database
+  $ astra db create demo -r us-east1
+
+See 'astra <command> <subcommand> --help' for help on a specific subcommand.
+----
+====
+
+Append the `-h` / `--help` option to any command or subcommand to get specific help information and examples:
+
+[source,shell]
+----
+astra org -h
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
+Usage: astra org [-qV] [--no-input] [--[no-]spinner] [--dump-logs[=FILE]]
+                 [--color=WHEN] [-o=FORMAT] [[[-cf=PATH] [-p=NAME]] |
+                 [--token=TOKEN [--env=ENV]]] [COMMAND]
+
+Get organization information
+
+The --token flag is handy to quickly get information about another organization.
+
+Use the --token @file syntax to read the token from a file, to avoid potential
+leaks.
+
+
+Common Options:
+      --color=WHEN         One of: auto, never, always
+                             (default: auto)
+      --dump-logs[=FILE]   Write all logs to an optionally specified file
+                             (default: ~/.astra/logs/<file>.log)
+      --no-input           Don't ask for user input (e.g. confirmation prompts)
+  -o, --output=FORMAT      One of: human, json, csv
+                             (default: human)
+  -q, --quiet              Only output essential information
+      --[no-]spinner       Enable/disable loading spinners
+                             (default: enabled if tty)
+  -V, --verbose            Enable verbose logging output
+
+Connection Options:
+      -cf, --config-file=PATH
+                           The .astrarc file to use for this command
+                             (default: ~/.astrarc)
+      --env=ENV            Override the target astra environment
+  -p, --profile=NAME       The .astrarc profile to use for this command
+      --token=TOKEN        The astra token to use for this command. Use the
+                             --token @file syntax to read the token from a
+                             file, to avoid potential leaks.
+
+Commands:
+  get   Get your organization's information
+  id    Get your organization's ID
+  name  Get your organization's name
+
+Examples:
+  # Get your organization's information
+  $ astra org
+
+  # Get information about another organization
+  $ astra org get --token AstraCS:...
+
+See 'astra <command> <subcommand> --help' for help on a specific subcommand.
+----
+====
+
+[source,shell]
+----
+astra db list --help
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
+Usage: astra db list [-qvV] [--no-input] [--[no-]spinner] [--dump-logs[=FILE]]
+                     [--color=WHEN] [-o=FORMAT] [[[-cf=PATH] [-p=NAME]] |
+                     [--token=TOKEN [--env=ENV]]]
+
+List your non-terminated Astra databases.
+
+  -v, --vector             Only show vector-enabled databases
+                             (default: false)
+
+Common Options:
+      --color=WHEN         One of: auto, never, always
+                             (default: auto)
+      --dump-logs[=FILE]   Write all logs to an optionally specified file
+                             (default: ~/.astra/logs/<file>.log)
+      --no-input           Don't ask for user input (e.g. confirmation prompts)
+  -o, --output=FORMAT      One of: human, json, csv
+                             (default: human)
+  -q, --quiet              Only output essential information
+      --[no-]spinner       Enable/disable loading spinners
+                             (default: enabled if tty)
+  -V, --verbose            Enable verbose logging output
+
+Connection Options:
+      -cf, --config-file=PATH
+                           The .astrarc file to use for this command
+                             (default: ~/.astrarc)
+      --env=ENV            Override the target astra environment
+  -p, --profile=NAME       The .astrarc profile to use for this command
+      --token=TOKEN        The astra token to use for this command. Use the
+                             --token @file syntax to read the token from a
+                             file, to avoid potential leaks.
+
+Examples:
+  # List all your Astra databases
+  $ astra db list
+
+  # List only vector-enabled Astra databases
+  $ astra db list --vector
+
+See 'astra <command> <subcommand> --help' for help on a specific subcommand.
+----
+====
+
+[#command-auto-completion]
+== Use command auto-completion
+
+The {product} provides command auto-completion for Bash and ZSH shells.
+
+To use auto-completion, type the `astra` command and then press kbd:[Tab] twice to get a list of available options:
+
+[source,shell,subs="+macros"]
+----
+% astra kbd:[Tab] kbd:[Tab]
+config     nuke       pcu        setup      streaming  upgrade
+db         org        role       shellenv   token      user
+----
+
+Certain dynamic arguments, such as database names, also support auto-completion once the {product} discovers them.
+
+For example, after running `astra db list`, type `astra db get` followed by kbd:[Tab] twice to see a list of your database names:
+
+[source,shell,subs="+macros"]
+----
+% astra db get kbd:[Tab] kbd:[Tab]
+prod_db    test_db    playground_db
+----
+
+Most dynamic auto-completions are tied to configuration profiles.
+When you switch to a different configuration profile, only resources that have been discovered by that profile are available for auto-completion.
+
+[#manage-configuration-profiles]
+== Manage configuration profiles
+
+Configuration profiles provide a convenient way to save and manage application tokens for <<connect-to-astra,connecting the {product}>>.
+Configuration profiles consist of a name and an application token and are stored in the `<<file-locations,.astrarc>>` configuration file.
+
+The following sections describe how to create additional configuration profiles, each with their own application token, to make it easier to manage different types of resources across one or more organizations.
+
+=== List your configuration profiles
+
+Use the `xref:commands:astra-config-list.adoc[]` command to list all of your configuration profiles:
+
+[source,shell]
+----
+astra config list
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
+┌─────────────────────┐
+│ configuration       │
+├─────────────────────┤
+│ Production (in use) │
+│ Testing             │
+└─────────────────────┘
+----
+====
+
+The default configuration profile is indicated by `(in use)`.
+
+Configuration profiles are stored in the following format in the `<<file-locations,.astrarc>>` file:
+
+..astrarc
+[source,ini,subs="+quotes"]
+----
+[Production]
+ASTRA_DB_APPLICATION_TOKEN=AstraCS:**IGXWg...**
+
+[default]
+ASTRA_DB_APPLICATION_TOKEN=AstraCS:**IGXWg...**
+
+[Testing]
+ASTRA_DB_APPLICATION_TOKEN=AstraCS:WeaYR...
+----
+
+The `[default]` profile duplicates the application token of the configuration profile that is currently <<set-default-configuration-profile,set as the default>>.
+In the previous example, you can tell the `Production` profile is the default profile because `[Production]` and `[default]` have the same application token.
+
+=== Create a new configuration profile
+
+Use the `xref:commands:astra-config-create.adoc[]` command to create a new configuration profile:
+
+[source,shell,subs="+quotes"]
+----
+astra config create '**PROFILE_NAME**' --token **APPLICATION_TOKEN**
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
+Configuration profile 'PROFILE_NAME' successfully created.
+
+(Hint: Use 'astra setup' for an interactive profile creation experience!)
+
+# Set it as the default profile:
+$ astra config use 'PROFILE_NAME'
+----
+====
+
+You can also use the `xref:commands:astra-setup.adoc[]` command again to create additional configuration profiles interactively.
+
+.Enclose arguments in quotes when they contain spaces
+[TIP]
+====
+When specifying arguments that contain spaces (for example, profile names like `Test 1`), you must wrap the value in single quotes (`''`).
+This ensures that your shell treats the entire phrase as one argument rather than splitting it into separate words.
+
+For example:
+
+[source,shell,subs="+quotes"]
+----
+astra config create **'Test 1'** --token AstraCS:...
+----
+
+Without quotes, your shell would interpret `Test` and `1` as two different arguments and cause the command to return an `Unmatched argument` or other similar error.
+====
+
+[#set-default-configuration-profile]
+=== Set the default configuration profile
+
+Use the `xref:commands:astra-config-use.adoc[]` command to change the default configuration that the {product} uses when executing commands:
+
+[source,shell,subs="+quotes"]
+----
+astra config use '**PROFILE_NAME**'
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
+Default profile set to 'PROFILE_NAME'.
+----
+====
+
+[#specify-configuration-profile-individual-command]
+=== Specify a configuration profile for an individual command
+
+Every command lets you specify a configuration profile using the `-p` / `--profile` option.
+This method is useful if you want to run a command using a different configuration profile without changing the default configuration profile.
+
+For example:
+
+[source,shell,subs="+quotes"]
+----
+astra user list --profile '**PROFILE_NAME**'
+----
+
+The `--profile` option bypasses the default configuration profile and uses the supplied configuration profile for that command only.
+
+If you want to run a command using an application token directly, without having to create a new profile, see <<authenticate-individual-command>>.
+
+=== Delete a configuration profile
+
+Use the `xref:commands:astra-config-delete.adoc[]` command to delete a configuration profile:
+
+[source,shell,subs="+quotes"]
+----
+astra config delete '**PROFILE_NAME**'
+----
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
+Profile 'PROFILE_NAME' deleted successfully.
+----
+====
+
+[NOTE]
+====
+If you delete the default configuration profile, the {product} _doesn't_ automatically select a new default configuration profile.
+You must use the `xref:commands:astra-config-use.adoc[]` command to set a new default configuration profile.
+====
+
+[#file-locations]
+== {product} file locations
+
+The {product} stores installation and configuration files in the following locations:
+
+[cols="1h,2"]
+|===
+|File / Directory |Description
+
+|`.astra`
+a|The `ASTRA_HOME` directory.
+
+_Default location_: `~/.astra` (macOS and Linux), `%USERPROFILE%\.astra` (Windows)
+
+The {product} stores the following items in this directory:
+
+* The {product} executable (scripted installations only)
+* Accessory executables downloaded by certain commands, such as `xref:commands:astra-db-cqlsh.adoc[]` and `xref:commands:astra-db-dsbulk.adoc[]`
+* {scb-brief}s
+* Cache files for <<command-auto-completion,command auto-completion>>
+* Logs
+
+For more information about the `ASTRA_HOME` directory, see the {product} https://github.com/datastax/astra-cli?tab=readme-ov-file#home-folder-location[README].
+
+|`.astrarc`
+|The {product} configuration file.
+
+_Default location_: `~/.astrarc` (macOS and Linux), `%USERPROFILE%\.astrarc` (Windows)
+
+This file stores your <<manage-configuration-profiles,configuration profiles>> and their associated application tokens.
+
+For more information about the {product} configuration file, see the {product} https://github.com/datastax/astra-cli?tab=readme-ov-file#astrarc-location[README].
+|===

@@ -1,5 +1,5 @@
-= Manage your {product-short} organization with the {product}
-:navtitle: Manage {product-short} administration
+// Writer's note: This page is no longer published but there is still content that should be retained and reformatted for Astra CLI 1.0.
+= {product-short} administration commands
 
 Use the {product} to manage your {product-short} organization.
 

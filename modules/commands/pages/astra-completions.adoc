@@ -1,0 +1,31 @@
+= astra completions
+
+[source,shell]
+----
+astra completions [-n=<$cliName>]
+
+----
+
+
+See the help for the ``astra shellenv`` command to setup completions in your shell.
+
+== Aliases
+
+`astra compgen`
+
+
+
+
+== Options
+
+`-n`, `--cli-name`:: CLI name to use in the completion script
+
+
+== Examples
+[source,bash]
+----
+# Put this in your shell profile (e.g. ``~/.zprofile``) to generate completions and set your PATH
+$ eval "$(/path/to/astra shellenv)"
+----
+
+

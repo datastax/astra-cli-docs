@@ -1,0 +1,45 @@
+= astra setup
+
+[source,shell]
+----
+astra setup [-qV] [--no-input] [--[no-]spinner] [--dump-logs[=FILE]]
+            [--color=WHEN] [-e=ENV] [--name=NAME] [-o=FORMAT] [-t=TOKEN]
+
+----
+
+
+Interactively set up the Astra CLI and create profiles
+
+See ``astra config create`` for a programmatic way to create profiles without interaction.
+
+
+
+
+
+== Options
+
+`-t`, `--token`:: Token to use authenticate each call. If not provided, you will be prompted for it
+`-e`, `--env`:: Astra environment for the token to target. If not provided, you will be prompted for it
+`--name`:: Optional name for the profile. If not provided, you will be prompted for it
+
+.Common Options
+[%collapsible]
+====
+`-o`, `--output`:: One of: human, json, csv
+`-V`, `--verbose`:: Enable verbose logging output
+`-q`, `--quiet`:: Only output essential information
+`--spinner`:: Enable/disable loading spinners
+`--no-input`:: Don't ask for user input (e.g. confirmation prompts)
+`--color`:: One of: auto, never, always
+`--dump-logs`:: Write all logs to an optionally specified file
+====
+
+
+== Examples
+[source,bash]
+----
+# Start the interactive setup process
+$ astra setup
+----
+
+

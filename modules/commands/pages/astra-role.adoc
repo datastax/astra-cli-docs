@@ -1,0 +1,34 @@
+= astra role
+
+[source,shell]
+----
+astra role [COMMAND]
+
+----
+
+
+Discover Astra roles
+
+
+
+== Subcommands
+
+* xref:astra-role-list.adoc[astra role list]
+* xref:astra-role-get.adoc[astra role get]
+
+
+== Options
+
+
+
+== Examples
+[source,bash]
+----
+# List all available roles
+$ astra role list
+
+# Get details for a specific role
+$ astra role get "Database Administrator"
+----
+
+

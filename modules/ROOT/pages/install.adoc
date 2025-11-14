@@ -1,0 +1,227 @@
+= Install the {product}
+:navtitle: Install the CLI
+:page-aliases: ROOT:installation.adoc, ROOT:getting-started.adoc
+:description: {product} makes it easier to integrate {product-short} into your applications and workflows by letting you perform common platform tasks for {astra_db} and {astra_stream} from the command line.
+
+Install the {product} to create and manage {astra_db} databases and {astra_stream} tenants from the command line.
+
+== Supported platforms
+
+The {product} supports the following operating systems:
+
+[cols="1,2"]
+|===
+|Operating System |Architecture
+
+|Linux
+|`x86_64`, `arm64`
+
+|macOS
+|`x86_64`, `arm64`
+
+|Microsoft Windows
+|`x86_64`
+|===
+
+== Install the CLI
+
+[tabs,sync-group-id=platforms]
+======
+macOS and Linux::
++
+Select one of the following installation methods to install the {product} on macOS and Linux.
+If you prefer to use a package manager, follow the Homebrew instructions instead.
++
+[tabs]
+=====
+Scripted installation (recommended)::
++
+--
+. Run the following command to install the latest version of the {product} to the default location:
++
+[source,shell]
+----
+curl -sSL ibm.biz/astra-cli | sh
+----
++
+.Install to a custom location
+[%collapsible]
+====
+To install the {product} to a custom location, export the `ASTRA_HOME` environment variable before running the installation command:
+
+[source,bash,subs="+quotes"]
+----
+export ASTRA_HOME=**INSTALLATION_DIRECTORY**
+----
+
+Replace `**INSTALLATION_DIRECTORY**` with the full path to your preferred installation directory.
+====
+
+. Add the following lines to your shell profile (for example, `~/.zprofile` or `~/.bash_profile`) to make the `astra` command executable from any directory:
++
+[source,bash]
+----
+# Astra CLI shell configuration
+eval "$(~/.astra/cli/astra shellenv)"
+----
+
+. Reload your shell profile or open a new terminal window.
+
+. Run the `astra` command from any directory to verify successful installation:
++
+[source,shell]
+----
+astra
+----
++
+The response includes available commands and options for the {product}.
+--
+
+Binary installation::
++
+--
+. Download the appropriate binary archive for your OS and CPU architecture from https://github.com/datastax/astra-cli/releases[GitHub].
+
+. Extract the archive into the directory where you want to install the {product}.
+For example:
++
+[source,shell,subs="+quotes"]
+----
+sudo tar -xzvf astra-**OS**-**ARCHITECTURE**.tar.gz -C **INSTALLATION_DIRECTORY**
+----
++
+Replace the following:
++
+* `**OS**`: Your operating system (`macos` or `linux`).
+* `**ARCHITECTURE**`: Your CPU architecture (`x86_64` or `arm64`).
+* `**INSTALLATION_DIRECTORY**`: The full path to your preferred installation directory.
+
+. Add the following lines to your shell profile (for example, `~/.zprofile` or `~/.bash_profile`) to make the `astra` command executable from any directory:
++
+[source,bash,subs="+quotes"]
+----
+# Astra CLI shell configuration
+eval "$(**PATH_TO_BINARY** shellenv)"
+----
++
+Replace `**PATH_TO_BINARY**` with the full path to the `astra` executable in the installation directory.
+
+. On macOS: Delete the `com.apple.quarantine` attribute from the `astra` binary to remove https://support.apple.com/guide/security/gatekeeper-and-runtime-protection-sec5599b66df/web[macOS Gatekeeper restrictions]:
++
+[source,shell]
+----
+xattr -d com.apple.quarantine $(which astra)
+----
++
+Alternatively, you can remove these restrictions in your https://support.apple.com/en-us/102445#openanyway[macOS System Settings].
++
+If you don't remove the restrictions, you will receive a security alert stating `“astra” Not Opened` when you run the `astra` command.
+
+. Reload your shell profile or open a new terminal window.
+
+. Run the `astra` command from any directory to verify successful installation:
++
+[source,shell]
+----
+astra
+----
++
+The response includes available commands and options for the {product}.
+--
+=====
+
+Windows::
++
+Select one of the following installation methods to install the {product} on Windows:
++
+[tabs]
+=====
+Scripted installation (recommended)::
++
+--
+. Run the following command to install the latest version of the {product} to the default location:
++
+[source,powershell]
+----
+powershell -c "irm ibm.biz/astra-cli-win | iex"
+----
++
+.Install to a custom location
+[%collapsible]
+====
+To install the {product} to a custom location, export the `ASTRA_HOME` environment variable before running the installation command:
+
+[source,powershell,subs="+quotes"]
+----
+$env:ASTRA_HOME = "**INSTALLATION_DIRECTORY**"
+----
+
+Replace `**INSTALLATION_DIRECTORY**` with the full path to your preferred installation directory.
+====
+
+. Open a new terminal window.
+
+. Run the `astra` command from any directory to verify successful installation:
++
+[source,powershell]
+----
+astra
+----
++
+The response includes available commands and options for the {product}.
+--
+
+Binary installation::
++
+--
+. Download the `windows` zip file from https://github.com/datastax/astra-cli/releases[GitHub].
+
+. Extract the zip file into the directory where you want to install the {product}:
++
+[source,powershell,subs="+quotes"]
+----
+powershell -C "Expand-Archive -Path astra-windows-x86_64.zip -DestinationPath **INSTALLATION_DIRECTORY** -Force"
+----
++
+Replace `**INSTALLATION_DIRECTORY**` with the full path to your preferred installation directory.
+
+. Add the path to the unzipped `astra.exe` file to your `PATH` environment variable.
+For more information, see the https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_environment_variables[Microsoft PowerShell documentation].
+
+. Start a new PowerShell session by opening a new terminal window.
+
+. Run the `astra` command from any directory to verify successful installation:
++
+[source,powershell]
+----
+astra
+----
++
+The response includes available commands and options for the {product}.
+--
+=====
+
+Homebrew::
++
+--
+. Install the latest version of the {product} using https://brew.sh/[Homebrew]:
++
+[source,shell]
+----
+brew install datastax/astra-cli/astra
+----
+
+. Run the `astra` command from any directory to verify successful installation:
++
+[source,shell]
+----
+astra
+----
++
+The response includes available commands and options for the {product}.
+--
+======
+
+== Next steps
+
+To connect to {product-short} and run your first commands, see xref:manage-cli.adoc[].

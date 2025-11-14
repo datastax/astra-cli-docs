@@ -1,0 +1,58 @@
+= astra config path
+
+[source,shell]
+----
+astra config path [-qV] [--no-input] [--[no-]spinner] [--dump-logs[=FILE]]
+                  [--color=WHEN] [-o=FORMAT] [-p | -i]
+
+----
+
+
+Prints the expected path of the .astrarc file, even if does not exist.
+
+The file is resolved in the following order:
+
+ 1. The ``ASTRARC`` environment variable __(e.g. ASTRARC=~/my_folder/.my_rc)__
+
+ 2. The ``XDG_CONFIG_HOME`` spec __(e.g. $XDG_CONFIG_HOME/astra/.astrarc)__
+
+ 3. The default home directory __(e.g. ~/.astrarc)__
+
+By default, shows informational output when running in a TTY (interactive terminal), and plain path output when piped or redirected.
+
+
+
+
+
+== Options
+
+`-p`, `--plain`:: Print only the path to the .astrarc file, without additional information (always)
+`-i`, `--info`:: Print informational output with context about the path (always)
+
+.Common Options
+[%collapsible]
+====
+`-o`, `--output`:: One of: human, json, csv
+`-V`, `--verbose`:: Enable verbose logging output
+`-q`, `--quiet`:: Only output essential information
+`--spinner`:: Enable/disable loading spinners
+`--no-input`:: Don't ask for user input (e.g. confirmation prompts)
+`--color`:: One of: auto, never, always
+`--dump-logs`:: Write all logs to an optionally specified file
+====
+
+
+== Examples
+[source,bash]
+----
+# Get information about the path to the .astrarc file
+$ astra config path
+
+# Force only the plain path to the .astrarc file, without additional information
+$ astra config path -p
+
+# Force informational output even when piped or redirected
+$ astra config path -i
+----
+
+

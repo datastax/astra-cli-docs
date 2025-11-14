@@ -1,0 +1,63 @@
+= astra pcu update
+
+[source,shell]
+----
+astra pcu update [-qV] [--allow-duplicate-names] [--no-input] [--[no-]spinner]
+                 [--dump-logs[=FILE]] [-c=CLOUD] [--color=WHEN] [-d=DESC]
+                 [-it=TYPE] [--max=MAX] [--min=MIN] [-o=FORMAT] [-pt=TYPE]
+                 [-r=REGION] [--reserved=RESERVED] [-t=TITLE] [[[-cf=PATH]
+                 [-p=NAME]] | [--token=TOKEN [--env=ENV]]] [GROUP]
+
+----
+
+
+Update an existing PCU group
+
+
+
+
+
+== Options
+
+`GROUP`:: The name or ID of the PCU group to work with
+`--allow-duplicate-names`:: Allow multiple pcus with the same name
+`-t`, `--title`:: New title for the PCU group
+`-c`, `--cloud`:: Cloud provider this PCU will work in
+`-r`, `--region`:: Cloud region this PCU will work in. **Use one of the `astra db list-regions-*` commands to see available regions.**
+`-d`, `--description`:: Optional description for the PCU group
+`-it`, `--instance-type`:: Cache type for the PCU group
+`-pt`, `--provision-type`:: Provision type for the PCU group
+`--min`:: Minimum capacity units for the PCU group
+`--max`:: Maximum capacity units for the PCU group
+`--reserved`:: Reserved capacity units for the PCU group
+
+.Common Options
+[%collapsible]
+====
+`-o`, `--output`:: One of: human, json, csv
+`-V`, `--verbose`:: Enable verbose logging output
+`-q`, `--quiet`:: Only output essential information
+`--spinner`:: Enable/disable loading spinners
+`--no-input`:: Don't ask for user input (e.g. confirmation prompts)
+`--color`:: One of: auto, never, always
+`--dump-logs`:: Write all logs to an optionally specified file
+====
+
+.Connection Options
+[%collapsible]
+====
+`-cf`, `--config-file`:: The ``.astrarc`` file to use for this command
+`-p`, `--profile`:: The ``.astrarc`` profile to use for this command
+`--token`:: The astra token to use for this command. Use the ``--token @file`` syntax to read the token from a file, to avoid potential leaks.
+`--env`:: Override the target astra environment
+====
+
+
+== Examples
+[source,bash]
+----
+# Update an existing PCU group
+$ astra pcu update my_pcu --tile new_title --min 2 --max 5
+----
+
+

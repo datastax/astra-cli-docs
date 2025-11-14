@@ -1,0 +1,46 @@
+= astra config rename
+
+[source,shell]
+----
+astra config rename [-qV] [--no-input] [--[no-]spinner] [--dump-logs[=FILE]]
+                    [-cf=PATH] [--color=WHEN] [-o=FORMAT] [NAME] NAME
+
+----
+
+
+Rename an existing configuration profile.
+
+
+
+
+
+== Options
+
+`NAME`:: Name of the profile to rename
+`NAME`:: New name for the profile
+`-cf`, `--config-file`:: The .astrarc file to work with. See ``astra config path -h`` for how this is resolved.
+
+.Common Options
+[%collapsible]
+====
+`-o`, `--output`:: One of: human, json, csv
+`-V`, `--verbose`:: Enable verbose logging output
+`-q`, `--quiet`:: Only output essential information
+`--spinner`:: Enable/disable loading spinners
+`--no-input`:: Don't ask for user input (e.g. confirmation prompts)
+`--color`:: One of: auto, never, always
+`--dump-logs`:: Write all logs to an optionally specified file
+====
+
+
+== Examples
+[source,bash]
+----
+# Rename a profile from 'old_name' to 'new_name'
+$ astra config rename old_name new_name
+
+# Interactively rename a profile
+$ astra config rename
+----
+
+

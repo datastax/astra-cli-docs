@@ -1,5 +1,5 @@
-= Manage {astra_db} with the {product}
-:navtitle: Manage {astra_db}
+// Writer's note: This page is no longer published but there is still content that should be retained and reformatted for Astra CLI 1.0.
+= {astra_db} commands
 :embedding-provider-name: NVIDIA
 :embedding-provider-name-api: nvidia
 :embedding-provider-model-name-api: NV-Embed-QA
@@ -2772,7 +2772,7 @@ OPTIONS
 == Use cqlsh
 
 `cqlsh` is an interface that you can use to issue xref:astra@cql:ROOT:index.adoc[{cass-short} Query Language (CQL)] commands to your database.
-The {product} provides built-in `cqlsh` support by downloading, installing, configuring, and wapping the `cqlsh` utility.
+The {product} provides built-in `cqlsh` support by downloading, installing, configuring, and wrapping the `cqlsh` utility.
 This can act as a convenient alternative to installing and configuring a xref:astra-db-serverless:cql:develop-with-cql.adoc#connect-to-the-cql-shell[standalone cqlsh].
 
 To use `cqlsh` commands, you must have a supported version of Python installed on your system.
@@ -2802,7 +2802,7 @@ token@cqlsh>
 ----
 ====
 
-Type `exit` or `quit;` and press kbd:[Return] to exit `cqlsh`.
+Type `exit` or `quit;` and press kbd:[Enter] to exit `cqlsh`.
 
 The first time you use the `astra db cqlsh` command, the {product} downloads and installs the `cqlsh` utility to the {product} installation directory (`~/.astra/cqlsh-astra`).
 The {product} also downloads the {scb} for each database you connect to and stores the {scb-short} zip files in the `~/.astra/scb` directory.
@@ -3020,7 +3020,7 @@ astra db cqlsh **DATABASE_ID** -e "SOURCE 'sample.cql'"
 == Use DataStax Bulk Loader
 
 The xref:dsbulk:overview:dsbulk-about.adoc[DataStax Bulk Loader (DSBulk)] lets you load, unload, and count data in your database tables.
-The {product} provides built-in DSBulk support by downloading, installing, configuring, and wapping the `dsbulk` utility.
+The {product} provides built-in DSBulk support by downloading, installing, configuring, and wrapping the `dsbulk` utility.
 
 The {product} exposes DSBulk functionality through the `astra db load`, `astra db unload`, and `astra db count` commands.
 
@@ -3517,7 +3517,7 @@ token@cqlsh:dsbulk_demo_keyspace>
 ----
 ====
 +
-.. Copy and paste the following CQL command into the `cqlsh` prompt and press kbd:[Return]:
+.. Copy and paste the following CQL command into the `cqlsh` prompt and press kbd:[Enter]:
 +
 [source,cql]
 ----
@@ -3539,7 +3539,7 @@ CREATE TABLE cities_by_country (
 +
 This command creates a table named `cities_by_country` with the appropriate schema for the `cities.csv` dataset.
 +
-.. Type `exit` or `quit;` and press kbd:[Return] to exit `cqlsh`.
+.. Type `exit` or `quit;` and press kbd:[Enter] to exit `cqlsh`.
 
 . Load the data from the `cities.csv` file into the `cities_by_country` table that you just created in your database:
 +

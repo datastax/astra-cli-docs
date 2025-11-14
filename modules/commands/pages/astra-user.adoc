@@ -1,0 +1,33 @@
+= astra user
+
+[source,shell]
+----
+astra user [COMMAND]
+
+----
+
+
+Manage users in your organization
+
+
+
+== Subcommands
+
+* xref:astra-user-list.adoc[astra user list]
+* xref:astra-user-get.adoc[astra user get]
+* xref:astra-user-invite.adoc[astra user invite]
+* xref:astra-user-delete.adoc[astra user delete]
+
+
+== Options
+
+
+
+== Examples
+[source,bash]
+----
+# List all your Astra users
+$ astra user list
+----
+
+

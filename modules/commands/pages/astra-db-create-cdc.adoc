@@ -1,0 +1,64 @@
+= astra db create-cdc
+
+[source,shell]
+----
+astra db create-cdc [-qV] [--if-not-exists] [--no-input] [--[no-]spinner]
+                    [--dump-logs[=FILE]] [--color=WHEN] [-k=KEYSPACE]
+                    [-o=FORMAT] --table=TABLE --tenant=TENANT
+                    [--topic-partitions=PARTITIONS] [[[-cf=PATH] [-p=NAME]] |
+                    [--token=TOKEN [--env=ENV]]] [DB]
+
+----
+
+
+Create a CDC (Change Data Capture) for a table in a specific keyspace and tenant.
+
+
+
+
+
+== Options
+
+`DB`:: The name or ID of the Astra database to operate on
+`-k`, `--keyspace`:: Keyspace where the table resides
+`--table`:: The table or collection to create CDC for
+`--tenant`:: The tenant name
+`--topic-partitions`:: Number of topic partitions
+`--if-not-exists`:: Will create a new CDC only if none exists
+
+.Common Options
+[%collapsible]
+====
+`-o`, `--output`:: One of: human, json, csv
+`-V`, `--verbose`:: Enable verbose logging output
+`-q`, `--quiet`:: Only output essential information
+`--spinner`:: Enable/disable loading spinners
+`--no-input`:: Don't ask for user input (e.g. confirmation prompts)
+`--color`:: One of: auto, never, always
+`--dump-logs`:: Write all logs to an optionally specified file
+====
+
+.Connection Options
+[%collapsible]
+====
+`-cf`, `--config-file`:: The ``.astrarc`` file to use for this command
+`-p`, `--profile`:: The ``.astrarc`` profile to use for this command
+`--token`:: The astra token to use for this command. Use the ``--token @file`` syntax to read the token from a file, to avoid potential leaks.
+`--env`:: Override the target astra environment
+====
+
+
+== Examples
+[source,bash]
+----
+# Create a CDC
+$ astra db create-cdc my_db --table my_table --tenant my_tenant
+
+# Create a CDC with a specific keyspace and topic partitions
+$ astra db create-cdc my_db -k my_keyspace --table my_table --tenant my_tenant --topic-partitions 5
+
+# Create a CDC without failing if it already exists
+$ astra db create-cdc my_db --table my_table --tenant my_tenant --if-not-exists
+----
+
+

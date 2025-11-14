@@ -1,0 +1,57 @@
+= astra pcu transfer-association
+
+[source,shell]
+----
+astra pcu transfer-association [-qV] [--if-not-exists] [--no-input] [--[no-]
+                               spinner] [--dump-logs[=FILE]] [--color=WHEN]
+                               [-o=FORMAT] -t=GROUP [[[-cf=PATH] [-p=NAME]] |
+                               [--token=TOKEN [--env=ENV]]] [-f=GROUP |
+                               --or-create] TARGET
+
+----
+
+
+Transfer an association from one PCU group to another
+
+
+
+
+
+== Options
+
+`TARGET`:: PCU association target (database name/id or datacenter id)
+`-t`, `--to`:: The PCU group to transfer the association to
+`--if-not-exists`:: Don't error if the association already exists
+`-f`, `--from`:: The PCU group which initially holds the association. May be omitted to let the CLI automatically detect it
+`--or-create`:: If the datacenter is not already associated to a PCU group, create the association first
+
+.Common Options
+[%collapsible]
+====
+`-o`, `--output`:: One of: human, json, csv
+`-V`, `--verbose`:: Enable verbose logging output
+`-q`, `--quiet`:: Only output essential information
+`--spinner`:: Enable/disable loading spinners
+`--no-input`:: Don't ask for user input (e.g. confirmation prompts)
+`--color`:: One of: auto, never, always
+`--dump-logs`:: Write all logs to an optionally specified file
+====
+
+.Connection Options
+[%collapsible]
+====
+`-cf`, `--config-file`:: The ``.astrarc`` file to use for this command
+`-p`, `--profile`:: The ``.astrarc`` profile to use for this command
+`--token`:: The astra token to use for this command. Use the ``--token @file`` syntax to read the token from a file, to avoid potential leaks.
+`--env`:: Override the target astra environment
+====
+
+
+== Examples
+[source,bash]
+----
+# Transfer a datacenter association association from one PCU group to another
+$ astra pcu transfer-association ee6991af-7783-4de9-8da0-c7fa250c89e2-1 --from pcu_1 --to pcu_2
+----
+
+

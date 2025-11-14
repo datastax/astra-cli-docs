@@ -1,0 +1,63 @@
+= astra config
+
+[source,shell]
+----
+astra config [-qV] [--no-input] [--[no-]spinner] [--dump-logs[=FILE]]
+             [-cf=PATH] [--color=WHEN] [-e=ENV] [-o=FORMAT] [COMMAND]
+
+----
+
+
+Manage your Astra CLI configuration profiles
+
+
+**Alias of `astra config list`**
+
+
+== Subcommands
+
+* xref:astra-config-list.adoc[astra config list]
+* xref:astra-config-create.adoc[astra config create]
+* xref:astra-config-get.adoc[astra config get]
+* xref:astra-config-delete.adoc[astra config delete]
+* xref:astra-config-rename.adoc[astra config rename]
+* xref:astra-config-use.adoc[astra config use]
+* xref:astra-config-path.adoc[astra config path]
+* xref:astra-config-home.adoc[astra config home]
+
+
+== Options
+
+`-cf`, `--config-file`:: The .astrarc file to work with. See ``astra config path -h`` for how this is resolved.
+`-e`, `--env`:: Filter by Astra environment
+
+.Common Options
+[%collapsible]
+====
+`-o`, `--output`:: One of: human, json, csv
+`-V`, `--verbose`:: Enable verbose logging output
+`-q`, `--quiet`:: Only output essential information
+`--spinner`:: Enable/disable loading spinners
+`--no-input`:: Don't ask for user input (e.g. confirmation prompts)
+`--color`:: One of: auto, never, always
+`--dump-logs`:: Write all logs to an optionally specified file
+====
+
+
+== Examples
+[source,bash]
+----
+# List your configuration profiles
+$ astra config
+
+# Interactively create a new configuration profile
+$ astra config setup
+
+# Programmatically create a new configuration profile
+$ astra config create my_profile --token @token.txt
+
+# Set an existing configuration profile as default
+$ astra config use my_profile
+----
+
+

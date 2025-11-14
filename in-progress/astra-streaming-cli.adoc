@@ -1,5 +1,5 @@
-= Manage {astra_stream} with the {product}
-:navtitle: Manage {astra_stream}
+// Writer's note: This page is no longer published but there is still content that should be retained and reformatted for Astra CLI 1.0.
+= {astra_stream} commands
 
 Use the {product} to manage your {astra_stream} deployments.
 
@@ -727,7 +727,7 @@ OPTIONS
 The https://pulsar.apache.org/docs/next/administration-pulsar-shell/[Pulsar shell] is an interactive command-line interface tool for managing and interacting with Pulsar clusters.
 It is designed to allow developers and administrators to execute Pulsar commands interactively or in a script-like fashion, facilitating tasks such as creating topics, producing and consuming messages, managing schemas, and more.
 
-The {product} provides built-in Pulsar shell support by downloading, installing, configuring, and wapping the `pulsar-shell` utility.
+The {product} provides built-in Pulsar shell support by downloading, installing, configuring, and wrapping the `pulsar-shell` utility.
 
 Use the `astra streaming pulsar-shell` command to start the Pulsar shell in interactive mode:
 
@@ -756,7 +756,7 @@ default(pulsar-aws-useast2.streaming.datastax.com)>
 ----
 ====
 
-Type `exit` and press kbd:[Return] to exit the Pulsar shell.
+Type `exit` and press kbd:[Enter] to exit the Pulsar shell.
 
 The first time you use the `astra streaming pulsar-shell` commands, the {product} downloads and installs the `pulsar-shell` utility to the {product} installation directory (`~/.astra/lunastreaming-shell-*`).
 

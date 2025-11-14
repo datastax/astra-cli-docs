@@ -1,0 +1,60 @@
+= astra streaming list-regions
+
+[source,shell]
+----
+astra streaming list-regions [-qV] [--no-input] [--[no-]spinner] [--dump-logs
+                             [=FILE]] [--color=WHEN] [-o=FORMAT] [-c=FILTER[,
+                             FILTER...]]... [-f=FILTER[,FILTER...]]...
+                             [[[-cf=PATH] [-p=NAME]] | [--token=TOKEN
+                             [--env=ENV]]]
+
+----
+
+
+List all available regions for Astra streaming tenants
+
+
+
+
+
+== Options
+
+`-f`, `--filter`:: Comma-separated case-insensitive partial-match filters on the region name
+`-c`, `--cloud`:: Comma-separated list of cloud providers to filter on
+
+.Common Options
+[%collapsible]
+====
+`-o`, `--output`:: One of: human, json, csv
+`-V`, `--verbose`:: Enable verbose logging output
+`-q`, `--quiet`:: Only output essential information
+`--spinner`:: Enable/disable loading spinners
+`--no-input`:: Don't ask for user input (e.g. confirmation prompts)
+`--color`:: One of: auto, never, always
+`--dump-logs`:: Write all logs to an optionally specified file
+====
+
+.Connection Options
+[%collapsible]
+====
+`-cf`, `--config-file`:: The ``.astrarc`` file to use for this command
+`-p`, `--profile`:: The ``.astrarc`` profile to use for this command
+`--token`:: The astra token to use for this command. Use the ``--token @file`` syntax to read the token from a file, to avoid potential leaks.
+`--env`:: Override the target astra environment
+====
+
+
+== Examples
+[source,bash]
+----
+# List all available regions for streaming tenants
+$ astra streaming list-regions
+
+# Filter by cloud provider
+$ astra streaming list-regions --cloud aws,gcp
+
+# Filter by partial region name
+$ astra streaming list-regions --filter us-
+----
+
+

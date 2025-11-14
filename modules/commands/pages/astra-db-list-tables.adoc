@@ -1,0 +1,59 @@
+= astra db list-tables
+
+[source,shell]
+----
+astra db list-tables [-aqV] [--no-input] [--[no-]spinner] [--dump-logs[=FILE]]
+                     [--color=WHEN] [-k=KEYSPACE] [-o=FORMAT] [[[-cf=PATH]
+                     [-p=NAME]] | [--token=TOKEN [--env=ENV]]] [DB]
+
+----
+
+
+List the tables in the specified database and keyspace
+
+
+
+
+
+== Options
+
+`DB`:: The name or ID of the Astra database to operate on
+`-k`, `--keyspace`:: The keyspace to use
+`-a`, `--all`:: List tables in all keyspaces
+
+.Common Options
+[%collapsible]
+====
+`-o`, `--output`:: One of: human, json, csv
+`-V`, `--verbose`:: Enable verbose logging output
+`-q`, `--quiet`:: Only output essential information
+`--spinner`:: Enable/disable loading spinners
+`--no-input`:: Don't ask for user input (e.g. confirmation prompts)
+`--color`:: One of: auto, never, always
+`--dump-logs`:: Write all logs to an optionally specified file
+====
+
+.Connection Options
+[%collapsible]
+====
+`-cf`, `--config-file`:: The ``.astrarc`` file to use for this command
+`-p`, `--profile`:: The ``.astrarc`` profile to use for this command
+`--token`:: The astra token to use for this command. Use the ``--token @file`` syntax to read the token from a file, to avoid potential leaks.
+`--env`:: Override the target astra environment
+====
+
+
+== Examples
+[source,bash]
+----
+# List all tables in the default keyspace
+$ astra db list-tables my_db
+
+# List all tables in a specific keyspace
+$ astra db list-tables my_db -k my_keyspace
+
+# List all tables in all keyspaces
+$ astra db list-tables my_db --all
+----
+
+

@@ -1,0 +1,63 @@
+= astra db dsbulk count
+
+[source,shell]
+----
+astra db dsbulk count [-qV] [--no-input] [--[no-]spinner] [--dump-logs[=FILE]]
+                      [--color=WHEN] [--encoding=ENCODING] [-k=KEYSPACE]
+                      [--log-dir=DIRECTORY] [--max-concurrent-queries=QUERIES]
+                      [-o=FORMAT] [-query=QUERY] [-r=REGION] [-t=TABLE]
+                      [[[-cf=PATH] [-p=NAME]] | [--token=TOKEN [--env=ENV]]]
+                      [--dsbulk-config=CONFIG_FILE | -F=FLAGS [-F=FLAGS]...]
+                      [DB]
+
+----
+
+
+Count items for a table, a query
+
+
+
+
+
+== Options
+
+`DB`:: The name or ID of the Astra database to operate on
+`-k`, `--keyspace`:: Keyspace used for loading or unloading data
+`-t`, `--table`:: Table used for loading or unloading data.
+`--encoding`:: The file name format to use when writing. This setting is ignored when reading and for non-file URLs
+`--max-concurrent-queries`:: The maximum number of concurrent queries that should be carried in parallel
+`--log-dir`:: Log directory for dsbulk operations
+`-r`, `--region`:: The region to use. Uses the db's default region if not specified.
+`-query`, `--schema.query`:: Optional query to unload or count
+`--dsbulk-config`:: Configuration file for DSBulk loader options
+`-F`, `--dsbulk-flags`:: Additional flags to pass to DSBulk loader
+
+.Common Options
+[%collapsible]
+====
+`-o`, `--output`:: One of: human, json, csv
+`-V`, `--verbose`:: Enable verbose logging output
+`-q`, `--quiet`:: Only output essential information
+`--spinner`:: Enable/disable loading spinners
+`--no-input`:: Don't ask for user input (e.g. confirmation prompts)
+`--color`:: One of: auto, never, always
+`--dump-logs`:: Write all logs to an optionally specified file
+====
+
+.Connection Options
+[%collapsible]
+====
+`-cf`, `--config-file`:: The ``.astrarc`` file to use for this command
+`-p`, `--profile`:: The ``.astrarc`` profile to use for this command
+`--token`:: The astra token to use for this command. Use the ``--token @file`` syntax to read the token from a file, to avoid potential leaks.
+`--env`:: Override the target astra environment
+====
+
+
+== Examples
+[source,bash]
+----
+
+----
+
+

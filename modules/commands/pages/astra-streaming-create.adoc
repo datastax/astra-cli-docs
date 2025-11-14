@@ -1,0 +1,68 @@
+= astra streaming create
+
+[source,shell]
+----
+astra streaming create [-qV] [--if-not-exists] [--no-input] [--[no-]spinner]
+                       [--dump-logs[=FILE]] [--color=WHEN] [-o=FORMAT]
+                       [[[-cf=PATH] [-p=NAME]] | [--token=TOKEN [--env=ENV]]]
+                       ([--plan=PLAN] | -e=EMAIL | (--cluster=CLUSTER |
+                       [-r=REGION [-c=CLOUD]])) TENANT
+
+----
+
+
+Create a new streaming tenant
+
+
+
+
+
+== Options
+
+`TENANT`:: The name of the tenant to operate on
+`--if-not-exists`:: Don't error if the tenant already exists
+`--plan`:: Plan for the tenant
+`-e`, `--email`:: User email
+`--cluster`:: Dedicated cluster, replacement for cloud/region
+`-r`, `--region`:: Cloud provider region to provision
+`-c`, `--cloud`:: The cloud provider where the tenant should be created. Inferred from the region if not provided.
+
+.Common Options
+[%collapsible]
+====
+`-o`, `--output`:: One of: human, json, csv
+`-V`, `--verbose`:: Enable verbose logging output
+`-q`, `--quiet`:: Only output essential information
+`--spinner`:: Enable/disable loading spinners
+`--no-input`:: Don't ask for user input (e.g. confirmation prompts)
+`--color`:: One of: auto, never, always
+`--dump-logs`:: Write all logs to an optionally specified file
+====
+
+.Connection Options
+[%collapsible]
+====
+`-cf`, `--config-file`:: The ``.astrarc`` file to use for this command
+`-p`, `--profile`:: The ``.astrarc`` profile to use for this command
+`--token`:: The astra token to use for this command. Use the ``--token @file`` syntax to read the token from a file, to avoid potential leaks.
+`--env`:: Override the target astra environment
+====
+
+
+== Examples
+[source,bash]
+----
+# Create a basic streaming tenant in the 'us-east1' region
+$ astra streaming create my_tenant --region us-east1
+
+# Create a tenant with a specific cloud provider
+$ astra streaming create my_tenant --region us-east1 --cloud AWS
+
+# Create a tenant with a dedicated cluster
+$ astra streaming create my_tenant --cluster my_cluster
+
+# Create a tenant if it doesn't already exist
+$ astra streaming create my_tenant --region us-east1 --if-not-exists
+----
+
+

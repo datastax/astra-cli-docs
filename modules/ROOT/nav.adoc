@@ -1,7 +1,17 @@
-* xref:installation.adoc[]
-* xref:getting-started.adoc[]
-* xref:managing.adoc[]
-* xref:astra-streaming-cli.adoc[]
-* xref:administration.adoc[]
-* https://github.com/datastax/astra-cli[GitHub repo]
-* https://github.com/datastax/astra-cli/releases[Release notes]
+.Get Started
+* xref:install.adoc[]
+* xref:manage-cli.adoc[]
+* xref:upgrade.adoc[]
+* xref:uninstall.adoc[]
+
+.Quickstarts
+* xref:quickstarts:cqlsh.adoc[]
+
+include::ROOT:partial$partial-nav.adoc[]
+
+.Release notes
+* https://github.com/datastax/astra-cli?tab=readme-ov-file#whats-changed[Release notes]
+
+//-
+
+* https://github.com/datastax/astra-cli[GitHub repository]

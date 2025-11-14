@@ -1,0 +1,296 @@
+// Writer's note: This page contains a selection of content that was deleted from the Astra Serverless docs. We should retain relevant content reformat it for Astra CLI 1.0.
+= Manage databases with the {product}
+:navtitle: Quickstart for databases
+:organization-administrator-role: pass:q[xref:astra-db-serverless:administration:rbac.adoc#organization-administrator-role[*Organization Administrator*]]
+:database-administrator-role: pass:q[xref:astra-db-serverless:administration:rbac.adoc#database-administrator-role[*Database Administrator*]]
+
+You can use the {product} to perform administrative operations on your {astra-db} databases and keyspaces.
+
+[IMPORTANT]
+====
+To perform database operations, you need an application token with permission to create and configure databases, such as the {organization-administrator-role} role.
+
+To work within databases, you need an application token with permission to interact with the target database, such as the {database-administrator-role} role.
+====
+
+When you xref:ROOT:manage-cli.adoc[connect the {product}], you provide an application token that authorizes you to run the CLI commands.
+
+== Find available regions
+
+Get a list of available regions for database creation.
+
+== Create a database
+
+You can create {db-serverless-vector} and {db-serverless} databases.
+
+[NOTE]
+====
+If your organization requires that new databases belong to a xref:astra-db-serverless:administration:provisioned-capacity-units.adoc[PCU group], you cannot use the {product} to create databases because it doesn't support PCU group assignment with database creation.
+====
+
+Create a database:
+
+[source,console,subs="+quotes"]
+----
+astra db create *DB_NAME* --region *REGION* --cloud *CLOUD_PROVIDER* \
+-k *KEYSPACE* --if-not-exist --async
+----
+
+Parameters:
+
+[cols="1,1,2"]
+|===
+| Name | Type | Summary
+
+| `db_name`
+| `String`
+a| The database name.
+
+Database names must follow these rules:
+
+include::common:ROOT:partial$database-name-rules.adoc[]
+
+| `region`
+| `String` (OPTIONAL)
+a| A valid xref:databases:regions.adoc[cloud provider region], depending on your xref:administration:subscription-plans.adoc[subscription plan] and the database type.
+
+include::astra-db-serverless:databases:partial$get-regions-endpoint.adoc[]
+
+| `cloud`
+| `String` (OPTIONAL)
+| The cloud provider (`gcp,azure,aws`) to use for the database.
+
+| `keyspace`
+| `String` (OPTIONAL)
+a| The name of the database's initial keyspace.
+If omitted, the default is `default_keyspace`.
+
+| `--if-not-exists`
+| `flag` (OPTIONAL)
+| If provided, this makes the operation idempotent.
+Check for an existing database with the same configuration.
+
+| `--async`
+| `flag` (OPTIONAL)
+| By default, the operation is synchronous and waits for the database to become active.
+Include this option to make the operation asynchronous.
+
+|===
+
+[IMPORTANT]
+====
+By default, the command waits until the database is created and ready to use.
+
+You can set `--async` to skip waiting while the database activates.
+However, you cannot perform operations on the new database before it is active.
+
+To learn more, run `astra help db create`.
+====
+
+== Find a database
+
+Get information about one database.
+
+Get database metadata by database ID:
+
+[source,console,subs="+quotes"]
+----
+astra db describe *DB_ID*
+----
+
+Parameters:
+
+[cols="1,1,2"]
+|===
+| Name | Type | Summary
+
+| `DB_ID`
+| `String`
+| The ID of the target database.
+See xref:databases:create-database.adoc#get-db-id[Get your database ID].
+
+You can also get metadata by providing the database name, but this doesn't guarantee uniqueness.
+|===
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
++------------------+-----------------------------------------+
+| Attribute        | Value                                   |
++------------------+-----------------------------------------+
+| Name             | astra_db_client                         |
+| id               | 4391daae-016c-49e3-8d0a-b4633a86082c    |
+| Cloud            | GCP                                     |
+| Regions          | us-east1                                |
+| Status           | ACTIVE                                  |
+| Vector           | Enabled                                 |
+| Default Keyspace | default_keyspace                        |
+| Creation Time    | 2024-02-24T01:20:03Z                    |
+|                  |                                         |
+| Keyspaces        | [0] default_keyspace                    |
+|                  |                                         |
+|                  |                                         |
+| Regions          | [0] us-east1                            |
+|                  |                                         |
++------------------+-----------------------------------------+
+----
+====
+
+=== Find all databases
+
+Retrieve the listing of all databases.
+
+List all of your databases:
+
+[source,console]
+----
+astra db list
+----
+
+.Result
+[%collapsible]
+====
+[source,console,subs="+quotes"]
+----
++---------------------+--------------+-----------+-------+---+-----------+
+| Name                | id           | Regions   | Cloud | V | Status    |
++---------------------+--------------+-----------+-------+---+-----------+
+| astra_db_client     | *DB_ID*      | us-east1  | gcp   | ■ | ACTIVE    |
++---------------------+--------------+-----------+-------+---+-----------+
+----
+//ID truncated to prevent bad wrapping.
+====
+
+== Drop a database
+
+include::common:ROOT:partial$terminate-db-warn.adoc[]
+
+Delete a database and erase all data stored in it.
+
+Delete a database by ID:
+
+[source,console,subs="+quotes"]
+----
+astra db delete *DB_ID*
+----
+
+Parameters:
+
+[cols="1,1,2"]
+|===
+| Name | Type | Summary
+
+| `DB_ID`
+| `UUID`
+| The ID of the database to delete.
+See xref:databases:create-database.adoc#get-db-id[Get your database ID].
+
+You can also delete a database by name.
+However, {company} recommends using the ID to ensure the correct database is deleted.
+|===
+
+== Create a keyspace
+
+{db-serverless-vector} databases have an initial keyspace named `default_keyspace`.
+You can override the initial keyspace name when you create the database, if desired.
+
+You can create more keyspaces as needed, such as for better application structure.
+
+Create a keyspace in a database:
+
+[source,console,subs="+quotes"]
+----
+astra db create-keyspace *DB_ID* -k *KEYSPACE_NAME*
+----
+
+Parameters:
+
+[cols="1,1,2"]
+|===
+| Name | Type | Summary
+
+| `DB_ID`
+| `String`
+| The ID of the database where you want to create the keyspace.
+The database must already exist.
+See xref:databases:create-database.adoc#get-db-id[Get your database ID].
+
+| `KEYSPACE_NAME`
+| `String`
+a| The unique name for the keyspace.
+
+Keyspace names must follow these rules:
+
+include::common:ROOT:partial$keyspace-name-rules.adoc[]
+|===
+
+== List keyspaces
+
+Get a list of the keyspaces in a database.
+
+List keyspaces in a database:
+
+[source,console,subs="+quotes"]
+----
+astra db list-keyspaces *DB_ID*
+----
+
+Parameters:
+
+[cols="1,1,2"]
+|===
+| Name | Type | Summary
+
+| `DB_ID`
+| `String`
+| The ID of the database from which to get the keyspaces.
+See xref:databases:create-database.adoc#get-db-id[Get your database ID].
+|===
+
+.Result
+[%collapsible]
+====
+[source,console]
+----
++----------------------------+
+| Name                       |
++----------------------------+
+| default_keyspace (default) |
+| keyspace2                 |
++----------------------------+
+----
+====
+
+== Drop a keyspace
+
+Delete a keyspace in a database and erase all data stored in that keyspace.
+
+Delete a keyspace:
+
+[source,console,subs="+quotes"]
+----
+astra db delete-keyspace *DB_ID* -k *KEYSPACE_NAME*
+----
+
+Parameters:
+
+[cols="1,1,2"]
+|===
+| Name | Type | Summary
+
+| `DB_ID`
+| `String`
+| The ID of the database where you want to delete a keyspace.
+See xref:databases:create-database.adoc#get-db-id[Get your database ID].
+
+| `KEYSPACE_NAME`
+| `String`
+| The name of the keyspace to delete.
+|===
+
+== Find embedding providers
+
+Get information about embedding providers for xref:databases:embedding-generation.adoc[{astra-db} vectorize], including supported providers, models, dimensions, and other configuration parameters.
+

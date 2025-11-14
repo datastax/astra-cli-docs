@@ -1,0 +1,42 @@
+= astra db cqlsh
+
+[source,shell]
+----
+astra db cqlsh [COMMAND]
+
+----
+
+
+Connect to your Astra database using cqlsh
+
+
+
+== Subcommands
+
+* xref:astra-db-cqlsh-start.adoc[astra db cqlsh start]
+* xref:astra-db-cqlsh-exec.adoc[astra db cqlsh exec]
+* xref:astra-db-cqlsh-version.adoc[astra db cqlsh version]
+* xref:astra-db-cqlsh-path.adoc[astra db cqlsh path]
+
+
+== Options
+
+
+
+== Examples
+[source,bash]
+----
+# Launch cqlsh for a database
+$ astra db cqlsh start my_db
+
+# Launch cqlsh with a specific keyspace
+$ astra db cqlsh start my_db -k my_keyspace
+
+# Execute a CQL statement
+$ astra db cqlsh exec my_db "SELECT * FROM my_keyspace.my_table"
+
+# Execute a CQL file
+$ astra db cqlsh exec my_db -f script.cql
+----
+
+
