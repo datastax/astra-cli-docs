@@ -6,8 +6,11 @@ The {cass-short} Query Language Shell (`cqlsh`) is a utility that you can use to
 The {product} provides embedded `cqlsh` support by downloading and installing the `cqlsh` utility in the background and exposing it through the `xref:commands:astra-db-cqlsh.adoc[]` commands.
 This can act as a convenient alternative to installing and configuring a xref:astra-db-serverless:cql:develop-with-cql.adoc#connect-to-the-cql-shell[standalone cqlsh].
 
-The {product} doesn't download the `cqlsh` utility until the first time you use an `astra db cqlsh` command.
-When this happens, the {product} downloads and installs the `cqlsh` utility, and the {scb} for each database you connect to, into the {product} home directory (`xref:ROOT:manage-cli.adoc#file-locations[~/.astra]`).
+The `cqlsh` utility isn't installed by default with the {product}.
+The first time you run an `astra db cqlsh` command, the {product} downloads and installs the `cqlsh` utility into the {product} home directory (`xref:ROOT:manage-cli.adoc#file-locations[~/.astra]`).
+
+All `astra db cqlsh` commands require a database ID.
+The first time you connect to a specific database, {product} downloads the database's {scb} into the {product} home directory.
 
 == Prerequisites
 
