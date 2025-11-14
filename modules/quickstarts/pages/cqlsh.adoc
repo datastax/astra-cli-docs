@@ -42,8 +42,6 @@ token@cqlsh>
 ----
 ====
 
-Type `exit` or `quit;` and press kbd:[Enter] to exit `cqlsh`.
-
 [TIP]
 ======
 If the {product} reports `ModuleNotFoundError`, check that you have a supported version of Python available in your terminal:
@@ -62,6 +60,9 @@ Python 3.11.10
 ----
 ====
 ======
+
+Type `exit` or `quit;` and press kbd:[Enter] to exit `cqlsh`.
+
 
 == Connect to a specific keyspace
 
