@@ -25,8 +25,6 @@ The {product} supports the following operating systems:
 
 == Install the CLI
 
-Select one of the following installation methods and follow the steps to install the {product}.
-
 [tabs,sync-group-id=platforms]
 ======
 macOS and Linux::
@@ -108,7 +106,7 @@ eval "$(**PATH_TO_BINARY** shellenv)"
 +
 Replace `**PATH_TO_BINARY**` with the full path to the `astra` executable in the installation directory.
 
-. On macOS: Delete the `com.apple.quarantine` attribute from the `astra` binary to remove https://support.apple.com/guide/security/gatekeeper-and-runtime-protection-sec5599b66df/web[macOS Gatekeeper restrictions]:
+. Required on macOS: Delete the `com.apple.quarantine` attribute from the `astra` binary to remove https://support.apple.com/guide/security/gatekeeper-and-runtime-protection-sec5599b66df/web[macOS Gatekeeper restrictions]:
 +
 [source,shell]
 ----
@@ -188,7 +186,7 @@ powershell -C "Expand-Archive -Path astra-windows-x86_64.zip -DestinationPath **
 Replace `**INSTALLATION_DIRECTORY**` with the full path to your preferred installation directory.
 
 . Add the path to the unzipped `astra.exe` file to your `PATH` environment variable.
-To learn how to update environment variables, see the https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_environment_variables[Microsoft PowerShell documentation].
+For more information, see the https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_environment_variables[Microsoft PowerShell documentation].
 
 . Start a new PowerShell session by opening a new terminal window.
 
