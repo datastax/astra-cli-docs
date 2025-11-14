@@ -116,30 +116,6 @@ SELECT * FROM users;
 ----
 ====
 
-[TIP]
-======
-You can also execute a CQL file using the `xref:astra@cql:reference:cqlsh-commands/source.adoc[]` CQL command:
-
-[source,shell,subs="+quotes"]
-----
-astra db cqlsh exec **DB_ID** "SOURCE 'sample.cql'"
-----
-
-.Result
-[%collapsible]
-====
-[source,console]
-----
- id                                   | email             | name
---------------------------------------+-------------------+-------
- f497124c-0095-4ba6-84e7-c704749e3927 |   bob@example.com |   Bob
- 93b9fe1b-b8c8-4492-b26e-7a2467e73005 | alice@example.com | Alice
-
-(2 rows)
-----
-====
-======
-
 == Connect to a specific keyspace
 
 Use the `-k` / `--keyspace` option with the `xref:commands:astra-db-cqlsh-start.adoc[]` and `xref:commands:astra-db-cqlsh-exec.adoc[]` commands to connect directly to a specific keyspace:
