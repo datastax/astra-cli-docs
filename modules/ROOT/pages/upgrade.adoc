@@ -3,7 +3,7 @@
 
 Keep the {product} up to date to access new features, improvements, and security updates.
 
-[NOTE]
+[IMPORTANT]
 ====
 If you used a package manager to install the {product}, such as Homebrew, then you must use the same package manager to upgrade the {product}.
 ====

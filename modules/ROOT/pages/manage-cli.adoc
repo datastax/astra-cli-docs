@@ -81,7 +81,7 @@ astra setup
 
 Welcome to the interactive Astra CLI setup!
 
-Your configuration file will be created at /Users/USERNAME/.astrarc
+Your configuration file will be created at /Users/username/.astrarc
 
 Press Enter to continue, or use Ctrl+C to cancel.
 ----

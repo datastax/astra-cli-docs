@@ -14,31 +14,90 @@ Select one of the following methods to uninstall the {product} on macOS and Linu
 `astra nuke` command (recommended)::
 +
 --
-Use the `xref:commands:astra-nuke.adoc[]` command to uninstall the {product}:
-
+. Run the `xref:commands:astra-nuke.adoc[]` command:
++
 [source,shell]
 ----
 astra nuke
 ----
++
+.Result
+[%collapsible]
+====
+[source,console]
+----
+     _____            __
+    /  _  \   _______/  |_____________
+   /  /_\  \ /  ___/\   __\_  __ \__  \
+  /    |    \\___ \  |  |  |  | \ //__ \_
+  \____|__  /____  > |__|  |__|  (____  /
+          \/     \/                   \/
 
-When prompted, type kbd:[y] and press kbd:[Enter] to proceed with the uninstallation.
+                       Version: x.x.x
 
-The `astra nuke` command deletes the {product} home directory and optionally the configuration files (`xref:ROOT:manage-cli.adoc#file-locations[~/.astra]` and `xref:ROOT:manage-cli.adoc#file-locations[~/.astrarc]`).
-It also lists any shell profile containing references to the `astra` command.
-Delete these references manually, if desired.
+Are you sure you want to entirely delete Astra CLI from your system?
+
+This action is irreversible and will delete all Astra CLI files from your system.
+  yes
+> no (default)
+
+↑↓ to navigate, Enter to select, type to filter
+----
+====
+
+. When prompted to continue, select kbd:[yes] and press kbd:[Enter].
++
+.Result
+[%collapsible]
+====
+[source,console]
+----
+Do you also want to delete the .astrarc file located at /Users/username/.astrarc?
+
+(You can still Ctrl+C to safely cancel this operation.)
+
+Your credentials may be lost if you do. A backup is recommended.
+  yes
+> no (default)
+----
+====
+
+. Select whether to delete the `xref:ROOT:manage-cli.adoc#file-locations[.astrarc]` file.
++
+Only select kbd:[yes] if you don't want to preserve your xref:ROOT:manage-cli.adoc#manage-configuration-profiles[configuration profiles].
++
+Press kbd:[Enter] to continue.
++
+.Result
+[%collapsible]
+====
+[source,console]
+----
+Astra CLI Nuke Summary
+
+Files deleted:
+→ /Users/username/.astra (contained binary)
+
+Shell profiles containing astra:
+→ /Users/username/.zprofile
+
+Files skipped:
+→ /Users/username/.astrarc - User chose to keep the file
+----
+====
+
+. Optional: If the `astra nuke` command found any shell profiles containing references to the `astra` command, you can manually delete these references.
 --
 
 Manual removal::
 +
 --
-. Optional: Delete the `xref:ROOT:manage-cli.adoc#file-locations[.astrarc]` file:
+. Optional: If you don't want to preserve your xref:ROOT:manage-cli.adoc#manage-configuration-profiles[configuration profiles], delete the `xref:ROOT:manage-cli.adoc#file-locations[.astrarc]` file:
 +
 [source,shell]
 ----
 rm $(astra config path -p)
 ----
-+
-Only do this if you don't want to preserve your xref:ROOT:manage-cli.adoc#manage-configuration-profiles[configuration profiles].
 
 . Delete the xref:ROOT:manage-cli.adoc#file-locations[{product} home directory]:
 +
@@ -54,7 +113,7 @@ rm -rf $(astra config home path -p)
 rm -f $(which astra)
 ----
 
-. Remove any references to the `astra` command from your shell profile.
+. Optional: Manually remove any references to the `astra` command from your shell profile.
 For example, from `~/.zprofile` or `~/.bash_profile`.
 --
 =====
@@ -70,54 +129,105 @@ Uninstaller (recommended)::
 --
 Only use this method if you installed the {product} using the xref:ROOT:install.adoc[scripted installer].
 
-. Optional: Delete the `xref:ROOT:manage-cli.adoc#file-locations[.astrarc]` file:
+. Optional: If you don't want to preserve your xref:ROOT:manage-cli.adoc#manage-configuration-profiles[configuration profiles], delete the `xref:ROOT:manage-cli.adoc#file-locations[.astrarc]` file:
 +
 [source,powershell]
 ----
 rm -f $(astra config path -p)
 ----
-+
-Only do this if you don't want to preserve your xref:ROOT:manage-cli.adoc#manage-configuration-profiles[configuration profiles].
 
-. Go to *Start > Settings  > Apps > Installed apps*.
-In the list of apps, find the {product}, select icon:ellipsis-vertical[name="More"], and then select *Uninstall*.
-+
-[NOTE]
-====
-The steps to locate and uninstall applications may vary depending on your version of Windows.
-For more information, see the https://support.microsoft.com/en-us/windows/uninstall-or-remove-apps-and-programs-in-windows-4b55f974-2cc6-2d2b-d092-5905080eaf98[Microsoft Windows documentation].
-====
+. In your Windows **Settings**, uninstall the {product} app.
+For specific instructions, see https://support.microsoft.com/en-us/windows/uninstall-or-remove-apps-and-programs-in-windows-4b55f974-2cc6-2d2b-d092-5905080eaf98[Uninstall or remove apps and programs in Windows].
 --
 
 `astra nuke` command::
 +
 --
-Use the `xref:commands:astra-nuke.adoc[]` command to uninstall the {product}:
-
+. Run the `xref:commands:astra-nuke.adoc[]` command:
++
 [source,powershell]
 ----
 astra nuke
 ----
++
+.Result
+[%collapsible]
+====
+[source,console]
+----
+     _____            __
+    /  _  \   _______/  |_____________
+   /  /_\  \ /  ___/\   __\_  __ \__  \
+  /    |    \\___ \  |  |  |  | \ //__ \_
+  \____|__  /____  > |__|  |__|  (____  /
+          \/     \/                   \/
 
-When prompted, type kbd:[y] and press kbd:[Enter] to proceed with the uninstallation.
+                       Version: x.x.x
 
-The `astra nuke` command deletes the {product} home directory and optionally the configuration files (`xref:ROOT:manage-cli.adoc#file-locations[~/.astra]` and `xref:ROOT:manage-cli.adoc#file-locations[~/.astrarc]`).
+Are you sure you want to entirely delete Astra CLI from your system?
 
-You must remove `astra` from your system `PATH` manually, if desired.
+This action is irreversible and will delete all Astra CLI files from your system.
+  yes
+> no (default)
+
+↑↓ to navigate, Enter to select, type to filter
+----
+====
+
+. When prompted to continue, select kbd:[yes] and press kbd:[Enter].
++
+.Result
+[%collapsible]
+====
+[source,console]
+----
+Do you also want to delete the .astrarc file located at <astra_cli_config_path>?
+
+(You can still Ctrl+C to safely cancel this operation.)
+
+Your credentials may be lost if you do. A backup is recommended.
+  yes
+> no (default)
+----
+====
+
+. Select whether to delete the `xref:ROOT:manage-cli.adoc#file-locations[.astrarc]` file.
++
+Only select kbd:[yes] if you don't want to preserve your xref:ROOT:manage-cli.adoc#manage-configuration-profiles[configuration profiles].
++
+Press kbd:[Enter] to continue.
++
+.Result
+[%collapsible]
+====
+[source,console]
+----
+Astra CLI Nuke Summary
+
+Files deleted:
+→ <astra_cli_home_directory> (contained binary)
+
+Shell profiles containing astra:
+→ <user_shell_profile_path>
+
+Files skipped:
+→ <astra_cli_config_path> - User chose to keep the file
+----
+====
+
+. Optional: Manually remove `astra` from your system `PATH`.
 For more information, see the https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_environment_variables[Microsoft PowerShell documentation].
 --
 
 Manual removal::
 +
 --
-. Optional: Delete the `xref:ROOT:manage-cli.adoc#file-locations[.astrarc]` file:
+. Optional: If you don't want to preserve your xref:ROOT:manage-cli.adoc#manage-configuration-profiles[configuration profiles], delete the `xref:ROOT:manage-cli.adoc#file-locations[.astrarc]` file:
 +
 [source,powershell]
 ----
 rm -f $(astra config path -p)
 ----
-+
-Only do this if you don't want to preserve your xref:ROOT:manage-cli.adoc#manage-configuration-profiles[configuration profiles].
 
 . Delete the xref:ROOT:manage-cli.adoc#file-locations[{product} home directory]:
 +
@@ -133,7 +243,7 @@ rm -r -f $(astra config home path -p)
 rm -f (Get-Command astra).Source
 ----
 
-. Remove `astra` from your system `PATH`.
+. Optional: Manually remove `astra` from your system `PATH`.
 For more information, see the https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_environment_variables[Microsoft PowerShell documentation].
 --
 =====
@@ -141,15 +251,78 @@ For more information, see the https://learn.microsoft.com/en-us/powershell/modul
 Homebrew::
 +
 --
-. Optional: Use the `xref:commands:astra-nuke.adoc[]` command to delete the {product} home directory and optionally the configuration files (`xref:ROOT:manage-cli.adoc#file-locations[~/.astra]` and `xref:ROOT:manage-cli.adoc#file-locations[~/.astrarc]`):
+. Delete the {product} home directory (`xref:ROOT:manage-cli.adoc#file-locations[~/.astra]`) and optionally its configuration file (`xref:ROOT:manage-cli.adoc#file-locations[~/.astrarc]`):
++
+.. Run the `xref:commands:astra-nuke.adoc[]` command:
 +
 [source,shell]
 ----
 astra nuke
 ----
 +
-When prompted, type kbd:[y] and press kbd:[Enter] to proceed.
+.Result
+[%collapsible]
+====
+[source,console]
+----
+     _____            __
+    /  _  \   _______/  |_____________
+   /  /_\  \ /  ___/\   __\_  __ \__  \
+  /    |    \\___ \  |  |  |  | \ //__ \_
+  \____|__  /____  > |__|  |__|  (____  /
+          \/     \/                   \/
 
+                       Version: x.x.x
+
+Are you sure you want to entirely delete Astra CLI from your system?
+
+This action is irreversible and will delete all Astra CLI files from your system.
+  yes
+> no (default)
+
+↑↓ to navigate, Enter to select, type to filter
+----
+====
++
+.. When prompted to continue, select kbd:[yes] and press kbd:[Enter].
++
+.Result
+[%collapsible]
+====
+[source,console]
+----
+Do you also want to delete the .astrarc file located at /Users/username/.astrarc?
+
+(You can still Ctrl+C to safely cancel this operation.)
+
+Your credentials may be lost if you do. A backup is recommended.
+  yes
+> no (default)
+----
+====
++
+.. Select whether to delete the `xref:ROOT:manage-cli.adoc#file-locations[.astrarc]` file.
++
+Only select kbd:[yes] if you don't want to preserve your xref:ROOT:manage-cli.adoc#manage-configuration-profiles[configuration profiles].
++
+Press kbd:[Enter] to continue.
++
+.Result
+[%collapsible]
+====
+[source,console]
+----
+Astra CLI Nuke Summary
+
+Files deleted:
+→ /Users/username/.astra
+
+Files skipped:
+→ /Users/username/.astrarc - User chose to keep the file
+
+To complete the uninstallation, please use Homebrew to uninstall the Astra CLI binary.
+----
+====
 
 . Uninstall the {product} using Homebrew:
 +
