@@ -36,7 +36,7 @@ astra setup
 astra db create my_db -r us-east1
 
 # Manage streaming tenants
-astra streaming create my_tenant --region us-east1
+astra streaming list
 
 # Run built-in utilities
 astra db cqlsh start my_db
