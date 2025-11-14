@@ -16,9 +16,11 @@ The first time you connect to a specific database, {product} downloads the datab
 
 To use `cqlsh` commands, you must have a supported version of Python installed on your system.
 
-The underlying `cqlsh` utility requires Python 2.7 (with TLS support) or Python 3.6--3.11.
+The underlying `cqlsh` utility requires Python 2.7 with TLS support, or any version of Python from 3.6 through 3.11.
 Python versions 3.12 and later are not supported.
 For more details, see this https://support.datastax.com/s/article/cqlsh-may-fail-with-A-Python-installation-with-SSL-is-required-to-connect-to-a-cloud-cluster-when-connecting-to-Astra[support article]
+
+If the {product} reports `ModuleNotFoundError` after running any of the `astra db cqlsh` commands, your installed version of Python might be incompatible.
 
 == Start an interactive cqlsh session
 
@@ -42,27 +44,7 @@ token@cqlsh>
 ----
 ====
 
-[TIP]
-======
-If the {product} reports `ModuleNotFoundError`, check that you have a supported version of Python available in your terminal:
-
-[source,shell]
-----
-python -V
-----
-
-.Result
-[%collapsible]
-====
-[source,console]
-----
-Python 3.11.10
-----
-====
-======
-
 Type `exit` or `quit;` and press kbd:[Enter] to exit `cqlsh`.
-
 
 == Connect to a specific keyspace
 
