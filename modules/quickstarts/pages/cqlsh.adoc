@@ -9,7 +9,7 @@ This can act as a convenient alternative to installing and configuring a xref:as
 The `cqlsh` utility isn't installed by default with the {product}.
 The first time you run an `astra db cqlsh` command, the {product} downloads and installs the `cqlsh` utility into the {product} home directory (`xref:ROOT:manage-cli.adoc#file-locations[~/.astra]`).
 
-All `astra db cqlsh` commands require a database ID.
+All `astra db cqlsh` commands require a database name or ID.
 The first time you connect to a specific database, {product} downloads the database's {scb} into the {product} home directory.
 
 == Prerequisites
