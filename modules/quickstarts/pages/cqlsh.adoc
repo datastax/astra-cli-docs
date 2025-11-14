@@ -176,3 +176,24 @@ astra db cqlsh exec **DB_ID** "SOURCE 'sample.cql'"
 ----
 ====
 ======
+
+////
+TODO: Consider adding the following sections later:
+
+1. Executing a statement from stdout
+```
+# Normal usage
+echo "<stmt>" | astra db cqlsh DB
+
+# or use - to explicitly specify that you're reading from stdin
+echo "<stmt>" | astra db cqlsh DB -
+
+# Or just type in what you want to into the terminal using `\` to create a new line
+astra db cqlsh DB
+```
+2. Using the cqlsh binary directly
+```
+$(astra db cqlsh path) --version
+```
+3. A section that's just a list of links to the command references for the various `cqlsh` commands `astra` offers
+////
