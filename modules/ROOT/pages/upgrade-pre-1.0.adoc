@@ -1,0 +1,31 @@
+= Upgrade from pre-1.0 versions of the {product}
+:navtitle: Upgrade from pre-1.0 versions
+
+{product} 1.0 and later do not support xref:ROOT:upgrade.adoc[in-place upgrades] from versions earlier than 1.0.
+
+If you have an earlier version installed, you must delete the `astra` executable before you can install the latest version:
+
+[tabs,sync-group-id=platforms]
+======
+macOS and Linux::
++
+--
+[source,shell]
+----
+rm ~/.astra/cli/astra
+----
+--
+
+Homebrew::
++
+--
+[source,shell]
+----
+brew uninstall datastax/astra-cli/astra-cli
+----
+--
+======
+
+After removing the previous version, follow the instructions in xref:ROOT:install.adoc[] to install the latest version.
+
+The new version uses your existing xref:ROOT:manage-cli.adoc#file-locations[home directory and configuration file], unless you delete them.
