@@ -570,3 +570,149 @@ This file stores your <<manage-configuration-profiles,configuration profiles>> a
 
 For more information about the {product} configuration file, see the {product} https://github.com/datastax/astra-cli?tab=readme-ov-file#astrarc-location[README].
 |===
+
+[#command-output]
+== Command output formats and exit codes
+
+Most commands support the `-o` / `--output` option to specify the output format:
+
+[source,shell,subs="+quotes"]
+----
+astra COMMAND -o **FORMAT**
+----
+
+The available output formats are:
+
+* `human` (default): Human-readable format optimized for command-line readability.
+* `json`: Structured JSON format suitable for programmatic parsing.
+* `csv`: Comma-separated output format, ideal for data export and analysis.
+
+Generally, for GET requests, the `json` response contains the raw response from the server, while the `human` and `csv` formats contain a simplified version of the data.
+
+[tabs]
+======
+Human-readable::
++
+--
+The human-readable format uses tables, lists, and other visual elements to present information on the command line.
+--
+
+JSON::
++
+--
+Every command supporting JSON output will always return a response of exactly this schema:
+
+.JSON output schema
+[source,json]
+----
+{
+  "code": "OK" | "UNCAUGHT" | "DATABASE_NOT_FOUND" | "...",
+  "message": "Optional human-readable description",
+  "data": {
+    // Command-specific payload, may be an object, array, or primitive
+  },
+  "nextSteps": [
+    {
+      "command": "astra ...",
+      "comment": "Explanation of why/when to run this next"
+    }
+  ]
+}
+----
+
+All field names in the JSON output are in `camelCase`.
+
+[cols="1,1,2"]
+|===
+|Name |Type |Summary
+
+|`code`
+|`string`
+a|A string enum representing the exit code of the command.
+
+Common values include:
+
+* `OK`: command succeeded
+* `UNCAUGHT`: unexpected failure
+* `DATABASE_NOT_FOUND`: referenced resource missing
+* Other command-specific codes
+
+|`message`
+|`string`
+|Optional.
+A human-friendly message describing the result or error of the command.
+
+Not all commands include a message.
+
+|`data`
+|Any (type varies by command)
+|Freeform data specific to the command.
+Typically an object or array, but may be a primitive value (string, number, boolean, etc.) depending on the command.
+
+|`nextSteps`
+|`array` or `null`
+a|Optional.
+Only present if there are actionable next steps that you can take (it will never be an empty list).
+
+If present, it is an array of recommended next-step objects containing the following fields:
+
+* `command`: The command to run.
+* `comment`: An explanation of why/when to run this next.
+|===
+--
+
+CSV::
++
+--
+Every command supporting CSV output will always return an RFC-4180-compliant response of exactly this schema:
+
+.CSV output schema
+[source,csv]
+----
+code,message,DATA_FIELD_1,DATA_FIELD_2,...
+----
+
+All field names in the CSV output are in `snake_case`.
+
+The first row is always the header, defining the column names.
+Each subsequent row represents one data record from the command.
+
+The `code` and `message` fields may repeat for each row of data to keep the CSV schema consistent.
+Values may be wrapped in quotes to ensure RFC-4180-compliant CSV output.
+
+[cols="1,1,2"]
+|===
+|Name |Type |Summary
+
+|`code`
+|`string`
+a|A string enum representing the exit code of the command.
+
+Common values include:
+
+* `OK`: command succeeded
+* `UNCAUGHT`: unexpected failure
+* `DATABASE_NOT_FOUND`: referenced resource missing
+* Other command-specific codes
+
+If no rows are returned, you should assume an implicit `OK` code.
+
+|`message`
+|`string`
+|Optional.
+A human-friendly message describing the result or error of the command.
+
+Not all commands include a message, and this field will be empty if there is nothing to report.
+
+May contain commas or newlines — in such cases it will be quoted according to RFC-4180.
+
+|Additional data fields
+|Any (type varies by command)
+a|Command-specific fields representing the actual data returned.
+
+Fields may be empty if there is nothing to show.
+
+Column order is consistent per command.
+|===
+--
+======

@@ -29,3 +29,15 @@ brew uninstall datastax/astra-cli/astra-cli
 After removing the previous version, follow the instructions in xref:ROOT:install.adoc[] to install the latest version.
 
 The new version uses your existing xref:ROOT:manage-cli.adoc#file-locations[home directory and configuration file], unless you delete them.
+
+.Breaking changes in version 1.0
+[IMPORTANT]
+====
+{product} version 1.0 is largely backwards-compatible with pre-1.0 versions.
+However, there are some changes that might break certain scripted usage, such as:
+
+* New standardized xref:ROOT:manage-cli.adoc#output-formats[JSON and CSV output formats and exit codes].
+
+* Minor command and flag name changes.
+For a full list of name changes, see the https://github.com/datastax/astra-cli?tab=readme-ov-file#whats-changed[release notes].
+====
