@@ -547,47 +547,119 @@ The {product} stores installation and configuration files in the following locat
 |File / Directory |Description
 
 |`.astra`
-a|The `ASTRA_HOME` directory.
+a|The {product} home folder (`ASTRA_HOME`).
 
-_Default location_: `~/.astra` (macOS and Linux), `%USERPROFILE%\.astra` (Windows)
+_Default location_:
 
-The {product} stores the following items in this directory:
+* macOS: `~/.astra`
+* Linux: `~/.astra`, or `$XDG_DATA_HOME/astra` (if the `XDG_DATA_HOME` environment variable is set)
+* Windows: `%USERPROFILE%\.astra`
 
-* The {product} executable (scripted installations only)
-* Accessory executables downloaded by certain commands, such as `xref:commands:astra-db-cqlsh.adoc[]` and `xref:commands:astra-db-dsbulk.adoc[]`
-* {scb-brief}s
+The {product} stores the following items in this folder:
+
+* The `astra` executable (scripted installations only)
+* Accessory executables that are downloaded by certain commands, such as `xref:commands:astra-db-cqlsh.adoc[]` and `xref:commands:astra-db-dsbulk.adoc[]`
+* xref:astra-db-serverless:databases:secure-connect-bundle.adoc[{scb-brief}s]
 * Cache files for <<command-auto-completion,command auto-completion>>
 * Logs
 
-For more information about the `ASTRA_HOME` directory, see the {product} https://github.com/datastax/astra-cli?tab=readme-ov-file#home-folder-location[README].
+For more information about `ASTRA_HOME`, see the https://github.com/datastax/astra-cli?tab=readme-ov-file#home-folder-location[{product} README].
 
 |`.astrarc`
-|The {product} configuration file.
+a|The {product} configuration file.
 
-_Default location_: `~/.astrarc` (macOS and Linux), `%USERPROFILE%\.astrarc` (Windows)
+_Default location_:
 
-This file stores your <<manage-configuration-profiles,configuration profiles>> and their associated application tokens.
+* macOS: `~/.astrarc`
+* Linux: `~/.astrarc`, or `$XDG_CONFIG_HOME/.astrarc` (if the `XDG_CONFIG_HOME` environment variable is set)
+* Windows: `%USERPROFILE%\.astrarc`
 
-For more information about the {product} configuration file, see the {product} https://github.com/datastax/astra-cli?tab=readme-ov-file#astrarc-location[README].
+The {product} uses this file to store your <<manage-configuration-profiles,configuration profiles>> and their associated application tokens.
+
+For more information about the {product} configuration file, see the https://github.com/datastax/astra-cli?tab=readme-ov-file#astrarc-location[{product} README].
 |===
+
+=== Override the default home folder location
+
+You can override the default location of the {product} home folder (`.astra`) by setting the `ASTRA_HOME` environment variable.
+
+[tabs]
+======
+Set the environment variable dynamically::
++
+--
+Add the following line to your shell profile:
+
+[source,bash,subs="+quotes"]
+----
+eval "$(astra shellenv --home "**HOME_FOLDER_PATH**")"
+----
+
+Replace `**HOME_FOLDER_PATH**` with the full path to your preferred {product} home folder.
+--
+
+Set the environment variable directly::
++
+--
+Add the following line to your shell profile:
+
+[source,bash,subs="+quotes"]
+----
+export ASTRA_HOME=**HOME_FOLDER_PATH**
+----
+
+Replace `**HOME_FOLDER_PATH**` with the full path to your preferred {product} home folder.
+--
+======
+
+=== Override the default configuration file location
+
+You can override the default location of the {product} configuration file (`.astrarc`) by setting the `ASTRA_CONFIG_FILE` environment variable.
+
+[tabs]
+======
+Set the environment variable dynamically::
++
+--
+Add the following line to your shell profile:
+
+[source,bash,subs="+quotes"]
+----
+eval "$(astra shellenv --rc "**CONFIG_FILE_PATH**/.astrarc")"
+----
+
+Replace `**CONFIG_FILE_PATH**` with the full path to your preferred`.astrarc` configuration file.
+--
+
+Set the environment variable directly::
++
+--
+Add the following line to your shell profile:
+
+[source,bash,subs="+quotes"]
+----
+export ASTRARC=**CONFIG_FILE_PATH**/.astrarc
+----
+
+Replace `**CONFIG_FILE_PATH**` with the full path to your preferred `.astrarc` configuration file.
+--
+======
 
 [#command-output]
 == Command output formats and exit codes
 
-Most commands support the `-o` / `--output` option to specify the output format:
+Most commands support the `-o` / `--output` option to specify the format of the command output:
 
 [source,shell,subs="+quotes"]
 ----
 astra COMMAND -o **FORMAT**
 ----
 
-The available output formats are:
+The following output formats are available:
 
-* `human` (default): Human-readable format optimized for command-line readability.
-* `json`: Structured JSON format suitable for programmatic parsing.
+* `human` (default): Human-readable format, optimized for command-line readability.
+* `json`: Structured JSON format, suitable for programmatic parsing.
 * `csv`: Comma-separated output format, ideal for data export and analysis.
-
-Generally, for GET requests, the `json` response contains the raw response from the server, while the `human` and `csv` formats contain a simplified version of the data.
 
 [tabs]
 ======
@@ -669,7 +741,7 @@ Every command supporting CSV output will always return an RFC-4180-compliant res
 .CSV output schema
 [source,csv]
 ----
-code,message,DATA_FIELD_1,DATA_FIELD_2,...
+code,message,data_field_1,data_field_2,...
 ----
 
 All field names in the CSV output are in `snake_case`.
@@ -704,15 +776,18 @@ A human-friendly message describing the result or error of the command.
 
 Not all commands include a message, and this field will be empty if there is nothing to report.
 
-May contain commas or newlines — in such cases it will be quoted according to RFC-4180.
-
 |Additional data fields
 |Any (type varies by command)
 a|Command-specific fields representing the actual data returned.
 
-Fields may be empty if there is nothing to show.
+Fields may be empty if there is nothing to report.
 
 Column order is consistent per command.
 |===
 --
 ======
+
+[NOTE]
+====
+For commands that issue GET requests, the `json` response generally contains the raw response from the server, whereas the `human` and `csv` formats contain a simplified version of the data.
+====
