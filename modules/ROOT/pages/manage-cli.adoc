@@ -544,7 +544,7 @@ The {product} stores installation and configuration files in the following locat
 
 [cols="1h,2"]
 |===
-|File / Directory |Description
+|File / Folder |Description
 
 |`.astra`
 a|The {product} home folder (`ASTRA_HOME`).
