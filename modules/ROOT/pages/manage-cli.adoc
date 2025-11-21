@@ -551,11 +551,11 @@ a|The {product} home folder (`ASTRA_HOME`).
 
 _Default location_:
 
-* macOS: `~/.astra`
-* Linux: `~/.astra`, or `$XDG_DATA_HOME/astra` (if the `XDG_DATA_HOME` environment variable is set)
+* macOS and Linux: `~/.astra`
 * Windows: `%USERPROFILE%\.astra`
+* All platforms: If the `XDG_DATA_HOME` environment variable is set, then the default location is `$XDG_DATA_HOME/astra`.
 
-The {product} stores the following items in this folder:
+The {product} home folder contains the following items:
 
 * The `astra` executable (scripted installations only)
 * Accessory executables that are downloaded by certain commands, such as `xref:commands:astra-db-cqlsh.adoc[]` and `xref:commands:astra-db-dsbulk.adoc[]`
@@ -570,9 +570,9 @@ a|The {product} configuration file.
 
 _Default location_:
 
-* macOS: `~/.astrarc`
-* Linux: `~/.astrarc`, or `$XDG_CONFIG_HOME/.astrarc` (if the `XDG_CONFIG_HOME` environment variable is set)
+* macOS and Linux: `~/.astrarc`
 * Windows: `%USERPROFILE%\.astrarc`
+* All platforms: If the `XDG_CONFIG_HOME` environment variable is set, then the default location is `$XDG_CONFIG_HOME/.astrarc`.
 
 The {product} uses this file to store your <<manage-configuration-profiles,configuration profiles>> and their associated application tokens.
 

@@ -14,8 +14,19 @@ macOS and Linux::
 --
 [source,shell]
 ----
+rm ~/.astra/cli/astra
+----
+
+.Delete custom installation
+[%collapsible]
+====
+If you installed the {product} to a custom location, you can use the following command to delete the `astra` executable if it exists in your PATH:
+
+[source,shell]
+----
 rm $(which astra)
 ----
+====
 
 This command does not delete your xref:ROOT:manage-cli.adoc#file-locations[{product} home folder and configuration file] (`.astra` and `.astrarc`).
 Leave these files in place so that the new version of the {product} can continue to connect using your existing configuration.
