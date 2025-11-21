@@ -750,7 +750,7 @@ The first row is always the header, defining the column names.
 Each subsequent row represents one data record from the command.
 
 The `code` and `message` fields may repeat for each row of data to keep the CSV schema consistent.
-Values may be wrapped in quotes to ensure RFC-4180-compliant CSV output.
+Values may contain commas or newlines and be wrapped in quotes to ensure RFC-4180-compliant CSV output.
 
 [cols="1,1,2"]
 |===
