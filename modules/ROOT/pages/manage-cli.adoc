@@ -544,29 +544,250 @@ The {product} stores installation and configuration files in the following locat
 
 [cols="1h,2"]
 |===
-|File / Directory |Description
+|File / Folder |Description
 
 |`.astra`
-a|The `ASTRA_HOME` directory.
+a|The {product} home folder (`ASTRA_HOME`).
 
-_Default location_: `~/.astra` (macOS and Linux), `%USERPROFILE%\.astra` (Windows)
+_Default location_:
 
-The {product} stores the following items in this directory:
+* macOS and Linux: `~/.astra`
+* Windows: `%USERPROFILE%\.astra`
+* All platforms: If the `XDG_DATA_HOME` environment variable is set, then the default location is `$XDG_DATA_HOME/astra`.
 
-* The {product} executable (scripted installations only)
-* Accessory executables downloaded by certain commands, such as `xref:commands:astra-db-cqlsh.adoc[]` and `xref:commands:astra-db-dsbulk.adoc[]`
-* {scb-brief}s
+The {product} home folder contains the following items:
+
+* The `astra` executable (scripted installations only)
+* Accessory executables that are downloaded by certain commands, such as `xref:commands:astra-db-cqlsh.adoc[]` and `xref:commands:astra-db-dsbulk.adoc[]`
+* xref:astra-db-serverless:databases:secure-connect-bundle.adoc[{scb-brief}s]
 * Cache files for <<command-auto-completion,command auto-completion>>
 * Logs
 
-For more information about the `ASTRA_HOME` directory, see the {product} https://github.com/datastax/astra-cli?tab=readme-ov-file#home-folder-location[README].
+For more information about `ASTRA_HOME`, see the https://github.com/datastax/astra-cli?tab=readme-ov-file#home-folder-location[{product} README].
 
 |`.astrarc`
-|The {product} configuration file.
+a|The {product} configuration file.
 
-_Default location_: `~/.astrarc` (macOS and Linux), `%USERPROFILE%\.astrarc` (Windows)
+_Default location_:
 
-This file stores your <<manage-configuration-profiles,configuration profiles>> and their associated application tokens.
+* macOS and Linux: `~/.astrarc`
+* Windows: `%USERPROFILE%\.astrarc`
+* All platforms: If the `XDG_CONFIG_HOME` environment variable is set, then the default location is `$XDG_CONFIG_HOME/astra/.astrarc`.
 
-For more information about the {product} configuration file, see the {product} https://github.com/datastax/astra-cli?tab=readme-ov-file#astrarc-location[README].
+The {product} uses this file to store your <<manage-configuration-profiles,configuration profiles>> and their associated application tokens.
+
+For more information about the {product} configuration file, see the https://github.com/datastax/astra-cli?tab=readme-ov-file#astrarc-location[{product} README].
 |===
+
+=== Override the default home folder location
+
+You can override the default location of the {product} home folder (`.astra`) by setting the `ASTRA_HOME` environment variable.
+
+[tabs]
+======
+Set the environment variable dynamically::
++
+--
+Add the following line to your shell profile:
+
+[source,bash,subs="+quotes"]
+----
+eval "$(astra shellenv --home "**HOME_FOLDER_PATH**")"
+----
+
+Replace `**HOME_FOLDER_PATH**` with the full path to your preferred {product} home folder.
+--
+
+Set the environment variable directly::
++
+--
+Add the following line to your shell profile:
+
+[source,bash,subs="+quotes"]
+----
+export ASTRA_HOME=**HOME_FOLDER_PATH**
+----
+
+Replace `**HOME_FOLDER_PATH**` with the full path to your preferred {product} home folder.
+--
+======
+
+=== Override the default configuration file location
+
+You can override the default location of the {product} configuration file (`.astrarc`) by setting the `ASTRA_CONFIG_FILE` environment variable.
+
+[tabs]
+======
+Set the environment variable dynamically::
++
+--
+Add the following line to your shell profile:
+
+[source,bash,subs="+quotes"]
+----
+eval "$(astra shellenv --rc "**CONFIG_FILE_PATH**/.astrarc")"
+----
+
+Replace `**CONFIG_FILE_PATH**` with the full path to your preferred `.astrarc` configuration file.
+--
+
+Set the environment variable directly::
++
+--
+Add the following line to your shell profile:
+
+[source,bash,subs="+quotes"]
+----
+export ASTRARC=**CONFIG_FILE_PATH**/.astrarc
+----
+
+Replace `**CONFIG_FILE_PATH**` with the full path to your preferred `.astrarc` configuration file.
+--
+======
+
+[#command-output]
+== Command output formats and exit codes
+
+Most commands support the `-o` / `--output` option to specify the format of the command output:
+
+[source,shell,subs="+quotes"]
+----
+astra COMMAND -o **FORMAT**
+----
+
+The following output formats are available:
+
+* `human` (default): Human-readable format, optimized for command-line readability.
+* `json`: Structured JSON format, suitable for programmatic parsing.
+* `csv`: Comma-separated output format, ideal for data export and analysis.
+
+[tabs]
+======
+Human-readable::
++
+--
+The human-readable format uses tables, lists, and other visual elements to present information on the command line.
+--
+
+JSON::
++
+--
+Every command supporting JSON output will always return a response of exactly this schema:
+
+.JSON output schema
+[source,json]
+----
+{
+  "code": "OK" | "UNCAUGHT" | "DATABASE_NOT_FOUND" | "...",
+  "message": "Optional human-readable description",
+  "data": {
+    // Command-specific payload, may be an object, array, or primitive
+  },
+  "nextSteps": [
+    {
+      "command": "astra ...",
+      "comment": "Explanation of why/when to run this next"
+    }
+  ]
+}
+----
+
+All field names in the JSON output are in camel case (`fieldName`).
+
+[cols="1,1,2"]
+|===
+|Name |Type |Summary
+
+|`code`
+|`string`
+a|A string enum representing the exit code of the command.
+
+Common values include:
+
+* `OK`: command succeeded
+* `UNCAUGHT`: unexpected failure
+* `DATABASE_NOT_FOUND`: referenced resource missing
+* Other command-specific codes
+
+|`message`
+|`string`
+|Optional.
+A human-friendly message describing the result or error of the command.
+
+Not all commands include a message.
+
+|`data`
+|Any (type varies by command)
+|Freeform data specific to the command.
+Typically an object or array, but may be a primitive value (string, number, boolean, etc.) depending on the command.
+
+|`nextSteps`
+|`array` or `null`
+a|Optional.
+Only present if there are actionable next steps that you can take (it will never be an empty list).
+
+If present, it is an array of recommended next-step objects containing the following fields:
+
+* `command`: The command to run.
+* `comment`: An explanation of why/when to run this next.
+|===
+--
+
+CSV::
++
+--
+Every command supporting CSV output will always return an RFC-4180-compliant response of exactly this schema:
+
+.CSV output schema
+[source,csv]
+----
+code,message,data_field_1,data_field_2,...
+----
+
+All field names in the CSV output are in snake case (`field_name`).
+
+The first row is always the header, defining the column names.
+Each subsequent row represents one data record from the command.
+
+The `code` and `message` fields may repeat for each row of data to keep the CSV schema consistent.
+Values may contain commas or newlines and be wrapped in quotes to ensure RFC-4180-compliant CSV output.
+
+[cols="1,1,2"]
+|===
+|Name |Type |Summary
+
+|`code`
+|`string`
+a|A string enum representing the exit code of the command.
+
+Common values include:
+
+* `OK`: command succeeded
+* `UNCAUGHT`: unexpected failure
+* `DATABASE_NOT_FOUND`: referenced resource missing
+* Other command-specific codes
+
+If no rows are returned, you should assume an implicit `OK` code.
+
+|`message`
+|`string`
+|Optional.
+A human-friendly message describing the result or error of the command.
+
+Not all commands include a message, and this field will be empty if there is nothing to report.
+
+|Additional data fields
+|Any (type varies by command)
+a|Command-specific fields representing the actual data returned.
+
+Fields may be empty if there is nothing to report.
+
+Column order is consistent per command.
+|===
+--
+======
+
+[NOTE]
+====
+For commands that issue GET requests, the `json` response generally contains the raw response from the server, whereas the `human` and `csv` formats contain a simplified version of the data.
+====

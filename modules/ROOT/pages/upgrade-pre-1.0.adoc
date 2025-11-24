@@ -1,0 +1,60 @@
+= Upgrade from pre-1.0 versions of the {product}
+:navtitle: Upgrade from pre-1.0 versions
+
+// Author's note: Once we get further away from the 1.0 release, we can probably move the content of this page into a section of on the main upgrade.adoc page.
+
+{product} 1.0 and later do not support xref:ROOT:upgrade.adoc[in-place upgrades] from versions earlier than 1.0.
+
+If you have an earlier version installed, you must delete the `astra` executable before you can install the latest version:
+
+[tabs,sync-group-id=platforms]
+======
+macOS and Linux::
++
+--
+[source,shell]
+----
+rm ~/.astra/cli/astra
+----
+
+.Delete custom installation
+[%collapsible]
+====
+If you installed the {product} to a custom location, you can use the following command to delete the `astra` executable if it exists in your PATH:
+
+[source,shell]
+----
+rm $(which astra)
+----
+====
+
+This command does not delete your xref:ROOT:manage-cli.adoc#file-locations[{product} home folder and configuration file] (`.astra` and `.astrarc`).
+Leave these files in place so that the new version of the {product} can continue to connect using your existing configuration.
+--
+
+Homebrew::
++
+--
+[source,shell]
+----
+brew uninstall datastax/astra-cli/astra-cli
+----
+
+Uninstalling with Homebrew does not delete your xref:ROOT:manage-cli.adoc#file-locations[{product} home folder and configuration file] (`.astra` and `.astrarc`).
+Leave these files in place so that the new version of the {product} can continue to connect using your existing configuration.
+--
+======
+
+After you delete the old `astra` executable, follow the instructions in xref:ROOT:install.adoc[] to install the latest version.
+
+.Breaking changes in version 1.0
+[IMPORTANT]
+====
+{product} version 1.0 is largely backwards-compatible with pre-1.0 versions.
+However, there are some changes that might break certain scripted usage, such as:
+
+* New standardized xref:ROOT:manage-cli.adoc#output-formats[JSON and CSV output formats and exit codes].
+
+* Minor command and flag name changes.
+For a full list of name changes, see the https://github.com/datastax/astra-cli?tab=readme-ov-file#whats-changed[release notes].
+====

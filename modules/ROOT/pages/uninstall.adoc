@@ -99,7 +99,7 @@ Manual removal::
 rm $(astra config path -p)
 ----
 
-. Delete the xref:ROOT:manage-cli.adoc#file-locations[{product} home directory]:
+. Delete the xref:ROOT:manage-cli.adoc#file-locations[{product} home folder]:
 +
 [source,shell]
 ----
@@ -229,7 +229,7 @@ Manual removal::
 rm -f $(astra config path -p)
 ----
 
-. Delete the xref:ROOT:manage-cli.adoc#file-locations[{product} home directory]:
+. Delete the xref:ROOT:manage-cli.adoc#file-locations[{product} home folder]:
 +
 [source,powershell]
 ----
@@ -251,7 +251,7 @@ For more information, see the https://learn.microsoft.com/en-us/powershell/modul
 Homebrew::
 +
 --
-. Delete the {product} home directory (`xref:ROOT:manage-cli.adoc#file-locations[~/.astra]`) and optionally its configuration file (`xref:ROOT:manage-cli.adoc#file-locations[~/.astrarc]`):
+. Delete the {product} home folder (`xref:ROOT:manage-cli.adoc#file-locations[~/.astra]`) and optionally its configuration file (`xref:ROOT:manage-cli.adoc#file-locations[~/.astrarc]`):
 +
 .. Run the `xref:commands:astra-nuke.adoc[]` command:
 +

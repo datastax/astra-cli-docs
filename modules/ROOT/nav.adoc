@@ -2,6 +2,7 @@
 * xref:install.adoc[]
 * xref:manage-cli.adoc[]
 * xref:upgrade.adoc[]
+* xref:upgrade-pre-1.0.adoc[]
 * xref:uninstall.adoc[]
 
 .Quickstarts
