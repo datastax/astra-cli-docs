@@ -628,7 +628,7 @@ Add the following line to your shell profile:
 eval "$(astra shellenv --rc "**CONFIG_FILE_PATH**/.astrarc")"
 ----
 
-Replace `**CONFIG_FILE_PATH**` with the full path to your preferred`.astrarc` configuration file.
+Replace `**CONFIG_FILE_PATH**` with the full path to your preferred `.astrarc` configuration file.
 --
 
 Set the environment variable directly::
@@ -692,7 +692,7 @@ Every command supporting JSON output will always return a response of exactly th
 }
 ----
 
-All field names in the JSON output are in `camelCase`.
+All field names in the JSON output are in camel case (`fieldName`).
 
 [cols="1,1,2"]
 |===
@@ -744,7 +744,7 @@ Every command supporting CSV output will always return an RFC-4180-compliant res
 code,message,data_field_1,data_field_2,...
 ----
 
-All field names in the CSV output are in `snake_case`.
+All field names in the CSV output are in snake case (`field_name`).
 
 The first row is always the header, defining the column names.
 Each subsequent row represents one data record from the command.
