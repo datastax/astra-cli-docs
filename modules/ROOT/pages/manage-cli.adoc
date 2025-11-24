@@ -572,7 +572,7 @@ _Default location_:
 
 * macOS and Linux: `~/.astrarc`
 * Windows: `%USERPROFILE%\.astrarc`
-* All platforms: If the `XDG_CONFIG_HOME` environment variable is set, then the default location is `$XDG_CONFIG_HOME/.astrarc`.
+* All platforms: If the `XDG_CONFIG_HOME` environment variable is set, then the default location is `$XDG_CONFIG_HOME/astra/.astrarc`.
 
 The {product} uses this file to store your <<manage-configuration-profiles,configuration profiles>> and their associated application tokens.
 
