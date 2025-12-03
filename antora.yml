@@ -22,7 +22,7 @@ asciidoc:
     product-version: '1.0'
     db-serverless: 'Serverless (Non-Vector)'
     db-serverless-vector: 'Serverless (Vector)'
-    db-classic: 'Astra Managed Clusters'
+    db-classic: 'Managed Cluster'
     devops-api: 'DevOps API'
     astra-stream: 'Astra Streaming'
     astra-ui: 'Astra Portal'

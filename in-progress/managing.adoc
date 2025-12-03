@@ -14,7 +14,7 @@ You can use `**DATABASE_NAME**` instead of `**DATABASE_ID**` in all `astra db` c
 == Create a database
 
 The {product} can create {db-serverless} and {db-serverless-vector} databases with on-demand (non-PCU) capacity only.
-It cannot create {db-classic}; however, you can use the {product} to <<get-database-details,get information>> about your existing {db-classic}.
+It cannot create {product-short} {db-classic} (Classic) databases; however, you can use the {product} to <<get-database-details,get information>> about your existing {db-classic} databases.
 
 If your organization requires that new databases to belong to a xref:astra-db-serverless:administration:provisioned-capacity-units.adoc[PCU group], you must xref:astra-db-serverless:databases:create-database.adoc[use the {astra-ui} or {devops-api} to create databases] because the {product} doesn't support PCU group assignment with database creation.
 
@@ -1936,7 +1936,7 @@ Use the `astra db list-regions-vector` command to get a list of available cloud 
 astra db list-regions-vector
 ----
 
-Use the `astra db list-regions-classic` command to get a list of available cloud provider regions that support {db-classic}:
+Use the `astra db list-regions-classic` command to get a list of available cloud provider regions that support {product-short} {db-classic} (Classic) databases:
 
 [source,bash]
 ----
@@ -2056,6 +2056,11 @@ OPTIONS
 ====
 
 === `db list-regions-classic` options
+
+[TIP]
+====
+`classic` refers to {product-short} {db-classic} databases, which were previously known as {astra-db} Classic databases.
+====
 
 .Expand to see all `db list-regions-classic` options
 [%collapsible]
