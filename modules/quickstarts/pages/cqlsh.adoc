@@ -1,7 +1,7 @@
 = Issue CQL commands with cqlsh in the {product}
 :navtitle:  CQL quickstart
 
-The {cass-short} Query Language Shell (`cqlsh`) is a utility that you can use to issue xref:astra@cql:reference:cql-quick-reference.adoc[CQL commands] to your {astra-db} database.
+The {cass-short} Query Language Shell (`cqlsh`) is a utility that you can use to issue xref:astra@cql:reference:cql-quick-reference.adoc[CQL commands] to your {product-short} databases.
 
 The {product} provides embedded `cqlsh` support by downloading and installing the `cqlsh` utility in the background and exposing it through the `xref:commands:astra-db-cqlsh.adoc[]` commands.
 This can act as a convenient alternative to installing and configuring a xref:astra-db-serverless:cql:develop-with-cql.adoc#connect-to-the-cql-shell[standalone cqlsh].

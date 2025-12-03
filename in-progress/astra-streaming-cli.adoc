@@ -1,7 +1,7 @@
 // Writer's note: This page is no longer published but there is still content that should be retained and reformatted for Astra CLI 1.0.
-= {astra_stream} commands
+= {astra-stream} commands
 
-Use the {product} to manage your {astra_stream} deployments.
+Use the {product} to manage your {astra-stream} deployments.
 
 == Create a tenant
 
@@ -28,7 +28,7 @@ Running `astra streaming create` without any options deploys the tenant in the d
 ====
 Tenant names must be unique
 
-All tenant names in {astra_stream} must be unique.
+All tenant names in {astra-stream} must be unique.
 If the tenant name is already in use, the command fails with with the following error message:
 
 [source,console]
@@ -541,9 +541,9 @@ OPTIONS
 ----
 ====
 
-== Get a list of available {astra_stream} regions
+== Get a list of available {astra-stream} regions
 
-Use the `astra streaming list-regions` command to get a list of available regions that support {astra_stream}:
+Use the `astra streaming list-regions` command to get a list of available regions that support {astra-stream}:
 
 [source,bash]
 ----
@@ -959,7 +959,7 @@ key:[null], properties:[], content:hello
 
 == Change Data Capture (CDC)
 
-CDC for {astra_db} automatically captures changes in real time, de-duplicates the changes, and then streams the clean set of changed data into xref:astra-streaming:ROOT:index.adoc[{astra_stream}] where it can be processed by client applications or sent to downstream systems.
+CDC for {astra-db} automatically captures changes in real time, de-duplicates the changes, and then streams the clean set of changed data into xref:astra-streaming:ROOT:index.adoc[{astra-stream}] where it can be processed by client applications or sent to downstream systems.
 
 For more information about using the {product} to configure CDC, see xref:ROOT:managing.adoc#cdc[Configure Change Data Capture].
 
@@ -1033,12 +1033,12 @@ OPTIONS
 
 == Create environment variables
 
-When developing applications with {astra_stream} APIs, you will notice common values that are frequently reused, such as Pulsar tokens, broker URLs, and web service URLs.
+When developing applications with {astra-stream} APIs, you will notice common values that are frequently reused, such as Pulsar tokens, broker URLs, and web service URLs.
 It's a good practice to store these values in environment variables to facilitate reuse in your scripts, simplify token rotation, and increase security by keeping sensitive information separate from your core application code.
 
-The {product} can automatically generate a set of relevant variables for an {astra_stream} tenant that you can use in your applications.
+The {product} can automatically generate a set of relevant variables for an {astra-stream} tenant that you can use in your applications.
 
-Use the `astra streaming create-dotenv` command to generate a `.env` file containing relevant environment variables for a specific {astra_stream} tenant:
+Use the `astra streaming create-dotenv` command to generate a `.env` file containing relevant environment variables for a specific {astra-stream} tenant:
 
 [source,bash,subs="+quotes"]
 ----

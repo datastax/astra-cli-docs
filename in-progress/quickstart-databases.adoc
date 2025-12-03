@@ -4,7 +4,7 @@
 :organization-administrator-role: pass:q[xref:astra-db-serverless:administration:rbac.adoc#organization-administrator-role[*Organization Administrator*]]
 :database-administrator-role: pass:q[xref:astra-db-serverless:administration:rbac.adoc#database-administrator-role[*Database Administrator*]]
 
-You can use the {product} to perform administrative operations on your {astra-db} databases and keyspaces.
+You can use the {product} to perform administrative operations on your {product-short} databases and keyspaces.
 
 [IMPORTANT]
 ====
@@ -292,5 +292,5 @@ See xref:databases:create-database.adoc#get-db-id[Get your database ID].
 
 == Find embedding providers
 
-Get information about embedding providers for xref:databases:embedding-generation.adoc[{astra-db} vectorize], including supported providers, models, dimensions, and other configuration parameters.
+Get information about embedding providers for xref:databases:embedding-generation.adoc[{product-short} vectorize], including supported providers, models, dimensions, and other configuration parameters.
 

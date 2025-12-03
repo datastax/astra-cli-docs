@@ -1,10 +1,10 @@
 // Writer's note: This page is no longer published but there is still content that should be retained and reformatted for Astra CLI 1.0.
-= {astra_db} commands
+= {astra-db} commands
 :embedding-provider-name: NVIDIA
 :embedding-provider-name-api: nvidia
 :embedding-provider-model-name-api: NV-Embed-QA
 
-Use the {product} to manage your {astra_db} deployments.
+Use the {product} to manage your {product-short} databases.
 
 [TIP]
 ====
@@ -14,7 +14,7 @@ You can use `**DATABASE_NAME**` instead of `**DATABASE_ID**` in all `astra db` c
 == Create a database
 
 The {product} can create {db-serverless} and {db-serverless-vector} databases with on-demand (non-PCU) capacity only.
-It cannot create {db-classic} databases; however, you can use the {product} to <<get-database-details,get information>> about your existing {db-classic} databases.
+It cannot create {db-classic}; however, you can use the {product} to <<get-database-details,get information>> about your existing {db-classic}.
 
 If your organization requires that new databases to belong to a xref:astra-db-serverless:administration:provisioned-capacity-units.adoc[PCU group], you must xref:astra-db-serverless:databases:create-database.adoc[use the {astra-ui} or {devops-api} to create databases] because the {product} doesn't support PCU group assignment with database creation.
 
@@ -171,7 +171,7 @@ astra db create **DATABASE_NAME** \
 
 //TODO: Confirm that this no longer applies.
 ////
-The database ID, not the database name, ensures uniqueness within your {astra_db} organization.
+The database ID, not the database name, ensures uniqueness within your {product-short} organization.
 Consequently, if you issue the `astra db create` command multiple times, you will create multiple database instances.
 To ensure that you don't create a database with the same name as another existing database, use the `--if-not-exist` option:
 
@@ -183,7 +183,7 @@ astra db create demo -r us-east-1 -k keyspace1 --if-not-exist
 
 == Manage keyspaces
 
-{astra_db} databases store data in <<manage-collections,collections>> and <<manage-tables,tables>>, which exist inside keyspaces.
+{product-short} databases store data in <<manage-collections,collections>> and <<manage-tables,tables>>, which exist inside keyspaces.
 Each database must have at least one keyspace, and you can create more as needed.
 
 Use the `astra db create-keyspace` command to create a new keyspace in a database:
@@ -282,7 +282,7 @@ The database enters *Maintenance* status while it deletes the keyspace along wit
 
 include::ROOT:partial$async-option-active.adoc[]
 
-If you delete the default keyspace, {astra_db} automatically selects another keyspace to be the default keyspace.
+If you delete the default keyspace, {product-short} automatically selects another keyspace to be the default keyspace.
 
 === `db create-keyspace` options
 
@@ -501,7 +501,7 @@ astra db create-collection 58747660-464b-4085-bef2-c3f3e5401e3d \
 Use an {product-short}-hosted provider::
 +
 --
-To automatically generate embeddings with xref:astra-db-serverless:databases:embedding-generation.adoc[{astra_db} vectorize], add an embedding provider integration to your collection.
+To automatically generate embeddings with xref:astra-db-serverless:databases:embedding-generation.adoc[{product-short} vectorize], add an embedding provider integration to your collection.
 Embedding provider integrations are either {product-short}-hosted or external.
 
 This option uses an {product-short}-hosted provider:
@@ -552,10 +552,10 @@ astra db create-collection 58747660-464b-4085-bef2-c3f3e5401e3d \
 Use an external provider::
 +
 --
-To automatically generate embeddings with xref:astra-db-serverless:databases:embedding-generation.adoc[{astra_db} vectorize], add an embedding provider integration to your collection.
+To automatically generate embeddings with xref:astra-db-serverless:databases:embedding-generation.adoc[{product-short} vectorize], add an embedding provider integration to your collection.
 Embedding provider integrations are either {product-short}-hosted or external.
 
-To use an external embedding provider, you must add an xref:astra-db-serverless:databases:embedding-generation.adoc#supported-embedding-providers[embedding provider integration] to your {astra_db} organization, and then you can select that embedding provider when you create a collection:
+To use an external embedding provider, you must add an xref:astra-db-serverless:databases:embedding-generation.adoc#supported-embedding-providers[embedding provider integration] to your {product-short} organization, and then you can select that embedding provider when you create a collection:
 
 [source,bash,subs="+quotes"]
 ----
@@ -1920,7 +1920,7 @@ OPTIONS
 ----
 ====
 
-== Get a list of available {astra_db} regions
+== Get a list of available {product-short} regions
 
 Use the `astra db list-regions-serverless` command to get a list of available regions that support {db-serverless} databases:
 
@@ -1936,7 +1936,7 @@ Use the `astra db list-regions-vector` command to get a list of available cloud 
 astra db list-regions-vector
 ----
 
-Use the `astra db list-regions-classic` command to get a list of available cloud provider regions that support {db-classic} databases:
+Use the `astra db list-regions-classic` command to get a list of available cloud provider regions that support {db-classic}:
 
 [source,bash]
 ----
@@ -3462,7 +3462,7 @@ OPTIONS
 
 The following end-to-end example shows how to use the {product}'s built-in DSBulk support to load data into a database, get information about the data, and unload the data into CSV files:
 
-. Create an {astra_db} {db-serverless} database:
+. Create an {astra-db} {db-serverless} database:
 +
 [source,bash]
 ----
@@ -3680,11 +3680,11 @@ This command unloads row data from the `cities_by_country` table, and stores it 
 
 [IMPORTANT]
 ====
-CDC for {astra_db} incurs billed charges based on your {astra_stream} usage.
-For more information, see https://www.ibm.com/docs/en/astra-streaming?topic=astra-streaming-annual-price-plans[{astra_stream} pricing].
+CDC for {astra-db} incurs billed charges based on your {astra-stream} usage.
+For more information, see https://www.ibm.com/docs/en/astra-streaming?topic=astra-streaming-annual-price-plans[{astra-stream} pricing].
 ====
 
-CDC for {astra_db} automatically captures changes in real time, de-duplicates the changes, and then streams the clean set of changed data into xref:astra-streaming:ROOT:index.adoc[{astra_stream}] where it can be processed by client applications or sent to downstream systems.
+CDC for {astra-db} automatically captures changes in real time, de-duplicates the changes, and then streams the clean set of changed data into xref:astra-streaming:ROOT:index.adoc[{astra-stream}] where it can be processed by client applications or sent to downstream systems.
 
 Use the `astra db create-cdc` command to create a CDC connection for a table in a {db-serverless} database:
 
@@ -3927,7 +3927,7 @@ OPTIONS
 
 The following end-to-end example shows how to use the {product} to create a CDC connection for a table in a {db-serverless} database:
 
-. Create an {astra_db} {db-serverless} database:
+. Create an {astra-db} {db-serverless} database:
 +
 [source,bash]
 ----
@@ -3952,7 +3952,7 @@ get CLoud provider
 ----
 ====
 
-. Create an {astra_stream} tenant in the same region as your database:
+. Create an {astra-stream} tenant in the same region as your database:
 +
 [source,bash]
 ----
@@ -4203,7 +4203,7 @@ astra db download-scb **DATABASE_ID** -f **DESTINATION_FILE**.zip
 
 == Create environment variables
 
-When developing applications with {astra_db} APIs, you will notice common values that are frequently reused, such as application tokens, database API endpoints, database IDs, and keyspace names.
+When developing applications with {astra-db} APIs, you will notice common values that are frequently reused, such as application tokens, database API endpoints, database IDs, and keyspace names.
 It's a good practice to store these values in environment variables to facilitate reuse in your scripts, simplify token rotation, and increase security by keeping sensitive information separate from your core application code.
 
 The {product} can automatically generate a set of relevant variables for a database that you can use in your applications.

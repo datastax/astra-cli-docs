@@ -352,8 +352,8 @@ OPTIONS
 ====
 Removing a user removes their access to your organization, but it doesn't delete their account.
 
-The user retains their personal {astra_db} account under their associated email address, including access to their default (personal) organization and any other organizations they belong to.
-The user can still access their personal {astra_db} account, if they have access to the associated xref:astra-db-serverless:administration:invite-users-to-organization.adoc#accept-the-invite[authentication method].
+The user retains their personal {product-short} account under their associated email address, including access to their default (personal) organization and any other organizations they belong to.
+The user can still access their personal {product-short} account, if they have access to the associated xref:astra-db-serverless:administration:invite-users-to-organization.adoc#accept-the-invite[authentication method].
 
 If your organization uses SSO, make sure that you also remove the user from your IdP, if necessary.
 ====

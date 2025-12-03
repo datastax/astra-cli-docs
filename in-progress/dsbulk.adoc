@@ -151,7 +151,7 @@ To resume the current operation, re-run it with the same settings, and add the f
 
 The following end-to-end example shows how to use the {product}'s built-in DSBulk support to load data into a database, get information about the data, and unload the data into CSV files:
 
-. Create an {astra_db} {db-serverless} database:
+. Create an {astra-db} {db-serverless} database:
 +
 [source,shell]
 ----
