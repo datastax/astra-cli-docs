@@ -4,7 +4,7 @@
 :organization-administrator-role: pass:q[xref:astra-db-serverless:administration:rbac.adoc#organization-administrator-role[*Organization Administrator*]]
 :database-administrator-role: pass:q[xref:astra-db-serverless:administration:rbac.adoc#database-administrator-role[*Database Administrator*]]
 
-You can use the {product} to perform administrative operations on your {product-short} databases and keyspaces.
+You can use the {product} to perform administrative operations on your {astra-db} databases and keyspaces.
 
 [IMPORTANT]
 ====

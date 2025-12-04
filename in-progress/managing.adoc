@@ -4,7 +4,7 @@
 :embedding-provider-name-api: nvidia
 :embedding-provider-model-name-api: NV-Embed-QA
 
-Use the {product} to manage your {product-short} databases.
+Use the {product} to manage your {astra-db} databases.
 
 [TIP]
 ====
@@ -183,7 +183,7 @@ astra db create demo -r us-east-1 -k keyspace1 --if-not-exist
 
 == Manage keyspaces
 
-{product-short} databases store data in <<manage-collections,collections>> and <<manage-tables,tables>>, which exist inside keyspaces.
+{astra-db} databases store data in <<manage-collections,collections>> and <<manage-tables,tables>>, which exist inside keyspaces.
 Each database must have at least one keyspace, and you can create more as needed.
 
 Use the `astra db create-keyspace` command to create a new keyspace in a database:
@@ -282,7 +282,7 @@ The database enters *Maintenance* status while it deletes the keyspace along wit
 
 include::ROOT:partial$async-option-active.adoc[]
 
-If you delete the default keyspace, {product-short} automatically selects another keyspace to be the default keyspace.
+If you delete the default keyspace, {astra-db} automatically selects another keyspace to be the default keyspace.
 
 === `db create-keyspace` options
 
@@ -1920,7 +1920,7 @@ OPTIONS
 ----
 ====
 
-== Get a list of available {product-short} regions
+== Get a list of available {astra-db} regions
 
 Use the `astra db list-regions-serverless` command to get a list of available regions that support {db-serverless} databases:
 
