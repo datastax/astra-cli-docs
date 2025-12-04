@@ -1,13 +1,13 @@
 = Configure Change Data Capture (CDC) with the {product}
 :navtitle:  Change Data Capture quickstart
 
-Change Data Capture (CDC) for {astra_db} automatically captures changes in real time, de-duplicates the changes, and then streams the clean set of changed data into xref:astra-streaming:ROOT:index.adoc[{astra_stream}] where it can be processed by client applications or sent to downstream systems.
+Change Data Capture (CDC) for {astra-db} automatically captures changes in real time, de-duplicates the changes, and then streams the clean set of changed data into xref:astra-streaming:ROOT:index.adoc[{astra-stream}] where it can be processed by client applications or sent to downstream systems.
 
-This page provides an end-to-end example that shows you how to use the {product} to enable CDC for an {astra-db} database.
+This page provides an end-to-end example that shows you how to use the {product} to enable CDC for an {astra} database.
 
 == Create a database
 
-Create an {astra_db} database:
+Create a database:
 
 [source,shell]
 ----
@@ -25,7 +25,7 @@ Database 'cdc_demo_db' has been created with id 'ce5e563c-3248-4064-b03c-5892433
 
 == Create a streaming tenant
 
-Create an {astra_stream} tenant in the same region as your database:
+Create an {astra-stream} tenant in the same region as your database:
 
 [source,shell]
 ----

@@ -1,9 +1,9 @@
 = Install the {product}
 :navtitle: Install the CLI
 :page-aliases: ROOT:installation.adoc, ROOT:getting-started.adoc
-:description: {product} makes it easier to integrate {product-short} into your applications and workflows by letting you perform common platform tasks for {astra_db} and {astra_stream} from the command line.
+:description: {product} makes it easier to integrate {product-short} into your applications and workflows by letting you perform common platform tasks for {astra-db} and {astra-stream} from the command line.
 
-Install the {product} to create and manage {astra_db} databases and {astra_stream} tenants from the command line.
+Install the {product} to create and manage {astra-db} databases and {astra-stream} tenants from the command line.
 
 == Supported platforms
 

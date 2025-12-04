@@ -292,5 +292,5 @@ See xref:databases:create-database.adoc#get-db-id[Get your database ID].
 
 == Find embedding providers
 
-Get information about embedding providers for xref:databases:embedding-generation.adoc[{astra-db} vectorize], including supported providers, models, dimensions, and other configuration parameters.
+Get information about embedding providers for xref:databases:embedding-generation.adoc[{product-short} vectorize], including supported providers, models, dimensions, and other configuration parameters.
 
