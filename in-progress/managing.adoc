@@ -2783,7 +2783,6 @@ This can act as a convenient alternative to installing and configuring a xref:as
 To use `cqlsh` commands, you must have a supported version of Python installed on your system.
 The underlying `cqlsh` utility requires Python 2.7 (with TLS support) or Python 3.6--3.11.
 Python versions 3.12 and later are not supported.
-For more details, see this https://support.datastax.com/s/article/cqlsh-may-fail-with-A-Python-installation-with-SSL-is-required-to-connect-to-a-cloud-cluster-when-connecting-to-Astra[Support article]
 
 Use the `astra db cqlsh` command to start `cqlsh` in interactive mode:
 
