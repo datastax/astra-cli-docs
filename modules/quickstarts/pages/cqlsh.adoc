@@ -15,7 +15,7 @@ The first time you connect to a specific database, {product} downloads the datab
 [#prerequisites]
 == Prerequisites
 
-The `cqlsh` commands required one of the following supported versions of Python with SSL/TLS:
+The `cqlsh` commands require one of the following supported versions of Python with SSL/TLS:
 
 * Python 3.6 to 3.11
 * Python 2.7.12 or later
@@ -24,7 +24,6 @@ All other versions aren't supported.
 
 Any supported Python version must be installed on your system _and_ available in your system's `PATH` for the {product} to use it with the `cqlsh` commands.
 This version doesn't need to be your system's default Python version as long as it's available in the `PATH`.
-For example, you can use a virtual environment or symbolic links to add a supported Python version without changing your system's default version.
 
 === Troubleshoot ModuleNotFoundError and Python installation errors
 
