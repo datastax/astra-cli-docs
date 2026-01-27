@@ -12,18 +12,45 @@ The first time you run an `astra db cqlsh` command, the {product} downloads and 
 All `astra db cqlsh` commands require a database name or ID.
 The first time you connect to a specific database, {product} downloads the database's {scb} into the {product} home directory.
 
+[#prerequisites]
 == Prerequisites
 
-To use `cqlsh` commands, you must have a supported version of Python installed on your system.
+The `cqlsh` commands require one of the following supported versions of Python with SSL/TLS:
 
-The underlying `cqlsh` utility requires Python 2.7 with TLS support, or any version of Python from 3.6 through 3.11.
-Python versions 3.12 and later are not supported.
-For more details, see this https://support.datastax.com/s/article/cqlsh-may-fail-with-A-Python-installation-with-SSL-is-required-to-connect-to-a-cloud-cluster-when-connecting-to-Astra[support article]
+* Python 3.6 to 3.11
+* Python 2.7.12 or later
 
-Any supported version of Python must be available in your system's `PATH` for the {product} to use it.
-It does not require that the supported version be your system's default version of Python.
+All other versions aren't supported.
 
-If the {product} reports `ModuleNotFoundError` after running any of the `astra db cqlsh` commands, you might not have a supported version of Python available in your system's `PATH`.
+Any supported Python version must be installed on your system _and_ available in your system's `PATH` for the {product} to use it with the `cqlsh` commands.
+This version doesn't need to be your system's default Python version as long as it's available in the `PATH`.
+
+=== Troubleshoot ModuleNotFoundError and Python installation errors
+
+If the {product} reports `ModuleNotFoundError` after running any of the `astra db cqlsh` commands, make sure you have a <<prerequisites,supported Python version>> available in your system's `PATH`.
+
+The error `A Python installation with SSL is required to connect to a cloud cluster` means that the detected Python version doesn't support TLS.
+This typically happens with Python versions earlier than 2.7.12, which don't support TLS.
+
+.Verify TLS support
+[%collapsible]
+====
+To verify whether your current Python version supports TLS, run the following command:
+
+[source,shell]
+----
+python -c 'from ssl import SSLContext, PROTOCOL_TLS, CERT_REQUIRED'
+----
+
+If TLS isn't supported, the following error is returned:
+
+[source,console]
+----
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+ImportError: cannot import name PROTOCOL_TLS
+----
+====
 
 == Start an interactive cqlsh session
 
