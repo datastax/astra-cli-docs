@@ -1,0 +1,33 @@
+= astra db endpoints
+
+[source,shell]
+----
+astra db endpoints [COMMAND]
+
+----
+
+
+Get various endpoints for your database
+
+
+
+== Subcommands
+
+* xref:astra-db-endpoints-list.adoc[astra db endpoints list]
+* xref:astra-db-endpoints-api.adoc[astra db endpoints api]
+* xref:astra-db-endpoints-data-api.adoc[astra db endpoints data-api]
+* xref:astra-db-endpoints-swagger.adoc[astra db endpoints swagger]
+* xref:astra-db-endpoints-playground.adoc[astra db endpoints playground]
+
+
+== Options
+
+
+
+== Examples
+[source,bash]
+----
+
+----
+
+

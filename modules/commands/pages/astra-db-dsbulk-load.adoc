@@ -3,14 +3,14 @@
 [source,shell]
 ----
 astra db dsbulk load [-qV] [--allow-missing-fields] [--dry-run] [--header]
-                     [--no-input] [--[no-]spinner] [--dump-logs[=FILE]]
-                     [--color=WHEN] [--delimiter=DELIMITER]
-                     [--encoding=ENCODING] [-k=KEYSPACE] [--log-dir=DIRECTORY]
-                     [-m=MAPPING] [--max-concurrent-queries=QUERIES]
-                     [--max-errors=COUNT] [-o=FORMAT] [-r=REGION]
-                     [--skip-records=COUNT] [-t=TABLE] --url=URL [[[-cf=PATH]
-                     [-p=NAME]] | [--token=TOKEN [--env=ENV]]]
-                     [--dsbulk-config=CONFIG_FILE | -F=FLAGS [-F=FLAGS]...] [DB]
+                     [--no-input] [--[no-]spinner] [--color[=WHEN]] [--dump-logs
+                     [=FILE]] [--delimiter=DELIMITER]
+                     [--dsbulk-config=CONFIG_FILE] [--encoding=ENCODING]
+                     [-k=KEYSPACE] [--log-dir=DIRECTORY] [-m=MAPPING]
+                     [--max-concurrent-queries=QUERIES] [--max-errors=COUNT]
+                     [-o=FORMAT] [-r=REGION] [--skip-records=COUNT] [-t=TABLE]
+                     --url=URL [-F=FLAGS]... [[[-cf=PATH] [-p=NAME]] |
+                     [--token=TOKEN [--env=ENV]]] [DB]
 
 ----
 
@@ -30,6 +30,8 @@ Load data leveraging DSBulk
 `--max-concurrent-queries`:: The maximum number of concurrent queries that should be carried in parallel
 `--log-dir`:: Log directory for dsbulk operations
 `-r`, `--region`:: The region to use. Uses the db's default region if not specified.
+`--dsbulk-config`:: Configuration file for DSBulk loader options
+`-F`, `--dsbulk-flag`:: Additional flags to pass to DSBulk loader, can be specified multiple times (e.g., -F '--key1=value1' -F '--key2')
 `--url`:: File location to load data
 `--delimiter`:: Character(s) use as field delimiter
 `-m`, `--schema.mapping`:: Field-to-column mapping to use
@@ -38,8 +40,6 @@ Load data leveraging DSBulk
 `--max-errors`:: Maximum number of errors before aborting the operation
 `--dry-run`:: Enable or disable dry-run mode
 `--allow-missing-fields`:: Ease the mapping
-`--dsbulk-config`:: Configuration file for DSBulk loader options
-`-F`, `--dsbulk-flags`:: Additional flags to pass to DSBulk loader
 
 .Common Options
 [%collapsible]
@@ -57,7 +57,7 @@ Load data leveraging DSBulk
 [%collapsible]
 ====
 `-cf`, `--config-file`:: The ``.astrarc`` file to use for this command
-`-p`, `--profile`:: The ``.astrarc`` profile to use for this command
+`-p`, `--profile`:: The ``.astrarc`` profile to use for this command. Can be set via ``ASTRA_PROFILE``.
 `--token`:: The astra token to use for this command. Use the ``--token @file`` syntax to read the token from a file, to avoid potential leaks.
 `--env`:: Override the target astra environment
 ====
@@ -66,7 +66,17 @@ Load data leveraging DSBulk
 == Examples
 [source,bash]
 ----
+# Load a CSV that includes a header row
+$ astra db dsbulk load my_db -k my_keyspace -t customers --url dsbulk_samples/customers.csv --header
 
+# Load a delimited file with no header
+$ astra db dsbulk load my_db -k my_keyspace -t products --url dsbulk_samples/products.psv --delimiter '|' -m '0=sku,1=name,2=category,3=price,4=inventory'
+
+# Map input field names to different table columns
+$ astra db dsbulk load my_db -k my_keyspace -t orders_by_customer --url dsbulk_samples/orders_legacy.csv --header -m 'cust_id=customer_id,ts=order_ts,id=order_id,status=status,total_usd=total,item_count=items' --log-dir dsbulk_out/logs/load-orders
+
+# Skip preamble lines and use a dsbulk config file
+$ astra db dsbulk load my_db -k my_keyspace -t orders_by_customer --url dsbulk_samples/orders_export.csv --skip-records 1 --header --dsbulk-config dsbulk_samples/dsbulk-timestamp.conf --max-errors 25
 ----
 
 

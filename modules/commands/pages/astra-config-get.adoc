@@ -2,8 +2,8 @@
 
 [source,shell]
 ----
-astra config get [-qV] [--no-input] [--[no-]spinner] [--dump-logs[=FILE]]
-                 [-cf=PATH] [--color=WHEN] [-k=KEY] [-o=FORMAT] [NAME]
+astra config get [-qV] [--no-input] [--[no-]spinner] [--color[=WHEN]]
+                 [--dump-logs[=FILE]] [-cf=PATH] [-k=KEY] [-o=FORMAT] [NAME]
 
 ----
 

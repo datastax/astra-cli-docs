@@ -2,8 +2,8 @@
 
 [source,shell]
 ----
-astra setup [-qV] [--no-input] [--[no-]spinner] [--dump-logs[=FILE]]
-            [--color=WHEN] [-e=ENV] [--name=NAME] [-o=FORMAT] [-t=TOKEN]
+astra setup [-qV] [--no-input] [--[no-]spinner] [--color[=WHEN]] [--dump-logs
+            [=FILE]] [-e=ENV] [--name=NAME] [-o=FORMAT] [-t=TOKEN]
 
 ----
 

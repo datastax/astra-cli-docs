@@ -3,7 +3,7 @@
 [source,shell]
 ----
 astra config create [-dqV] [--no-input] [--[no-]overwrite] [--[no-]spinner]
-                    [--dump-logs[=FILE]] [-cf=PATH] [--color=WHEN] [-e=ENV]
+                    [--color[=WHEN]] [--dump-logs[=FILE]] [-cf=PATH] [-e=ENV]
                     [-o=FORMAT] -t=TOKEN [NAME]
 
 ----

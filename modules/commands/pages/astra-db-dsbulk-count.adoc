@@ -2,12 +2,12 @@
 
 [source,shell]
 ----
-astra db dsbulk count [-qV] [--no-input] [--[no-]spinner] [--dump-logs[=FILE]]
-                      [--color=WHEN] [--encoding=ENCODING] [-k=KEYSPACE]
-                      [--log-dir=DIRECTORY] [--max-concurrent-queries=QUERIES]
-                      [-o=FORMAT] [-query=QUERY] [-r=REGION] [-t=TABLE]
+astra db dsbulk count [-qV] [--no-input] [--[no-]spinner] [--color[=WHEN]]
+                      [--dump-logs[=FILE]] [--dsbulk-config=CONFIG_FILE]
+                      [--encoding=ENCODING] [-k=KEYSPACE] [--log-dir=DIRECTORY]
+                      [--max-concurrent-queries=QUERIES] [-o=FORMAT]
+                      [-query=QUERY] [-r=REGION] [-t=TABLE] [-F=FLAGS]...
                       [[[-cf=PATH] [-p=NAME]] | [--token=TOKEN [--env=ENV]]]
-                      [--dsbulk-config=CONFIG_FILE | -F=FLAGS [-F=FLAGS]...]
                       [DB]
 
 ----
@@ -28,9 +28,9 @@ Count items for a table, a query
 `--max-concurrent-queries`:: The maximum number of concurrent queries that should be carried in parallel
 `--log-dir`:: Log directory for dsbulk operations
 `-r`, `--region`:: The region to use. Uses the db's default region if not specified.
-`-query`, `--schema.query`:: Optional query to unload or count
 `--dsbulk-config`:: Configuration file for DSBulk loader options
-`-F`, `--dsbulk-flags`:: Additional flags to pass to DSBulk loader
+`-F`, `--dsbulk-flag`:: Additional flags to pass to DSBulk loader, can be specified multiple times (e.g., -F '--key1=value1' -F '--key2')
+`-query`, `--schema.query`:: Optional query to unload or count
 
 .Common Options
 [%collapsible]
@@ -48,7 +48,7 @@ Count items for a table, a query
 [%collapsible]
 ====
 `-cf`, `--config-file`:: The ``.astrarc`` file to use for this command
-`-p`, `--profile`:: The ``.astrarc`` profile to use for this command
+`-p`, `--profile`:: The ``.astrarc`` profile to use for this command. Can be set via ``ASTRA_PROFILE``.
 `--token`:: The astra token to use for this command. Use the ``--token @file`` syntax to read the token from a file, to avoid potential leaks.
 `--env`:: Override the target astra environment
 ====
@@ -57,7 +57,17 @@ Count items for a table, a query
 == Examples
 [source,bash]
 ----
+# Count all rows in a table
+$ astra db dsbulk count my_db -k my_keyspace -t users
 
+# Count rows using a custom query with filtering
+$ astra db dsbulk count my_db -k my_keyspace -query "SELECT * FROM orders_by_customer WHERE customer_id = 11111111-1111-1111-1111-111111111111"
+
+# Count with increased parallelism for large tables
+$ astra db dsbulk count my_db -k my_keyspace -t products --max-concurrent-queries 32
+
+# Find the largest partitions using dsbulk stats flags
+$ astra db dsbulk count my_db -k my_keyspace -t orders_by_customer -F '--stats.modes=partitions' -F '--stats.numPartitions=5'
 ----
 
 

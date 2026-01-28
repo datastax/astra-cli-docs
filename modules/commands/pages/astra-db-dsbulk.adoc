@@ -27,7 +27,20 @@ Use dsbulk to interface with your Astra DB database
 == Examples
 [source,bash]
 ----
+# Count all rows in a database table
+$ astra db dsbulk count my_db -k my_keyspace -t my_table
 
+# Load data into a database table from a file
+$ astra db dsbulk load my_db -k my_keyspace -t my_table --url my_data.csv
+
+# Unload a database table
+$ astra db dsbulk unload my_db -k my_keyspace -t my_table
+
+# Display dsbulk's version information
+$ astra db dsbulk version
+
+# Get the path to the dsbulk executable
+$ astra db dsbulk path
 ----
 
 

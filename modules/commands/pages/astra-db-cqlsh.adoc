@@ -33,7 +33,7 @@ $ astra db cqlsh start my_db
 $ astra db cqlsh start my_db -k my_keyspace
 
 # Execute a CQL statement
-$ astra db cqlsh exec my_db "SELECT * FROM my_keyspace.my_table"
+$ astra db cqlsh exec my_db -e "SELECT * FROM my_keyspace.my_table"
 
 # Execute a CQL file
 $ astra db cqlsh exec my_db -f script.cql

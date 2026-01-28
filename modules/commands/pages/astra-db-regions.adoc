@@ -1,0 +1,31 @@
+= astra db regions
+
+[source,shell]
+----
+astra db regions [COMMAND]
+
+----
+
+
+List available regions for Astra DB databases
+
+
+
+== Subcommands
+
+* xref:astra-db-regions-classic.adoc[astra db regions classic]
+* xref:astra-db-regions-serverless.adoc[astra db regions serverless]
+* xref:astra-db-regions-vector.adoc[astra db regions vector]
+
+
+== Options
+
+
+
+== Examples
+[source,bash]
+----
+
+----
+
+

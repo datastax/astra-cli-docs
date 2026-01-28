@@ -3,7 +3,7 @@
 [source,shell]
 ----
 astra nuke [-qVy] [--dry-run] [--no-input] [--[no-]preserve-astrarc] [--[no-]
-           spinner] [--dump-logs[=FILE]] [--color=WHEN] [-o=FORMAT]
+           spinner] [--color[=WHEN]] [--dump-logs[=FILE]] [-o=FORMAT]
 
 ----
 

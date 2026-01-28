@@ -1,13 +1,12 @@
-= astra db list-regions-vector
+= astra db regions vector
 
 [source,shell]
 ----
-astra db list-regions-vector [-qV] [--no-input] [--[no-]spinner] [--color
-                             [=WHEN]] [--dump-logs[=FILE]] [-o=FORMAT]
-                             [-c=FILTER[,FILTER...]]... [-f=FILTER[,
-                             FILTER...]]... [-z=FILTER[,FILTER...]]...
-                             [[[-cf=PATH] [-p=NAME]] | [--token=TOKEN
-                             [--env=ENV]]]
+astra db regions vector [-qV] [--no-input] [--[no-]spinner] [--color[=WHEN]]
+                        [--dump-logs[=FILE]] [-o=FORMAT] [-c=FILTER[,
+                        FILTER...]]... [-f=FILTER[,FILTER...]]... [-z=FILTER[,
+                        FILTER...]]... [[[-cf=PATH] [-p=NAME]] | [--token=TOKEN
+                        [--env=ENV]]]
 
 ----
 
@@ -49,7 +48,17 @@ List all available regions for vector Astra DB databases
 == Examples
 [source,bash]
 ----
+# List all available regions for vector Astra DB databases
+$ astra db regions vector
 
+# Filter by cloud provider
+$ astra db regions vector --cloud AWS,GCP
+
+# Filter by partial region name
+$ astra db regions vector --filter us-,ca-
+
+# Filter by zone
+$ astra db regions vector --zone Europe
 ----
 
 

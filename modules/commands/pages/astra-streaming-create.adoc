@@ -3,10 +3,10 @@
 [source,shell]
 ----
 astra streaming create [-qV] [--if-not-exists] [--no-input] [--[no-]spinner]
-                       [--dump-logs[=FILE]] [--color=WHEN] [-o=FORMAT]
-                       [[[-cf=PATH] [-p=NAME]] | [--token=TOKEN [--env=ENV]]]
-                       ([--plan=PLAN] | -e=EMAIL | (--cluster=CLUSTER |
-                       [-r=REGION [-c=CLOUD]])) TENANT
+                       [--color[=WHEN]] [--dump-logs[=FILE]] [-c=CLOUD]
+                       --cluster=CLUSTER [-e=EMAIL] [-o=FORMAT] [--plan=PLAN]
+                       -r=REGION [[[-cf=PATH] [-p=NAME]] | [--token=TOKEN
+                       [--env=ENV]]] TENANT
 
 ----
 
@@ -43,7 +43,7 @@ Create a new streaming tenant
 [%collapsible]
 ====
 `-cf`, `--config-file`:: The ``.astrarc`` file to use for this command
-`-p`, `--profile`:: The ``.astrarc`` profile to use for this command
+`-p`, `--profile`:: The ``.astrarc`` profile to use for this command. Can be set via ``ASTRA_PROFILE``.
 `--token`:: The astra token to use for this command. Use the ``--token @file`` syntax to read the token from a file, to avoid potential leaks.
 `--env`:: Override the target astra environment
 ====
