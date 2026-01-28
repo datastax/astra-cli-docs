@@ -3,7 +3,7 @@
 [source,shell]
 ----
 astra db create-cdc [-qV] [--if-not-exists] [--no-input] [--[no-]spinner]
-                    [--dump-logs[=FILE]] [--color=WHEN] [-k=KEYSPACE]
+                    [--color[=WHEN]] [--dump-logs[=FILE]] [-k=KEYSPACE]
                     [-o=FORMAT] --table=TABLE --tenant=TENANT
                     [--topic-partitions=PARTITIONS] [[[-cf=PATH] [-p=NAME]] |
                     [--token=TOKEN [--env=ENV]]] [DB]
@@ -42,7 +42,7 @@ Create a CDC (Change Data Capture) for a table in a specific keyspace and tenant
 [%collapsible]
 ====
 `-cf`, `--config-file`:: The ``.astrarc`` file to use for this command
-`-p`, `--profile`:: The ``.astrarc`` profile to use for this command
+`-p`, `--profile`:: The ``.astrarc`` profile to use for this command. Can be set via ``ASTRA_PROFILE``.
 `--token`:: The astra token to use for this command. Use the ``--token @file`` syntax to read the token from a file, to avoid potential leaks.
 `--env`:: Override the target astra environment
 ====

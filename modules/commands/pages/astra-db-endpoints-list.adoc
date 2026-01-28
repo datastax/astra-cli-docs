@@ -1,18 +1,16 @@
-= astra db list-regions-vector
+= astra db endpoints list
 
 [source,shell]
 ----
-astra db list-regions-vector [-qV] [--no-input] [--[no-]spinner] [--color
-                             [=WHEN]] [--dump-logs[=FILE]] [-o=FORMAT]
-                             [-c=FILTER[,FILTER...]]... [-f=FILTER[,
-                             FILTER...]]... [-z=FILTER[,FILTER...]]...
-                             [[[-cf=PATH] [-p=NAME]] | [--token=TOKEN
-                             [--env=ENV]]]
+astra db endpoints list [-qV] [--no-input] [--[no-]spinner] [--color[=WHEN]]
+                        [--dump-logs[=FILE]] [-o=FORMAT] [-r=REGION]
+                        [[[-cf=PATH] [-p=NAME]] | [--token=TOKEN [--env=ENV]]]
+                        [DB]
 
 ----
 
 
-List all available regions for vector Astra DB databases
+Get the various endpoints for a database
 
 
 
@@ -20,9 +18,8 @@ List all available regions for vector Astra DB databases
 
 == Options
 
-`-f`, `--filter`:: Comma-separated case-insensitive partial-match filters on the region name
-`-c`, `--cloud`:: Comma-separated list of cloud providers to filter on
-`-z`, `--zone`:: Comma-separated list of zones to include
+`DB`:: The name or ID of the Astra database to operate on
+`-r`, `--region`:: The region to use
 
 .Common Options
 [%collapsible]
@@ -49,7 +46,11 @@ List all available regions for vector Astra DB databases
 == Examples
 [source,bash]
 ----
+# List the various endpoints for the specified database
+$ astra db endpoints list my_db
 
+# List the various endpoints for a prompted db
+$ astra db endpoints list
 ----
 
 

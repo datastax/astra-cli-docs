@@ -2,9 +2,8 @@
 
 [source,shell]
 ----
-astra config delete [-qV] [--if-exists] [--no-input] [--[no-]spinner]
-                    [--dump-logs[=FILE]] [-cf=PATH] [--color=WHEN] [-o=FORMAT]
-                    [NAME]
+astra config delete [-qV] [--if-exists] [--no-input] [--[no-]spinner] [--color
+                    [=WHEN]] [--dump-logs[=FILE]] [-cf=PATH] [-o=FORMAT] [NAME]
 
 ----
 

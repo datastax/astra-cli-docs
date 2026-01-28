@@ -2,8 +2,8 @@
 
 [source,shell]
 ----
-astra db truncate-collection [-qV] [--no-input] [--[no-]spinner] [--dump-logs
-                             [=FILE]] [-c=COLLECTION] [--color=WHEN]
+astra db truncate-collection [-qV] [--no-input] [--[no-]spinner] [--color
+                             [=WHEN]] [--dump-logs[=FILE]] [-c=COLLECTION]
                              [-k=KEYSPACE] [-o=FORMAT] [[[-cf=PATH] [-p=NAME]]
                              | [--token=TOKEN [--env=ENV]]] [DB]
 
@@ -38,7 +38,7 @@ Atomically delete all documents in a Data API collection
 [%collapsible]
 ====
 `-cf`, `--config-file`:: The ``.astrarc`` file to use for this command
-`-p`, `--profile`:: The ``.astrarc`` profile to use for this command
+`-p`, `--profile`:: The ``.astrarc`` profile to use for this command. Can be set via ``ASTRA_PROFILE``.
 `--token`:: The astra token to use for this command. Use the ``--token @file`` syntax to read the token from a file, to avoid potential leaks.
 `--env`:: Override the target astra environment
 ====

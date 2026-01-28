@@ -2,8 +2,8 @@
 
 [source,shell]
 ----
-astra db [-qvV] [--no-input] [--[no-]spinner] [--dump-logs[=FILE]]
-         [--color=WHEN] [-o=FORMAT] [[[-cf=PATH] [-p=NAME]] | [--token=TOKEN
+astra db [-qvV] [--no-input] [--[no-]spinner] [--color[=WHEN]] [--dump-logs
+         [=FILE]] [-o=FORMAT] [[[-cf=PATH] [-p=NAME]] | [--token=TOKEN
          [--env=ENV]]] [COMMAND]
 
 ----
@@ -46,10 +46,12 @@ Manage your Astra databases
 * xref:astra-db-create-region.adoc[astra db create-region]
 * xref:astra-db-delete-region.adoc[astra db delete-region]
 * xref:astra-db-list-regions.adoc[astra db list-regions]
+* xref:astra-db-list-clouds.adoc[astra db list-clouds]
 * xref:astra-db-list-regions-classic.adoc[astra db list-regions-classic]
 * xref:astra-db-list-regions-serverless.adoc[astra db list-regions-serverless]
 * xref:astra-db-list-regions-vector.adoc[astra db list-regions-vector]
-* xref:astra-db-list-clouds.adoc[astra db list-clouds]
+* xref:astra-db-regions.adoc[astra db regions]
+* xref:astra-db-endpoints.adoc[astra db endpoints]
 * xref:astra-db-get-endpoint-swagger.adoc[astra db get-endpoint-swagger]
 * xref:astra-db-get-endpoint-api.adoc[astra db get-endpoint-api]
 * xref:astra-db-get-endpoint-playground.adoc[astra db get-endpoint-playground]
@@ -75,7 +77,7 @@ Manage your Astra databases
 [%collapsible]
 ====
 `-cf`, `--config-file`:: The ``.astrarc`` file to use for this command
-`-p`, `--profile`:: The ``.astrarc`` profile to use for this command
+`-p`, `--profile`:: The ``.astrarc`` profile to use for this command. Can be set via ``ASTRA_PROFILE``.
 `--token`:: The astra token to use for this command. Use the ``--token @file`` syntax to read the token from a file, to avoid potential leaks.
 `--env`:: Override the target astra environment
 ====

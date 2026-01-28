@@ -1,18 +1,16 @@
-= astra db list-regions-vector
+= astra db endpoints swagger
 
 [source,shell]
 ----
-astra db list-regions-vector [-qV] [--no-input] [--[no-]spinner] [--color
-                             [=WHEN]] [--dump-logs[=FILE]] [-o=FORMAT]
-                             [-c=FILTER[,FILTER...]]... [-f=FILTER[,
-                             FILTER...]]... [-z=FILTER[,FILTER...]]...
-                             [[[-cf=PATH] [-p=NAME]] | [--token=TOKEN
-                             [--env=ENV]]]
+astra db endpoints swagger [-qV] [--no-input] [--[no-]spinner] [--color[=WHEN]]
+                           [--dump-logs[=FILE]] [-o=FORMAT] [-r=REGION]
+                           [[[-cf=PATH] [-p=NAME]] | [--token=TOKEN
+                           [--env=ENV]]] [DB]
 
 ----
 
 
-List all available regions for vector Astra DB databases
+Get the SwaggerUI endpoint for the specified database
 
 
 
@@ -20,9 +18,8 @@ List all available regions for vector Astra DB databases
 
 == Options
 
-`-f`, `--filter`:: Comma-separated case-insensitive partial-match filters on the region name
-`-c`, `--cloud`:: Comma-separated list of cloud providers to filter on
-`-z`, `--zone`:: Comma-separated list of zones to include
+`DB`:: The name or ID of the Astra database to operate on
+`-r`, `--region`:: The region to use
 
 .Common Options
 [%collapsible]
@@ -49,7 +46,11 @@ List all available regions for vector Astra DB databases
 == Examples
 [source,bash]
 ----
+# Get the SwaggerUI endpoint for the database
+$ astra db endpoints swagger mydb
 
+# Get the SwaggerUI endpoint for the database in a specific region
+$ astra db endpoints swagger mydb --region us-east1
 ----
 
 

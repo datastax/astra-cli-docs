@@ -3,7 +3,7 @@
 [source,shell]
 ----
 astra db delete [-qV] [--[no-]async] [--if-exists] [--no-input] [--[no-]
-                spinner] [--yes] [--dump-logs[=FILE]] [--color=WHEN]
+                spinner] [--yes] [--color[=WHEN]] [--dump-logs[=FILE]]
                 [-o=FORMAT] [--timeout=<timeout>] [[[-cf=PATH] [-p=NAME]] |
                 [--token=TOKEN [--env=ENV]]] [DB]
 
@@ -22,7 +22,7 @@ Delete an existing Astra database
 `--if-exists`:: Do not fail if database does not exist
 `--yes`:: Force deletion of database without prompting
 `--async`:: Do not wait for the database to become active
-`--timeout`:: How long the command should wait for the database to become active
+`--timeout`:: How long the command should wait for the database to become terminated
 
 .Common Options
 [%collapsible]
@@ -40,7 +40,7 @@ Delete an existing Astra database
 [%collapsible]
 ====
 `-cf`, `--config-file`:: The ``.astrarc`` file to use for this command
-`-p`, `--profile`:: The ``.astrarc`` profile to use for this command
+`-p`, `--profile`:: The ``.astrarc`` profile to use for this command. Can be set via ``ASTRA_PROFILE``.
 `--token`:: The astra token to use for this command. Use the ``--token @file`` syntax to read the token from a file, to avoid potential leaks.
 `--env`:: Override the target astra environment
 ====

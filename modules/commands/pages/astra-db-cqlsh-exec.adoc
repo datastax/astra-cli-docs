@@ -2,11 +2,12 @@
 
 [source,shell]
 ----
-astra db cqlsh exec [-qV] [--debug] [--no-input] [--[no-]spinner] [--dump-logs
-                    [=FILE]] [--color=WHEN] [--connect-timeout=TIMEOUT]
-                    [--encoding=ENCODING] [-f=FILE] [-k=KEYSPACE] [-o=FORMAT]
-                    [-r=REGION] [--request-timeout=TIMEOUT] [[[-cf=PATH]
-                    [-p=NAME]] | [--token=TOKEN [--env=ENV]]] [DB] [STATEMENT]
+astra db cqlsh exec [-qV] [--debug] [--no-input] [--[no-]spinner] [--color
+                    [=WHEN]] [--dump-logs[=FILE]] [-b=PATH]
+                    [--connect-timeout=TIMEOUT] [--encoding=ENCODING]
+                    [-k=KEYSPACE] [-o=FORMAT] [-r=REGION]
+                    [--request-timeout=TIMEOUT] [[[-cf=PATH] [-p=NAME]] |
+                    [--token=TOKEN [--env=ENV]]] [-e[=STATEMENT] | -f=FILE] [DB]
 
 ----
 
@@ -20,13 +21,14 @@ Execute CQL statements for your db using cqlsh
 == Options
 
 `DB`:: The name/ID of the Astra database to connect to
-`STATEMENT`:: Execute the statement and quit
 `--debug`:: Show additional debugging information
 `--encoding`:: Output encoding (default: utf8)
 `--connect-timeout`:: Connection timeout in seconds
+`-b`, `--secure-connect-bundle`:: Path to the secure connect bundle to use for authentication instead of the database name
 `-k`, `--keyspace`:: Authenticate to the given keyspace
 `--request-timeout`:: Request timeout in seconds
 `-r`, `--region`:: The region to use. Uses the db's default region if not specified.
+`-e`, `--execute`:: Execute the statement then exit
 `-f`, `--file`:: Execute commands from a CQL file, then exit
 
 .Common Options
@@ -45,7 +47,7 @@ Execute CQL statements for your db using cqlsh
 [%collapsible]
 ====
 `-cf`, `--config-file`:: The ``.astrarc`` file to use for this command
-`-p`, `--profile`:: The ``.astrarc`` profile to use for this command
+`-p`, `--profile`:: The ``.astrarc`` profile to use for this command. Can be set via ``ASTRA_PROFILE``.
 `--token`:: The astra token to use for this command. Use the ``--token @file`` syntax to read the token from a file, to avoid potential leaks.
 `--env`:: Override the target astra environment
 ====
@@ -55,7 +57,7 @@ Execute CQL statements for your db using cqlsh
 [source,bash]
 ----
 # Execute a CQL statement
-$ astra db cqlsh exec my_db "SELECT * FROM my_keyspace.my_table"
+$ astra db cqlsh exec my_db -e "SELECT * FROM my_keyspace.my_table"
 
 # Execute a CQL file
 $ astra db cqlsh exec my_db -f script.cql
