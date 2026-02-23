@@ -79,7 +79,7 @@ The response includes available commands and options for the {product}.
 Binary installation::
 +
 --
-. Download the appropriate binary archive for your OS and CPU architecture from https://github.com/datastax/astra-cli/releases[GitHub].
+. Download the appropriate binary archive for your OS and CPU architecture from {product-repo}/releases[GitHub].
 
 . Extract the archive into the directory where you want to install the {product}.
 For example:
@@ -173,7 +173,7 @@ The response includes available commands and options for the {product}.
 Binary installation::
 +
 --
-. Download the `windows` zip file from https://github.com/datastax/astra-cli/releases[GitHub].
+. Download the `windows` zip file from {product-repo}/releases[GitHub].
 
 . Extract the zip file into the directory where you want to install the {product}:
 +

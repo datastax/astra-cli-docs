@@ -1,10 +1,10 @@
-= Run DataStax Bulk Loader (DSBulk) commands
-:navtitle:  DSBulk quickstart
+= Run {dsbulk} commands
+:navtitle:  {dsbulk-short} quickstart
 
-xref:dsbulk:overview:dsbulk-about.adoc[DataStax Bulk Loader (DSBulk)] is a utility that you can use to load, unload, and count data in your database tables.
-The {product} provides embedded DSBulk support by downloading, installing, configuring, and wrapping the `dsbulk` utility.
+xref:dsbulk:overview:dsbulk-about.adoc[{dsbulk}] is a utility that you can use to load, unload, and count data in your database tables.
+The {product} provides embedded {dsbulk-short} support by downloading, installing, configuring, and wrapping the `dsbulk` utility.
 
-The {product} exposes DSBulk functionality through the following commands:
+The {product} exposes {dsbulk-short} functionality through the following commands:
 
 * `xref:commands:astra-db-dsbulk-load.adoc[]`
 * `xref:commands:astra-db-dsbulk-unload.adoc[]`
@@ -147,9 +147,9 @@ To resume the current operation, re-run it with the same settings, and add the f
 ----
 ====
 
-== Complete DSBulk example
+== Complete {dsbulk-short} example
 
-The following end-to-end example shows how to use the {product}'s built-in DSBulk support to load data into a database, get information about the data, and unload the data into CSV files:
+The following end-to-end example shows how to use the {product}'s built-in {dsbulk-short} support to load data into a database, get information about the data, and unload the data into CSV files:
 
 . Create an {astra-db} {db-serverless} database:
 +

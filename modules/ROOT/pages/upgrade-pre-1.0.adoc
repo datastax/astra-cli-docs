@@ -56,5 +56,5 @@ However, there are some changes that might break certain scripted usage, such as
 * New standardized xref:ROOT:manage-cli.adoc#output-formats[JSON and CSV output formats and exit codes].
 
 * Minor command and flag name changes.
-For a full list of name changes, see the https://github.com/datastax/astra-cli?tab=readme-ov-file#whats-changed[release notes].
+For a full list of name changes, see the {product-repo}?tab=readme-ov-file#whats-changed[release notes].
 ====

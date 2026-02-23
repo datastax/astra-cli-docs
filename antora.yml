@@ -8,17 +8,12 @@ nav:
 
 asciidoc:
   attributes:
-    # General attributes
     company: 'DataStax'
-    # Other product attributes
-    cass-reg: 'Apache Cassandra(R)'
-    cass: 'Apache Cassandra'
-    cass-short: 'Cassandra'
-    # Astra DB attributes
     astra-db: 'Astra DB'
     product: 'Astra CLI'
     product-short: 'Astra'
     product-version: '1.0'
+    product-repo: 'https://github.com/datastax/astra-cli'
     db-serverless: 'Serverless (non-vector)'
     db-serverless-vector: 'Serverless (vector)'
     db-classic: 'Managed Cluster'
@@ -30,3 +25,8 @@ asciidoc:
     scb: 'Secure Connect Bundle (SCB)'
     scb-short: 'SCB'
     scb-brief: 'Secure Connect Bundle'
+    dsbulk: 'DataStax Bulk Loader (DSBulk)'
+    dsbulk-short: 'DSBulk'
+    cql: 'Cassandra Query Language (CQL)'
+    cql-shell: 'CQL shell'
+    pulsar-short: 'Pulsar'

@@ -563,7 +563,7 @@ The {product} home folder contains the following items:
 * Cache files for <<command-auto-completion,command auto-completion>>
 * Logs
 
-For more information about `ASTRA_HOME`, see the https://github.com/datastax/astra-cli?tab=readme-ov-file#home-folder-location[{product} README].
+For more information about `ASTRA_HOME`, see the {product-repo}?tab=readme-ov-file#home-folder-location[{product} README].
 
 |`.astrarc`
 a|The {product} configuration file.
@@ -576,7 +576,7 @@ _Default location_:
 
 The {product} uses this file to store your <<manage-configuration-profiles,configuration profiles>> and their associated application tokens.
 
-For more information about the {product} configuration file, see the https://github.com/datastax/astra-cli?tab=readme-ov-file#astrarc-location[{product} README].
+For more information about the {product} configuration file, see the {product-repo}?tab=readme-ov-file#astrarc-location[{product} README].
 |===
 
 === Override the default home folder location

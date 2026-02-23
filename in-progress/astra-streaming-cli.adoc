@@ -283,7 +283,7 @@ astra streaming status **TENANT_NAME**
 ----
 ====
 
-Use the `astra streaming pulsar-token` command to get the Pulsar token for a specific tenant:
+Use the `astra streaming pulsar-token` command to get the {pulsar-short} token for a specific tenant:
 
 [source,bash,subs="+quotes"]
 ----
@@ -722,14 +722,14 @@ OPTIONS
 ----
 ====
 
-== Use the Pulsar shell
+== Use the {pulsar-short} shell
 
-The https://pulsar.apache.org/docs/next/administration-pulsar-shell/[Pulsar shell] is an interactive command-line interface tool for managing and interacting with Pulsar clusters.
-It is designed to allow developers and administrators to execute Pulsar commands interactively or in a script-like fashion, facilitating tasks such as creating topics, producing and consuming messages, managing schemas, and more.
+The https://pulsar.apache.org/docs/next/administration-pulsar-shell/[{pulsar-short} shell] is an interactive command-line interface tool for managing and interacting with {pulsar-short} clusters.
+It is designed to allow developers and administrators to execute {pulsar-short} commands interactively or in a script-like fashion, facilitating tasks such as creating topics, producing and consuming messages, managing schemas, and more.
 
-The {product} provides built-in Pulsar shell support by downloading, installing, configuring, and wrapping the `pulsar-shell` utility.
+The {product} provides built-in {pulsar-short} shell support by downloading, installing, configuring, and wrapping the `pulsar-shell` utility.
 
-Use the `astra streaming pulsar-shell` command to start the Pulsar shell in interactive mode:
+Use the `astra streaming pulsar-shell` command to start the {pulsar-short} shell in interactive mode:
 
 [source,bash,subs="+quotes"]
 ----
@@ -756,7 +756,7 @@ default(pulsar-aws-useast2.streaming.datastax.com)>
 ----
 ====
 
-Type `exit` and press kbd:[Enter] to exit the Pulsar shell.
+Type `exit` and press kbd:[Enter] to exit the {pulsar-short} shell.
 
 The first time you use the `astra streaming pulsar-shell` commands, the {product} downloads and installs the `pulsar-shell` utility to the {product} installation directory (`~/.astra/lunastreaming-shell-*`).
 
@@ -825,7 +825,7 @@ OPTIONS
 ----
 ====
 
-Use the `-e`/`--execute` option to execute a Pulsar shell command:
+Use the `-e`/`--execute` option to execute a {pulsar-short} shell command:
 
 [source,bash,subs="+quotes"]
 ----
@@ -834,7 +834,7 @@ astra streaming pulsar-shell **TENANT_NAME** -e "admin namespaces list **TENANT_
 
 // TODO: Add the output of the command. The command reported a Java-related error. Determine if more java prerequisites are needed.
 
-Use the `-f`/`--file` option to execute Pulsar shell commands from a file:
+Use the `-f`/`--file` option to execute {pulsar-short} shell commands from a file:
 
 [source,bash,subs="+quotes"]
 ----
@@ -843,9 +843,9 @@ astra streaming pulsar-shell **TENANT_NAME** -f sample.txt
 
 // TODO: Add sample.txt content and the output of the command.
 
-=== Pulsar shell example
+=== {pulsar-short} shell example
 
-The following procedure shows an example of how to use the {product}'s built-in Pulsar shell support to write and read in a topic with a client:
+The following procedure shows an example of how to use the {product}'s built-in {pulsar-short} shell support to write and read in a topic with a client:
 
 . Create a tenant:
 +
@@ -864,7 +864,7 @@ https://api.astra.datastax.com/v2/streaming/tenants/my-streaming-tenant
 ----
 ====
 
-. In two separate terminals, run the following command to start the Pulsar shell in each terminal:
+. In two separate terminals, run the following command to start the {pulsar-short} shell in each terminal:
 +
 [source,bash]
 ----
@@ -1033,7 +1033,7 @@ OPTIONS
 
 == Create environment variables
 
-When developing applications with {astra-stream} APIs, you will notice common values that are frequently reused, such as Pulsar tokens, broker URLs, and web service URLs.
+When developing applications with {astra-stream} APIs, you will notice common values that are frequently reused, such as {pulsar-short} tokens, broker URLs, and web service URLs.
 It's a good practice to store these values in environment variables to facilitate reuse in your scripts, simplify token rotation, and increase security by keeping sensitive information separate from your core application code.
 
 The {product} can automatically generate a set of relevant variables for an {astra-stream} tenant that you can use in your applications.
