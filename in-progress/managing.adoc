@@ -2774,9 +2774,9 @@ OPTIONS
 ====
 
 [#cqlsh]
-== Use cqlsh
+== Use `cqlsh`
 
-`cqlsh` is an interface that you can use to issue xref:astra@cql:ROOT:index.adoc[{cass-short} Query Language (CQL)] commands to your database.
+`cqlsh` is an interface that you can use to issue xref:astra@cql:ROOT:index.adoc[{cql}] commands to your database.
 The {product} provides built-in `cqlsh` support by downloading, installing, configuring, and wrapping the `cqlsh` utility.
 This can act as a convenient alternative to installing and configuring a xref:astra-db-serverless:cql:develop-with-cql.adoc#connect-to-the-cql-shell[standalone cqlsh].
 
@@ -3021,12 +3021,12 @@ astra db cqlsh **DATABASE_ID** -e "SOURCE 'sample.cql'"
 ====
 ======
 
-== Use DataStax Bulk Loader
+== Use {dsbulk}
 
-The xref:dsbulk:overview:dsbulk-about.adoc[DataStax Bulk Loader (DSBulk)] lets you load, unload, and count data in your database tables.
-The {product} provides built-in DSBulk support by downloading, installing, configuring, and wrapping the `dsbulk` utility.
+The xref:dsbulk:overview:dsbulk-about.adoc[{dsbulk}] lets you load, unload, and count data in your database tables.
+The {product} provides built-in {dsbulk-short} support by downloading, installing, configuring, and wrapping the `dsbulk` utility.
 
-The {product} exposes DSBulk functionality through the `astra db load`, `astra db unload`, and `astra db count` commands.
+The {product} exposes {dsbulk-short} functionality through the `astra db load`, `astra db unload`, and `astra db count` commands.
 
 The first time you run `astra db load`, `astra db unload`, or `astra db count` commands, the {product} downloads and installs the `dsbulk` utility to the {product} installation directory (`~/.astra/dsbulk-*`).
 The {product} also downloads the {scb} for each database you connect to and stores the {scb-short} zip files in the `~/.astra/scb` directory.
@@ -3462,9 +3462,9 @@ OPTIONS
 ----
 ====
 
-=== Complete DSBulk example
+=== Complete {dsbulk-short} example
 
-The following end-to-end example shows how to use the {product}'s built-in DSBulk support to load data into a database, get information about the data, and unload the data into CSV files:
+The following end-to-end example shows how to use the {product}'s built-in {dsbulk-short} support to load data into a database, get information about the data, and unload the data into CSV files:
 
 . Create an {astra-db} {db-serverless} database:
 +
