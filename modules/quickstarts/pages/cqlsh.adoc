@@ -3,14 +3,16 @@
 
 The {cql-shell} (`cqlsh`) is a utility that you can use to issue xref:astra@cql:reference:cql-quick-reference.adoc[{cql} commands] to your {astra-db} databases.
 
-The {product} provides embedded `cqlsh` support by downloading and installing the `cqlsh` utility in the background and exposing it through the `xref:commands:astra-db-cqlsh.adoc[]` commands.
-This can act as a convenient alternative to installing and configuring a xref:astra-db-serverless:cql:develop-with-cql.adoc#connect-to-the-cql-shell[standalone cqlsh].
+The {product} provides built-in `cqlsh` support by downloading and installing the `cqlsh` utility in the background, and then exposing it through the `xref:commands:astra-db-cqlsh.adoc[]` commands.
+This is a command line-based alternative to the embedded {cql-console} in the {astra-ui}.
 
 The `cqlsh` utility isn't installed by default with the {product}.
 The first time you run an `astra db cqlsh` command, the {product} downloads and installs the `cqlsh` utility into the {product} home directory (`xref:ROOT:manage-cli.adoc#file-locations[~/.astra]`).
 
 All `astra db cqlsh` commands require a database name or ID.
 The first time you connect to a specific database, {product} downloads the database's {scb} into the {product} home directory.
+
+For more information about CQL for {astra-db}, see xref:astra-db-serverless:cql:develop-with-cql.adoc[].
 
 [#prerequisites]
 == Prerequisites
@@ -52,7 +54,7 @@ ImportError: cannot import name PROTOCOL_TLS
 ----
 ====
 
-== Start an interactive cqlsh session
+== Start an interactive `cqlsh` session
 
 Use the `xref:commands:astra-db-cqlsh-start.adoc[]` command to start `cqlsh` in interactive mode:
 
