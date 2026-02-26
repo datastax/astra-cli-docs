@@ -29,4 +29,5 @@ asciidoc:
     dsbulk-short: 'DSBulk'
     cql: 'Cassandra Query Language (CQL)'
     cql-shell: 'CQL shell'
+    cql-console: 'CQL console'
     pulsar-short: 'Pulsar'
