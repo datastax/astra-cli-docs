@@ -24,7 +24,6 @@ asciidoc:
     astra-ui-link: '{astra-url}[{astra-ui}^]'
     scb: 'Secure Connect Bundle (SCB)'
     scb-short: 'SCB'
-    scb-brief: 'Secure Connect Bundle'
     dsbulk: 'DataStax Bulk Loader (DSBulk)'
     dsbulk-short: 'DSBulk'
     cql: 'Cassandra Query Language (CQL)'

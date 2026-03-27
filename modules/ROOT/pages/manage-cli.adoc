@@ -559,7 +559,7 @@ The {product} home folder contains the following items:
 
 * The `astra` executable (scripted installations only)
 * Accessory executables that are downloaded by certain commands, such as `xref:commands:astra-db-cqlsh.adoc[]` and `xref:commands:astra-db-dsbulk.adoc[]`
-* xref:astra-db-serverless:databases:secure-connect-bundle.adoc[{scb-brief}s]
+* A xref:astra-db-serverless:databases:secure-connect-bundle.adoc[{scb}] for each database that you've connected to with the {product}.
 * Cache files for <<command-auto-completion,command auto-completion>>
 * Logs
 
