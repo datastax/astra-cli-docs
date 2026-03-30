@@ -16,7 +16,7 @@ asciidoc:
     product-repo: 'https://github.com/datastax/astra-cli'
     db-serverless: 'Serverless (non-vector)'
     db-serverless-vector: 'Serverless (vector)'
-    db-classic: 'Managed Clusters'
+    db-classic: 'Astra Managed Clusters'
     devops-api: 'DevOps API'
     astra-stream: 'Astra Streaming'
     astra-ui: 'Astra Portal'
