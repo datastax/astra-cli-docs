@@ -24,7 +24,7 @@ xref:astra-db-serverless:administration:manage-application-tokens.adoc#org-token
 [TIP]
 ====
 If this is your first time using the {product}, {company} recommends that you connect to a non-production organization first.
-That way, you can assign your application token a more expansive role, such as *Organization Administrator*, so that you can try out all of the {product}'s features without putting production data at risk.
+That way, you can assign your application token a more expansive role, such as {organization-administrator-role}, so that you can try out all of the {product}'s features without putting production data at risk.
 
 If you're using the {product} in production, {company} strongly recommends that you follow the principle of least privilege: Make sure your application token's role provides only the minimum required permissions.
 For example, don't grant an administrator-level role to a token that won't be used to execute those types of commands.

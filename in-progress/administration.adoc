@@ -131,7 +131,7 @@ astra user invite **USER_EMAIL**
 
 [IMPORTANT]
 ====
-If you don't specify a role when inviting a user, the user is automatically assigned the default role of `Database Administrator`.
+If you don't specify a role when inviting a user, the user is automatically assigned the default role of {database-administrator-role}.
 ====
 
 === `user invite` options
@@ -200,7 +200,7 @@ Replace the following:
 * `**ROLE**`: The name or ID of the role you want to assign to the user.
 To get a list of the available roles in your organization, see <<list-roles>>.
 
-For example, to invite a user with the `Organization Administrator` role:
+For example, to invite a user with the {organization-administrator-role} role:
 
 [source,bash]
 ----

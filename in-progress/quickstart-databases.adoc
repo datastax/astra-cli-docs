@@ -1,8 +1,6 @@
 // Writer's note: This page contains a selection of content that was deleted from the Astra Serverless docs. We should retain relevant content reformat it for Astra CLI 1.0.
 = Manage databases with the {product}
 :navtitle: Quickstart for databases
-:organization-administrator-role: pass:q[xref:astra-db-serverless:administration:rbac.adoc#organization-administrator-role[*Organization Administrator*]]
-:database-administrator-role: pass:q[xref:astra-db-serverless:administration:rbac.adoc#database-administrator-role[*Database Administrator*]]
 
 You can use the {product} to perform administrative operations on your {astra-db} databases and keyspaces.
 
