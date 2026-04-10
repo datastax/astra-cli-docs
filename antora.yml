@@ -30,3 +30,7 @@ asciidoc:
     cql-shell: 'CQL shell'
     cql-console: 'CQL console'
     pulsar-short: 'Pulsar'
+
+    # Astra role attributes (compare with astra-vector-docs antora.yml)
+    organization-administrator-role: 'xref:astra-db-serverless:administration:rbac.adoc#organization-administrator-role[Organization Administrator]'
+    database-administrator-role: 'xref:astra-db-serverless:administration:rbac.adoc#database-administrator-role[Database Administrator]'
