@@ -44,18 +44,12 @@ Scripted installation (recommended)::
 curl -sSL https://ibm.biz/astra-cli | sh
 ----
 +
-.Install to a custom location
-[%collapsible]
-====
-To install the {product} to a custom location, export the `ASTRA_HOME` environment variable before running the installation command:
-
+To install the {product} to a custom location, export the `ASTRA_HOME` environment variable before running the installation command, replacing `**INSTALLATION_DIRECTORY**` with the full path to your preferred installation directory:
++
 [source,bash,subs="+quotes"]
 ----
 export ASTRA_HOME=**INSTALLATION_DIRECTORY**
 ----
-
-Replace `**INSTALLATION_DIRECTORY**` with the full path to your preferred installation directory.
-====
 
 . Add the `astra` executable to your `PATH` by running the command supplied after installation:
 +
@@ -114,7 +108,7 @@ xattr -d com.apple.quarantine $(which astra)
 +
 Alternatively, you can remove these restrictions in your https://support.apple.com/en-us/102445#openanyway[macOS System Settings].
 +
-If you don't remove the restrictions, you will receive a security alert stating `“astra” Not Opened` when you run the `astra` command.
+If you don't remove the restrictions, you will receive a security alert stating `"astra" Not Opened` when you run the `astra` command.
 
 . Reload your shell profile or open a new terminal window.
 
@@ -145,18 +139,12 @@ Scripted installation (recommended)::
 powershell -c "irm https://ibm.biz/astra-cli-win | iex"
 ----
 +
-.Install to a custom location
-[%collapsible]
-====
-To install the {product} to a custom location, export the `ASTRA_HOME` environment variable before running the installation command:
-
+To install the {product} to a custom location, export the `ASTRA_HOME` environment variable before running the installation command, replacing `**INSTALLATION_DIRECTORY**` with the full path to your preferred installation directory:
++
 [source,powershell,subs="+quotes"]
 ----
 $env:ASTRA_HOME = "**INSTALLATION_DIRECTORY**"
 ----
-
-Replace `**INSTALLATION_DIRECTORY**` with the full path to your preferred installation directory.
-====
 
 . Open a new terminal window.
 
