@@ -23,20 +23,12 @@ The {product} supports the following operating systems:
 |`x86_64`
 |===
 
-== Install the CLI
+== Install the {product} on macOS or Linux
 
-[tabs,sync-group-id=platforms]
-======
-macOS and Linux::
-+
-Select one of the following installation methods to install the {product} on macOS and Linux.
-If you prefer to use a package manager, follow the Homebrew instructions instead.
-+
-[tabs]
-=====
-Scripted installation (recommended)::
-+
---
+To install the {product} on macOS and Linux, you can use a scripted installation, binary installation, or a package manager.
+
+=== Scripted installation on macOS and Linux (recommended)
+
 . Run the following command to install the latest version of the {product} to the default location:
 +
 [source,shell]
@@ -68,11 +60,9 @@ astra
 ----
 +
 The response includes available commands and options for the {product}.
---
 
-Binary installation::
-+
---
+=== Binary installation on macOS and Linux
+
 . Download the appropriate binary archive for your OS and CPU architecture from {product-repo}/releases[GitHub].
 
 . Extract the archive into the directory where you want to install the {product}.
@@ -120,18 +110,31 @@ astra
 ----
 +
 The response includes available commands and options for the {product}.
---
-=====
 
-Windows::
+=== Install with Homebrew
+
+. Install the latest version of the {product} using https://brew.sh/[Homebrew]:
 +
-Select one of the following installation methods to install the {product} on Windows:
+[source,shell]
+----
+brew install datastax/astra-cli/astra
+----
+
+. Run the `astra` command from any directory to verify successful installation:
 +
-[tabs]
-=====
-Scripted installation (recommended)::
+[source,shell]
+----
+astra
+----
 +
---
+The response includes available commands and options for the {product}.
+
+== Install the {product} on Windows
+
+To install the {product} on Windows, you can use a scripted installation or binary installation.
+
+=== Scripted installation on Windows (recommended)
+
 . Run the following command to install the latest version of the {product} to the default location:
 +
 [source,powershell]
@@ -156,11 +159,9 @@ astra
 ----
 +
 The response includes available commands and options for the {product}.
---
 
-Binary installation::
-+
---
+=== Binary installation on Windows
+
 . Download the `windows` zip file from {product-repo}/releases[GitHub].
 
 . Extract the zip file into the directory where you want to install the {product}:
@@ -185,29 +186,6 @@ astra
 ----
 +
 The response includes available commands and options for the {product}.
---
-=====
-
-Homebrew::
-+
---
-. Install the latest version of the {product} using https://brew.sh/[Homebrew]:
-+
-[source,shell]
-----
-brew install datastax/astra-cli/astra
-----
-
-. Run the `astra` command from any directory to verify successful installation:
-+
-[source,shell]
-----
-astra
-----
-+
-The response includes available commands and options for the {product}.
---
-======
 
 == Next steps
 

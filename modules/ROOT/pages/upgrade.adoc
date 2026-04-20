@@ -12,7 +12,7 @@ If you used a package manager to install the {product}, such as Homebrew, then y
 
 == Upgrade with astra upgrade
 
-You can use the `xref:commands:astra-upgrade.adoc[]` command on Linux, macOS, or Microsoft Windows if you _did not_ install the {product} with a package manager.
+You can use the `xref:commands:astra-upgrade.adoc[]` command on macOS, Linux, or Microsoft Windows if you _did not_ install the {product} with a package manager.
 
 On Windows, run the following commands in a PowerShell terminal.
 
