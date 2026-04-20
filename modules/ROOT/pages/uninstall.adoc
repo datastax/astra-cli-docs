@@ -22,8 +22,6 @@ astra nuke
 ----
 +
 .Result
-[%collapsible]
-====
 [source,console]
 ----
      _____            __
@@ -43,13 +41,10 @@ This action is irreversible and will delete all Astra CLI files from your system
 
 ↑↓ to navigate, Enter to select, type to filter
 ----
-====
 
 . When prompted to continue, select kbd:[yes] and press kbd:[Enter].
 +
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 Do you also want to delete the .astrarc file located at /Users/username/.astrarc?
@@ -60,7 +55,6 @@ Your credentials may be lost if you do. A backup is recommended.
   yes
 > no (default)
 ----
-====
 
 . Select whether to delete the `xref:ROOT:manage-cli.adoc#file-locations[.astrarc]` file.
 +
@@ -69,8 +63,6 @@ Only select kbd:[yes] if you don't want to preserve your xref:ROOT:manage-cli.ad
 Press kbd:[Enter] to continue.
 +
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 Astra CLI Nuke Summary
@@ -84,7 +76,6 @@ Shell profiles containing astra:
 Files skipped:
 → /Users/username/.astrarc - User chose to keep the file
 ----
-====
 
 . Optional: If the `astra nuke` command found any shell profiles containing references to the `astra` command, you can manually delete these references.
 --
@@ -151,8 +142,6 @@ astra nuke
 ----
 +
 .Result
-[%collapsible]
-====
 [source,console]
 ----
      _____            __
@@ -172,13 +161,10 @@ This action is irreversible and will delete all Astra CLI files from your system
 
 ↑↓ to navigate, Enter to select, type to filter
 ----
-====
 
 . When prompted to continue, select kbd:[yes] and press kbd:[Enter].
 +
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 Do you also want to delete the .astrarc file located at <astra_cli_config_path>?
@@ -189,7 +175,6 @@ Your credentials may be lost if you do. A backup is recommended.
   yes
 > no (default)
 ----
-====
 
 . Select whether to delete the `xref:ROOT:manage-cli.adoc#file-locations[.astrarc]` file.
 +
@@ -198,8 +183,6 @@ Only select kbd:[yes] if you don't want to preserve your xref:ROOT:manage-cli.ad
 Press kbd:[Enter] to continue.
 +
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 Astra CLI Nuke Summary
@@ -213,7 +196,6 @@ Shell profiles containing astra:
 Files skipped:
 → <astra_cli_config_path> - User chose to keep the file
 ----
-====
 
 . Optional: Manually remove `astra` from your system `PATH`.
 For more information, see the https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_environment_variables[Microsoft PowerShell documentation].
@@ -261,8 +243,6 @@ astra nuke
 ----
 +
 .Result
-[%collapsible]
-====
 [source,console]
 ----
      _____            __
@@ -282,13 +262,10 @@ This action is irreversible and will delete all Astra CLI files from your system
 
 ↑↓ to navigate, Enter to select, type to filter
 ----
-====
 +
 .. When prompted to continue, select kbd:[yes] and press kbd:[Enter].
 +
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 Do you also want to delete the .astrarc file located at /Users/username/.astrarc?
@@ -299,7 +276,6 @@ Your credentials may be lost if you do. A backup is recommended.
   yes
 > no (default)
 ----
-====
 +
 .. Select whether to delete the `xref:ROOT:manage-cli.adoc#file-locations[.astrarc]` file.
 +
@@ -308,8 +284,6 @@ Only select kbd:[yes] if you don't want to preserve your xref:ROOT:manage-cli.ad
 Press kbd:[Enter] to continue.
 +
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 Astra CLI Nuke Summary
@@ -322,7 +296,6 @@ Files skipped:
 
 To complete the uninstallation, please use Homebrew to uninstall the Astra CLI binary.
 ----
-====
 
 . Uninstall the {product} using Homebrew:
 +
