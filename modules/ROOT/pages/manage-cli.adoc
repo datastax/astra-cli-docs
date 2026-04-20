@@ -66,8 +66,6 @@ astra setup
 ----
 +
 .Result
-[%collapsible%open]
-====
 [source,console]
 ----
      _____            __
@@ -85,44 +83,34 @@ Your configuration file will be created at /Users/username/.astrarc
 
 Press Enter to continue, or use Ctrl+C to cancel.
 ----
-====
 
 . Press kbd:[Enter] to continue.
 +
 .Result
-[%collapsible%open]
-====
 [source,console]
 ----
 (Required) Enter your Astra token (it should start with AstraCS)
 > input hidden for security
 ----
-====
 
 . Enter your application token (`AstraCS:...`), and then press kbd:[Enter].
 +
 .Result
-[%collapsible%open]
-====
 [source,console]
 ----
 (Optional) Enter a name for your profile (defaults to your org name)
 >
 ----
-====
 
 . Enter a name for your configuration profile, or press kbd:[Enter] to accept the default (your organization name).
 +
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 Profile 'PROFILE_NAME' successfully created.
 
 It has been set as the default profile.
 ----
-====
 +
 The {product} automatically sets the configuration profile as the default.
 All subsequent commands use this profile unless you <<specify-configuration-profile-individual-command,override it>>.
@@ -136,8 +124,6 @@ astra db list-clouds
 ----
 +
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 ┌─────────────────┐
@@ -148,7 +134,6 @@ astra db list-clouds
 │ aws             │
 └─────────────────┘
 ----
-====
 +
 If the command succeeds, your connection is configured correctly.
 
@@ -172,16 +157,15 @@ See <<specify-configuration-profile-individual-command>>.
 
 == Get command help
 
+Get general help::
 Run `astra` by itself to print general help information:
-
++
 [source,shell]
 ----
 astra
 ----
-
++
 .Result
-[%collapsible]
-====
 [source,console]
 ----
      _____            __
@@ -240,18 +224,16 @@ Examples:
 
 See 'astra <command> <subcommand> --help' for help on a specific subcommand.
 ----
-====
 
-Append the `-h` / `--help` option to any command or subcommand to get specific help information and examples:
-
+Get help for a specific command::
+Append the `-h` / `--help` option to any command to get specific help information and examples:
++
 [source,shell]
 ----
 astra org -h
 ----
-
++
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 Usage: astra org [-qV] [--no-input] [--[no-]spinner] [--dump-logs[=FILE]]
@@ -303,16 +285,16 @@ Examples:
 
 See 'astra <command> <subcommand> --help' for help on a specific subcommand.
 ----
-====
 
+Get help for a specific subcommand::
+Append the `-h` / `--help` option to any subcommand to get specific help information and examples:
++
 [source,shell]
 ----
 astra db list --help
 ----
-
++
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 Usage: astra db list [-qvV] [--no-input] [--[no-]spinner] [--dump-logs[=FILE]]
@@ -356,7 +338,6 @@ Examples:
 
 See 'astra <command> <subcommand> --help' for help on a specific subcommand.
 ----
-====
 
 [#command-auto-completion]
 == Use command auto-completion
@@ -403,8 +384,6 @@ astra config list
 ----
 
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 ┌─────────────────────┐
@@ -414,7 +393,6 @@ astra config list
 │ Testing             │
 └─────────────────────┘
 ----
-====
 
 The default configuration profile is indicated by `(in use)`.
 
@@ -446,8 +424,6 @@ astra config create '**PROFILE_NAME**' --token **APPLICATION_TOKEN**
 ----
 
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 Configuration profile 'PROFILE_NAME' successfully created.
@@ -457,7 +433,6 @@ Configuration profile 'PROFILE_NAME' successfully created.
 # Set it as the default profile:
 $ astra config use 'PROFILE_NAME'
 ----
-====
 
 You can also use the `xref:commands:astra-setup.adoc[]` command again to create additional configuration profiles interactively.
 
@@ -488,13 +463,10 @@ astra config use '**PROFILE_NAME**'
 ----
 
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 Default profile set to 'PROFILE_NAME'.
 ----
-====
 
 [#specify-configuration-profile-individual-command]
 === Specify a configuration profile for an individual command
@@ -523,13 +495,10 @@ astra config delete '**PROFILE_NAME**'
 ----
 
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 Profile 'PROFILE_NAME' deleted successfully.
 ----
-====
 
 [NOTE]
 ====
