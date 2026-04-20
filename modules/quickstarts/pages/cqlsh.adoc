@@ -34,9 +34,6 @@ If the {product} reports `ModuleNotFoundError` after running any of the `astra d
 The error `A Python installation with SSL is required to connect to a cloud cluster` means that the detected Python version doesn't support TLS.
 This typically happens with Python versions earlier than 2.7.12, which don't support TLS.
 
-.Verify TLS support
-[%collapsible]
-====
 To verify whether your current Python version supports TLS, run the following command:
 
 [source,shell]
@@ -52,7 +49,6 @@ Traceback (most recent call last):
   File "<string>", line 1, in <module>
 ImportError: cannot import name PROTOCOL_TLS
 ----
-====
 
 == Start an interactive `cqlsh` session
 
@@ -64,8 +60,6 @@ astra db cqlsh start **DB_ID**
 ----
 
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 [INFO] Patched cqlsh script to try known supported Python versions first
@@ -74,7 +68,6 @@ Connected to cndb at 127.0.0.1:9042.
 Use HELP for help.
 token@cqlsh>
 ----
-====
 
 To exit `cqlsh`, type `exit` or `quit;` and then press kbd:[Enter].
 
@@ -88,15 +81,12 @@ astra db cqlsh exec **DB_ID** "describe keyspaces;"
 ----
 
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 system_auth    data_endpoint_auth  default_keyspace  system_views
 my_keyspace    system              system_traces     system_virtual_schema
 system_schema  datastax_sla        my_keyspace2
 ----
-====
 
 CQL statements must be enclosed in double quotes (`""`).
 
@@ -109,10 +99,7 @@ Use the `-f` / `--file` option with the `xref:commands:astra-db-cqlsh-exec.adoc[
 astra db cqlsh exec **DB_ID** -f sample.cql
 ----
 
-.Example CQL file
-[%collapsible]
-====
-.sample.cql
+.Example CQL file (sample.cql)
 [source,cql]
 ----
 -- Use a specific keyspace
@@ -132,11 +119,8 @@ INSERT INTO users (id, name, email) VALUES (uuid(), 'Bob', 'bob@example.com');
 -- Query the data
 SELECT * FROM users;
 ----
-====
 
 .Result
-[%collapsible]
-====
 [source,console]
 ----
  id                                   | email             | name
@@ -146,20 +130,19 @@ SELECT * FROM users;
 
 (2 rows)
 ----
-====
 
 == Connect to a specific keyspace
 
-Use the `-k` / `--keyspace` option with the `xref:commands:astra-db-cqlsh-start.adoc[]` and `xref:commands:astra-db-cqlsh-exec.adoc[]` commands to connect directly to a specific keyspace:
+Use the `-k` / `--keyspace` option to connect directly to a specific keyspace:
 
+* With `xref:commands:astra-db-cqlsh-start.adoc[]`:
++
 [source,shell,subs="+quotes"]
 ----
 astra db cqlsh start **DB_ID** -k **KEYSPACE_NAME**
 ----
-
++
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 Connected to cndb at 127.0.0.1:9042.
@@ -167,16 +150,15 @@ Connected to cndb at 127.0.0.1:9042.
 Use HELP for help.
 token@cqlsh:my_keyspace>
 ----
-====
 
+* With `xref:commands:astra-db-cqlsh-exec.adoc[]`:
++
 [source,shell,subs="+quotes"]
 ----
 astra db cqlsh exec **DB_ID** -k **KEYSPACE_NAME** "DESC TABLES"
 ----
-
++
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 repairs              view_builds_in_progress  paxos           transferred_ranges
@@ -185,7 +167,6 @@ batches              compaction_history       built_views
 prepared_statements  sstable_activity         range_xfers
 "IndexInfo"          peer_events              local
 ----
-====
 
 ////
 TODO: Consider adding the following sections later:
