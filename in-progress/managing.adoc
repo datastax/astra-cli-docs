@@ -26,8 +26,6 @@ astra db create **DATABASE_NAME**
 ----
 
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 [INFO]  Database 'my_serverless_db' does not exist. Creating database 'my_serverless_db' with keyspace 'default_keyspace'
@@ -36,7 +34,6 @@ astra db create **DATABASE_NAME**
 [INFO]  Database 'my_serverless_db' has status 'ACTIVE' (took 470346 millis)
 [OK]    Database 'my_serverless_db' is ready.
 ----
-====
 
 Use the `--vector` option to create a {db-serverless-vector} database:
 
@@ -46,8 +43,6 @@ astra db create **DATABASE_NAME** --vector
 ----
 
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 [INFO]  Database 'my_vector_db' does not exist. Creating database 'my_vector_db' with keyspace 'default_keyspace'
@@ -57,7 +52,6 @@ astra db create **DATABASE_NAME** --vector
 [INFO]  Database 'my_vector_db' has status 'ACTIVE' (took 142712 millis)
 [OK]    Database 'my_vector_db' is ready.
 ----
-====
 
 Running `astra db create` without any options deploys the database in an available *Free* region and uses `default_keyspace` as the name for the default keyspace.
 
@@ -67,9 +61,7 @@ include::ROOT:partial$async-option-active.adoc[]
 
 === `db create` options
 
-.Expand to see all `db create` options
-[%collapsible]
-====
+.All db create options
 [source,console]
 ----
 NAME
@@ -144,7 +136,6 @@ OPTIONS
         <DB>
             Database name (if unique) or Database identifier
 ----
-====
 
 Use the `-c`, `-r`, and `-k` options to specify the cloud provider, region, and keyspace name when creating a database:
 
@@ -157,8 +148,6 @@ astra db create **DATABASE_NAME** \
 ----
 
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 [INFO]  Database 'my_serverless_db' does not exist. Creating database 'my_serverless_db' with keyspace 'my_keyspace'
@@ -167,7 +156,6 @@ astra db create **DATABASE_NAME** \
 [INFO]  Database 'my_serverless_db' has status 'ACTIVE' (took 109050 millis)
 [OK]    Database 'my_serverless_db' is ready.
 ----
-====
 
 //TODO: Confirm that this no longer applies.
 ////
@@ -194,8 +182,6 @@ astra db create-keyspace **DATABASE_ID** -k **KEYSPACE_NAME**
 ----
 
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 [INFO]  Keyspace  'keyspace2' is creating.
@@ -204,7 +190,6 @@ astra db create-keyspace **DATABASE_ID** -k **KEYSPACE_NAME**
 [OK]    Database '26054aa9-eb37-4d88-b343-7c934cd1d7bc' is ready.
 [OK]    Database '26054aa9-eb37-4d88-b343-7c934cd1d7bc' is ready.
 ----
-====
 
 The database enters *Maintenance* status while creating the keyspace.
 When the database returns to *Active* status, you can use the new keyspace.
@@ -212,7 +197,7 @@ When the database returns to *Active* status, you can use the new keyspace.
 include::ROOT:partial$async-option-active.adoc[]
 
 [TIP]
-======
+====
 By default, the {product} returns an error if a keyspace with the same name already exists.
 However, if you use the `--if-not-exist` option, the {product} automatically connects to the existing keyspace instead of returning an error.
 This option can be useful when invoking the {product} in idempotent scripts.
@@ -223,8 +208,6 @@ astra db create-keyspace **DATABASE_ID** -k **KEYSPACE_NAME** --if-not-exist
 ----
 
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 [INFO]  Keyspace  'keyspace1' already exists. Connecting to keyspace.
@@ -232,7 +215,6 @@ astra db create-keyspace **DATABASE_ID** -k **KEYSPACE_NAME** --if-not-exist
 [OK]    Database '26054aa9-eb37-4d88-b343-7c934cd1d7bc' is ready.
 ----
 ====
-======
 
 Use the `astra db list-keyspaces` command to get a list of the keyspaces in a database:
 
@@ -242,8 +224,6 @@ astra db list-keyspaces **DATABASE_ID**
 ----
 
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 +---------------------+
@@ -253,7 +233,6 @@ astra db list-keyspaces **DATABASE_ID**
 | keyspace2           |
 +---------------------+
 ----
-====
 
 Use the `astra db delete-keyspace` command to delete a keyspace from a database:
 
@@ -263,15 +242,12 @@ astra db delete-keyspace **DATABASE_ID** -k **KEYSPACE_NAME**
 ----
 
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 [INFO]  Database '26054aa9-eb37-4d88-b343-7c934cd1d7bc' has status 'MAINTENANCE' waiting to be 'ACTIVE' ...
 [INFO]  Database 'my_serverless_db' has status 'ACTIVE' (took 6804 millis)
 [OK]    Database '26054aa9-eb37-4d88-b343-7c934cd1d7bc' is ready.
 ----
-====
 
 [WARNING]
 ====
@@ -286,9 +262,7 @@ If you delete the default keyspace, {astra-db} automatically selects another key
 
 === `db create-keyspace` options
 
-.Expand to see all `db create-keyspace` options
-[%collapsible]
-====
+.All db create-keyspace options
 [source,console]
 ----
 NAME
@@ -340,13 +314,10 @@ OPTIONS
         <DB>
             Database name (if unique) or Database identifier
 ----
-====
 
 === `db list-keyspaces` options
 
-.Expand to see all `db list-keyspaces` options
-[%collapsible]
-====
+.All db list-keyspaces options
 [source,console]
 ----
 NAME
@@ -388,13 +359,10 @@ OPTIONS
         <DB>
             Database name (if unique) or Database identifier
 ----
-====
 
 === `db delete-keyspace` options
 
-.Expand to see all `db delete-keyspace` options
-[%collapsible]
-====
+.All db delete-keyspace options
 [source,console]
 ----
 NAME
@@ -440,7 +408,6 @@ OPTIONS
         <DB>
             Database name (if unique) or Database identifier
 ----
-====
 
 [#manage-collections]
 == Manage collections
@@ -488,14 +455,11 @@ astra db create-collection 58747660-464b-4085-bef2-c3f3e5401e3d \
 ----
 
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 [OK]    Collection 'my_collection' as been created from db '58747660-464b-4085-bef2-c3f3e5401e3d' on keyspace  'default_keyspace'
 [OK]    Database '58747660-464b-4085-bef2-c3f3e5401e3d' is ready.
 ----
-====
 --
 
 Use an {product-short}-hosted provider::
@@ -539,14 +503,11 @@ astra db create-collection 58747660-464b-4085-bef2-c3f3e5401e3d \
 ----
 
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 [OK]    Collection 'my_collection' as been created from db '58747660-464b-4085-bef2-c3f3e5401e3d' on keyspace  'default_keyspace'
 [OK]    Database '58747660-464b-4085-bef2-c3f3e5401e3d' is ready.
 ----
-====
 --
 
 Use an external provider::
@@ -593,14 +554,11 @@ astra db create-collection 58747660-464b-4085-bef2-c3f3e5401e3d \
 ----
 
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 [OK]    Collection 'my_collection' as been created from db '58747660-464b-4085-bef2-c3f3e5401e3d' on keyspace  'default_keyspace'
 [OK]    Database '58747660-464b-4085-bef2-c3f3e5401e3d' is ready.
 ----
-====
 --
 
 Non-vector collection::
@@ -615,14 +573,11 @@ astra db create-collection **DATABASE_ID** -c **COLLECTION_NAME**
 ----
 
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 [OK]    Collection 'my_collection' as been created from db '58747660-464b-4085-bef2-c3f3e5401e3d' on keyspace  'default_keyspace'
 [OK]    Database '58747660-464b-4085-bef2-c3f3e5401e3d' is ready.
 ----
-====
 --
 ======
 
@@ -634,8 +589,6 @@ astra db list-collections **DATABASE_ID**
 ----
 
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 +---------------------+-----------+-------------------+--------------------+--------------+------------------------+
@@ -646,7 +599,6 @@ astra db list-collections **DATABASE_ID**
 | my_collection3      | default   | 1024              | dot_product        | openai       | text-embedding-3-small |
 +---------------------+-----------+-------------------+--------------------+--------------+------------------------+
 ----
-====
 
 Use the `astra db describe-collection` command to get information about a specific collection:
 
@@ -656,8 +608,6 @@ astra db describe-collection **DATABASE_ID** -c **COLLECTION_NAME**
 ----
 
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 +-------------------+-----------------------------------------+
@@ -673,7 +623,6 @@ astra db describe-collection **DATABASE_ID** -c **COLLECTION_NAME**
 
 [OK]    Database '58747660-464b-4085-bef2-c3f3e5401e3d' is ready.
 ----
-====
 
 Use the `astra db truncate-collection` command to clear an existing collection:
 
@@ -683,13 +632,10 @@ astra db truncate-collection **DATABASE_ID** -c **COLLECTION_NAME**
 ----
 
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 [OK]    Collection 'my_collection' as been truncated from '58747660-464b-4085-bef2-c3f3e5401e3d'.
 ----
-====
 
 Use the `astra db delete-collection` command to delete a collection:
 
@@ -699,20 +645,15 @@ astra db delete-collection **DATABASE_ID** -c **COLLECTION_NAME**
 ----
 
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 [OK]    Collection 'my_collection' as been deleted from '58747660-464b-4085-bef2-c3f3e5401e3d'.
 [OK]    Database '58747660-464b-4085-bef2-c3f3e5401e3d' is ready.
 ----
-====
 
 === `db create-collection` options
 
-.Expand to see all `db create-collection` options
-[%collapsible]
-====
+.All db create-collection options
 [source,console]
 ----
 NAME
@@ -797,7 +738,6 @@ OPTIONS
         <DB>
             Database name (if unique) or Database identifier
 ----
-====
 
 Use the `-k` / `--keyspace` option to create a collection in a specific keyspace:
 
@@ -810,20 +750,15 @@ astra db create-collection **DATABASE_ID** \
 ----
 
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 [OK]    Collection 'my_collection' as been created from db '58747660-464b-4085-bef2-c3f3e5401e3d' on keyspace  'my_keyspace'
 [OK]    Database '58747660-464b-4085-bef2-c3f3e5401e3d' is ready.
 ----
-====
 
 === `db list-collections` options
 
-.Expand to see all `db list-collections` options
-[%collapsible]
-====
+.All db list-collections options
 [source,console]
 ----
 NAME
@@ -870,7 +805,6 @@ OPTIONS
         <DB>
             Database name (if unique) or Database identifier
 ----
-====
 
 Use the `-k` / `--keyspace` option to get a list of the collections in a specific keyspace:
 
@@ -880,8 +814,6 @@ astra db list-collections **DATABASE_ID** -k **KEYSPACE_NAME**
 ----
 
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 +--------------------------+-----------+-------------------+--------------------+--------------+---------------------+
@@ -891,13 +823,10 @@ astra db list-collections **DATABASE_ID** -k **KEYSPACE_NAME**
 | my_collection_non_vector | default   |                   |                    |              |                     |
 +--------------------------+-----------+-------------------+--------------------+--------------+---------------------+
 ----
-====
 
 === `db describe-collection` options
 
-.Expand to see all `db describe-collection` options
-[%collapsible]
-====
+.All db describe-collection options
 [source,console]
 ----
 NAME
@@ -947,7 +876,6 @@ OPTIONS
         <DB>
             Database name (if unique) or Database identifier
 ----
-====
 
 Use the `-k` / `--keyspace` option to get information about a collection in a specific keyspace:
 
@@ -959,8 +887,6 @@ astra db describe-collection **DATABASE_ID** \
 ----
 
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 +-------------------+-----------------------------------------+
@@ -976,13 +902,10 @@ astra db describe-collection **DATABASE_ID** \
 
 [OK]    Database '58747660-464b-4085-bef2-c3f3e5401e3d' is ready.
 ----
-====
 
 === `db truncate-collection` options
 
-.Expand to see all `db truncate-collection` options
-[%collapsible]
-====
+.All db truncate-collection options
 [source,console]
 ----
 NAME
@@ -1032,7 +955,6 @@ OPTIONS
         <DB>
             Database name (if unique) or Database identifier
 ----
-====
 
 Use the `-k` / `--keyspace` option to clear an existing collection in a specific keyspace:
 
@@ -1044,19 +966,14 @@ astra db truncate-collection **DATABASE_ID** \
 ----
 
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 [OK]    Collection 'my_collection' as been truncated from '58747660-464b-4085-bef2-c3f3e5401e3d'.
 ----
-====
 
 === `db delete-collection` options
 
-.Expand to see all `db delete-collection` options
-[%collapsible]
-====
+.All db delete-collection options
 [source,console]
 ----
 NAME
@@ -1109,7 +1026,6 @@ OPTIONS
         <DB>
             Database name (if unique) or Database identifier
 ----
-====
 
 Use the `-k` / `--keyspace` option to delete a collection from a specific keyspace:
 
@@ -1121,14 +1037,11 @@ astra db delete-collection **DATABASE_ID** \
 ----
 
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 [OK]    Collection 'my_collection' as been deleted from '58747660-464b-4085-bef2-c3f3e5401e3d'.
 [OK]    Database '58747660-464b-4085-bef2-c3f3e5401e3d' is ready.
 ----
-====
 
 [#manage-tables]
 == Manage tables
@@ -1146,8 +1059,6 @@ astra db list-tables **DATABASE_ID**
 ----
 
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 +---------------------+
@@ -1156,7 +1067,6 @@ astra db list-tables **DATABASE_ID**
 | students            |
 +---------------------+
 ----
-====
 
 Use the `astra db describe-table` command to get information about a specific table:
 
@@ -1166,8 +1076,6 @@ astra db describe-table **DATABASE_ID** -t **TABLE_NAME**
 ----
 
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 +------------------+-----------------------------------------+
@@ -1189,7 +1097,6 @@ astra db describe-table **DATABASE_ID** -t **TABLE_NAME**
 | Partition Key    | [0] email                               |
 +------------------+-----------------------------------------+
 ----
-====
 
 Use the `astra db truncate-table` command to clear an existing table:
 
@@ -1199,13 +1106,10 @@ astra db truncate-table **DATABASE_ID** -t **TABLE_NAME**
 ----
 
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 [OK]    Table 'students' as been truncated from '58747660-464b-4085-bef2-c3f3e5401e3d'.
 ----
-====
 
 Use the `astra db delete-collection` command to delete a collection from a a {db-serverless-vector} database:
 
@@ -1215,20 +1119,15 @@ astra db delete-table **DATABASE_ID** -t **TABLE_NAME**
 ----
 
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 [OK]    Table 'students' as been deleted from '58747660-464b-4085-bef2-c3f3e5401e3d'.
 [OK]    Database '58747660-464b-4085-bef2-c3f3e5401e3d' is ready.
 ----
-====
 
 === `db list-tables` options
 
-.Expand to see all `db list-tables` options
-[%collapsible]
-====
+.All db list-tables options
 [source,console]
 ----
 NAME
@@ -1275,13 +1174,10 @@ OPTIONS
         <DB>
             Database name (if unique) or Database identifier
 ----
-====
 
 === `db describe-table` options
 
-.Expand to see all `db describe-table` options
-[%collapsible]
-====
+.All db describe-table options
 [source,console]
 ----
 NAME
@@ -1330,13 +1226,10 @@ OPTIONS
         <DB>
             Database name (if unique) or Database identifier
 ----
-====
 
 === `db truncate-table` options
 
-.Expand to see all `db truncate-table` options
-[%collapsible]
-====
+.All db truncate-table options
 [source,console]
 ----
 NAME
@@ -1385,13 +1278,10 @@ OPTIONS
         <DB>
             Database name (if unique) or Database identifier
 ----
-====
 
 === `db delete-table` options
 
-.Expand to see all `db delete-table` options
-[%collapsible]
-====
+.All db delete-table options
 [source,console]
 ----
 NAME
@@ -1443,7 +1333,6 @@ OPTIONS
         <DB>
             Database name (if unique) or Database identifier
 ----
-====
 
 == Manage embedding providers
 
@@ -1454,12 +1343,10 @@ Use the `astra db list-embedding-providers` command to get a list of the embeddi
 astra db list-embedding-providers **DATABASE_ID**
 ----
 
-.Result
-[%collapsible]
-======
 The following result is for example purposes only.
 Supported embedding providers and options can change.
 
+.Result
 [source,console]
 ----
 +----------------------+--------------------------+--------+------------+---------+----------+
@@ -1478,7 +1365,6 @@ Supported embedding providers and options can change.
 | mistral              | Mistral AI               | 1      | 0          | ■       | ■        |
 +----------------------+--------------------------+--------+------------+---------+----------+
 ----
-======
 
 Use the `astra db describe-embedding-provider` command to get information about a specific embedding provider integration:
 
@@ -1489,12 +1375,10 @@ astra db describe-embedding-provider **DATABASE_ID** -ep **PROVIDER_NAME**
 
 The `**PROVIDER_NAME**` is the name listed in the `Key` column in the output of the `astra db list-embedding-providers` command.
 
-.Result
-[%collapsible]
-======
 The following result is for example purposes only.
 Supported embedding providers and options can change.
 
+.Result
 [source,console]
 ----
 +-------------------+---------------------------------------------------------------------------------------------+
@@ -1523,13 +1407,10 @@ Supported embedding providers and options can change.
 
 [OK]    Database '58747660-464b-4085-bef2-c3f3e5401e3d' is ready.
 ----
-======
 
 === `db list-embedding-providers` options
 
-.Expand to see all `db list-embedding-providers` options
-[%collapsible]
-====
+.All db list-embedding-providers options
 [source,console]
 ----
 NAME
@@ -1573,13 +1454,10 @@ OPTIONS
         <DB>
             Database name (if unique) or Database identifier
 ----
-====
 
 === `db describe-embedding-provider` options
 
-.Expand to see all `db describe-embedding-provider` options
-[%collapsible]
-====
+.All db describe-embedding-provider options
 [source,console]
 ----
 NAME
@@ -1627,7 +1505,6 @@ OPTIONS
         <DB>
             Database name (if unique) or Database identifier
 ----
-====
 
 [#get-database-details]
 == Get database details
@@ -1640,8 +1517,6 @@ astra db list
 ----
 
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 +---------------------+--------------------------------------+-----------+-------+---+-----------+
@@ -1651,7 +1526,6 @@ astra db list
 | my_vector_db        | 6fabb532-a3ac-4780-a1bc-d984531aed76 | us-east1  | gcp   | ■ | ACTIVE    |
 +---------------------+--------------------------------------+-----------+-------+---+-----------+
 ----
-====
 
 Use the `astra db get` or `astra db describe` command to get information about a specific database:
 
@@ -1666,8 +1540,6 @@ astra db describe **DATABASE_ID**
 ----
 
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 +------------------+-----------------------------------------+
@@ -1685,7 +1557,6 @@ astra db describe **DATABASE_ID**
 | Regions          | [0] us-east1                            |
 +------------------+-----------------------------------------+
 ----
-====
 
 Use the `astra db status` command to get the status of a specific database:
 
@@ -1695,19 +1566,14 @@ astra db status **DATABASE_ID**
 ----
 
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 [OK]    Database '96b1b6e3-5288-4cef-8a41-d4f1d36bbfca' has status 'ACTIVE'
 ----
-====
 
 === `db list` options
 
-.Expand to see all `db list` options
-[%collapsible]
-====
+.All db list options
 [source,console]
 ----
 NAME
@@ -1744,7 +1610,6 @@ OPTIONS
         --vector
             Create a database with vector search enabled
 ----
-====
 
 Use the `--vector` option to list only {db-serverless-vector} databases:
 
@@ -1754,8 +1619,6 @@ astra db list --vector
 ----
 
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 +---------------------+--------------------------------------+-----------+-------+---+-----------+
@@ -1764,13 +1627,10 @@ astra db list --vector
 | my_vector_db        | ebae8d5a-4848-44c9-8485-87e413b60549 | us-east1  | gcp   | ■ | ACTIVE    |
 +---------------------+--------------------------------------+-----------+-------+---+-----------+
 ----
-====
 
 === `db get` options
 
-.Expand to see all ``db get` options
-[%collapsible]
-====
+.All db get options
 [source,console]
 ----
 NAME
@@ -1817,13 +1677,10 @@ OPTIONS
         <DB>
             Database name (if unique) or Database identifier
 ----
-====
 
 === `db describe` options
 
-.Expand to see all `db describe` options
-[%collapsible]
-====
+.All db describe options
 [source,console]
 ----
 NAME
@@ -1870,13 +1727,10 @@ OPTIONS
         <DB>
             Database name (if unique) or Database identifier
 ----
-====
 
 === `db status` options
 
-.Expand to see all `db status` options
-[%collapsible]
-====
+.All db status options
 [source,console]
 ----
 NAME
@@ -1918,7 +1772,6 @@ OPTIONS
         <DB>
             Database name (if unique) or Database identifier
 ----
-====
 
 == Get a list of available {astra-db} regions
 
@@ -1943,12 +1796,10 @@ Use the `astra db list-regions-classic` command to get a list of available cloud
 astra db list-regions-classic
 ----
 
-.Result
-[%collapsible]
-====
 The result for each `list-regions-*` command is a table with `Cloud Provider`, `Region`, and `Full Name` columns.
 `Full Name` can be empty or contain the region's name and location (city, state, or country).
 
+.Result
 [source,console,subs="+quotes"]
 ----
 +-----------------+---------------------+-------------------------------+
@@ -1957,13 +1808,10 @@ The result for each `list-regions-*` command is a table with `Cloud Provider`, `
 | **PROVIDER**    | **REGION**          | **NAME**                      |
 +-----------------+---------------------+-------------------------------+
 ----
-====
 
 === `db list-regions-serverless` options
 
-.Expand to see all `db list-regions-serverless` options
-[%collapsible]
-====
+.All db list-regions-serverless options
 [source,console]
 ----
 NAME
@@ -2005,13 +1853,10 @@ OPTIONS
         -v, --verbose
             Verbose mode with log in console
 ----
-====
 
 === `db list-regions-vector` options
 
-.Expand to see all `db list-regions-vector` options
-[%collapsible]
-====
+.All db list-regions-vector options
 [source,console]
 ----
 NAME
@@ -2053,7 +1898,6 @@ OPTIONS
         -v, --verbose
             Verbose mode with log in console
 ----
-====
 
 === `db list-regions-classic` options
 
@@ -2062,9 +1906,7 @@ OPTIONS
 `classic` refers to {db-classic}, which was previously known as {astra-db} Classic.
 ====
 
-.Expand to see all `db list-regions-classic` options
-[%collapsible]
-====
+.All db list-regions-classic options
 [source,console]
 ----
 NAME
@@ -2106,13 +1948,10 @@ OPTIONS
         -v, --verbose
             Verbose mode with log in console
 ----
-====
 
 === `db list-clouds` options
 
-.Expand to see all `db list-clouds` options
-[%collapsible]
-====
+.All db list-clouds options
 [source,console]
 ----
 NAME
@@ -2146,7 +1985,6 @@ OPTIONS
         -v, --verbose
             Verbose mode with log in console
 ----
-====
 
 [#configure-multiple-regions]
 == Configure multiple regions
@@ -2168,13 +2006,10 @@ For more information, including requirements and costs for additional regions, s
 ////
 // TODO: The command is not working as expected. Must investigate and figure out why it is reporting the following error: [ERROR] UNAVAILABLE: Database 'my_serverless_db' has been found but operation cannot be processed due to invalid state (ACTIVE) expected (ACTIVE)
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 
 ----
-====
 ////
 
 Use the `astra db list-regions` command to list the regions where a database is deployed:
@@ -2185,8 +2020,6 @@ astra db list-regions **DATABASE_ID**
 ----
 
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 +----------------+---------------------+----------------+----------------+
@@ -2196,7 +2029,6 @@ astra db list-regions **DATABASE_ID**
 | aws            | us-east-1 (default) | serverless     |                |
 +----------------+---------------------+----------------+----------------+
 ----
-====
 
 Use the `astra db delete-region` command to remove a region from a database:
 
@@ -2206,14 +2038,11 @@ astra db delete-region **DATABASE_ID** -r **REGION**
 ----
 
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 [INFO]  Region 'us-west1' is deleting.
 [OK]    Region us-west1 has been deleted
 ----
-====
 
 [IMPORTANT]
 ====
@@ -2225,9 +2054,7 @@ However, to avoid data loss, all data is replicated to the other regions before 
 
 === `db create-region` options
 
-.Expand to see all `db create-region` options
-[%collapsible]
-====
+.All db create-region options
 [source,console]
 ----
 NAME
@@ -2293,13 +2120,10 @@ OPTIONS
         <DB>
             Database name (if unique) or Database identifier
 ----
-====
 
 === `db list-regions` options
 
-.Expand to see all `db list-regions` options
-[%collapsible]
-====
+.All db list-regions options
 [source,console]
 ----
 NAME
@@ -2341,13 +2165,10 @@ OPTIONS
         <DB>
             Database name (if unique) or Database identifier
 ----
-====
 
 === `db delete-region` options
 
-.Expand to see all `db delete-region` options
-[%collapsible]
-====
+.All db delete-region options
 [source,console]
 ----
 NAME
@@ -2404,7 +2225,6 @@ OPTIONS
         <DB>
             Database name (if unique) or Database identifier
 ----
-====
 
 [#resume-database]
 == Resume a hibernated database
@@ -2422,9 +2242,7 @@ include::ROOT:partial$async-option-active.adoc[]
 
 === `db resume` options
 
-.Expand to see all `db resume` options
-[%collapsible]
-====
+.All db resume options
 [source,console]
 ----
 NAME
@@ -2476,7 +2294,6 @@ OPTIONS
         <DB>
             Database name (if unique) or Database identifier
 ----
-====
 
 == Terminate a database
 
@@ -2494,14 +2311,11 @@ astra db delete **DATABASE_ID**
 ----
 
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 [INFO]  Deleting Database '26054aa9-eb37-4d88-b343-7c934cd1d7bc'
 [OK]    Database 26054aa9-eb37-4d88-b343-7c934cd1d7bc has been deleted
 ----
-====
 
 The database enters *Terminating* status while deletion occurs.
 
@@ -2510,9 +2324,7 @@ To run the command _asynchronously_, add the `--async` option.
 
 === `db delete` options
 
-.Expand to see all `db delete` options
-[%collapsible]
-====
+.All db delete options
 [source,console]
 ----
 NAME
@@ -2564,7 +2376,6 @@ OPTIONS
         <DB>
             Database name (if unique) or Database identifier
 ----
-====
 
 == Get database API endpoints
 
@@ -2576,13 +2387,10 @@ astra db get-endpoint-swagger **DATABASE_ID**
 ----
 
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 https://26054aa9-eb37-4d88-b343-7c934cd1d7bc-us-east-1.apps.astra.datastax.com/api/rest/swagger-ui/
 ----
-====
 
 Use the `get-endpoint-api` command to get the JSON API endpoint for a {db-serverless-vector} database:
 
@@ -2592,13 +2400,10 @@ astra db get-endpoint-api **DATABASE_ID**
 ----
 
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 https://26054aa9-eb37-4d88-b343-7c934cd1d7bc-us-east-1.apps.astra.datastax.com/api/rest
 ----
-====
 
 Use the `get-endpoint-playground` command to get the GraphQL playground endpoint for a non-vector database:
 
@@ -2608,19 +2413,14 @@ astra db get-endpoint-playground **DATABASE_ID**
 ----
 
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 https://26054aa9-eb37-4d88-b343-7c934cd1d7bc-us-east-1.apps.astra.datastax.com/api/playground
 ----
-====
 
 === `db get-endpoint-swagger` options
 
-.Expand to see all `db get-endpoint-swagger` options
-[%collapsible]
-====
+.All db get-endpoint-swagger options
 [source,console]
 ----
 NAME
@@ -2666,13 +2466,10 @@ OPTIONS
         <DB>
             Database name (if unique) or Database identifier
 ----
-====
 
 === `db get-endpoint-api` options
 
-.Expand to see all `db get-endpoint-api` options
-[%collapsible]
-====
+.All db get-endpoint-api options
 [source,console]
 ----
 NAME
@@ -2718,13 +2515,10 @@ OPTIONS
         <DB>
             Database name (if unique) or Database identifier
 ----
-====
 
 === `db get-endpoint-playground` options
 
-.Expand to see all `db get-endpoint-playground` options
-[%collapsible]
-====
+.All db get-endpoint-playground options
 [source,console]
 ----
 NAME
@@ -2771,7 +2565,6 @@ OPTIONS
         <DB>
             Database name (if unique) or Database identifier
 ----
-====
 
 [#cqlsh]
 == Use `cqlsh`
@@ -2792,8 +2585,6 @@ astra db cqlsh **DATABASE_ID**
 ----
 
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 [INFO]  Downloading Cqlshell, please wait...
@@ -2804,7 +2595,6 @@ Connected to cndb at 127.0.0.1:9042.
 Use HELP for help.
 token@cqlsh>
 ----
-====
 
 Type `exit` or `quit;` and press kbd:[Enter] to exit `cqlsh`.
 
@@ -2812,7 +2602,7 @@ The first time you use the `astra db cqlsh` command, the {product} downloads and
 The {product} also downloads the {scb} for each database you connect to and stores the {scb-short} zip files in the `~/.astra/scb` directory.
 
 [TIP]
-======
+====
 If the {product} reports `ModuleNotFoundError`, check that you have a supported version of Python available in your terminal:
 
 [source,bash]
@@ -2821,20 +2611,15 @@ python -V
 ----
 
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 Python 3.11.10
 ----
 ====
-======
 
 === `db cqlsh` options
 
-.Expand to see all `db cqlsh` options
-[%collapsible]
-====
+.All db cqlsh options
 [source,console]
 ----
 NAME
@@ -2905,7 +2690,6 @@ OPTIONS
         <DB>
             Database name (if unique) or Database identifier
 ----
-====
 
 Use the `-k` / `--keyspace` option to connect directly to a specific keyspace:
 
@@ -2915,8 +2699,6 @@ astra db cqlsh **DATABASE_ID** -k **KEYSPACE_NAME**
 ----
 
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 [INFO]  Cqlsh is starting, please wait for connection establishment...
@@ -2925,7 +2707,6 @@ Connected to cndb at 127.0.0.1:9042.
 Use HELP for help.
 token@cqlsh:keyspace2>
 ----
-====
 
 Use the `-e` / `--execute` option to execute a CQL statement:
 
@@ -2935,8 +2716,6 @@ astra db cqlsh **DATABASE_ID** -e "describe keyspaces;"
 ----
 
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 [INFO]  Cqlsh is starting, please wait for connection establishment...
@@ -2945,7 +2724,6 @@ system_auth    data_endpoint_auth  system_traces
 datastax_sla   default_keyspace    system_virtual_schema
 system_schema  system              system_views
 ----
-====
 
 Use the `-f` / `--file` option to execute a CQL file:
 
@@ -2954,10 +2732,7 @@ Use the `-f` / `--file` option to execute a CQL file:
 astra db cqlsh **DATABASE_ID** -f sample.cql
 ----
 
-.Example CQL file
-[%collapsible]
-====
-.sample.cql
+.sample.cql (Example CQL file)
 [source,cql]
 ----
 -- Use a specific keyspace
@@ -2977,11 +2752,8 @@ INSERT INTO users (id, name, email) VALUES (uuid(), 'Bob', 'bob@example.com');
 -- Query the data
 SELECT * FROM users;
 ----
-====
 
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 [INFO]  Cqlsh is starting, please wait for connection establishment...
@@ -2993,10 +2765,9 @@ SELECT * FROM users;
 
 (2 rows)
 ----
-====
 
 [TIP]
-======
+====
 You can also execute a CQL file using the `xref:astra@cql:cqlsh:cqlsh-commands/source.adoc[]` CQL command:
 
 [source,bash,subs="+quotes"]
@@ -3005,8 +2776,6 @@ astra db cqlsh **DATABASE_ID** -e "SOURCE 'sample.cql'"
 ----
 
 .Result
-[%collapsible]
-====
 [source,cql]
 ----
 [INFO]  Cqlsh is starting, please wait for connection establishment...
@@ -3019,7 +2788,6 @@ astra db cqlsh **DATABASE_ID** -e "SOURCE 'sample.cql'"
 (2 rows)
 ----
 ====
-======
 
 == Use {dsbulk}
 
@@ -3042,8 +2810,6 @@ astra db load **DATABASE_ID** \
 ----
 
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 [INFO]  Downloading Dsbulk, please wait...
@@ -3063,10 +2829,9 @@ Checkpoints for the current operation were written to checkpoint.csv.
 To resume the current operation, re-run it with the same settings, and add the following command line flag:
 --dsbulk.log.checkpoint.file=/Users/USERNAME/logs/LOAD_20250123-020734-995267/checkpoint.csv
 ----
-====
 
 [TIP]
-======
+====
 You can use the `cqlsh` command to check that the data imported successfully:
 
 [source,bash,subs="+quotes"]
@@ -3076,8 +2841,6 @@ astra db cqlsh **DATABASE_ID** -e \
 ----
 
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 [INFO]  Cqlsh is starting, please wait for connection establishment...
@@ -3108,7 +2871,6 @@ astra db cqlsh **DATABASE_ID** -e \
 (20 rows)
 ----
 ====
-======
 
 Use the `astra db unload` command to unload database table rows into a file:
 
@@ -3121,8 +2883,6 @@ astra db unload **DATABASE_ID** \
 ----
 
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 [INFO]  RUNNING: /Users/USERNAME/.astra/dsbulk-1.11.0/bin/dsbulk unload -u token -p AstraCS:FZm... -b /Users/USERNAME/.astra/scb/scb_91b35105-a5aa-4cd5-a93b-900ac58452ba_us-east1.zip -k dsbulk_demo_keyspace -t cities_by_country -logDir ./logs --log.verbosity normal --schema.allowMissingFields true -maxConcurrentQueries AUTO -delim , -url unloaded_data -header true -encoding UTF-8 -skipRecords 0 -maxErrors 100
@@ -3137,7 +2897,6 @@ Checkpoints for the current operation were written to checkpoint.csv.
 To resume the current operation, re-run it with the same settings, and add the following command line flag:
 --dsbulk.log.checkpoint.file=/Users/USERNAME/logs/UNLOAD_20250123-021231-557959/checkpoint.csv
 ----
-====
 
 Use the `astra db count` command to get information about loaded data:
 
@@ -3149,8 +2908,6 @@ astra db count **DATABASE_ID** \
 ----
 
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 [INFO]  RUNNING: /Users/USERNAME/.astra/dsbulk-1.11.0/bin/dsbulk count -u token -p AstraCS:FZm... -b /Users/USERNAME/.astra/scb/scb_91b35105-a5aa-4cd5-a93b-900ac58452ba_us-east1.zip -k dsbulk_demo_keyspace -t cities_by_country -logDir ./logs --log.verbosity normal --schema.allowMissingFields true -maxConcurrentQueries AUTO
@@ -3166,13 +2923,10 @@ To resume the current operation, re-run it with the same settings, and add the f
 --dsbulk.log.checkpoint.file=/Users/USERNAME/logs/COUNT_20250123-021120-127216/checkpoint.csv
 134574
 ----
-====
 
 === `db load` options
 
-.Expand to see all `db load` options
-[%collapsible]
-====
+.All db load options
 [source,console]
 ----
 NAME
@@ -3274,13 +3028,10 @@ OPTIONS
         <DB>
             Database name (if unique) or Database identifier
 ----
-====
 
 === `db unload` options
 
-.Expand to see all `db unload` options
-[%collapsible]
-====
+.All db unload options
 [source,console]
 ----
 NAME
@@ -3381,13 +3132,10 @@ OPTIONS
         <DB>
             Database name (if unique) or Database identifier
 ----
-====
 
 === `db count` options
 
-.Expand to see all `db count` options
-[%collapsible]
-====
+.All db count options
 [source,console]
 ----
 NAME
@@ -3460,7 +3208,6 @@ OPTIONS
         <DB>
             Database name (if unique) or Database identifier
 ----
-====
 
 === Complete {dsbulk-short} example
 
@@ -3474,8 +3221,6 @@ astra db create dsbulk_demo_db -k dsbulk_demo_keyspace
 ----
 +
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 [INFO]  Database 'dsbulk_demo_db' does not exist. Creating database 'dsbulk_demo_db' with keyspace 'dsbulk_demo_keyspace'
@@ -3484,7 +3229,6 @@ astra db create dsbulk_demo_db -k dsbulk_demo_keyspace
 [INFO]  Database 'dsbulk_demo_db' has status 'ACTIVE' (took 471460 millis)
 [OK]    Database 'dsbulk_demo_db' is ready.
 ----
-====
 
 . Download the xref:ROOT:attachment$cities.csv[cities.csv] file and move it to the directory where you run {product} commands.
 +
@@ -3509,8 +3253,6 @@ astra db cqlsh dsbulk_demo_db -k dsbulk_demo_keyspace
 ----
 +
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 [INFO]  Cqlsh is starting, please wait for connection establishment...
@@ -3519,7 +3261,6 @@ Connected to cndb at 127.0.0.1:9042.
 Use HELP for help.
 token@cqlsh:dsbulk_demo_keyspace>
 ----
-====
 +
 .. Copy and paste the following CQL command into the `cqlsh` prompt and press kbd:[Enter]:
 +
@@ -3556,8 +3297,6 @@ astra db load dsbulk_demo_db \
 ----
 +
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 [INFO]  RUNNING: /Users/USERNAME/.astra/dsbulk-1.11.0/bin/dsbulk load -u token -p AstraCS:FZm... -b /Users/USERNAME/.astra/scb/scb_91b35105-a5aa-4cd5-a93b-900ac58452ba_us-east1.zip -k dsbulk_demo_keyspace -t cities_by_country -logDir ./logs --log.verbosity normal --schema.allowMissingFields true -maxConcurrentQueries AUTO -delim , -url cities.csv -header true -encoding UTF-8 -skipRecords 0 -maxErrors 100
@@ -3575,7 +3314,6 @@ Checkpoints for the current operation were written to checkpoint.csv.
 To resume the current operation, re-run it with the same settings, and add the following command line flag:
 --dsbulk.log.checkpoint.file=/Users/USERNAME/logs/LOAD_20250123-020734-995267/checkpoint.csv
 ----
-====
 
 . Confirm that the data loaded successfully:
 +
@@ -3586,8 +3324,6 @@ astra db cqlsh dsbulk_demo_db -e \
 ----
 +
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 [INFO]  Cqlsh is starting, please wait for connection establishment...
@@ -3617,7 +3353,6 @@ astra db cqlsh dsbulk_demo_db -e \
 
 (20 rows)
 ----
-====
 
 . Count the loaded data:
 +
@@ -3629,8 +3364,6 @@ astra db count dsbulk_demo_db \
 ----
 +
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 [INFO]  RUNNING: /Users/USERNAME/.astra/dsbulk-1.11.0/bin/dsbulk count -u token -p AstraCS:FZm... -b /Users/USERNAME/.astra/scb/scb_91b35105-a5aa-4cd5-a93b-900ac58452ba_us-east1.zip -k dsbulk_demo_keyspace -t cities_by_country -logDir ./logs --log.verbosity normal --schema.allowMissingFields true -maxConcurrentQueries AUTO
@@ -3646,7 +3379,6 @@ To resume the current operation, re-run it with the same settings, and add the f
 --dsbulk.log.checkpoint.file=/Users/USERNAME/logs/COUNT_20250123-021120-127216/checkpoint.csv
 134574
 ----
-====
 
 . Unload the data into CSV files:
 +
@@ -3659,8 +3391,6 @@ astra db unload dsbulk_demo_db \
 ----
 +
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 [INFO]  RUNNING: /Users/USERNAME/.astra/dsbulk-1.11.0/bin/dsbulk unload -u token -p AstraCS:FZm... -b /Users/USERNAME/.astra/scb/scb_91b35105-a5aa-4cd5-a93b-900ac58452ba_us-east1.zip -k dsbulk_demo_keyspace -t cities_by_country -logDir ./logs --log.verbosity normal --schema.allowMissingFields true -maxConcurrentQueries AUTO -delim , -url unloaded_data -header true -encoding UTF-8 -skipRecords 0 -maxErrors 100
@@ -3675,7 +3405,6 @@ Checkpoints for the current operation were written to checkpoint.csv.
 To resume the current operation, re-run it with the same settings, and add the following command line flag:
 --dsbulk.log.checkpoint.file=/Users/USERNAME/logs/UNLOAD_20250123-021231-557959/checkpoint.csv
 ----
-====
 +
 This command unloads row data from the `cities_by_country` table, and stores it as CSV files within a subsirectory names `unloaded_data` in the same directory where you ran the command.
 
@@ -3703,13 +3432,10 @@ astra db create-cdc **DATABASE_ID** \
 ////
 // TODO: The command is not working as expected. Must investigate and figure out why it is reporting the following error: [ERROR] INVALID_ARGUMENT: Error Code=422(422) Invalid information provided to create DB: 422 Unprocessable Entity: databaseId, keyspace, tableName, and orgId are mandatory fields
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 
 ----
-====
 ////
 
 Use the `astra db list-cdc` command to list the CDC connections for a specifc database:
@@ -3720,8 +3446,6 @@ astra db list-cdc **DATABASE_ID**
 ----
 
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 +-----------------------+-------------------+----------------+----------------+--------------------+----------------+----------------+
@@ -3730,7 +3454,6 @@ astra db list-cdc **DATABASE_ID**
 | 57a3024f-cdcdemotable | cdc_demo_keyspace | cdc_demo_table | cdc-demo-tenant| pulsar-aws-useast1 | astracdc       | Running        |
 +-----------------------+-------------------+----------------+----------------+--------------------+----------------+----------------+
 ----
-====
 
 Use the `astra db delete-cdc` command to delete a CDC connection for a specific table:
 
@@ -3745,20 +3468,15 @@ astra db delete-cdc **DATABASE_ID** \
 ////
 // TODO: The command is not working as expected. Must investigate and figure out why it is reporting the following error: [ERROR] INVALID_ARGUMENT: Error Code=422(422) Invalid information provided to create DB: 422 Unprocessable Entity: databaseId, keyspace, tableName, and orgId are mandatory fields
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 
 ----
-====
 ////
 
 === `db create-cdc` options
 
-.Expand to see all `db create-cdc` options
-[%collapsible]
-====
+.All db create-cdc options
 [source,console]
 ----
 NAME
@@ -3815,13 +3533,10 @@ OPTIONS
         <DB>
             Database name (if unique) or Database identifier
 ----
-====
 
 === `db list-cdc` options
 
-.Expand to see all `db list-cdc` options
-[%collapsible]
-====
+.All db list-cdc options
 [source,console]
 ----
 NAME
@@ -3863,13 +3578,10 @@ OPTIONS
         <DB>
             Database name (if unique) or Database identifier
 ----
-====
 
 === `db delete-cdc` options
 
-.Expand to see all `db delete-cdc` options
-[%collapsible]
-====
+.All db delete-cdc options
 [source,console]
 ----
 NAME
@@ -3925,7 +3637,6 @@ OPTIONS
         <DB>
             Database name (if unique) or Database identifier
 ----
-====
 
 === Complete CDC configuration example
 
@@ -3942,8 +3653,6 @@ astra db create cdc_demo_db \
 ----
 +
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 REGION OK
@@ -3954,7 +3663,6 @@ get CLoud provider
 [INFO]  Database 'cdc_demo_db' has status 'ACTIVE' (took 112117 millis)
 [OK]    Database 'cdc_demo_db' is ready.
 ----
-====
 
 . Create an {astra-stream} tenant in the same region as your database:
 +
@@ -3966,14 +3674,11 @@ astra streaming create cdc-demo-tenant \
 ----
 +
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 https://api.astra.datastax.com/v2/streaming/tenants/cdc-demo-tenant
 [OK]    Tenant 'cdc-demo-tenant' has being created.
 ----
-====
 
 . Use `xref:ROOT:managing.adoc#cqlsh[cqlsh]` to create a table with a primary key column in your database.
 +
@@ -3987,13 +3692,10 @@ astra db cqlsh cdc_demo_db -e \
 ----
 +
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 [INFO]  Cqlsh is starting, please wait for connection establishment...
 ----
-====
 
 . Confirm table creation:
 +
@@ -4004,8 +3706,6 @@ astra db cqlsh cdc_demo_db -e \
 ----
 +
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 [INFO]  Cqlsh is starting, please wait for connection establishment...
@@ -4015,7 +3715,6 @@ astra db cqlsh cdc_demo_db -e \
 
 (0 rows)
 ----
-====
 
 . Create a CDC connection.
 +
@@ -4030,13 +3729,10 @@ astra db create-cdc cdc_demo_db \
 ////
 // TODO: The command is not working as expected. Must investigate and figure out why it is reporting the following error: [ERROR] INVALID_ARGUMENT: Error Code=422(422) Invalid information provided to create DB: 422 Unprocessable Entity: databaseId, keyspace, tableName, and orgId are mandatory fields
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 
 ----
-====
 ////
 
 . Confirm CDC details for the database and tenant.
@@ -4047,8 +3743,6 @@ astra db list-cdc cdc_demo_db
 ----
 +
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 +-----------------------+-------------------+----------------+----------------+--------------------+----------------+----------------+
@@ -4057,7 +3751,6 @@ astra db list-cdc cdc_demo_db
 | 57a3024f-cdcdemotable | cdc_demo_keyspace | cdc_demo_table | cdc-demo-tenant| pulsar-aws-useast1 | astracdc       | Running        |
 +-----------------------+-------------------+----------------+----------------+--------------------+----------------+----------------+
 ----
-====
 +
 [source,bash]
 ----
@@ -4065,8 +3758,6 @@ astra streaming list-cdc cdc-demo-tenant
 ----
 +
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 +--------------------+----------------+----------------+-------------------+----------------+----------------+
@@ -4075,7 +3766,6 @@ astra streaming list-cdc cdc-demo-tenant
 | pulsar-aws-useast1 | astracdc       | cdc_demo_db    | cdc_demo_keyspace | cdc_demo_table | running        |
 +--------------------+----------------+----------------+-------------------+----------------+----------------+
 ----
-====
 
 After you enable CDC on your {db-serverless} database, you can xref:astra-db-serverless:databases:change-data-capture.adoc#connect-a-sink[connect a sink].
 
@@ -4091,13 +3781,10 @@ astra db download-scb **DATABASE_ID** -r **REGION_NAME**
 ----
 
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 [INFO]  Bundle downloaded in ./scb_a53003fe-ba42-4c3c-85d0-6b345622c2dc_dc-1.zip
 ----
-====
 
 The `-r **REGION_NAME**` option is required for <<configure-multiple-regions,multi-region databases>>.
 If your database is configured with multiple regions, replace `**REGION_NAME**` with the name of the region you want to download the {scb-short} for.
@@ -4113,9 +3800,7 @@ The {scb-short} contains sensitive information that establishes a connection to 
 
 === `db download-scb` options
 
-.Expand to see all `db download-scb` options
-[%collapsible]
-====
+.All db download-scb options
 [source,console]
 ----
 NAME
@@ -4165,7 +3850,6 @@ OPTIONS
         <DB>
             Database name (if unique) or Database identifier
 ----
-====
 
 Use the `-r` / `--region` option to download the {scb-short} for a specific region:
 
@@ -4175,13 +3859,10 @@ astra db download-scb **DATABASE_ID** -r **REGION_NAME**
 ----
 
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 [INFO]  Bundle downloaded in ./scb_a53003fe-ba42-4c3c-85d0-6b345622c2dc_dc-1.zip
 ----
-====
 
 [TIP]
 ====
@@ -4197,13 +3878,10 @@ astra db download-scb **DATABASE_ID** -f **DESTINATION_FILE**.zip
 ----
 
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 [INFO]  Bundle downloaded in DESTINATION_FILE.zip
 ----
-====
 
 == Create environment variables
 
@@ -4223,10 +3901,7 @@ By default, the {product} saves the `.env` file to the directory where you run t
 
 If a `.env` file already exists in the directory, the {product} appends the new environment variables to the existing file.
 
-.Result
-[%collapsible%open]
-====
-..env
+.Result (.env)
 [source,console]
 ----
 ASTRA_DB_API_ENDPOINT="https://a53003fe-ba42-4c3c-85d0-6b345622c2dc-us-east1.apps.astra.datastax.com/api/json"
@@ -4246,7 +3921,6 @@ ASTRA_ORG_ID="2dbd3c55-6a68-4b5b-9155-5be9d41823e8"
 ASTRA_ORG_NAME="alice@example.com"
 ASTRA_ORG_TOKEN="AstraCS:FZm..."
 ----
-====
 
 [WARNING]
 ====
@@ -4260,9 +3934,7 @@ The {scb-short} contains sensitive information that establishes a connection to 
 The directory must already exist before you run the `db create-dotenv` command.
 If the directory doesn't exist, the command fails with the error `INVALID_ARGUMENT: Destination folder has not been found`.
 
-.Expand to see all `db create-dotenv` options
-[%collapsible]
-====
+.All db create-dotenv options
 [source,console]
 ----
 NAME
@@ -4316,7 +3988,6 @@ OPTIONS
         <DB>
             Database name (if unique) or Database identifier
 ----
-====
 
 Use the `-d` / `--directory` option to save the `.env` file to a specific directory:
 
@@ -4326,10 +3997,7 @@ astra db create-dotenv **DATABASE_ID** -d ~/tmp
 ----
 
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 [OK]    File '/Users/USERNAME/tmp/.env' has been created/amended
 ----
-====
