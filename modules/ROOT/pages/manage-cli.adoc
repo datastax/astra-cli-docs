@@ -30,7 +30,6 @@ If you're using the {product} in production, {company} strongly recommends that 
 For example, don't grant an administrator-level role to a token that won't be used to execute those types of commands.
 ====
 
-//TODO: Turn this section into tabs
 [#connect-to-astra]
 == Connect the {product}
 
@@ -550,69 +549,51 @@ For more information about the {product} configuration file, see the {product-re
 
 === Override the default home folder location
 
-You can override the default location of the {product} home folder (`.astra`) by setting the `ASTRA_HOME` environment variable.
+You can override the default location of the {product} home folder (`.astra`) by setting the `ASTRA_HOME` environment variable:
 
-[tabs]
-======
 Set the environment variable dynamically::
-+
---
 Add the following line to your shell profile:
-
++
 [source,bash,subs="+quotes"]
 ----
 eval "$(astra shellenv --home "**HOME_FOLDER_PATH**")"
 ----
-
++
 Replace `**HOME_FOLDER_PATH**` with the full path to your preferred {product} home folder.
---
 
 Set the environment variable directly::
-+
---
 Add the following line to your shell profile:
-
++
 [source,bash,subs="+quotes"]
 ----
 export ASTRA_HOME=**HOME_FOLDER_PATH**
 ----
-
++
 Replace `**HOME_FOLDER_PATH**` with the full path to your preferred {product} home folder.
---
-======
 
 === Override the default configuration file location
 
-You can override the default location of the {product} configuration file (`.astrarc`) by setting the `ASTRA_CONFIG_FILE` environment variable.
+You can override the default location of the {product} configuration file (`.astrarc`) by setting the `ASTRA_CONFIG_FILE` environment variable:
 
-[tabs]
-======
 Set the environment variable dynamically::
-+
---
 Add the following line to your shell profile:
-
++
 [source,bash,subs="+quotes"]
 ----
 eval "$(astra shellenv --rc "**CONFIG_FILE_PATH**/.astrarc")"
 ----
-
++
 Replace `**CONFIG_FILE_PATH**` with the full path to your preferred `.astrarc` configuration file.
---
 
 Set the environment variable directly::
-+
---
 Add the following line to your shell profile:
-
++
 [source,bash,subs="+quotes"]
 ----
 export ASTRARC=**CONFIG_FILE_PATH**/.astrarc
 ----
-
++
 Replace `**CONFIG_FILE_PATH**` with the full path to your preferred `.astrarc` configuration file.
---
-======
 
 [#command-output]
 == Command output formats and exit codes
@@ -626,23 +607,16 @@ astra COMMAND -o **FORMAT**
 
 The following output formats are available:
 
-* `human` (default): Human-readable format, optimized for command-line readability.
-* `json`: Structured JSON format, suitable for programmatic parsing.
-* `csv`: Comma-separated output format, ideal for data export and analysis.
-
-[tabs]
-======
-Human-readable::
+`human` (default)::
+Human-readable format, optimized for command-line readability.
 +
---
-The human-readable format uses tables, lists, and other visual elements to present information on the command line.
---
+This format uses tables, lists, and other visual elements to present information on the command line.
 
-JSON::
+`json`::
+Structured JSON format, suitable for programmatic parsing.
 +
---
-Every command supporting JSON output will always return a response of exactly this schema:
-
+Every command that supports JSON output always returns a response using exactly this schema:
++
 .JSON output schema
 [source,json]
 ----
@@ -660,9 +634,10 @@ Every command supporting JSON output will always return a response of exactly th
   ]
 }
 ----
-
++
 All field names in the JSON output are in camel case (`fieldName`).
-
++
+.JSON output fields
 [cols="1,1,2"]
 |===
 |Name |Type |Summary
@@ -700,27 +675,27 @@ If present, it is an array of recommended next-step objects containing the follo
 * `command`: The command to run.
 * `comment`: An explanation of why/when to run this next.
 |===
---
 
-CSV::
+`csv`::
+Comma-separated output format, ideal for data export and analysis.
 +
---
-Every command supporting CSV output will always return an RFC-4180-compliant response of exactly this schema:
-
+Every command that supports CSV output always returns an RFC-4180-compliant response using exactly this schema:
++
 .CSV output schema
 [source,csv]
 ----
 code,message,data_field_1,data_field_2,...
 ----
-
++
 All field names in the CSV output are in snake case (`field_name`).
-
++
 The first row is always the header, defining the column names.
 Each subsequent row represents one data record from the command.
-
-The `code` and `message` fields may repeat for each row of data to keep the CSV schema consistent.
-Values may contain commas or newlines and be wrapped in quotes to ensure RFC-4180-compliant CSV output.
-
++
+The `code` and `message` fields can repeat for each row of data to keep the CSV schema consistent.
+Values can contain commas or newlines, and they can be wrapped in quotes to ensure RFC-4180-compliant CSV output.
++
+.CSV output fields
 [cols="1,1,2"]
 |===
 |Name |Type |Summary
@@ -736,25 +711,23 @@ Common values include:
 * `DATABASE_NOT_FOUND`: referenced resource missing
 * Other command-specific codes
 
-If no rows are returned, you should assume an implicit `OK` code.
+If no rows are returned, you can assume an implicit `OK` code.
 
 |`message`
 |`string`
 |Optional.
 A human-friendly message describing the result or error of the command.
 
-Not all commands include a message, and this field will be empty if there is nothing to report.
+Not all commands include a `message`, and this field is empty if there is nothing to report.
 
 |Additional data fields
 |Any (type varies by command)
 a|Command-specific fields representing the actual data returned.
 
-Fields may be empty if there is nothing to report.
+Fields can be empty if there is nothing to report.
 
 Column order is consistent per command.
 |===
---
-======
 
 [NOTE]
 ====
