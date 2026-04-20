@@ -414,19 +414,22 @@ OPTIONS
 
 xref:astra-db-serverless:databases:manage-collections.adoc[Collections] store semi-structured data, in the form of documents, in {db-serverless-vector} databases.
 
+=== Create a collection
+
+[IMPORTANT]
+====
 When you create a collection, you decide if the collection can store structured vector data.
 This is known as a _vector-enabled collection_.
 For vector-enabled collections, you also decide how to provide embeddings.
 You can bring your own embeddings and xref:astra-db-serverless:databases:embedding-generation.adoc[automatically generate embeddings with vectorize].
 **You must decide which options you need when you create the collection.**
+====
 
-Use the `astra db create-collection` command to create a new collection in a {db-serverless-vector} database:
+Use the `astra db create-collection` command to create a new collection in a {db-serverless-vector} database.
+The options to use depend on your desired collection settings.
 
-[tabs]
-======
-Bring my own embeddings::
-+
---
+==== Bring my own embeddings
+
 Use these options if you plan to generate your own embeddings and import them when you load data into your collection:
 
 [source,bash,subs="+quotes"]
@@ -444,8 +447,7 @@ Replace the following:
 * (Optional) `**SIMILARITY_METRIC**`: The xref:astra-db-serverless:get-started:concepts.adoc#metrics[similarity metric] that your embedding model will use to compare vectors.
 The available metrics are `cosine` (default), `dot_product`, and `euclidean`.
 
-Example:
-
+.Example
 [source,bash]
 ----
 astra db create-collection 58747660-464b-4085-bef2-c3f3e5401e3d \
@@ -460,11 +462,9 @@ astra db create-collection 58747660-464b-4085-bef2-c3f3e5401e3d \
 [OK]    Collection 'my_collection' as been created from db '58747660-464b-4085-bef2-c3f3e5401e3d' on keyspace  'default_keyspace'
 [OK]    Database '58747660-464b-4085-bef2-c3f3e5401e3d' is ready.
 ----
---
 
-Use an {product-short}-hosted provider::
-+
---
+==== Use an {product-short}-hosted provider
+
 To automatically generate embeddings with xref:astra-db-serverless:databases:embedding-generation.adoc[{product-short} vectorize], add an embedding provider integration to your collection.
 Embedding provider integrations are either {product-short}-hosted or external.
 
@@ -490,8 +490,7 @@ You can only set the dimensions if the chosen model supports a range of dimensio
 * (Optional) `**SIMILARITY_METRIC**`: The xref:astra-db-serverless:get-started:concepts.adoc#metrics[similarity metric] that your embedding model will use to compare vectors.
 The available metrics are `cosine` (default), `dot_product`, and `euclidean`.
 
-Example:
-
+.Example
 [source,bash]
 ----
 astra db create-collection 58747660-464b-4085-bef2-c3f3e5401e3d \
@@ -508,11 +507,9 @@ astra db create-collection 58747660-464b-4085-bef2-c3f3e5401e3d \
 [OK]    Collection 'my_collection' as been created from db '58747660-464b-4085-bef2-c3f3e5401e3d' on keyspace  'default_keyspace'
 [OK]    Database '58747660-464b-4085-bef2-c3f3e5401e3d' is ready.
 ----
---
 
-Use an external provider::
-+
---
+==== Use an external provider
+
 To automatically generate embeddings with xref:astra-db-serverless:databases:embedding-generation.adoc[{product-short} vectorize], add an embedding provider integration to your collection.
 Embedding provider integrations are either {product-short}-hosted or external.
 
@@ -540,8 +537,7 @@ You can only set the dimensions if the chosen model supports a range of dimensio
 * (Optional) `**SIMILARITY_METRIC**`: The xref:astra-db-serverless:get-started:concepts.adoc#metrics[similarity metric] that your embedding model will use to compare vectors.
 The available metrics are `cosine` (default), `dot_product`, and `euclidean`.
 
-Example:
-
+.Example
 [source,bash]
 ----
 astra db create-collection 58747660-464b-4085-bef2-c3f3e5401e3d \
@@ -559,11 +555,9 @@ astra db create-collection 58747660-464b-4085-bef2-c3f3e5401e3d \
 [OK]    Collection 'my_collection' as been created from db '58747660-464b-4085-bef2-c3f3e5401e3d' on keyspace  'default_keyspace'
 [OK]    Database '58747660-464b-4085-bef2-c3f3e5401e3d' is ready.
 ----
---
 
-Non-vector collection::
-+
---
+==== Non-vector collection
+
 To create a collection that is _not_ vector-enabled, omit the `-d` and `-m` options.
 Be aware that non-vector collections don't support vector-dependent functionality like vector search.
 
@@ -578,80 +572,8 @@ astra db create-collection **DATABASE_ID** -c **COLLECTION_NAME**
 [OK]    Collection 'my_collection' as been created from db '58747660-464b-4085-bef2-c3f3e5401e3d' on keyspace  'default_keyspace'
 [OK]    Database '58747660-464b-4085-bef2-c3f3e5401e3d' is ready.
 ----
---
-======
 
-Use the `astra db list-collections` command to get a list of the collections in `default_keyspace`:
-
-[source,bash,subs="+quotes"]
-----
-astra db list-collections **DATABASE_ID**
-----
-
-.Result
-[source,console]
-----
-+---------------------+-----------+-------------------+--------------------+--------------+------------------------+
-| Name                | DefaultId | Vector Dimension  | Similarity Metric  | AI Provider  | AI Model               |
-+---------------------+-----------+-------------------+--------------------+--------------+------------------------+
-| my_collection       | default   | 1024              | dot_product        |              |                        |
-| my_collection2      | default   | 1024              | dot_product        | nvidia       | NV-Embed-QA            |
-| my_collection3      | default   | 1024              | dot_product        | openai       | text-embedding-3-small |
-+---------------------+-----------+-------------------+--------------------+--------------+------------------------+
-----
-
-Use the `astra db describe-collection` command to get information about a specific collection:
-
-[source,bash,subs="+quotes"]
-----
-astra db describe-collection **DATABASE_ID** -c **COLLECTION_NAME**
-----
-
-.Result
-[source,console]
-----
-+-------------------+-----------------------------------------+
-| Attribute         | Value                                   |
-+-------------------+-----------------------------------------+
-| Name              | my_collection                           |
-| Estim. Count      | 0                                       |
-|                   |                                         |
-| Vector:           |                                         |
-| Vector Dimension  | 1024                                    |
-| Similarity Metric | dot_product                             |
-+-------------------+-----------------------------------------+
-
-[OK]    Database '58747660-464b-4085-bef2-c3f3e5401e3d' is ready.
-----
-
-Use the `astra db truncate-collection` command to clear an existing collection:
-
-[source,bash,subs="+quotes"]
-----
-astra db truncate-collection **DATABASE_ID** -c **COLLECTION_NAME**
-----
-
-.Result
-[source,console]
-----
-[OK]    Collection 'my_collection' as been truncated from '58747660-464b-4085-bef2-c3f3e5401e3d'.
-----
-
-Use the `astra db delete-collection` command to delete a collection:
-
-[source,bash,subs="+quotes"]
-----
-astra db delete-collection **DATABASE_ID** -c **COLLECTION_NAME**
-----
-
-.Result
-[source,console]
-----
-[OK]    Collection 'my_collection' as been deleted from '58747660-464b-4085-bef2-c3f3e5401e3d'.
-[OK]    Database '58747660-464b-4085-bef2-c3f3e5401e3d' is ready.
-----
-
-=== `db create-collection` options
+==== `db create-collection` options
 
 .All db create-collection options
 [source,console]
@@ -756,7 +678,28 @@ astra db create-collection **DATABASE_ID** \
 [OK]    Database '58747660-464b-4085-bef2-c3f3e5401e3d' is ready.
 ----
 
-=== `db list-collections` options
+=== Get all collections
+
+Use the `astra db list-collections` command to get a list of the collections in `default_keyspace`:
+
+[source,bash,subs="+quotes"]
+----
+astra db list-collections **DATABASE_ID**
+----
+
+.Result
+[source,console]
+----
++---------------------+-----------+-------------------+--------------------+--------------+------------------------+
+| Name                | DefaultId | Vector Dimension  | Similarity Metric  | AI Provider  | AI Model               |
++---------------------+-----------+-------------------+--------------------+--------------+------------------------+
+| my_collection       | default   | 1024              | dot_product        |              |                        |
+| my_collection2      | default   | 1024              | dot_product        | nvidia       | NV-Embed-QA            |
+| my_collection3      | default   | 1024              | dot_product        | openai       | text-embedding-3-small |
++---------------------+-----------+-------------------+--------------------+--------------+------------------------+
+----
+
+==== `db list-collections` options
 
 .All db list-collections options
 [source,console]
@@ -824,7 +767,33 @@ astra db list-collections **DATABASE_ID** -k **KEYSPACE_NAME**
 +--------------------------+-----------+-------------------+--------------------+--------------+---------------------+
 ----
 
-=== `db describe-collection` options
+=== Get one collection
+
+Use the `astra db describe-collection` command to get information about a specific collection:
+
+[source,bash,subs="+quotes"]
+----
+astra db describe-collection **DATABASE_ID** -c **COLLECTION_NAME**
+----
+
+.Result
+[source,console]
+----
++-------------------+-----------------------------------------+
+| Attribute         | Value                                   |
++-------------------+-----------------------------------------+
+| Name              | my_collection                           |
+| Estim. Count      | 0                                       |
+|                   |                                         |
+| Vector:           |                                         |
+| Vector Dimension  | 1024                                    |
+| Similarity Metric | dot_product                             |
++-------------------+-----------------------------------------+
+
+[OK]    Database '58747660-464b-4085-bef2-c3f3e5401e3d' is ready.
+----
+
+==== `db describe-collection` options
 
 .All db describe-collection options
 [source,console]
@@ -903,7 +872,22 @@ astra db describe-collection **DATABASE_ID** \
 [OK]    Database '58747660-464b-4085-bef2-c3f3e5401e3d' is ready.
 ----
 
-=== `db truncate-collection` options
+=== Empty a collection
+
+Use the `astra db truncate-collection` command to clear an existing collection (delete all documents from the specified collection):
+
+[source,bash,subs="+quotes"]
+----
+astra db truncate-collection **DATABASE_ID** -c **COLLECTION_NAME**
+----
+
+.Result
+[source,console]
+----
+[OK]    Collection 'my_collection' as been truncated from '58747660-464b-4085-bef2-c3f3e5401e3d'.
+----
+
+==== `db truncate-collection` options
 
 .All db truncate-collection options
 [source,console]
@@ -971,7 +955,23 @@ astra db truncate-collection **DATABASE_ID** \
 [OK]    Collection 'my_collection' as been truncated from '58747660-464b-4085-bef2-c3f3e5401e3d'.
 ----
 
-=== `db delete-collection` options
+=== Delete a collection
+
+Use the `astra db delete-collection` command to delete a collection:
+
+[source,bash,subs="+quotes"]
+----
+astra db delete-collection **DATABASE_ID** -c **COLLECTION_NAME**
+----
+
+.Result
+[source,console]
+----
+[OK]    Collection 'my_collection' as been deleted from '58747660-464b-4085-bef2-c3f3e5401e3d'.
+[OK]    Database '58747660-464b-4085-bef2-c3f3e5401e3d' is ready.
+----
+
+==== `db delete-collection` options
 
 .All db delete-collection options
 [source,console]
@@ -3540,7 +3540,7 @@ OPTIONS
 [source,console]
 ----
 NAME
-        astra db list-cdc - List CDC available on this databse
+        astra db list-cdc - List CDC available on this database
 
 SYNOPSIS
         astra db list-cdc [ {-cf | --config-file} <CONFIG_FILE> ]
