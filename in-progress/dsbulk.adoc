@@ -23,8 +23,6 @@ astra db dsbulk load **DB_ID** -k **KEYSPACE_NAME** -t **TABLE_NAME** --url **FI
 ----
 
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 [INFO]  Downloading Dsbulk, please wait...
@@ -44,10 +42,9 @@ Checkpoints for the current operation were written to checkpoint.csv.
 To resume the current operation, re-run it with the same settings, and add the following command line flag:
 --dsbulk.log.checkpoint.file=/Users/USERNAME/logs/LOAD_20250123-020734-995267/checkpoint.csv
 ----
-====
 
 [TIP]
-======
+====
 You can use the `xref:commands:astra-db-cqlsh-exec.adoc[]` command to check that the data imported successfully:
 
 [source,shell,subs="+quotes"]
@@ -56,8 +53,6 @@ astra db cqlsh exec **DB_ID** "SELECT * FROM **KEYSPACE_NAME**.**TABLE_NAME** LI
 ----
 
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 [INFO]  Cqlsh is starting, please wait for connection establishment...
@@ -88,7 +83,6 @@ astra db cqlsh exec **DB_ID** "SELECT * FROM **KEYSPACE_NAME**.**TABLE_NAME** LI
 (20 rows)
 ----
 ====
-======
 
 == Unload data
 
@@ -100,8 +94,6 @@ astra db dsbulk unload **DB_ID** -k **KEYSPACE_NAME** -t **TABLE_NAME** --url **
 ----
 
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 [INFO]  RUNNING: /Users/USERNAME/.astra/dsbulk-1.11.0/bin/dsbulk unload -u token -p AstraCS:FZm... -b /Users/USERNAME/.astra/scb/scb_91b35105-a5aa-4cd5-a93b-900ac58452ba_us-east1.zip -k dsbulk_demo_keyspace -t cities_by_country -logDir ./logs --log.verbosity normal --schema.allowMissingFields true -maxConcurrentQueries AUTO -delim , -url unloaded_data -header true -encoding UTF-8 -skipRecords 0 -maxErrors 100
@@ -116,7 +108,6 @@ Checkpoints for the current operation were written to checkpoint.csv.
 To resume the current operation, re-run it with the same settings, and add the following command line flag:
 --dsbulk.log.checkpoint.file=/Users/USERNAME/logs/UNLOAD_20250123-021231-557959/checkpoint.csv
 ----
-====
 
 == Count data
 
@@ -128,8 +119,6 @@ astra db dsbulk count **DB_ID** -k **KEYSPACE_NAME** -t **TABLE_NAME**
 ----
 
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 [INFO]  RUNNING: /Users/USERNAME/.astra/dsbulk-1.11.0/bin/dsbulk count -u token -p AstraCS:FZm... -b /Users/USERNAME/.astra/scb/scb_91b35105-a5aa-4cd5-a93b-900ac58452ba_us-east1.zip -k dsbulk_demo_keyspace -t cities_by_country -logDir ./logs --log.verbosity normal --schema.allowMissingFields true -maxConcurrentQueries AUTO
@@ -145,7 +134,6 @@ To resume the current operation, re-run it with the same settings, and add the f
 --dsbulk.log.checkpoint.file=/Users/USERNAME/logs/COUNT_20250123-021120-127216/checkpoint.csv
 134574
 ----
-====
 
 == Complete {dsbulk-short} example
 
@@ -159,13 +147,10 @@ astra db create dsbulk_demo_db -r us-east1 -k dsbulk_demo_keyspace
 ----
 +
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 Database 'dsbulk_demo_db' has been created with id '8b8fea68-404e-4f12-9a79-02079060adfa'. It is now active after waiting 433 seconds.
 ----
-====
 
 . Download the xref:ROOT:attachment$cities.csv[cities.csv] file and move it to the directory where you run {product} commands.
 +
@@ -190,8 +175,6 @@ astra db cqlsh start dsbulk_demo_db -k dsbulk_demo_keyspace
 ----
 +
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 Connected to cndb at 127.0.0.1:9042.
@@ -199,7 +182,6 @@ Connected to cndb at 127.0.0.1:9042.
 Use HELP for help.
 token@cqlsh:dsbulk_demo_keyspace>
 ----
-====
 +
 .. Copy and paste the following CQL statement into the `cqlsh` prompt and press kbd:[Enter]:
 +
@@ -233,8 +215,6 @@ astra db dsbulk load dsbulk_demo_db -k dsbulk_demo_keyspace -t cities_by_country
 ----
 +
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 [INFO]  RUNNING: /Users/USERNAME/.astra/dsbulk-1.11.0/bin/dsbulk load -u token -p AstraCS:FZm... -b /Users/USERNAME/.astra/scb/scb_91b35105-a5aa-4cd5-a93b-900ac58452ba_us-east1.zip -k dsbulk_demo_keyspace -t cities_by_country -logDir ./logs --log.verbosity normal --schema.allowMissingFields true -maxConcurrentQueries AUTO -delim , -url cities.csv -header true -encoding UTF-8 -skipRecords 0 -maxErrors 100
@@ -252,7 +232,6 @@ Checkpoints for the current operation were written to checkpoint.csv.
 To resume the current operation, re-run it with the same settings, and add the following command line flag:
 --dsbulk.log.checkpoint.file=/Users/USERNAME/logs/LOAD_20250123-020734-995267/checkpoint.csv
 ----
-====
 
 . Confirm that the data loaded successfully:
 +
@@ -262,8 +241,6 @@ astra db cqlsh exec dsbulk_demo_db "select * from dsbulk_demo_keyspace.cities_by
 ----
 +
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 [INFO]  Cqlsh is starting, please wait for connection establishment...
@@ -293,7 +270,6 @@ astra db cqlsh exec dsbulk_demo_db "select * from dsbulk_demo_keyspace.cities_by
 
 (20 rows)
 ----
-====
 
 . Count the loaded data:
 +
@@ -303,8 +279,6 @@ astra db dsbulk count dsbulk_demo_db -k dsbulk_demo_keyspace -t cities_by_countr
 ----
 +
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 [INFO]  RUNNING: /Users/USERNAME/.astra/dsbulk-1.11.0/bin/dsbulk count -u token -p AstraCS:FZm... -b /Users/USERNAME/.astra/scb/scb_91b35105-a5aa-4cd5-a93b-900ac58452ba_us-east1.zip -k dsbulk_demo_keyspace -t cities_by_country -logDir ./logs --log.verbosity normal --schema.allowMissingFields true -maxConcurrentQueries AUTO
@@ -320,7 +294,6 @@ To resume the current operation, re-run it with the same settings, and add the f
 --dsbulk.log.checkpoint.file=/Users/USERNAME/logs/COUNT_20250123-021120-127216/checkpoint.csv
 134574
 ----
-====
 
 . Unload the data into CSV files:
 +
@@ -330,8 +303,6 @@ astra db dsbulk unload dsbulk_demo_db -k dsbulk_demo_keyspace -t cities_by_count
 ----
 +
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 [INFO]  RUNNING: /Users/USERNAME/.astra/dsbulk-1.11.0/bin/dsbulk unload -u token -p AstraCS:FZm... -b /Users/USERNAME/.astra/scb/scb_91b35105-a5aa-4cd5-a93b-900ac58452ba_us-east1.zip -k dsbulk_demo_keyspace -t cities_by_country -logDir ./logs --log.verbosity normal --schema.allowMissingFields true -maxConcurrentQueries AUTO -delim , -url unloaded_data -header true -encoding UTF-8 -skipRecords 0 -maxErrors 100
@@ -346,6 +317,5 @@ Checkpoints for the current operation were written to checkpoint.csv.
 To resume the current operation, re-run it with the same settings, and add the following command line flag:
 --dsbulk.log.checkpoint.file=/Users/USERNAME/logs/UNLOAD_20250123-021231-557959/checkpoint.csv
 ----
-====
 +
 This command unloads row data from the `cities_by_country` table, and stores it as CSV files within a subsirectory names `unloaded_data` in the same directory where you ran the command.

@@ -111,8 +111,6 @@ You can also get metadata by providing the database name, but this doesn't guara
 |===
 
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 +------------------+-----------------------------------------+
@@ -134,7 +132,6 @@ You can also get metadata by providing the database name, but this doesn't guara
 |                  |                                         |
 +------------------+-----------------------------------------+
 ----
-====
 
 === Find all databases
 
@@ -148,8 +145,6 @@ astra db list
 ----
 
 .Result
-[%collapsible]
-====
 [source,console,subs="+quotes"]
 ----
 +---------------------+--------------+-----------+-------+---+-----------+
@@ -159,7 +154,6 @@ astra db list
 +---------------------+--------------+-----------+-------+---+-----------+
 ----
 //ID truncated to prevent bad wrapping.
-====
 
 == Drop a database
 
@@ -248,8 +242,6 @@ See xref:databases:create-database.adoc#get-db-id[Get your database ID].
 |===
 
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 +----------------------------+
@@ -259,7 +251,6 @@ See xref:databases:create-database.adoc#get-db-id[Get your database ID].
 | keyspace2                 |
 +----------------------------+
 ----
-====
 
 == Drop a keyspace
 

@@ -13,14 +13,11 @@ astra streaming create **TENANT_NAME**
 ----
 
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 https://api.astra.datastax.com/v2/streaming/tenants/my-streaming-tenant
 [OK]    Tenant 'my-streaming-tenant' has being created.
 ----
-====
 
 Running `astra streaming create` without any options deploys the tenant in the default cloud provider (`aws`), region (`useast2`), plan (`free`) and namespace (`default`).
 
@@ -45,14 +42,12 @@ astra streaming create **TENANT_NAME** --if-not-exist
 ====
 
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 https://api.astra.datastax.com/v2/streaming/tenants/my-streaming-tenant
 [OK]    Tenant already existed (--if-not-exist)
 ----
-====
+
 
 Alternatively, you can use the `astra streaming exist` command to check ahead of time if a tenant name is already in use:
 
@@ -62,20 +57,15 @@ astra streaming exist my-streaming-tenant
 ----
 
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 https://api.astra.datastax.com/v2/streaming/tenants/my-streaming-tenant
 [OK]    Tenant 'my-streaming-tenant' exists.
 ----
-====
 
 === `streaming create` options
 
-.Expand to see all `streaming create` options
-[%collapsible]
-====
+.All streaming create options
 [source,console]
 ----
 NAME
@@ -140,7 +130,6 @@ OPTIONS
         <TENANT>
             Tenant identifier
 ----
-====
 
 You can use the `-c`, `-r`, and `-p`  options to define the cloud provider, region, and plan when creating a tenant:
 
@@ -153,20 +142,15 @@ astra streaming create **TENANT_NAME** \
 ----
 
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 https://api.astra.datastax.com/v2/streaming/tenants/my-streaming-tenant
 [OK]    Tenant 'my-streaming-tenant' has being created.
 ----
-====
 
 === `streaming exist` options
 
-.Expand to see all `streaming exist` options
-[%collapsible]
-====
+.All streaming exist options
 [source,console]
 ----
 NAME
@@ -208,7 +192,6 @@ OPTIONS
         <TENANT>
             Tenant identifier
 ----
-====
 
 == Get tenant details
 
@@ -220,8 +203,6 @@ astra streaming list
 ----
 
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 +---------------------+-----------+----------------+----------------+
@@ -230,7 +211,6 @@ astra streaming list
 | my-streaming-tenant | aws       | useast1        | active         |
 +---------------------+-----------+----------------+----------------+
 ----
-====
 
 Use the `astra streaming get` or `astra streaming describe` command to get information about a specific tenant:
 
@@ -245,8 +225,6 @@ astra streaming describe **TENANT_NAME**
 ----
 
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 +------------------+-------------------------------------------------------------+
@@ -265,7 +243,6 @@ astra streaming describe **TENANT_NAME**
 | WebSocketUrl     | wss://pulsar-aws-useast1.streaming.datastax.com:8001/ws/v2  |
 +------------------+-------------------------------------------------------------+
 ----
-====
 
 Use the `astra streaming status` command to get the status of a specific tenant:
 
@@ -275,13 +252,10 @@ astra streaming status **TENANT_NAME**
 ----
 
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 [OK]    Tenant 'my-streaming-tenant' has status 'active'
 ----
-====
 
 Use the `astra streaming pulsar-token` command to get the {pulsar-short} token for a specific tenant:
 
@@ -291,19 +265,14 @@ astra streaming pulsar-token **TENANT_NAME**
 ----
 
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MzYyMTcxMzAsImlzcyI6ImRhdGFzdGF4Iiwic3ViIjoiY2xpZW50OzJkYmQzYzU1LTZhNjgtNGI1Yi05MTU1LTViZTlkNDE4MjNkODtiWGt0YzNSeVpXRnRhVzVuTFhSbGJtRnVkQT09OzVlMzQ5Y2NlNzgiLCJ0b2tlbmlkIjoiNWUzNDljY2U3OCJ9.aVQiSD7wS21ltrVn-Beei39WC9T9oGGz2P95DjXbHsqB-Lgp2N_T2jTjBxzoKv5-AoCGjMZAK7vr0SvKsyzViXY9ubE72hu0TsnPPFyDcqX-3fpdI0HoA62ppXrqmZvZVKw2bCCg4868xhfGJvY_S5R8K6Zz-2bOuKf8I271V7-gUVw5zlbnkmCER6ch-11Kq3o4HMa9rgoY1W0DNv4V6CNQdjM4qs6qLal0U9Qd3jEKR935jsr518LEye8F4rMGhqNX-Wrnb45kiejrVA4nAdLK6mBMhIZ68lw2J3bQqjCX26NXPsJFmQiR1I0YLFgRJXpoFhYjmA058duTP9Hy4Q
 ----
-====
 
 === `streaming list` options
 
-.Expand to see all `streaming list` options
-[%collapsible]
-====
+.All streaming list options
 [source,console]
 ----
 NAME
@@ -337,13 +306,10 @@ OPTIONS
         -v, --verbose
             Verbose mode with log in console
 ----
-====
 
 === `streaming get` options
 
-.Expand to see all `streaming get` options
-[%collapsible]
-====
+.All streaming get options
 [source,console]
 ----
 NAME
@@ -390,13 +356,10 @@ OPTIONS
         <TENANT>
             Tenant identifier
 ----
-====
 
 === `streaming describe` options
 
-.Expand to see all `streaming describe` options
-[%collapsible]
-====
+.All streaming describe options
 [source,console]
 ----
 NAME
@@ -443,13 +406,10 @@ OPTIONS
         <TENANT>
             Tenant identifier
 ----
-====
 
 === `streaming status` options
 
-.Expand to see all `streaming status` options
-[%collapsible]
-====
+.All streaming status options
 [source,console]
 ----
 NAME
@@ -491,13 +451,10 @@ OPTIONS
         <TENANT>
             Tenant identifier
 ----
-====
 
 === `streaming pulsar-token` options
 
-.Expand to see all `streaming pulsar-token` options
-[%collapsible]
-====
+.All streaming pulsar-token options
 [source,console]
 ----
 NAME
@@ -539,7 +496,6 @@ OPTIONS
         <TENANT>
             Tenant identifier
 ----
-====
 
 == Get a list of available {astra-stream} regions
 
@@ -551,8 +507,6 @@ astra streaming list-regions
 ----
 
 .Result
-[%collapsible]
-====
 The result is a table with `Cloud Provider`, `Region`, and `Full Name` columns.
 `Full Name` can be empty or contain the region's name and location (city, state, or country).
 
@@ -564,13 +518,10 @@ The result is a table with `Cloud Provider`, `Region`, and `Full Name` columns.
 | **PROVIDER**    | **REGION**          | **NAME**                      |
 +-----------------+---------------------+-------------------------------+
 ----
-====
 
 === `streaming list-regions` options
 
-.Expand to see all `streaming list-regions` options
-[%collapsible]
-====
+.All streaming list-regions options
 [source,console]
 ----
 NAME
@@ -613,13 +564,10 @@ OPTIONS
         -v, --verbose
             Verbose mode with log in console
 ----
-====
 
 === `streaming list-clouds` options
 
-.Expand to see all `streaming list-clouds` options
-[%collapsible]
-====
+.All streaming list-clouds options
 [source,console]
 ----
 NAME
@@ -653,8 +601,6 @@ OPTIONS
         -v, --verbose
             Verbose mode with log in console
 ----
-====
-
 
 == Delete a tenant
 
@@ -666,19 +612,14 @@ astra streaming delete **TENANT_NAME**
 ----
 
 .Result
-[%collapsible]
-====
-[source,console,subs="+quotes"]
+[source,console]
 ----
 [OK]    Deleting Tenant 'my-streaming-tenant'
 ----
-====
 
 === `streaming delete` options
 
-.Expand to see all `streaming delete` options
-[%collapsible]
-====
+.All streaming delete options
 [source,console]
 ----
 NAME
@@ -720,7 +661,6 @@ OPTIONS
         <TENANT>
             Tenant identifier
 ----
-====
 
 == Use the {pulsar-short} shell
 
@@ -737,8 +677,6 @@ astra streaming pulsar-shell **TENANT_NAME**
 ----
 
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 [INFO]  Downloading PulsarShell, please wait...
@@ -754,7 +692,6 @@ Type exit or quit to end the shell session.
 
 default(pulsar-aws-useast2.streaming.datastax.com)>
 ----
-====
 
 Type `exit` and press kbd:[Enter] to exit the {pulsar-short} shell.
 
@@ -762,9 +699,7 @@ The first time you use the `astra streaming pulsar-shell` commands, the {product
 
 === `streaming pulsar-shell` options
 
-.Expand to see all `streaming pulsar-shell` options
-[%collapsible]
-====
+.All streaming pulsar-shell options
 [source,console]
 ----
 NAME
@@ -823,7 +758,6 @@ OPTIONS
         <TENANT>
             Tenant unique name
 ----
-====
 
 Use the `-e`/`--execute` option to execute a {pulsar-short} shell command:
 
@@ -855,14 +789,11 @@ astra streaming create my-streaming-tenant
 ----
 +
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 https://api.astra.datastax.com/v2/streaming/tenants/my-streaming-tenant
 [OK]    Tenant 'my-streaming-tenant' has being created.
 ----
-====
 
 . In two separate terminals, run the following command to start the {pulsar-short} shell in each terminal:
 +
@@ -872,8 +803,6 @@ astra streaming pulsar-shell my-streaming-tenant
 ----
 +
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 [INFO]  Pulsar-shell is starting please wait for connection establishment...
@@ -885,7 +814,6 @@ Welcome to Pulsar shell!
 Type help to get started or try the autocompletion (TAB button).
 Type exit or quit to end the shell session.
 ----
-====
 
 . In the first terminal, create a topic named `demo` in the `default` namespace:
 +
@@ -903,13 +831,10 @@ admin topics list my-streaming-tenant/default
 ----
 +
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 persistent://my-streaming-tenant/default/demo
 ----
-====
 // TODO: Confirm the output of the command.
 
 . Start a consumer on the `demo` topic:
@@ -920,8 +845,6 @@ client consume persistent://my-streaming-tenant/default/demo -s astra_cli_tuto -
 ----
 +
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 .. init ...
@@ -930,7 +853,6 @@ client consume persistent://my-streaming-tenant/default/demo -s astra_cli_tuto -
 2022-09-12T12:28:35,460+0200 [pulsar-client-io-1-1] INFO  org.apache.pulsar.client.impl.ConsumerImpl - [persistent://my-streaming-tenant/default/demo/default/demo][astra_cli_tuto] Subscribing to topic on cnx [id: 0xc5ce3ec4, L:/192.168.82.1:53683 - R:pulsar-aws-useast2.streaming.datastax.com/3.16.119.226:6651], consumerId 0
 2022-09-12T12:28:35,645+0200 [pulsar-client-io-1-1] INFO  org.apache.pulsar.client.impl.ConsumerImpl - [persistent://my-streaming-tenant/default/demo/default/demo][astra_cli_tuto] Subscribed to topic on pulsar-aws-useast2.streaming.datastax.com/3.16.119.226:6651 -- consumer: 0
 ----
-====
 // TODO: Confirm the output of the command.
 
 . In the second terminal, start a producer.
@@ -941,8 +863,6 @@ client produce persistent://my-streaming-tenant/default/demo/default/demo -m "he
 ----
 +
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 2022-09-12T12:36:28,684+0200 [pulsar-client-io-14-1] INFO  org.apache.pulsar.client.impl.ClientCnx - [id: 0x682890b5, L:/192.168.1.106:53796 ! R:pulsar-aws-useast2.streaming.datastax.com/3.138.177.230:6651] Disconnected
@@ -954,7 +874,6 @@ key:[null], properties:[], content:world
 ----- got message -----
 key:[null], properties:[], content:hello
 ----
-====
 // TODO: Confirm the output of the command.
 
 == Change Data Capture (CDC)
@@ -971,8 +890,6 @@ astra streaming list-cdc **TENANT_NAME**
 ----
 
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 +--------------------+----------------+----------------+-------------------+----------------+----------------+
@@ -981,13 +898,10 @@ astra streaming list-cdc **TENANT_NAME**
 | pulsar-aws-useast1 | astracdc       | cdc_demo_db    | cdc_demo_keyspace | cdc_demo_table | running        |
 +--------------------+----------------+----------------+-------------------+----------------+----------------+
 ----
-====
 
 === `streaming list-cdc` options
 
-.Expand to see all `streaming list-cdc` options
-[%collapsible]
-====
+.All streaming list-cdc options
 [source,console]
 ----
 NAME
@@ -1029,7 +943,6 @@ OPTIONS
         <TENANT>
             Tenant identifier
 ----
-====
 
 == Create environment variables
 
@@ -1049,10 +962,7 @@ By default, the {product} saves the `.env` file to the directory where you run t
 
 If a `.env` file already exists in the directory, the {product} appends the new environment variables to the existing file.
 
-.Result
-[%collapsible%open]
-====
-..env
+.Result (.env)
 [source,console]
 ----
 ASTRA_STREAMING_BROKER_URL="pulsar+ssl://pulsar-aws-useast2.streaming.datastax.com:6651"
@@ -1063,7 +973,6 @@ ASTRA_STREAMING_REGION="useast2"
 ASTRA_STREAMING_WEBSERVICE_URL="https://pulsar-aws-useast2.api.streaming.datastax.com"
 ASTRA_STREAMING_WEBSOCKET_URL="wss://pulsar-aws-useast2.streaming.datastax.com:8001/ws/v2"
 ----
-====
 
 [WARNING]
 ====
@@ -1077,9 +986,7 @@ The {scb} contains sensitive information that establishes a connection to your d
 The directory must already exist before you run the `streaming create-dotenv` command.
 If the directory doesn't exist, the command fails with the error `INVALID_ARGUMENT: Destination folder has not been found`.
 
-.Expand to see all `streaming create-dotenv` options
-[%collapsible]
-====
+.All streaming create-dotenv options
 [source,console]
 ----
 NAME
@@ -1126,7 +1033,6 @@ OPTIONS
         <TENANT>
             Tenant identifier
 ----
-====
 
 Use the `-d`/`--directory` option to save the `.env` file to a specified directory:
 
@@ -1136,10 +1042,7 @@ astra streaming create-dotenv **TENANT_NAME** -d ~/tmp
 ----
 
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 [OK]    File '/Users/USERNAME/tmp/.env' has been created/amended
 ----
-====

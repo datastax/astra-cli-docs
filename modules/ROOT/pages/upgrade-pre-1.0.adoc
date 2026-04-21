@@ -7,43 +7,33 @@
 
 If you have an earlier version installed, you must delete the `astra` executable before you can install the latest version:
 
-[tabs,sync-group-id=platforms]
-======
 macOS and Linux::
+Delete the `astra` executable:
 +
---
 [source,shell]
 ----
 rm ~/.astra/cli/astra
 ----
-
-.Delete custom installation
-[%collapsible]
-====
++
 If you installed the {product} to a custom location, you can use the following command to delete the `astra` executable if it exists in your PATH:
-
++
 [source,shell]
 ----
 rm $(which astra)
 ----
-====
-
-This command does not delete your xref:ROOT:manage-cli.adoc#file-locations[{product} home folder and configuration file] (`.astra` and `.astrarc`).
++
+The `rm` command does not delete your xref:ROOT:manage-cli.adoc#file-locations[{product} home folder and configuration file] (`.astra` and `.astrarc`).
 Leave these files in place so that the new version of the {product} can continue to connect using your existing configuration.
---
 
 Homebrew::
 +
---
 [source,shell]
 ----
 brew uninstall datastax/astra-cli/astra-cli
 ----
-
++
 Uninstalling with Homebrew does not delete your xref:ROOT:manage-cli.adoc#file-locations[{product} home folder and configuration file] (`.astra` and `.astrarc`).
 Leave these files in place so that the new version of the {product} can continue to connect using your existing configuration.
---
-======
 
 After you delete the old `astra` executable, follow the instructions in xref:ROOT:install.adoc[] to install the latest version.
 

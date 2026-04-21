@@ -15,13 +15,10 @@ astra db create cdc_demo_db -r us-east1 -k cdc_demo_keyspace
 ----
 
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 Database 'cdc_demo_db' has been created with id 'ce5e563c-3248-4064-b03c-5892433a1347'. It is now active after waiting 422 seconds.
 ----
-====
 
 == Create a streaming tenant
 
@@ -33,14 +30,11 @@ astra streaming create cdc-demo-tenant -c gcp -r useast1
 ----
 
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 https://api.astra.datastax.com/v2/streaming/tenants/cdc-demo-tenant
 [OK]    Tenant 'cdc-demo-tenant' has being created.
 ----
-====
 
 == Create a table in your database
 
@@ -56,13 +50,10 @@ astra db cqlsh exec cdc_demo_db \
 ----
 
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 [INFO]  Cqlsh is starting, please wait for connection establishment...
 ----
-====
 
 Confirm table creation:
 +
@@ -73,8 +64,6 @@ astra db cqlsh exec cdc_demo_db \
 ----
 
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 [INFO]  Cqlsh is starting, please wait for connection establishment...
@@ -84,7 +73,6 @@ astra db cqlsh exec cdc_demo_db \
 
 (0 rows)
 ----
-====
 
 == Create a CDC connection
 
@@ -101,13 +89,10 @@ astra db create-cdc cdc_demo_db \
 ////
 // TODO: The command is not working as expected. Must investigate and figure out why it is reporting the following error: [ERROR] INVALID_ARGUMENT: Error Code=422(422) Invalid information provided to create DB: 422 Unprocessable Entity: databaseId, keyspace, tableName, and orgId are mandatory fields
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 
 ----
-====
 ////
 
 Use `xref:commands:astra-db-list-cdcs.adoc[]` to confirm CDC details for the database and tenant:
@@ -118,8 +103,6 @@ astra db list-cdcs cdc_demo_db
 ----
 
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 +-----------------------+-------------------+----------------+----------------+--------------------+----------------+----------------+
@@ -128,7 +111,6 @@ astra db list-cdcs cdc_demo_db
 | 57a3024f-cdcdemotable | cdc_demo_keyspace | cdc_demo_table | cdc-demo-tenant| pulsar-aws-useast1 | astracdc       | Running        |
 +-----------------------+-------------------+----------------+----------------+--------------------+----------------+----------------+
 ----
-====
 
 [source,shell]
 ----
@@ -136,8 +118,6 @@ astra streaming list-cdc cdc-demo-tenant
 ----
 
 .Result
-[%collapsible]
-====
 [source,console]
 ----
 +--------------------+----------------+----------------+-------------------+----------------+----------------+
@@ -146,7 +126,6 @@ astra streaming list-cdc cdc-demo-tenant
 | pulsar-aws-useast1 | astracdc       | cdc_demo_db    | cdc_demo_keyspace | cdc_demo_table | running        |
 +--------------------+----------------+----------------+-------------------+----------------+----------------+
 ----
-====
 
 == Connect a sink
 
