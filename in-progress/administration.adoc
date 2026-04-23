@@ -116,7 +116,7 @@ astra user invite **USER_EMAIL**
 
 [IMPORTANT]
 ====
-If you don't specify a role when inviting a user, the user is automatically assigned the default role of {database-administrator-role}.
+If you don't specify a role when inviting a user, the user is automatically assigned the {database-administrator-role} role.
 ====
 
 === `user invite` options
@@ -391,7 +391,7 @@ OPTIONS
 [#list-roles]
 == List roles
 
-Use the `astra role list` command to list all xref:astra-db-serverless:administration:manage-database-access.adoc#default-roles[default roles] and xref:astra-db-serverless:administration:manage-database-access.adoc#custom-roles[custom roles] in your {product-short} organization:
+Use the `astra role list` command to list all xref:astra-db-serverless:administration:rbac.adoc[built-in and custom roles] in your {product-short} organization:
 
 [source,bash]
 ----
