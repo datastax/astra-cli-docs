@@ -50,7 +50,7 @@ include::common:ROOT:partial$database-name-rules.adoc[]
 
 | `region`
 | `String` (OPTIONAL)
-a| A valid xref:databases:regions.adoc[cloud provider region], depending on your xref:administration:subscription-plans.adoc[subscription plan] and the database type.
+a| A valid xref:databases:regions.adoc[cloud provider region], depending on your xref:administration:subscription-plans.adoc[plan] and the database type.
 
 include::astra-db-serverless:databases:partial$get-regions-endpoint.adoc[]
 
