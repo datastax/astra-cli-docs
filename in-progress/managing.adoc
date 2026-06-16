@@ -3771,7 +3771,7 @@ After you enable CDC on your {db-serverless} database, you can xref:astra-db-ser
 
 == Download the {scb-brief}
 
-The xref:astra-db-serverless:drivers:secure-connect-bundle.adoc[] is a zip file containing security credentials and certificates required for secure mutual TLS (mTLS) connection to your database.
+The xref:astra-db-serverless:databases:secure-connect-bundle.adoc[] is a zip file containing security credentials and certificates required for secure mutual TLS (mTLS) connection to your database.
 
 Use the `astra db download-scb` command to download the {scb} for a database:
 
