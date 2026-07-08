@@ -10,7 +10,7 @@ astra db dsbulk unload [-qV] [--header] [--no-input] [--[no-]spinner] [--color
                        [-o=FORMAT] [-query=QUERY] [-r=REGION]
                        [--skip-records=COUNT] [-t=TABLE] [--url=URL]
                        [-F=FLAGS]... [[[-cf=PATH] [-p=NAME]] | [--token=TOKEN
-                       [--env=ENV]]] [DB]
+                       [--env=ENV]]] [DB] [ARGS...]
 
 ----
 
@@ -24,6 +24,7 @@ Unload data leveraging DSBulk
 == Options
 
 `DB`:: The name or ID of the Astra database to operate on
+`ARGS`:: Verbatim arguments to pass to dsbulk directly (anything after '--' is passed through)
 `-k`, `--keyspace`:: Keyspace used for loading or unloading data
 `-t`, `--table`:: Table used for loading or unloading data.
 `--encoding`:: The file name format to use when writing. This setting is ignored when reading and for non-file URLs
@@ -58,7 +59,7 @@ Unload data leveraging DSBulk
 `-cf`, `--config-file`:: The ``.astrarc`` file to use for this command
 `-p`, `--profile`:: The ``.astrarc`` profile to use for this command. Can be set via ``ASTRA_PROFILE``.
 `--token`:: The astra token to use for this command. Use the ``--token @file`` syntax to read the token from a file, to avoid potential leaks.
-`--env`:: Override the target astra environment
+`--env`:: Astra environment the token belongs to: prod (default), dev, or test. Leave unset unless you were issued a non-prod token.
 ====
 
 

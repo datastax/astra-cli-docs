@@ -1,32 +1,30 @@
-= astra token
+= astra dotenv write
 
 [source,shell]
 ----
-astra token [-cqV] [--no-input] [--[no-]spinner] [--validate] [--color[=WHEN]]
-            [--dump-logs[=FILE]] [-o=FORMAT] [[[-cf=PATH] [-p=NAME]] |
-            [--token=TOKEN [--env=ENV]]] [COMMAND]
+astra dotenv write [-qV] [--no-input] [--[no-]overwrite] [--[no-]spinner]
+                   [--color[=WHEN]] [--dump-logs[=FILE]] [--db=DB] [-f=FILE]
+                   [--keyspace=KEYSPACE] [-o=FORMAT] [--region=REGION]
+                   [-k=<EnvKey=String>[,<EnvKey=String>...]]... [[[-cf=PATH]
+                   [-p=NAME]] | [--token=TOKEN [--env=ENV]]]
 
 ----
 
 
-Manage your Astra tokens
+Fill bound keys and write to a .env file.
 
 
-**Alias of `astra token get`**
 
-
-== Subcommands
-
-* xref:astra-token-list.adoc[astra token list]
-* xref:astra-token-get.adoc[astra token get]
-* xref:astra-token-create.adoc[astra token create]
-* xref:astra-token-delete.adoc[astra token delete]
 
 
 == Options
 
-`-c`, `--copy`:: Copy the token to clipboard instead of printing it
-`--validate`:: Validates the token before returning it
+`-f`, `--file`:: The target .env file to update.
+`-k`, `--keys`:: Comma-separated EnvKey names to filter the resolved binding set.
+`--overwrite`:: Always overwrite non-empty values.
+`--db`:: Database to bind to.
+`--keyspace`:: The keyspace to use.
+`--region`:: The region to use.
 
 .Common Options
 [%collapsible]
@@ -53,14 +51,7 @@ Manage your Astra tokens
 == Examples
 [source,bash]
 ----
-# Show your current token
-$ astra token
 
-# Copy your current token
-$ astra token -c
-
-# Show a token from a different profile
-$ astra token -p <profile>
 ----
 
 

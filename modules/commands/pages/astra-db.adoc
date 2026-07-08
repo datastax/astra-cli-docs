@@ -23,6 +23,7 @@ Manage your Astra databases
 * xref:astra-db-delete.adoc[astra db delete]
 * xref:astra-db-status.adoc[astra db status]
 * xref:astra-db-cqlsh.adoc[astra db cqlsh]
+* xref:astra-db-data-api.adoc[astra db data-api]
 * xref:astra-db-dsbulk.adoc[astra db dsbulk]
 * xref:astra-db-create-dotenv.adoc[astra db create-dotenv]
 * xref:astra-db-download-scb.adoc[astra db download-scb]
@@ -79,7 +80,7 @@ Manage your Astra databases
 `-cf`, `--config-file`:: The ``.astrarc`` file to use for this command
 `-p`, `--profile`:: The ``.astrarc`` profile to use for this command. Can be set via ``ASTRA_PROFILE``.
 `--token`:: The astra token to use for this command. Use the ``--token @file`` syntax to read the token from a file, to avoid potential leaks.
-`--env`:: Override the target astra environment
+`--env`:: Astra environment the token belongs to: prod (default), dev, or test. Leave unset unless you were issued a non-prod token.
 ====
 
 

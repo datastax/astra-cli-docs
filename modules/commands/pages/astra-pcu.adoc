@@ -28,7 +28,9 @@ Manage your PCU groups and associations
 * xref:astra-pcu-associate.adoc[astra pcu associate]
 * xref:astra-pcu-disassociate.adoc[astra pcu disassociate]
 * xref:astra-pcu-list-associations.adoc[astra pcu list-associations]
+* xref:astra-pcu-find-association.adoc[astra pcu find-association]
 * xref:astra-pcu-transfer-association.adoc[astra pcu transfer-association]
+* xref:astra-pcu-list-types.adoc[astra pcu list-types]
 
 
 == Options
@@ -52,7 +54,7 @@ Manage your PCU groups and associations
 `-cf`, `--config-file`:: The ``.astrarc`` file to use for this command
 `-p`, `--profile`:: The ``.astrarc`` profile to use for this command. Can be set via ``ASTRA_PROFILE``.
 `--token`:: The astra token to use for this command. Use the ``--token @file`` syntax to read the token from a file, to avoid potential leaks.
-`--env`:: Override the target astra environment
+`--env`:: Astra environment the token belongs to: prod (default), dev, or test. Leave unset unless you were issued a non-prod token.
 ====
 
 

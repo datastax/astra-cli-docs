@@ -7,7 +7,8 @@ astra db cqlsh exec [-qV] [--debug] [--no-input] [--[no-]spinner] [--color
                     [--connect-timeout=TIMEOUT] [--encoding=ENCODING]
                     [-k=KEYSPACE] [-o=FORMAT] [-r=REGION]
                     [--request-timeout=TIMEOUT] [[[-cf=PATH] [-p=NAME]] |
-                    [--token=TOKEN [--env=ENV]]] [-e[=STATEMENT] | -f=FILE] [DB]
+                    [--token=TOKEN [--env=ENV]]] [-e[=STATEMENT] | -f=FILE]
+                    [DB] [ARGS...]
 
 ----
 
@@ -20,7 +21,8 @@ Execute CQL statements for your db using cqlsh
 
 == Options
 
-`DB`:: The name/ID of the Astra database to connect to
+`DB`:: The name/ID/endpoint of the Astra database to connect to
+`ARGS`:: Verbatim arguments to pass to cqlsh directly (anything after '--' is passed through)
 `--debug`:: Show additional debugging information
 `--encoding`:: Output encoding (default: utf8)
 `--connect-timeout`:: Connection timeout in seconds
@@ -49,7 +51,7 @@ Execute CQL statements for your db using cqlsh
 `-cf`, `--config-file`:: The ``.astrarc`` file to use for this command
 `-p`, `--profile`:: The ``.astrarc`` profile to use for this command. Can be set via ``ASTRA_PROFILE``.
 `--token`:: The astra token to use for this command. Use the ``--token @file`` syntax to read the token from a file, to avoid potential leaks.
-`--env`:: Override the target astra environment
+`--env`:: Astra environment the token belongs to: prod (default), dev, or test. Leave unset unless you were issued a non-prod token.
 ====
 
 

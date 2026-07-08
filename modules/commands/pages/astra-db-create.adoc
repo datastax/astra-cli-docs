@@ -5,9 +5,9 @@
 astra db create [-qV] [--[no-]async] [--no-input] [--non-vector] [--[no-]
                 spinner] [--color[=WHEN]] [--dump-logs[=FILE]] [-c=CLOUD]
                 [--capacity-units=CAPACITY UNITS] [-k=KEYSPACE] [-o=FORMAT]
-                [-r=REGION] [--tier=TIER] [--timeout=<timeout>] [[[-cf=PATH]
-                [-p=NAME]] | [--token=TOKEN [--env=ENV]]] [--if-not-exists |
-                --allow-duplicate-names] DB
+                [-pg=PCU_GROUP] [-r=REGION] [--tier=TIER] [--timeout=<timeout>]
+                [[[-cf=PATH] [-p=NAME]] | [--token=TOKEN [--env=ENV]]]
+                [--if-not-exists | --allow-duplicate-names] DB
 
 ----
 
@@ -31,6 +31,7 @@ Create a new Astra database
 `--tier`:: Tier to create the database in
 `--capacity-units`:: Capacity units to create the database with
 `--non-vector`:: Create a classic non-vector database
+`-pg`, `--pcu-group`:: The PCU group to associate the database to.
 
 .Common Options
 [%collapsible]
@@ -50,7 +51,7 @@ Create a new Astra database
 `-cf`, `--config-file`:: The ``.astrarc`` file to use for this command
 `-p`, `--profile`:: The ``.astrarc`` profile to use for this command. Can be set via ``ASTRA_PROFILE``.
 `--token`:: The astra token to use for this command. Use the ``--token @file`` syntax to read the token from a file, to avoid potential leaks.
-`--env`:: Override the target astra environment
+`--env`:: Astra environment the token belongs to: prod (default), dev, or test. Leave unset unless you were issued a non-prod token.
 ====
 
 
@@ -73,7 +74,7 @@ $ astra db create my_db --async
 $ astra db create my_db --region us-east1 --if-not-exists
 
 # List available vector database regions for creating a database
-$ astra db list-regions-vector
+$ astra db regions vector
 ----
 
 

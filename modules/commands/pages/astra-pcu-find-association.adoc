@@ -1,32 +1,23 @@
-= astra token
+= astra pcu find-association
 
 [source,shell]
 ----
-astra token [-cqV] [--no-input] [--[no-]spinner] [--validate] [--color[=WHEN]]
-            [--dump-logs[=FILE]] [-o=FORMAT] [[[-cf=PATH] [-p=NAME]] |
-            [--token=TOKEN [--env=ENV]]] [COMMAND]
+astra pcu find-association [-qV] [--no-input] [--[no-]spinner] [--color[=WHEN]]
+                           [--dump-logs[=FILE]] [-o=FORMAT] [[[-cf=PATH]
+                           [-p=NAME]] | [--token=TOKEN [--env=ENV]]] TARGET
 
 ----
 
 
-Manage your Astra tokens
+Find the PCU group associated with a datacenter
 
 
-**Alias of `astra token get`**
 
-
-== Subcommands
-
-* xref:astra-token-list.adoc[astra token list]
-* xref:astra-token-get.adoc[astra token get]
-* xref:astra-token-create.adoc[astra token create]
-* xref:astra-token-delete.adoc[astra token delete]
 
 
 == Options
 
-`-c`, `--copy`:: Copy the token to clipboard instead of printing it
-`--validate`:: Validates the token before returning it
+`TARGET`:: PCU association target (database name/id/endpoint or datacenter id)
 
 .Common Options
 [%collapsible]
@@ -53,14 +44,11 @@ Manage your Astra tokens
 == Examples
 [source,bash]
 ----
-# Show your current token
-$ astra token
+# Find the PCU group associated with a datacenter
+$ astra pcu find-association ee6991af-7783-4de9-8da0-c7fa250c89e2-1
 
-# Copy your current token
-$ astra token -c
-
-# Show a token from a different profile
-$ astra token -p <profile>
+# Find the PCU group associated with a database
+$ astra pcu find-association my_database
 ----
 
 

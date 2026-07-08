@@ -1,0 +1,77 @@
+= astra db data-api repl
+
+[source,shell]
+----
+astra db data-api repl [-qV] [--no-input] [--[no-]spinner] [--color[=WHEN]]
+                       [--dump-logs[=FILE]] [-c[=COLLECTION[,
+                       COLLECTION...]]]... [-t[=TABLE[,TABLE...]]]... [-e=CODE]
+                       [-k=KEYSPACE] [-o=FORMAT] [-r=REGION] [-a=PACKAGES[,
+                       PACKAGES...]]... [[[-cf=PATH] [-p=NAME]] |
+                       [--token=TOKEN [--env=ENV]]] [--node | --python |
+                       --ipython] [DB] [ARGS...]
+
+----
+
+
+Start an interactive Data API REPL session against a database
+
+
+
+
+
+== Options
+
+`DB`:: The name or ID of the Astra database to operate on
+`ARGS`:: Verbatim arguments to pass to the underlying node/python directly (anything after '--' is passed through)
+`-k`, `--keyspace`:: The keyspace to use
+`-a`, `--artifacts`:: Additional packages to include (e.g., pandas, lodash)
+`-r`, `--region`:: The region to use
+`-c`, `--collection`:: The collections to use
+`-t`, `--table`:: The tables to use
+`-e`, `--extra`:: Code to execute after starting the REPL (e.g., to import modules or set up the environment)
+`--node`:: Use astra-db-ts with Node.js (default)
+`--python`:: Use astrapy with Python
+`--ipython`:: Use astrapy with IPython
+
+.Common Options
+[%collapsible]
+====
+`-o`, `--output`:: One of: human, json, csv
+`-V`, `--verbose`:: Enable verbose logging output
+`-q`, `--quiet`:: Only output essential information
+`--spinner`:: Enable/disable loading spinners
+`--no-input`:: Don't ask for user input (e.g. confirmation prompts)
+`--color`:: One of: auto, never, always
+`--dump-logs`:: Write all logs to an optionally specified file
+====
+
+.Connection Options
+[%collapsible]
+====
+`-cf`, `--config-file`:: The ``.astrarc`` file to use for this command
+`-p`, `--profile`:: The ``.astrarc`` profile to use for this command. Can be set via ``ASTRA_PROFILE``.
+`--token`:: The astra token to use for this command. Use the ``--token @file`` syntax to read the token from a file, to avoid potential leaks.
+`--env`:: Astra environment the token belongs to: prod (default), dev, or test. Leave unset unless you were issued a non-prod token.
+====
+
+
+== Examples
+[source,bash]
+----
+# Start a REPL session using astra-db-ts
+$ astra db data-api repl my_db
+
+# Start a REPL session using astrapy
+$ astra db data-api repl my_db -l python
+
+# Start a REPL session with multiple collections available
+$ astra db data-api repl my_db -c coll1 -c coll2
+
+# Start a REPL session, prompting for the collections/tables to include
+$ astra db data-api repl my_db -c -t
+
+# Start a Data API REPL for a database and execute some initialization code
+$ astra db data-api repl my_db -e "console.log('hello');"
+----
+
+
