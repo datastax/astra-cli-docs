@@ -2,13 +2,17 @@
 
 [source,shell]
 ----
-astra db endpoints [COMMAND]
+astra db endpoints [-qV] [--no-input] [--[no-]spinner] [--color[=WHEN]]
+                   [--dump-logs[=FILE]] [-o=FORMAT] [-r=REGION] [[[-cf=PATH]
+                   [-p=NAME]] | [--token=TOKEN [--env=ENV]]] [DB] [COMMAND]
 
 ----
 
 
-Get various endpoints for your database
+Get the various endpoints for your database
 
+
+**Alias of `astra db endpoints list`**
 
 
 == Subcommands
@@ -22,12 +26,39 @@ Get various endpoints for your database
 
 == Options
 
+`DB`:: The name or ID of the Astra database to operate on
+`-r`, `--region`:: The region to use
+
+.Common Options
+[%collapsible]
+====
+`-o`, `--output`:: One of: human, json, csv
+`-V`, `--verbose`:: Enable verbose logging output
+`-q`, `--quiet`:: Only output essential information
+`--spinner`:: Enable/disable loading spinners
+`--no-input`:: Don't ask for user input (e.g. confirmation prompts)
+`--color`:: One of: auto, never, always
+`--dump-logs`:: Write all logs to an optionally specified file
+====
+
+.Connection Options
+[%collapsible]
+====
+`-cf`, `--config-file`:: The ``.astrarc`` file to use for this command
+`-p`, `--profile`:: The ``.astrarc`` profile to use for this command. Can be set via ``ASTRA_PROFILE``.
+`--token`:: The astra token to use for this command. Use the ``--token @file`` syntax to read the token from a file, to avoid potential leaks.
+`--env`:: Astra environment the token belongs to: prod (default), dev, or test. Leave unset unless you were issued a non-prod token.
+====
 
 
 == Examples
 [source,bash]
 ----
+# List the various endpoints for the specified database
+$ astra db endpoints my_db
 
+# Get a specific endpoint for the specified database
+$ astra db endpoints data-api-client my_db
 ----
 
 

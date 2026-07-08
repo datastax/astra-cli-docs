@@ -48,7 +48,7 @@ Create a env file to help you connect to your Astra DB instance.
 `-cf`, `--config-file`:: The ``.astrarc`` file to use for this command
 `-p`, `--profile`:: The ``.astrarc`` profile to use for this command. Can be set via ``ASTRA_PROFILE``.
 `--token`:: The astra token to use for this command. Use the ``--token @file`` syntax to read the token from a file, to avoid potential leaks.
-`--env`:: Override the target astra environment
+`--env`:: Astra environment the token belongs to: prod (default), dev, or test. Leave unset unless you were issued a non-prod token.
 ====
 
 
@@ -59,7 +59,7 @@ Create a env file to help you connect to your Astra DB instance.
 $ astra db create-dotenv
 
 # Create a .env file specifying the keys to include
-$ astra db create-dotenv --keys ASTRA_DB_APPLICATION_TOKEN,ASTRA_DB_API_ENDPOINT
+$ astra db create-dotenv --keys ASTRA_DB_TOKEN,ASTRA_DB_API_ENDPOINT
 
 # Create a .env file with a preset specifying the keys to include
 $ astra db create-dotenv --preset data_api_client

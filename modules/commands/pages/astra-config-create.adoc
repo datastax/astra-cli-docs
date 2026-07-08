@@ -22,7 +22,7 @@ Use the ``--token @<file>`` syntax to securely read the token from a file, witho
 `NAME`:: Unique name for the profile
 `-cf`, `--config-file`:: The .astrarc file to work with. See ``astra config path -h`` for how this is resolved.
 `-t`, `--token`:: Astra token (``AstraCS:...``) or ``@<file>`` to read from file
-`-e`, `--env`:: Astra environment the token targets
+`-e`, `--env`:: Astra environment the token belongs to: prod (default), dev, or test. Leave unset unless you were issued a non-prod token.
 `-d`, `--default`:: Set the created profile as the default profile. Same as 'config use <profile>'
 `--overwrite`:: Overwrite any existing profile with the same name
 

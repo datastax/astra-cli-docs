@@ -46,7 +46,7 @@ Manage your Astra tokens
 `-cf`, `--config-file`:: The ``.astrarc`` file to use for this command
 `-p`, `--profile`:: The ``.astrarc`` profile to use for this command. Can be set via ``ASTRA_PROFILE``.
 `--token`:: The astra token to use for this command. Use the ``--token @file`` syntax to read the token from a file, to avoid potential leaks.
-`--env`:: Override the target astra environment
+`--env`:: Astra environment the token belongs to: prod (default), dev, or test. Leave unset unless you were issued a non-prod token.
 ====
 
 
@@ -55,6 +55,12 @@ Manage your Astra tokens
 ----
 # Show your current token
 $ astra token
+
+# Copy your current token
+$ astra token -c
+
+# Show a token from a different profile
+$ astra token -p <profile>
 ----
 
 

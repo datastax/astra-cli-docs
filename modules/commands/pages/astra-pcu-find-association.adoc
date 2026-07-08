@@ -1,0 +1,54 @@
+= astra pcu find-association
+
+[source,shell]
+----
+astra pcu find-association [-qV] [--no-input] [--[no-]spinner] [--color[=WHEN]]
+                           [--dump-logs[=FILE]] [-o=FORMAT] [[[-cf=PATH]
+                           [-p=NAME]] | [--token=TOKEN [--env=ENV]]] TARGET
+
+----
+
+
+Find the PCU group associated with a datacenter
+
+
+
+
+
+== Options
+
+`TARGET`:: PCU association target (database name/id/endpoint or datacenter id)
+
+.Common Options
+[%collapsible]
+====
+`-o`, `--output`:: One of: human, json, csv
+`-V`, `--verbose`:: Enable verbose logging output
+`-q`, `--quiet`:: Only output essential information
+`--spinner`:: Enable/disable loading spinners
+`--no-input`:: Don't ask for user input (e.g. confirmation prompts)
+`--color`:: One of: auto, never, always
+`--dump-logs`:: Write all logs to an optionally specified file
+====
+
+.Connection Options
+[%collapsible]
+====
+`-cf`, `--config-file`:: The ``.astrarc`` file to use for this command
+`-p`, `--profile`:: The ``.astrarc`` profile to use for this command. Can be set via ``ASTRA_PROFILE``.
+`--token`:: The astra token to use for this command. Use the ``--token @file`` syntax to read the token from a file, to avoid potential leaks.
+`--env`:: Astra environment the token belongs to: prod (default), dev, or test. Leave unset unless you were issued a non-prod token.
+====
+
+
+== Examples
+[source,bash]
+----
+# Find the PCU group associated with a datacenter
+$ astra pcu find-association ee6991af-7783-4de9-8da0-c7fa250c89e2-1
+
+# Find the PCU group associated with a database
+$ astra pcu find-association my_database
+----
+
+

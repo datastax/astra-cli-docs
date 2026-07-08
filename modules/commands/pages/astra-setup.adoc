@@ -19,7 +19,7 @@ See ``astra config create`` for a programmatic way to create profiles without in
 == Options
 
 `-t`, `--token`:: Token to use authenticate each call. If not provided, you will be prompted for it
-`-e`, `--env`:: Astra environment for the token to target. If not provided, you will be prompted for it
+`-e`, `--env`:: Astra environment the token belongs to: prod (default), dev, or test. Leave unset unless you were issued a non-prod token.
 `--name`:: Optional name for the profile. If not provided, you will be prompted for it
 
 .Common Options

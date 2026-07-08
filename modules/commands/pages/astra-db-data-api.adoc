@@ -1,0 +1,30 @@
+= astra db data-api
+
+[source,shell]
+----
+astra db data-api [COMMAND]
+
+----
+
+
+Easily work with the Data API __(beta)__
+
+
+
+== Subcommands
+
+* xref:astra-db-data-api-repl.adoc[astra db data-api repl]
+* xref:astra-db-data-api-exec.adoc[astra db data-api exec]
+
+
+== Options
+
+
+
+== Examples
+[source,bash]
+----
+
+----
+
+

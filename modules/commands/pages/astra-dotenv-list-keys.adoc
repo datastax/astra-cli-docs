@@ -1,0 +1,39 @@
+= astra dotenv list-keys
+
+[source,shell]
+----
+astra dotenv list-keys [-qV] [--no-input] [--[no-]spinner] [--color[=WHEN]]
+                       [--dump-logs[=FILE]] [-o=FORMAT]
+
+----
+
+
+List all available Astra keys (no values resolved).
+
+
+
+
+
+== Options
+
+
+.Common Options
+[%collapsible]
+====
+`-o`, `--output`:: One of: human, json, csv
+`-V`, `--verbose`:: Enable verbose logging output
+`-q`, `--quiet`:: Only output essential information
+`--spinner`:: Enable/disable loading spinners
+`--no-input`:: Don't ask for user input (e.g. confirmation prompts)
+`--color`:: One of: auto, never, always
+`--dump-logs`:: Write all logs to an optionally specified file
+====
+
+
+== Examples
+[source,bash]
+----
+
+----
+
+

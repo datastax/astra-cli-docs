@@ -1,0 +1,57 @@
+= astra dotenv write
+
+[source,shell]
+----
+astra dotenv write [-qV] [--no-input] [--[no-]overwrite] [--[no-]spinner]
+                   [--color[=WHEN]] [--dump-logs[=FILE]] [--db=DB] [-f=FILE]
+                   [--keyspace=KEYSPACE] [-o=FORMAT] [--region=REGION]
+                   [-k=<EnvKey=String>[,<EnvKey=String>...]]... [[[-cf=PATH]
+                   [-p=NAME]] | [--token=TOKEN [--env=ENV]]]
+
+----
+
+
+Fill bound keys and write to a .env file.
+
+
+
+
+
+== Options
+
+`-f`, `--file`:: The target .env file to update.
+`-k`, `--keys`:: Comma-separated EnvKey names to filter the resolved binding set.
+`--overwrite`:: Always overwrite non-empty values.
+`--db`:: Database to bind to.
+`--keyspace`:: The keyspace to use.
+`--region`:: The region to use.
+
+.Common Options
+[%collapsible]
+====
+`-o`, `--output`:: One of: human, json, csv
+`-V`, `--verbose`:: Enable verbose logging output
+`-q`, `--quiet`:: Only output essential information
+`--spinner`:: Enable/disable loading spinners
+`--no-input`:: Don't ask for user input (e.g. confirmation prompts)
+`--color`:: One of: auto, never, always
+`--dump-logs`:: Write all logs to an optionally specified file
+====
+
+.Connection Options
+[%collapsible]
+====
+`-cf`, `--config-file`:: The ``.astrarc`` file to use for this command
+`-p`, `--profile`:: The ``.astrarc`` profile to use for this command. Can be set via ``ASTRA_PROFILE``.
+`--token`:: The astra token to use for this command. Use the ``--token @file`` syntax to read the token from a file, to avoid potential leaks.
+`--env`:: Astra environment the token belongs to: prod (default), dev, or test. Leave unset unless you were issued a non-prod token.
+====
+
+
+== Examples
+[source,bash]
+----
+
+----
+
+

@@ -23,3 +23,40 @@ endif::[]
 This repository contains the https://docs.asciidoctor.org/asciidoc/latest/[AsciiDoc] source files for the {company} {product} documentation.
 
 To learn how to update the documentation, see the https://datastax.jira.com/wiki/spaces/DOCS/overview[Docs team Confluence site].
+
+== Regenerate the Astra CLI command reference
+
+The Astra CLI command reference documentation is generated from the literal CLI help text in the Astra CLI code.
+The command reference documentation should be regenerated and committed to the docs whenever a new version of the Astra CLI is released.
+
+. If you haven't done so yet, clone the Astra CLI code repository:
++
+[source,bash]
+----
+git clone https://github.com/datastax/astra-cli.git
+----
+
+. Change directory to the cloned repository:
++
+[source,bash]
+----
+cd astra-cli
+----
+
+. Pull the latest changes:
++
+[source,bash]
+----
+git switch main && git pull
+----
+
+. Run the following command to regenerate the command reference docs:
++
+[source,bash]
+----
+source scripts/dev-alias.sh; astra docs && \
+    rsync -a --delete build/docs/commands/ ~/repos/astra-cli-docs/modules/commands/pages/ && \
+    cp -f build/docs/partial-nav.adoc ~/repos/astra-cli-docs/modules/commands/partials/
+----
++
+Replace `repos` with the appropriate path to your cloned repositories.
