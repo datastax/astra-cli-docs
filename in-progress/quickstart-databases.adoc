@@ -21,9 +21,7 @@ Get a list of available regions for database creation.
 
 You can create {db-serverless-vector} and {db-serverless} databases.
 
-[NOTE]
-====
-If your organization requires that new databases belong to a xref:astra-db-serverless:administration:provisioned-capacity-units.adoc[PCU group], you cannot use the {product} to create databases because it doesn't support PCU group assignment with database creation.
+If your organization uses xref:astra-db-serverless:administration:provisioned-capacity-units.adoc[PCU groups], you assign the database to a PCU group when creating the database.
 ====
 
 Create a database:
