@@ -282,5 +282,5 @@ To complete the uninstallation, please use Homebrew to uninstall the Astra CLI b
 +
 [source,shell]
 ----
-brew uninstall datastax/astra-cli/astra
+brew uninstall astra
 ----
