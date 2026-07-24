@@ -117,7 +117,7 @@ The response includes available commands and options for the {product}.
 +
 [source,shell]
 ----
-brew install datastax/astra-cli/astra
+brew install astra
 ----
 
 . Run the `astra` command from any directory to verify successful installation:

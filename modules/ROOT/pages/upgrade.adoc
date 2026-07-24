@@ -47,7 +47,7 @@ The response returns your {product} version.
 +
 [source,shell]
 ----
-brew upgrade datastax/astra-cli/astra
+brew upgrade astra
 ----
 
 . Check the {product} version to verify that the upgrade was successful:
