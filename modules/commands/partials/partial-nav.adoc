@@ -47,6 +47,7 @@
 ** xref:commands:astra-db-delete-table.adoc[]
 ** xref:commands:astra-db-truncate-table.adoc[]
 ** xref:commands:astra-db-list-embedding-providers.adoc[]
+** xref:commands:astra-db-list-reranking-providers.adoc[]
 ** xref:commands:astra-db-list-cdcs.adoc[]
 ** xref:commands:astra-db-create-cdc.adoc[]
 ** xref:commands:astra-db-delete-cdc.adoc[]

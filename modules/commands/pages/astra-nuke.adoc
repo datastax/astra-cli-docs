@@ -3,7 +3,7 @@
 [source,shell]
 ----
 astra nuke [-qVy] [--dry-run] [--no-input] [--[no-]preserve-astrarc] [--[no-]
-           spinner] [--color[=WHEN]] [--dump-logs[=FILE]] [-o=FORMAT]
+           spinner] [--color[=WHEN]] [--dump-logs[=FILE]] [-h[=all]] [-o=FORMAT]
 
 ----
 
@@ -35,6 +35,7 @@ This will also detect any shell rc files which need ``astra``-related lines remo
 .Common Options
 [%collapsible]
 ====
+`-h`, `--help`:: Show this help message and exit.
 `-o`, `--output`:: One of: human, json, csv
 `-V`, `--verbose`:: Enable verbose logging output
 `-q`, `--quiet`:: Only output essential information

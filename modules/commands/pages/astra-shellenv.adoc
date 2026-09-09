@@ -2,9 +2,11 @@
 
 [source,shell]
 ----
-astra shellenv [--ignore-beta-warnings] [--ignore-multiple-paths]
-               [--no-update-notifier] [--default-args=<$defaultArgs>]
-               [--home=<$home>] [--rc=<$rc>]
+astra shellenv [-qV] [--ignore-beta-warnings] [--ignore-multiple-paths]
+               [--no-input] [--no-update-notifier] [--[no-]spinner] [--color
+               [=WHEN]] [--dump-logs[=FILE]] [-h[=all]]
+               [--default-args=<$defaultArgs>] [--home=<$home>] [-o=FORMAT]
+               [--rc=<$rc>]
 
 ----
 
@@ -33,6 +35,19 @@ Intended to be added to your shell profile (``.zprofile``, ``.bash_profile``, ``
 `--ignore-beta-warnings`:: Ignore warnings about commands being in beta. Sets ``ASTRA_IGNORE_BETA_WARNINGS=true`` under the hood.
 `--no-update-notifier`:: Disables background update checks notifications. Sets ``ASTRA_NO_UPDATE_NOTIFIER=true`` under the hood.
 `--default-args`:: Sets the default args used for every CLI command (e.g. --no-spinner or --no-color). Sets ``ASTRA_DEFAULT_ARGS`` under the hood.
+
+.Common Options
+[%collapsible]
+====
+`-h`, `--help`:: Show this help message and exit.
+`-o`, `--output`:: One of: human, json, csv
+`-V`, `--verbose`:: Enable verbose logging output
+`-q`, `--quiet`:: Only output essential information
+`--spinner`:: Enable/disable loading spinners
+`--no-input`:: Don't ask for user input (e.g. confirmation prompts)
+`--color`:: One of: auto, never, always
+`--dump-logs`:: Write all logs to an optionally specified file
+====
 
 
 == Examples

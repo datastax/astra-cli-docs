@@ -3,7 +3,7 @@
 [source,shell]
 ----
 astra config use [-qV] [--no-input] [--[no-]spinner] [--color[=WHEN]]
-                 [--dump-logs[=FILE]] [-cf=PATH] [-o=FORMAT] [NAME]
+                 [--dump-logs[=FILE]] [-h[=all]] [-cf=PATH] [-o=FORMAT] [NAME]
 
 ----
 
@@ -22,6 +22,7 @@ Sets an existing profile to be used as the default for all commands. Use the ``-
 .Common Options
 [%collapsible]
 ====
+`-h`, `--help`:: Show this help message and exit.
 `-o`, `--output`:: One of: human, json, csv
 `-V`, `--verbose`:: Enable verbose logging output
 `-q`, `--quiet`:: Only output essential information

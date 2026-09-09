@@ -3,7 +3,8 @@
 [source,shell]
 ----
 astra config delete [-qV] [--if-exists] [--no-input] [--[no-]spinner] [--color
-                    [=WHEN]] [--dump-logs[=FILE]] [-cf=PATH] [-o=FORMAT] [NAME]
+                    [=WHEN]] [--dump-logs[=FILE]] [-h[=all]] [-cf=PATH]
+                    [-o=FORMAT] [NAME]
 
 ----
 
@@ -23,6 +24,7 @@ Delete an existing configuration profile.
 .Common Options
 [%collapsible]
 ====
+`-h`, `--help`:: Show this help message and exit.
 `-o`, `--output`:: One of: human, json, csv
 `-V`, `--verbose`:: Enable verbose logging output
 `-q`, `--quiet`:: Only output essential information

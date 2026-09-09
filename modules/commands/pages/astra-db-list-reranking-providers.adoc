@@ -1,16 +1,16 @@
-= astra pcu find-association
+= astra db list-reranking-providers
 
 [source,shell]
 ----
-astra pcu find-association [-qV] [--no-input] [--[no-]spinner] [--color[=WHEN]]
-                           [--dump-logs[=FILE]] [-h[=all]] [-o=FORMAT]
-                           [[[-cf=PATH] [-p=NAME]] | [--token=TOKEN
-                           [--env=ENV]]] TARGET
+astra db list-reranking-providers [-qV] [--no-input] [--[no-]spinner] [--color
+                                  [=WHEN]] [--dump-logs[=FILE]] [-h[=all]]
+                                  [-o=FORMAT] [[[-cf=PATH] [-p=NAME]] |
+                                  [--token=TOKEN [--env=ENV]]] [DB]
 
 ----
 
 
-Find the PCU group associated with a datacenter
+Find all available reranking providers for a given database
 
 
 
@@ -18,7 +18,7 @@ Find the PCU group associated with a datacenter
 
 == Options
 
-`TARGET`:: PCU association target (database name/id/endpoint or datacenter id)
+`DB`:: The name or ID of the Astra database to operate on
 
 .Common Options
 [%collapsible]
@@ -46,11 +46,8 @@ Find the PCU group associated with a datacenter
 == Examples
 [source,bash]
 ----
-# Find the PCU group associated with a datacenter
-$ astra pcu find-association ee6991af-7783-4de9-8da0-c7fa250c89e2-1
-
-# Find the PCU group associated with a database
-$ astra pcu find-association my_database
+# Find all available reranking providers for a database
+$ astra db list-reranking-providers my_db
 ----
 
 

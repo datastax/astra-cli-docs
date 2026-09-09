@@ -2,7 +2,8 @@
 
 [source,shell]
 ----
-astra completions [-n=<$cliName>]
+astra completions [-qV] [--no-input] [--[no-]spinner] [--color[=WHEN]]
+                  [--dump-logs[=FILE]] [-h[=all]] [-n=<$cliName>] [-o=FORMAT]
 
 ----
 
@@ -19,6 +20,19 @@ See the help for the ``astra shellenv`` command to setup completions in your she
 == Options
 
 `-n`, `--cli-name`:: CLI name to use in the completion script
+
+.Common Options
+[%collapsible]
+====
+`-h`, `--help`:: Show this help message and exit.
+`-o`, `--output`:: One of: human, json, csv
+`-V`, `--verbose`:: Enable verbose logging output
+`-q`, `--quiet`:: Only output essential information
+`--spinner`:: Enable/disable loading spinners
+`--no-input`:: Don't ask for user input (e.g. confirmation prompts)
+`--color`:: One of: auto, never, always
+`--dump-logs`:: Write all logs to an optionally specified file
+====
 
 
 == Examples

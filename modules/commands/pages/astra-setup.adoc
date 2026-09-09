@@ -3,7 +3,7 @@
 [source,shell]
 ----
 astra setup [-qV] [--no-input] [--[no-]spinner] [--color[=WHEN]] [--dump-logs
-            [=FILE]] [-e=ENV] [--name=NAME] [-o=FORMAT] [-t=TOKEN]
+            [=FILE]] [-h[=all]] [-e=ENV] [--name=NAME] [-o=FORMAT] [-t=TOKEN]
 
 ----
 
@@ -19,12 +19,13 @@ See ``astra config create`` for a programmatic way to create profiles without in
 == Options
 
 `-t`, `--token`:: Token to use authenticate each call. If not provided, you will be prompted for it
-`-e`, `--env`:: Astra environment the token belongs to: prod (default), dev, or test. Leave unset unless you were issued a non-prod token.
+`-e`, `--env`:: Astra environment the token belongs to: prod (default), dev, test, or local. Leave unset unless you were issued a non-prod token.
 `--name`:: Optional name for the profile. If not provided, you will be prompted for it
 
 .Common Options
 [%collapsible]
 ====
+`-h`, `--help`:: Show this help message and exit.
 `-o`, `--output`:: One of: human, json, csv
 `-V`, `--verbose`:: Enable verbose logging output
 `-q`, `--quiet`:: Only output essential information

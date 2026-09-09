@@ -4,9 +4,9 @@
 ----
 astra pcu transfer-association [-qV] [--if-not-exists] [--no-input] [--[no-]
                                spinner] [--color[=WHEN]] [--dump-logs[=FILE]]
-                               [-o=FORMAT] -t=GROUP [[[-cf=PATH] [-p=NAME]] |
-                               [--token=TOKEN [--env=ENV]]] [-f=GROUP |
-                               --or-create] TARGET
+                               [-h[=all]] [-o=FORMAT] -t=GROUP [[[-cf=PATH]
+                               [-p=NAME]] | [--token=TOKEN [--env=ENV]]]
+                               [-f=GROUP | --or-create] TARGET
 
 ----
 
@@ -28,6 +28,7 @@ Transfer an association from one PCU group to another
 .Common Options
 [%collapsible]
 ====
+`-h`, `--help`:: Show this help message and exit.
 `-o`, `--output`:: One of: human, json, csv
 `-V`, `--verbose`:: Enable verbose logging output
 `-q`, `--quiet`:: Only output essential information
@@ -43,7 +44,7 @@ Transfer an association from one PCU group to another
 `-cf`, `--config-file`:: The ``.astrarc`` file to use for this command
 `-p`, `--profile`:: The ``.astrarc`` profile to use for this command. Can be set via ``ASTRA_PROFILE``.
 `--token`:: The astra token to use for this command. Use the ``--token @file`` syntax to read the token from a file, to avoid potential leaks.
-`--env`:: Astra environment the token belongs to: prod (default), dev, or test. Leave unset unless you were issued a non-prod token.
+`--env`:: Astra environment the token belongs to: prod (default), dev, test, or local. Leave unset unless you were issued a non-prod token.
 ====
 
 

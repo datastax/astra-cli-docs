@@ -2,7 +2,8 @@
 
 [source,shell]
 ----
-astra db dsbulk [COMMAND]
+astra db dsbulk [-qV] [--no-input] [--[no-]spinner] [--color[=WHEN]]
+                [--dump-logs[=FILE]] [-h[=all]] [-o=FORMAT] [COMMAND]
 
 ----
 
@@ -22,6 +23,19 @@ Use dsbulk to interface with your Astra DB database
 
 == Options
 
+
+.Common Options
+[%collapsible]
+====
+`-h`, `--help`:: Show this help message and exit.
+`-o`, `--output`:: One of: human, json, csv
+`-V`, `--verbose`:: Enable verbose logging output
+`-q`, `--quiet`:: Only output essential information
+`--spinner`:: Enable/disable loading spinners
+`--no-input`:: Don't ask for user input (e.g. confirmation prompts)
+`--color`:: One of: auto, never, always
+`--dump-logs`:: Write all logs to an optionally specified file
+====
 
 
 == Examples
