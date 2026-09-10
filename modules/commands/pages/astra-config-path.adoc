@@ -3,7 +3,7 @@
 [source,shell]
 ----
 astra config path [-qV] [--no-input] [--[no-]spinner] [--color[=WHEN]]
-                  [--dump-logs[=FILE]] [-o=FORMAT] [-p | -i]
+                  [--dump-logs[=FILE]] [-h[=all]] [-o=FORMAT] [-p | -i]
 
 ----
 
@@ -29,9 +29,8 @@ By default, shows informational output when running in a TTY (interactive termin
 `-p`, `--plain`:: Print only the path to the .astrarc file, without additional information (always)
 `-i`, `--info`:: Print informational output with context about the path (always)
 
-.Common Options
-[%collapsible]
-====
+=== Common Options
+`-h`, `--help`:: Show this help message and exit.
 `-o`, `--output`:: One of: human, json, csv
 `-V`, `--verbose`:: Enable verbose logging output
 `-q`, `--quiet`:: Only output essential information
@@ -39,10 +38,11 @@ By default, shows informational output when running in a TTY (interactive termin
 `--no-input`:: Don't ask for user input (e.g. confirmation prompts)
 `--color`:: One of: auto, never, always
 `--dump-logs`:: Write all logs to an optionally specified file
-====
+
 
 
 == Examples
+
 [source,bash]
 ----
 # Get information about the path to the .astrarc file

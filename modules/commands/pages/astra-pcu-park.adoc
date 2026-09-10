@@ -3,8 +3,9 @@
 [source,shell]
 ----
 astra pcu park [-qV] [--[no-]async] [--no-input] [--[no-]spinner] [--color
-               [=WHEN]] [--dump-logs[=FILE]] [-o=FORMAT] [--timeout=<timeout>]
-               [[[-cf=PATH] [-p=NAME]] | [--token=TOKEN [--env=ENV]]] [GROUP]
+               [=WHEN]] [--dump-logs[=FILE]] [-h[=all]] [-o=FORMAT]
+               [--timeout=<timeout>] [[[-cf=PATH] [-p=NAME]] | [--token=TOKEN
+               [--env=ENV]]] [GROUP]
 
 ----
 
@@ -21,9 +22,8 @@ Park an existing PCU group
 `--async`:: Do not wait for the database to become active
 `--timeout`:: How long the command should wait for the database to become active
 
-.Common Options
-[%collapsible]
-====
+=== Common Options
+`-h`, `--help`:: Show this help message and exit.
 `-o`, `--output`:: One of: human, json, csv
 `-V`, `--verbose`:: Enable verbose logging output
 `-q`, `--quiet`:: Only output essential information
@@ -31,19 +31,18 @@ Park an existing PCU group
 `--no-input`:: Don't ask for user input (e.g. confirmation prompts)
 `--color`:: One of: auto, never, always
 `--dump-logs`:: Write all logs to an optionally specified file
-====
 
-.Connection Options
-[%collapsible]
-====
+
+=== Connection Options
 `-cf`, `--config-file`:: The ``.astrarc`` file to use for this command
 `-p`, `--profile`:: The ``.astrarc`` profile to use for this command. Can be set via ``ASTRA_PROFILE``.
 `--token`:: The astra token to use for this command. Use the ``--token @file`` syntax to read the token from a file, to avoid potential leaks.
-`--env`:: Astra environment the token belongs to: prod (default), dev, or test. Leave unset unless you were issued a non-prod token.
-====
+`--env`:: Astra environment the token belongs to: prod (default), dev, test, or local. Leave unset unless you were issued a non-prod token.
+
 
 
 == Examples
+
 [source,bash]
 ----
 # Park an existing PCU group

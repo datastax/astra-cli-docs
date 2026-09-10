@@ -3,8 +3,8 @@
 [source,shell]
 ----
 astra pcu delete [-qV] [--if-exists] [--no-input] [--[no-]spinner] [--yes]
-                 [--color[=WHEN]] [--dump-logs[=FILE]] [-o=FORMAT] [[[-cf=PATH]
-                 [-p=NAME]] | [--token=TOKEN [--env=ENV]]] [GROUP]
+                 [--color[=WHEN]] [--dump-logs[=FILE]] [-h[=all]] [-o=FORMAT]
+                 [[[-cf=PATH] [-p=NAME]] | [--token=TOKEN [--env=ENV]]] [GROUP]
 
 ----
 
@@ -21,9 +21,8 @@ Delete an existing Pcu group
 `--if-exists`:: Do not fail if PCU group does not exist
 `--yes`:: Force deletion of PCU group without prompting
 
-.Common Options
-[%collapsible]
-====
+=== Common Options
+`-h`, `--help`:: Show this help message and exit.
 `-o`, `--output`:: One of: human, json, csv
 `-V`, `--verbose`:: Enable verbose logging output
 `-q`, `--quiet`:: Only output essential information
@@ -31,19 +30,18 @@ Delete an existing Pcu group
 `--no-input`:: Don't ask for user input (e.g. confirmation prompts)
 `--color`:: One of: auto, never, always
 `--dump-logs`:: Write all logs to an optionally specified file
-====
 
-.Connection Options
-[%collapsible]
-====
+
+=== Connection Options
 `-cf`, `--config-file`:: The ``.astrarc`` file to use for this command
 `-p`, `--profile`:: The ``.astrarc`` profile to use for this command. Can be set via ``ASTRA_PROFILE``.
 `--token`:: The astra token to use for this command. Use the ``--token @file`` syntax to read the token from a file, to avoid potential leaks.
-`--env`:: Astra environment the token belongs to: prod (default), dev, or test. Leave unset unless you were issued a non-prod token.
-====
+`--env`:: Astra environment the token belongs to: prod (default), dev, test, or local. Leave unset unless you were issued a non-prod token.
+
 
 
 == Examples
+
 [source,bash]
 ----
 # Delete an existing Pcu group

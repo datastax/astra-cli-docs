@@ -29,6 +29,9 @@ To learn how to update the documentation, see the https://datastax.jira.com/wiki
 The Astra CLI command reference documentation is generated from the literal CLI help text in the Astra CLI code.
 The command reference documentation should be regenerated and committed to the docs whenever a new version of the Astra CLI is released.
 
+You need a recent JDK installed.
+You do not need the Astra CLI itself installed.
+
 . If you haven't done so yet, clone the Astra CLI code repository:
 +
 [source,bash]
@@ -50,13 +53,25 @@ cd astra-cli
 git switch main && git pull
 ----
 
-. Run the following command to regenerate the command reference docs:
+. Set the path to your local clone of this documentation repository (`astra-cli-docs`):
 +
 [source,bash]
 ----
-source scripts/dev-alias.sh; astra docs && \
-    rsync -a --delete build/docs/commands/ ~/repos/astra-cli-docs/modules/commands/pages/ && \
-    cp -f build/docs/partial-nav.adoc ~/repos/astra-cli-docs/modules/commands/partials/
+ASTRA_CLI_DOCS=~/repos/astra-cli-docs
 ----
+
+. Load the Astra CLI development alias:
 +
-Replace `repos` with the appropriate path to your cloned repositories.
+[source,bash]
+----
+source scripts/dev-alias.sh
+----
+
+. Regenerate the command reference docs:
++
+[source,bash]
+----
+astra docs && \
+    rsync -a --delete build/docs/commands/ $ASTRA_CLI_DOCS/modules/commands/pages/ && \
+    cp -f build/docs/partial-nav.adoc $ASTRA_CLI_DOCS/modules/commands/partials/
+----
