@@ -25,9 +25,7 @@ To opt out of Update notifications, set ``ASTRA_NO_UPDATE_NOTIFIER=true``, or, e
 `-v`, `--version`:: Version to upgrade to (default: latest)
 `--pre`, `--prerelease`:: Include pre-releases when looking for the latest version
 
-.Common Options
-[%collapsible]
-====
+=== Common Options
 `-h`, `--help`:: Show this help message and exit.
 `-o`, `--output`:: One of: human, json, csv
 `-V`, `--verbose`:: Enable verbose logging output
@@ -36,10 +34,11 @@ To opt out of Update notifications, set ``ASTRA_NO_UPDATE_NOTIFIER=true``, or, e
 `--no-input`:: Don't ask for user input (e.g. confirmation prompts)
 `--color`:: One of: auto, never, always
 `--dump-logs`:: Write all logs to an optionally specified file
-====
+
 
 
 == Examples
+
 [source,bash]
 ----
 # Upgrade to the latest stable version

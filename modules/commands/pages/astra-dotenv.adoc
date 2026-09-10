@@ -22,9 +22,7 @@ Easily create and update your .env files __(beta)__
 == Options
 
 
-.Common Options
-[%collapsible]
-====
+=== Common Options
 `-h`, `--help`:: Show this help message and exit.
 `-o`, `--output`:: One of: human, json, csv
 `-V`, `--verbose`:: Enable verbose logging output
@@ -33,10 +31,11 @@ Easily create and update your .env files __(beta)__
 `--no-input`:: Don't ask for user input (e.g. confirmation prompts)
 `--color`:: One of: auto, never, always
 `--dump-logs`:: Write all logs to an optionally specified file
-====
+
 
 
 == Examples
+
 [source,bash]
 ----
 

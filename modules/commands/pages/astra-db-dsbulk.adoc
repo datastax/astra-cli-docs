@@ -24,9 +24,7 @@ Use dsbulk to interface with your Astra DB database
 == Options
 
 
-.Common Options
-[%collapsible]
-====
+=== Common Options
 `-h`, `--help`:: Show this help message and exit.
 `-o`, `--output`:: One of: human, json, csv
 `-V`, `--verbose`:: Enable verbose logging output
@@ -35,10 +33,11 @@ Use dsbulk to interface with your Astra DB database
 `--no-input`:: Don't ask for user input (e.g. confirmation prompts)
 `--color`:: One of: auto, never, always
 `--dump-logs`:: Write all logs to an optionally specified file
-====
+
 
 
 == Examples
+
 [source,bash]
 ----
 # Count all rows in a database table

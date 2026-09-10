@@ -21,9 +21,7 @@ See the help for the ``astra shellenv`` command to setup completions in your she
 
 `-n`, `--cli-name`:: CLI name to use in the completion script
 
-.Common Options
-[%collapsible]
-====
+=== Common Options
 `-h`, `--help`:: Show this help message and exit.
 `-o`, `--output`:: One of: human, json, csv
 `-V`, `--verbose`:: Enable verbose logging output
@@ -32,10 +30,11 @@ See the help for the ``astra shellenv`` command to setup completions in your she
 `--no-input`:: Don't ask for user input (e.g. confirmation prompts)
 `--color`:: One of: auto, never, always
 `--dump-logs`:: Write all logs to an optionally specified file
-====
+
 
 
 == Examples
+
 [source,bash]
 ----
 # Put this in your shell profile (e.g. ``~/.zprofile``) to generate completions and set your PATH

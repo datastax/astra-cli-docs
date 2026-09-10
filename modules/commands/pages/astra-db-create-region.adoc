@@ -24,9 +24,7 @@ Add a new region to an existing database
 `--if-not-exists`:: Do not fail if the region already exists
 `--timeout`:: How long the command should wait for the database to become active
 
-.Common Options
-[%collapsible]
-====
+=== Common Options
 `-h`, `--help`:: Show this help message and exit.
 `-o`, `--output`:: One of: human, json, csv
 `-V`, `--verbose`:: Enable verbose logging output
@@ -35,19 +33,18 @@ Add a new region to an existing database
 `--no-input`:: Don't ask for user input (e.g. confirmation prompts)
 `--color`:: One of: auto, never, always
 `--dump-logs`:: Write all logs to an optionally specified file
-====
 
-.Connection Options
-[%collapsible]
-====
+
+=== Connection Options
 `-cf`, `--config-file`:: The ``.astrarc`` file to use for this command
 `-p`, `--profile`:: The ``.astrarc`` profile to use for this command. Can be set via ``ASTRA_PROFILE``.
 `--token`:: The astra token to use for this command. Use the ``--token @file`` syntax to read the token from a file, to avoid potential leaks.
 `--env`:: Astra environment the token belongs to: prod (default), dev, test, or local. Leave unset unless you were issued a non-prod token.
-====
+
 
 
 == Examples
+
 [source,bash]
 ----
 # Create a region in a database

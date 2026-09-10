@@ -22,9 +22,7 @@ See ``astra config create`` for a programmatic way to create profiles without in
 `-e`, `--env`:: Astra environment the token belongs to: prod (default), dev, test, or local. Leave unset unless you were issued a non-prod token.
 `--name`:: Optional name for the profile. If not provided, you will be prompted for it
 
-.Common Options
-[%collapsible]
-====
+=== Common Options
 `-h`, `--help`:: Show this help message and exit.
 `-o`, `--output`:: One of: human, json, csv
 `-V`, `--verbose`:: Enable verbose logging output
@@ -33,10 +31,11 @@ See ``astra config create`` for a programmatic way to create profiles without in
 `--no-input`:: Don't ask for user input (e.g. confirmation prompts)
 `--color`:: One of: auto, never, always
 `--dump-logs`:: Write all logs to an optionally specified file
-====
+
 
 
 == Examples
+
 [source,bash]
 ----
 # Start the interactive setup process

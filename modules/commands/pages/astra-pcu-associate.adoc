@@ -22,9 +22,7 @@ Associate a PCU group to a datacenter
 `TARGET`:: PCU association target (database name/id/endpoint or datacenter id)
 `--if-not-exists`:: Don't error if the association already exists
 
-.Common Options
-[%collapsible]
-====
+=== Common Options
 `-h`, `--help`:: Show this help message and exit.
 `-o`, `--output`:: One of: human, json, csv
 `-V`, `--verbose`:: Enable verbose logging output
@@ -33,19 +31,18 @@ Associate a PCU group to a datacenter
 `--no-input`:: Don't ask for user input (e.g. confirmation prompts)
 `--color`:: One of: auto, never, always
 `--dump-logs`:: Write all logs to an optionally specified file
-====
 
-.Connection Options
-[%collapsible]
-====
+
+=== Connection Options
 `-cf`, `--config-file`:: The ``.astrarc`` file to use for this command
 `-p`, `--profile`:: The ``.astrarc`` profile to use for this command. Can be set via ``ASTRA_PROFILE``.
 `--token`:: The astra token to use for this command. Use the ``--token @file`` syntax to read the token from a file, to avoid potential leaks.
 `--env`:: Astra environment the token belongs to: prod (default), dev, test, or local. Leave unset unless you were issued a non-prod token.
-====
+
 
 
 == Examples
+
 [source,bash]
 ----
 # Associate a specific datacenter to a PCU group
