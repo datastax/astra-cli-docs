@@ -3,10 +3,10 @@
 [source,shell]
 ----
 astra pcu update [-qV] [--allow-duplicate-names] [--no-input] [--[no-]spinner]
-                 [--color[=WHEN]] [--dump-logs[=FILE]] [-c=CLOUD] [-d=DESC]
-                 [-it=TYPE] [--max=MAX] [--min=MIN] [-o=FORMAT] [-pt=TYPE]
-                 [-r=REGION] [--reserved=RESERVED] [-t=TITLE] [[[-cf=PATH]
-                 [-p=NAME]] | [--token=TOKEN [--env=ENV]]] [GROUP]
+                 [--color[=WHEN]] [--dump-logs[=FILE]] [-h[=all]] [-c=CLOUD]
+                 [-d=DESC] [-it=TYPE] [--max=MAX] [--min=MIN] [-o=FORMAT]
+                 [-pt=TYPE] [-r=REGION] [--reserved=RESERVED] [-t=TITLE]
+                 [[[-cf=PATH] [-p=NAME]] | [--token=TOKEN [--env=ENV]]] [GROUP]
 
 ----
 
@@ -31,9 +31,8 @@ Update an existing PCU group
 `--max`:: Maximum capacity units for the PCU group
 `--reserved`:: Reserved capacity units for the PCU group
 
-.Common Options
-[%collapsible]
-====
+=== Common Options
+`-h`, `--help`:: Show this help message and exit.
 `-o`, `--output`:: One of: human, json, csv
 `-V`, `--verbose`:: Enable verbose logging output
 `-q`, `--quiet`:: Only output essential information
@@ -41,19 +40,18 @@ Update an existing PCU group
 `--no-input`:: Don't ask for user input (e.g. confirmation prompts)
 `--color`:: One of: auto, never, always
 `--dump-logs`:: Write all logs to an optionally specified file
-====
 
-.Connection Options
-[%collapsible]
-====
+
+=== Connection Options
 `-cf`, `--config-file`:: The ``.astrarc`` file to use for this command
 `-p`, `--profile`:: The ``.astrarc`` profile to use for this command. Can be set via ``ASTRA_PROFILE``.
 `--token`:: The astra token to use for this command. Use the ``--token @file`` syntax to read the token from a file, to avoid potential leaks.
-`--env`:: Astra environment the token belongs to: prod (default), dev, or test. Leave unset unless you were issued a non-prod token.
-====
+`--env`:: Astra environment the token belongs to: prod (default), dev, test, or local. Leave unset unless you were issued a non-prod token.
+
 
 
 == Examples
+
 [source,bash]
 ----
 # Update an existing PCU group

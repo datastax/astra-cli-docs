@@ -3,12 +3,12 @@
 [source,shell]
 ----
 astra db create-dotenv [-qV] [--no-input] [--[no-]overwrite] [--print] [--[no-]
-                       spinner] [--color[=WHEN]] [--dump-logs[=FILE]]
-                       [--file=FILE] [-k=KEYSPACE] [-o=FORMAT] [-r=REGION]
-                       [[[-cf=PATH] [-p=NAME]] | [--token=TOKEN [--env=ENV]]]
-                       [--keys=KEYS[,KEYS...] [--keys=KEYS[,KEYS...]]... |
-                       --preset=PRESETS[,PRESETS...] [--preset=PRESETS[,
-                       PRESETS...]]...] [DB]
+                       spinner] [--color[=WHEN]] [--dump-logs[=FILE]] [-h
+                       [=all]] [--file=FILE] [-k=KEYSPACE] [-o=FORMAT]
+                       [-r=REGION] [[[-cf=PATH] [-p=NAME]] | [--token=TOKEN
+                       [--env=ENV]]] [--keys=KEYS[,KEYS...] [--keys=KEYS[,
+                       KEYS...]]... | --preset=PRESETS[,PRESETS...]
+                       [--preset=PRESETS[,PRESETS...]]...] [DB]
 
 ----
 
@@ -30,9 +30,8 @@ Create a env file to help you connect to your Astra DB instance.
 `--keys`:: Comma-separated list of keys to include in the .env file. If not specified, all keys will be included.
 `--preset`:: The preset(s) to use for the .env file. If not specified, all keys (or the keys from `--keys`) will be used.
 
-.Common Options
-[%collapsible]
-====
+=== Common Options
+`-h`, `--help`:: Show this help message and exit.
 `-o`, `--output`:: One of: human, json, csv
 `-V`, `--verbose`:: Enable verbose logging output
 `-q`, `--quiet`:: Only output essential information
@@ -40,19 +39,18 @@ Create a env file to help you connect to your Astra DB instance.
 `--no-input`:: Don't ask for user input (e.g. confirmation prompts)
 `--color`:: One of: auto, never, always
 `--dump-logs`:: Write all logs to an optionally specified file
-====
 
-.Connection Options
-[%collapsible]
-====
+
+=== Connection Options
 `-cf`, `--config-file`:: The ``.astrarc`` file to use for this command
 `-p`, `--profile`:: The ``.astrarc`` profile to use for this command. Can be set via ``ASTRA_PROFILE``.
 `--token`:: The astra token to use for this command. Use the ``--token @file`` syntax to read the token from a file, to avoid potential leaks.
-`--env`:: Astra environment the token belongs to: prod (default), dev, or test. Leave unset unless you were issued a non-prod token.
-====
+`--env`:: Astra environment the token belongs to: prod (default), dev, test, or local. Leave unset unless you were issued a non-prod token.
+
 
 
 == Examples
+
 [source,bash]
 ----
 # Create a fully-populated .env file, updating the existing one if it exists

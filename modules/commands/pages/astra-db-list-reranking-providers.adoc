@@ -1,15 +1,16 @@
-= astra db dsbulk version
+= astra db list-reranking-providers
 
 [source,shell]
 ----
-astra db dsbulk version [-qV] [--no-input] [--[no-]spinner] [--color[=WHEN]]
-                        [--dump-logs[=FILE]] [-h[=all]] [-o=FORMAT]
-                        [[[-cf=PATH] [-p=NAME]] | [--token=TOKEN [--env=ENV]]]
+astra db list-reranking-providers [-qV] [--no-input] [--[no-]spinner] [--color
+                                  [=WHEN]] [--dump-logs[=FILE]] [-h[=all]]
+                                  [-o=FORMAT] [[[-cf=PATH] [-p=NAME]] |
+                                  [--token=TOKEN [--env=ENV]]] [DB]
 
 ----
 
 
-Display the currently installed dsbulk's version
+Find all available reranking providers for a given database
 
 
 
@@ -17,6 +18,7 @@ Display the currently installed dsbulk's version
 
 == Options
 
+`DB`:: The name or ID of the Astra database to operate on
 
 === Common Options
 `-h`, `--help`:: Show this help message and exit.
@@ -41,8 +43,8 @@ Display the currently installed dsbulk's version
 
 [source,bash]
 ----
-# Display dsbulk's version information
-$ astra db dsbulk version
+# Find all available reranking providers for a database
+$ astra db list-reranking-providers my_db
 ----
 
 

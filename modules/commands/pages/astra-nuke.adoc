@@ -3,7 +3,7 @@
 [source,shell]
 ----
 astra nuke [-qVy] [--dry-run] [--no-input] [--[no-]preserve-astrarc] [--[no-]
-           spinner] [--color[=WHEN]] [--dump-logs[=FILE]] [-o=FORMAT]
+           spinner] [--color[=WHEN]] [--dump-logs[=FILE]] [-h[=all]] [-o=FORMAT]
 
 ----
 
@@ -32,9 +32,8 @@ This will also detect any shell rc files which need ``astra``-related lines remo
 `--preserve-astrarc`:: Preserve the ``.astrarc`` file in your home directory
 `-y`, `--yes`:: Whether to nuke without confirmation (if not a dry run)
 
-.Common Options
-[%collapsible]
-====
+=== Common Options
+`-h`, `--help`:: Show this help message and exit.
 `-o`, `--output`:: One of: human, json, csv
 `-V`, `--verbose`:: Enable verbose logging output
 `-q`, `--quiet`:: Only output essential information
@@ -42,10 +41,11 @@ This will also detect any shell rc files which need ``astra``-related lines remo
 `--no-input`:: Don't ask for user input (e.g. confirmation prompts)
 `--color`:: One of: auto, never, always
 `--dump-logs`:: Write all logs to an optionally specified file
-====
+
 
 
 == Examples
+
 [source,bash]
 ----
 # Nuke Astra CLI from your system
