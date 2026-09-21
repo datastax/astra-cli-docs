@@ -54,7 +54,8 @@ Use the `xref:commands:astra-db-cqlsh-start.adoc[]` command to start `cqlsh` in 
 astra db cqlsh start **DB_ID**
 ----
 
-.Result
+A successful connection shows the connection details and the `cqlsh` prompt:
+
 [source,console]
 ----
 [INFO] Patched cqlsh script to try known supported Python versions first
@@ -68,14 +69,17 @@ To exit `cqlsh`, type `exit` or `quit;` and then press kbd:[Enter].
 
 == Issue a CQL statement directly
 
-Use the `xref:commands:astra-db-cqlsh-exec.adoc[]` command to issue a CQL statement directly from your terminal without starting an interactive `cqlsh` session:
+Use the `xref:commands:astra-db-cqlsh-exec.adoc[]` command to issue a CQL statement directly from your terminal without starting an interactive `cqlsh` session.
+
+For example, run `DESCRIBE KEYSPACES`:
 
 [source,shell,subs="+quotes"]
 ----
 astra db cqlsh exec **DB_ID** "describe keyspaces;"
 ----
 
-.Result
+The result of `DESCRIBE KEYSPACES` is printed to the terminal:
+
 [source,console]
 ----
 system_auth    data_endpoint_auth  default_keyspace  system_views
@@ -94,7 +98,8 @@ Use the `-f` / `--file` option with the `xref:commands:astra-db-cqlsh-exec.adoc[
 astra db cqlsh exec **DB_ID** -f sample.cql
 ----
 
-.Example CQL file (sample.cql)
+For example, using the following `sample.cql` file:
+
 [source,cql]
 ----
 -- Use a specific keyspace
@@ -115,7 +120,8 @@ INSERT INTO users (id, name, email) VALUES (uuid(), 'Bob', 'bob@example.com');
 SELECT * FROM users;
 ----
 
-.Result
+The result is printed to the terminal:
+
 [source,console]
 ----
  id                                   | email             | name
@@ -137,7 +143,8 @@ Use the `-k` / `--keyspace` option to connect directly to a specific keyspace:
 astra db cqlsh start **DB_ID** -k **KEYSPACE_NAME**
 ----
 +
-.Result
+The `cqlsh` prompt shows the selected keyspace:
++
 [source,console]
 ----
 Connected to cndb at 127.0.0.1:9042.
@@ -153,7 +160,8 @@ token@cqlsh:my_keyspace>
 astra db cqlsh exec **DB_ID** -k **KEYSPACE_NAME** "DESC TABLES"
 ----
 +
-.Result
+The result of the `DESC TABLES` command is printed to the terminal:
++
 [source,console]
 ----
 repairs              view_builds_in_progress  paxos           transferred_ranges

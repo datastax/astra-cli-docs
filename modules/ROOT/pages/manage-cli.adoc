@@ -63,19 +63,11 @@ For more advanced methods of creating and managing configuration profiles, see <
 ----
 astra setup
 ----
+
+. Press kbd:[Enter] to continue:
 +
-.Result
 [source,console]
 ----
-     _____            __
-    /  _  \   _______/  |_____________
-   /  /_\  \ /  ___/\   __\_  __ \__  \
-  /    |    \\___ \  |  |  |  | \ //__ \_
-  \____|__  /____  > |__|  |__|  (____  /
-          \/     \/                   \/
-
-                       Version: x.x.x
-
 Welcome to the interactive Astra CLI setup!
 
 Your configuration file will be created at /Users/username/.astrarc
@@ -83,38 +75,34 @@ Your configuration file will be created at /Users/username/.astrarc
 Press Enter to continue, or use Ctrl+C to cancel.
 ----
 
-. Press kbd:[Enter] to continue.
+. When prompted, enter your application token (`AstraCS:...`), and then press kbd:[Enter]:
 +
-.Result
 [source,console]
 ----
 (Required) Enter your Astra token (it should start with AstraCS)
 > input hidden for security
 ----
 
-. Enter your application token (`AstraCS:...`), and then press kbd:[Enter].
+. Enter a name for your configuration profile, or press kbd:[Enter] to accept the default (your organization name):
 +
-.Result
 [source,console]
 ----
 (Optional) Enter a name for your profile (defaults to your org name)
 >
 ----
-
-. Enter a name for your configuration profile, or press kbd:[Enter] to accept the default (your organization name).
 +
-.Result
+The {product} automatically sets the configuration profile as the default.
+All subsequent commands use this profile unless you <<specify-configuration-profile-individual-command,override the configuration profile>>.
++
 [source,console]
 ----
 Profile 'PROFILE_NAME' successfully created.
 
 It has been set as the default profile.
 ----
-+
-The {product} automatically sets the configuration profile as the default.
-All subsequent commands use this profile unless you <<specify-configuration-profile-individual-command,override it>>.
 
 . Run a command to test the connection.
++
 For example:
 +
 [source,shell]
@@ -122,7 +110,9 @@ For example:
 astra db list-clouds
 ----
 +
-.Result
+If the command succeeds, your connection is configured correctly.
+For example, the `list-clouds` command returns a list of cloud providers:
++
 [source,console]
 ----
 ┌─────────────────┐
@@ -133,8 +123,6 @@ astra db list-clouds
 │ aws             │
 └─────────────────┘
 ----
-+
-If the command succeeds, your connection is configured correctly.
 
 [#authenticate-individual-command]
 === Authenticate an individual command
@@ -164,7 +152,8 @@ Run `astra` by itself to print general help information:
 astra
 ----
 +
-.Result
+The output lists available commands and general help information:
++
 [source,console]
 ----
      _____            __
@@ -232,7 +221,8 @@ Append the `-h` / `--help` option to any command to get specific help informatio
 astra org -h
 ----
 +
-.Result
+The output is based on the specified command:
++
 [source,console]
 ----
 Usage: astra org [-qV] [--no-input] [--[no-]spinner] [--dump-logs[=FILE]]
@@ -293,7 +283,8 @@ Append the `-h` / `--help` option to any subcommand to get specific help informa
 astra db list --help
 ----
 +
-.Result
+The output is based on the specified subcommand:
++
 [source,console]
 ----
 Usage: astra db list [-qvV] [--no-input] [--[no-]spinner] [--dump-logs[=FILE]]
@@ -382,7 +373,9 @@ Use the `xref:commands:astra-config-list.adoc[]` command to list all of your con
 astra config list
 ----
 
-.Result
+The output shows the list of configuration profiles.
+The default configuration profile is indicated by `(in use)`.
+
 [source,console]
 ----
 ┌─────────────────────┐
@@ -393,12 +386,11 @@ astra config list
 └─────────────────────┘
 ----
 
-The default configuration profile is indicated by `(in use)`.
+
 
 Configuration profiles are stored in the following format in the `<<file-locations,.astrarc>>` file:
 
-..astrarc
-[source,ini,subs="+quotes"]
+[source,plaintext,subs="+quotes"]
 ----
 [Production]
 ASTRA_DB_APPLICATION_TOKEN=AstraCS:**IGXWg...**
@@ -422,7 +414,8 @@ Use the `xref:commands:astra-config-create.adoc[]` command to create a new confi
 astra config create '**PROFILE_NAME**' --token **APPLICATION_TOKEN**
 ----
 
-.Result
+The output shows the new profile name and a hint to set it as your default configuration profile:
+
 [source,console]
 ----
 Configuration profile 'PROFILE_NAME' successfully created.
@@ -435,9 +428,10 @@ $ astra config use 'PROFILE_NAME'
 
 You can also use the `xref:commands:astra-setup.adoc[]` command again to create additional configuration profiles interactively.
 
-.Enclose arguments in quotes when they contain spaces
 [TIP]
 ====
+Enclose arguments in quotes when they contain spaces.
+
 When specifying arguments that contain spaces (for example, profile names like `Test 1`), you must wrap the value in single quotes (`''`).
 This ensures that your shell treats the entire phrase as one argument rather than splitting it into separate words.
 
@@ -461,7 +455,8 @@ Use the `xref:commands:astra-config-use.adoc[]` command to change the default co
 astra config use '**PROFILE_NAME**'
 ----
 
-.Result
+The output confirms that the default profile has been set:
+
 [source,console]
 ----
 Default profile set to 'PROFILE_NAME'.
@@ -486,6 +481,12 @@ If you want to run a command using an application token directly, without having
 
 === Delete a configuration profile
 
+[TIP]
+====
+If you delete the default configuration profile, the {product} _doesn't_ automatically select a new default configuration profile.
+You must use the `xref:commands:astra-config-use.adoc[]` command to set a new default configuration profile.
+====
+
 Use the `xref:commands:astra-config-delete.adoc[]` command to delete a configuration profile:
 
 [source,shell,subs="+quotes"]
@@ -493,37 +494,29 @@ Use the `xref:commands:astra-config-delete.adoc[]` command to delete a configura
 astra config delete '**PROFILE_NAME**'
 ----
 
-.Result
+The output shows that the profile was deleted:
+
 [source,console]
 ----
 Profile 'PROFILE_NAME' deleted successfully.
 ----
-
-[NOTE]
-====
-If you delete the default configuration profile, the {product} _doesn't_ automatically select a new default configuration profile.
-You must use the `xref:commands:astra-config-use.adoc[]` command to set a new default configuration profile.
-====
 
 [#file-locations]
 == {product} file locations
 
 The {product} stores installation and configuration files in the following locations:
 
-[cols="1h,2"]
+[cols=4]
 |===
-|File / Folder |Description
+|File or Folder |Description |Default location |Contents
 
 |`.astra`
-a|The {product} home folder (`ASTRA_HOME`).
-
-_Default location_:
-
+|The {product} home folder (`ASTRA_HOME`)
+a|
 * macOS and Linux: `~/.astra`
 * Windows: `%USERPROFILE%\.astra`
 * All platforms: If the `XDG_DATA_HOME` environment variable is set, then the default location is `$XDG_DATA_HOME/astra`.
-
-The {product} home folder contains the following items:
+a|The {product} home folder contains the following items:
 
 * The `astra` executable (scripted installations only)
 * Accessory executables that are downloaded by certain commands, such as `xref:commands:astra-db-cqlsh.adoc[]` and `xref:commands:astra-db-dsbulk.adoc[]`
@@ -531,21 +524,16 @@ The {product} home folder contains the following items:
 * Cache files for <<command-auto-completion,command auto-completion>>
 * Logs
 
-For more information about `ASTRA_HOME`, see the https://github.com/datastax/astra-cli?tab=readme-ov-file#home-folder-location[{product} README].
-
 |`.astrarc`
-a|The {product} configuration file.
-
-_Default location_:
-
+|The {product} configuration file.
+a|
 * macOS and Linux: `~/.astrarc`
 * Windows: `%USERPROFILE%\.astrarc`
 * All platforms: If the `XDG_CONFIG_HOME` environment variable is set, then the default location is `$XDG_CONFIG_HOME/astra/.astrarc`.
-
-The {product} uses this file to store your <<manage-configuration-profiles,configuration profiles>> and their associated application tokens.
-
-For more information about the {product} configuration file, see the https://github.com/datastax/astra-cli?tab=readme-ov-file#astrarc-location[{product} README].
+|The {product} uses this file to store your <<manage-configuration-profiles,configuration profiles>> and their associated application tokens.
 |===
+
+For more information, see the https://github.com/datastax/astra-cli?tab=readme-ov-file#astrarc-location[{product} README].
 
 === Override the default home folder location
 
@@ -617,7 +605,6 @@ Structured JSON format, suitable for programmatic parsing.
 +
 Every command that supports JSON output always returns a response using exactly this schema:
 +
-.JSON output schema
 [source,json]
 ----
 {
@@ -635,9 +622,8 @@ Every command that supports JSON output always returns a response using exactly 
 }
 ----
 +
-All field names in the JSON output are in camel case (`fieldName`).
+All field names in the JSON output are in camel case (`fieldName`):
 +
-.JSON output fields
 [cols="1,1,2"]
 |===
 |Name |Type |Summary
@@ -681,8 +667,7 @@ Comma-separated output format, ideal for data export and analysis.
 +
 Every command that supports CSV output always returns an RFC-4180-compliant response using exactly this schema:
 +
-.CSV output schema
-[source,csv]
+[source,plaintext]
 ----
 code,message,data_field_1,data_field_2,...
 ----
@@ -695,7 +680,6 @@ Each subsequent row represents one data record from the command.
 The `code` and `message` fields can repeat for each row of data to keep the CSV schema consistent.
 Values can contain commas or newlines, and they can be wrapped in quotes to ensure RFC-4180-compliant CSV output.
 +
-.CSV output fields
 [cols="1,1,2"]
 |===
 |Name |Type |Summary
@@ -729,7 +713,7 @@ Fields can be empty if there is nothing to report.
 Column order is consistent per command.
 |===
 
-[NOTE]
+[TIP]
 ====
-For commands that issue GET requests, the `json` response generally contains the raw response from the server, whereas the `human` and `csv` formats contain a simplified version of the data.
+For commands that issue `GET` requests, the `json` response generally contains the raw response from the server, whereas the `human` and `csv` formats contain a simplified version of the data.
 ====
