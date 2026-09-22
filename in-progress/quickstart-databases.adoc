@@ -22,7 +22,6 @@ Get a list of available regions for database creation.
 You can create {db-serverless-vector} and {db-serverless} databases.
 
 If your organization uses xref:astra-db-serverless:administration:provisioned-capacity-units.adoc[PCU groups], you assign the database to a PCU group when creating the database.
-====
 
 Create a database:
 
@@ -40,17 +39,11 @@ Parameters:
 
 | `db_name`
 | `String`
-a| The database name.
-
-Database names must follow these rules:
-
-include::common:ROOT:partial$database-name-rules.adoc[]
+| The database name.
 
 | `region`
 | `String` (OPTIONAL)
-a| A valid xref:databases:regions.adoc[cloud provider region], depending on your xref:administration:subscription-plans.adoc[plan] and the database type.
-
-include::astra-db-serverless:databases:partial$get-regions-endpoint.adoc[]
+| A valid xref:databases:regions.adoc[cloud provider region], depending on your xref:administration:subscription-plans.adoc[plan] and the database type.
 
 | `cloud`
 | `String` (OPTIONAL)
@@ -58,7 +51,7 @@ include::astra-db-serverless:databases:partial$get-regions-endpoint.adoc[]
 
 | `keyspace`
 | `String` (OPTIONAL)
-a| The name of the database's initial keyspace.
+| The name of the database's initial keyspace.
 If omitted, the default is `default_keyspace`.
 
 | `--if-not-exists`
@@ -70,7 +63,6 @@ Check for an existing database with the same configuration.
 | `flag` (OPTIONAL)
 | By default, the operation is synchronous and waits for the database to become active.
 Include this option to make the operation asynchronous.
-
 |===
 
 [IMPORTANT]
@@ -142,7 +134,6 @@ List all of your databases:
 astra db list
 ----
 
-.Result
 [source,console,subs="+quotes"]
 ----
 +---------------------+--------------+-----------+-------+---+-----------+
@@ -151,13 +142,11 @@ astra db list
 | astra_db_client     | *DB_ID*      | us-east1  | gcp   | ■ | ACTIVE    |
 +---------------------+--------------+-----------+-------+---+-----------+
 ----
-//ID truncated to prevent bad wrapping.
 
 == Drop a database
 
-include::common:ROOT:partial$terminate-db-warn.adoc[]
-
-Delete a database and erase all data stored in it.
+Permanently delete a database, erasing all data stored in it and all backups.
+You cannot undo this action.
 
 Delete a database by ID:
 
@@ -209,11 +198,7 @@ See xref:databases:create-database.adoc#get-db-id[Get your database ID].
 
 | `KEYSPACE_NAME`
 | `String`
-a| The unique name for the keyspace.
-
-Keyspace names must follow these rules:
-
-include::common:ROOT:partial$keyspace-name-rules.adoc[]
+| The unique name for the keyspace.
 |===
 
 == List keyspaces

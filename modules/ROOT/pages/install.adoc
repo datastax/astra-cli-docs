@@ -137,14 +137,14 @@ To install the {product} on Windows, you can use a scripted installation or bina
 
 . Run the following command to install the latest version of the {product} to the default location:
 +
-[source,powershell]
+[source,shell]
 ----
 powershell -c "irm https://ibm.biz/astra-cli-win | iex"
 ----
 +
 To install the {product} to a custom location, export the `ASTRA_HOME` environment variable before running the installation command, replacing `**INSTALLATION_DIRECTORY**` with the full path to your preferred installation directory:
 +
-[source,powershell,subs="+quotes"]
+[source,shell,subs="+quotes"]
 ----
 $env:ASTRA_HOME = "**INSTALLATION_DIRECTORY**"
 ----
@@ -153,7 +153,7 @@ $env:ASTRA_HOME = "**INSTALLATION_DIRECTORY**"
 
 . Run the `astra` command from any directory to verify successful installation:
 +
-[source,powershell]
+[source,shell]
 ----
 astra
 ----
@@ -166,7 +166,7 @@ The response includes available commands and options for the {product}.
 
 . Extract the zip file into the directory where you want to install the {product}:
 +
-[source,powershell,subs="+quotes"]
+[source,shell,subs="+quotes"]
 ----
 powershell -C "Expand-Archive -Path astra-windows-x86_64.zip -DestinationPath **INSTALLATION_DIRECTORY** -Force"
 ----
@@ -180,7 +180,7 @@ For more information, see the https://learn.microsoft.com/en-us/powershell/modul
 
 . Run the `astra` command from any directory to verify successful installation:
 +
-[source,powershell]
+[source,shell]
 ----
 astra
 ----
