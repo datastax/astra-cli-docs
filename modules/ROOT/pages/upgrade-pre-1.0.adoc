@@ -43,7 +43,7 @@ After you delete the old `astra` executable, follow the instructions in xref:ROO
 {product} version 1.0 is largely backwards-compatible with pre-1.0 versions.
 However, there are some changes that might break certain scripted usage, such as:
 
-* New standardized xref:ROOT:manage-cli.adoc#output-formats[JSON and CSV output formats and exit codes].
+* New standardized xref:ROOT:manage-cli.adoc#command-output[JSON and CSV output formats and exit codes].
 
 * Minor command and flag name changes.
 For a full list of name changes, see the https://github.com/datastax/astra-cli?tab=readme-ov-file#whats-changed[release notes].
