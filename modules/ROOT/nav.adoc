@@ -6,7 +6,7 @@
 * xref:ROOT:uninstall.adoc[]
 
 .Quickstarts
-* xref:ROOT:quickstarts:cqlsh.adoc[]
+* xref:quickstarts:cqlsh.adoc[]
 
 include::commands:partial$partial-nav.adoc[]
 
