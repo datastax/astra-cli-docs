@@ -174,7 +174,7 @@ prepared_statements  sstable_activity         range_xfers
 ////
 TODO: Consider adding the following sections later:
 
-1. Executing a statement from stdout
+== Executing a statement from stdout
 ```
 # Normal usage
 echo "<stmt>" | astra db cqlsh DB
@@ -185,9 +185,61 @@ echo "<stmt>" | astra db cqlsh DB -
 # Or just type in what you want to into the terminal using `\` to create a new line
 astra db cqlsh DB
 ```
-2. Using the cqlsh binary directly
+
+== Using the cqlsh binary directly
 ```
 $(astra db cqlsh path) --version
 ```
-3. A section that's just a list of links to the command references for the various `cqlsh` commands `astra` offers
+
+== A section that's just a list of links to the command references for the various `cqlsh` commands `astra` offers
+
+== Using a `.cqlshrc` file
+//The following content is from the pre-IBM migration cql docs:
+
+When you xref:astra-cli:quickstarts:cqlsh.adoc[run `cqlsh` with the {astra-cli}], it retrieves credentials and connection details from the {scb} and the `.astrarc` file created by `xref:astra-cli:commands:astra-setup.adoc[astra setup]`.
+
+If you need to further customize the `cqlsh` session, you can create a `cqlshrc` file.
+Store the `cqlshrc` file in the `~/.cassandra` directory on the machine where you installed the {astra-cli}.
+When you run `xref:astra-cli:commands:astra-db-cqlsh-start.adoc[astra db cqlsh start]`, the {astra-cli} starts `cqlsh` and loads the `cqlshrc` file.
+
+`cqlshrc` files are written in INI format.
+Each file is divided into sections, beginning with a section name enclosed in square brackets, such as `[connection]`.
+A section contains one or more options in the format `**OPTION** = **VALUE**`.
+//For available options see <link to astra DB cqlsh ref doc>
+
+Because the {astra-cli} handles credentials and connection details, `keyspace` is the only valid option that you can set in the `[authentication]` section.
+This option is equivalent to running the `xref:reference:cql-commands/use.adoc[USE]` command immediately after starting a `cqlsh` session.
+
+[source,ini]
+----
+[authentication]
+keyspace = default_keyspace
+----
+////
+
+////
+CQLSH AND CQLSHRC QUESTIONS:
+
+Determine if the use of a separate `.cqlshrc` conflicts with the `.cqlshrc` included in the SCB.
+
+Determine where to store the cqlshrc for use with astra db cqlsh.
+
+You can download a sample `cqlshrc` file from the https://github.com/apache/cassandra/blob/trunk/conf/cqlshrc.sample[`apache/cassandra` GitHub repository].
+Not all OSS Cass options are supported.
+Some options that are supported by DSE/HCD aren't supported w Astra bc the option is set by the SCB or not relevant.
+Most options that could be set in the cqlshrc can already be set with native Astra CLI options (--color, timestamp, timeout, encoding...). I think the only _relevant_ exceptions are:
+
+* --browser - Can also be adjusted by changing the system's default browser. Could maybe be set with `CQLSH_BROWSER` env var.
+
+* [copy],[copy-to],[copy-from], and keyspace/table-specific copy/copy-to/copy-from sections - Can also be set with `-e` or `-f` as usual command line options.
+
+* [history] - The `disabled` option controls saving command history to the `cqlsh_history` file when the session exits. Astra CQL cqlsh sessions _do_ create this file. Users might want to turn off session history (disabled = true).
+I am not sure whether the CQL_HISTORY env var is available in Astra - maybe only DSE 6.8 and 6.9.
+Not sure if logging options for Astra CLI (if any exist) would override/transfer to the cqlsh session.
+
+Does Astra CLI recognize `CQLSH_*` environment variables?
+
+Does Astra CLI support cqlsh connections to AMC? If you can connect to AMC, _and_ you change the value of cqlsh's `--request-timeout` option, does Astra CLI recognize the SEARCH_INDEX_TIMEOUT environment variables?
+
+If Astra CLI supports an external cqlshrc, verify if it will allow the keyspace option in [authentication]. For ex, if the default keyspace is set elsewhere in astra cli's context.
 ////
