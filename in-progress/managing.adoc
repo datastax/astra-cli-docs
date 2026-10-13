@@ -2799,7 +2799,7 @@ astra db cqlsh **DATABASE_ID** -e "SOURCE 'sample.cql'"
 
 == Use {dsbulk}
 
-The xref:dsbulk:overview:dsbulk-about.adoc[{dsbulk}] lets you load, unload, and count data in your database tables.
+The https://github.com/datastax/dsbulk[{dsbulk}] lets you load, unload, and count data in your database tables.
 The {product} provides built-in {dsbulk-short} support by downloading, installing, configuring, and wrapping the `dsbulk` utility.
 
 The {product} exposes {dsbulk-short} functionality through the `astra db load`, `astra db unload`, and `astra db count` commands.
