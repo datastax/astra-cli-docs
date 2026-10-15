@@ -1,9 +1,9 @@
 = Issue CQL commands with {cql-shell} in the {product}
 :navtitle:  CQL quickstart
 
-The {cql-shell} (`cqlsh`) is a utility that you can use to issue xref:astra@cql:reference:cql-quick-reference.adoc[{cql} commands] to your {astra-db} databases.
+The {cql-shell} (`cqlsh`) is a utility that you can use to interact with your {astra-db} databases with xref:astra-db-serverless:cql:reference/cql-syntax.adoc[{cql} statements] and unique `cqlsh` commands like `DESCRIBE` and `TRACING`.
 
-The {product} provides built-in `cqlsh` support by downloading and installing the `cqlsh` utility in the background, and then exposing it through the `xref:commands:astra-db-cqlsh.adoc[]` commands.
+The {product} provides built-in `cqlsh` support by downloading and installing the `cqlsh` utility in the background, and then exposing it through the `xref:commands:astra-db-cqlsh.adoc[astra db cqlsh]` commands.
 This is a command line-based alternative to the embedded {cql-console} in the {astra-ui}.
 
 The `cqlsh` utility isn't installed by default with the {product}.
@@ -12,11 +12,12 @@ The first time you run an `astra db cqlsh` command, the {product} downloads and 
 All `astra db cqlsh` commands require a database name or ID.
 The first time you connect to a specific database, {product} downloads the database's {scb} into the {product} home directory.
 
-For more information about CQL for {astra-db}, see xref:astra-db-serverless:cql:develop-with-cql.adoc[].
+For more information about CQL and {cql-shell} for {astra-db}, see xref:astra-db-serverless:cql:develop-with-cql.adoc[].
 
 [#prerequisites]
 == Prerequisites
 
+//Might be up to 3.13?
 The `cqlsh` commands require Python 3.8 to 3.11.
 
 The supported Python version must be installed on your system _and_ available in your system's `PATH` for the {product} to use it with the `cqlsh` commands.
@@ -131,6 +132,8 @@ The result is printed to the terminal:
 
 (2 rows)
 ----
+
+You can also execute a CQL file using the {cql-shell} `xref:astra-db-serverless:cql:cqlsh/cqlsh-commands/source.adoc[SOURCE]` command.
 
 == Connect to a specific keyspace
 
