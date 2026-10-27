@@ -44,7 +44,7 @@ ImportError: cannot import name PROTOCOL_TLS
 == `cqlsh` connection options
 
 All `cqlsh` options can be specified on the command line with `astra db cqlsh` commands.
-However, in addition to connection options, the {product} automatically sets connection details, authentication credentials, and other `cqlsh` options like `--color` and `--encoding`.
+However, the {product} automatically sets connection details, authentication credentials, and other `cqlsh` options like `--color` and `--encoding`.
 There is no need to set these options again unless you want to override the inherited values.
 
 All `astra db cqlsh` commands require a database name or ID.
