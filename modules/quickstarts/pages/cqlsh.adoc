@@ -41,23 +41,23 @@ Traceback (most recent call last):
 ImportError: cannot import name PROTOCOL_TLS
 ----
 
-== `cqlsh` connection options
-
-All `cqlsh` options can be specified on the command line with `astra db cqlsh` commands.
-However, the {product} automatically sets connection details, authentication credentials, and other `cqlsh` options like `--color` and `--encoding`.
-There is no need to set these options again unless you want to override the inherited values.
+== Connect `cqlsh` and set options
 
 All `astra db cqlsh` commands require a database name or ID.
-The first time you connect to a specific database, {product} downloads the database's {scb} into the {product} home directory.
-`astra db cqlsh` commands connect to the specified database using the downloaded {scb-short} and the application token in the active xref:ROOT:manage-cli.adoc#manage-configuration-profiles[{product} configuration profile] or in the `--token` option.
+The first time you connect to a given database, {product} downloads the database's {scb} into the {product} home directory.
+`astra db cqlsh` commands connect to the specified database using the downloaded {scb-short} and the application token in the active xref:ROOT:manage-cli.adoc#manage-configuration-profiles[{product} configuration profile] or the `--token` option.
 
-To use different connection options, you can set options on the command line.
-For example, to use a different {scb-short} and application token, use the `-b` and `--token` options, such as:
+To use different connection details, you can set options on the command line.
+For example, to override the {scb-short} and application token, use the `-b` and `--token` options, such as:
 
 [source,shell,subs="+quotes"]
 ----
 astra db cqlsh start **DB_ID** -b path/to/scb --token @path/to/token/file
 ----
+
+All `cqlsh` options can be specified on the command line with `astra db cqlsh` commands.
+However, the {product} automatically sets connection details, authentication credentials, and other `cqlsh` options like `--color` and `--encoding`.
+There is no need to set these options again unless you want to override the inherited values.
 
 SSL options are ignored because the {scb-short} contains the SSL configuration details.
 
