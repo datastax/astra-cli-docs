@@ -9,11 +9,6 @@ This is a command line-based alternative to the embedded {cql-console} in the {a
 The `cqlsh` utility isn't installed by default with the {product}.
 The first time you run an `astra db cqlsh` command, the {product} downloads and installs the `cqlsh` utility into the {product} home directory (`xref:ROOT:manage-cli.adoc#file-locations[~/.astra]`).
 
-All `astra db cqlsh` commands require a database name or ID.
-The first time you connect to a specific database, {product} downloads the database's {scb} into the {product} home directory.
-
-For more information about CQL and {cql-shell} for {astra-db}, see xref:astra-db-serverless:cql:develop-with-cql.adoc[].
-
 [#prerequisites]
 == Prerequisites
 
@@ -45,6 +40,26 @@ Traceback (most recent call last):
   File "<string>", line 1, in <module>
 ImportError: cannot import name PROTOCOL_TLS
 ----
+
+== Connect `cqlsh` and set options
+
+All `astra db cqlsh` commands require a database name or ID.
+The first time you connect to a given database, {product} downloads the database's {scb} into the {product} home directory.
+`astra db cqlsh` commands connect to the specified database using the downloaded {scb-short} and the application token in the active xref:ROOT:manage-cli.adoc#manage-configuration-profiles[{product} configuration profile] or the `--token` option.
+
+To use different connection details, you can set options on the command line.
+For example, to override the {scb-short} and application token, use the `-b` and `--token` options, such as:
+
+[source,shell,subs="+quotes"]
+----
+astra db cqlsh start **DB_ID** -b **PATH/TO/SCB** --token @**PATH/TO/TOKEN/FILE**
+----
+
+All `cqlsh` options can be specified on the command line with `astra db cqlsh` commands.
+However, the {product} automatically sets connection details, authentication credentials, and other `cqlsh` options like `--color` and `--encoding`.
+There is no need to set these options again unless you want to override the inherited values.
+
+SSL options are ignored because the {scb-short} contains the SSL configuration details.
 
 == Start an interactive `cqlsh` session
 
@@ -194,8 +209,6 @@ astra db cqlsh DB
 $(astra db cqlsh path) --version
 ```
 
-== A section that's just a list of links to the command references for the various `cqlsh` commands `astra` offers
-
 == Using a `.cqlshrc` file
 //The following content is from the pre-IBM migration cql docs:
 
@@ -246,3 +259,30 @@ Does Astra CLI support cqlsh connections to AMC? If you can connect to AMC, _and
 
 If Astra CLI supports an external cqlshrc, verify if it will allow the keyspace option in [authentication]. For ex, if the default keyspace is set elsewhere in astra cli's context.
 ////
+
+== Command references
+
+* xref:commands:astra-db-cqlsh-exec.adoc[]
+* xref:commands:astra-db-cqlsh-start.adoc[]
+* xref:commands:astra-db-cqlsh-version.adoc[]
+* xref:commands:astra-db-cqlsh-path.adoc[]
+* xref:astra-db-serverless:cql:develop-with-cql.adoc[]
+* xref:astra-db-serverless:cql:cqlsh/cqlsh-commands/capture.adoc[]
+* xref:astra-db-serverless:cql:cqlsh/cqlsh-commands/clear.adoc[]
+* xref:astra-db-serverless:cql:cqlsh/cqlsh-commands/consistency.adoc[]
+* xref:astra-db-serverless:cql:cqlsh/cqlsh-commands/serial-consistency.adoc[]
+* xref:astra-db-serverless:cql:cqlsh/cqlsh-commands/copy.adoc[]
+* xref:astra-db-serverless:cql:cqlsh/cqlsh-commands/copy-from.adoc[]
+* xref:astra-db-serverless:cql:cqlsh/cqlsh-commands/describe-cluster.adoc[]
+* xref:astra-db-serverless:cql:cqlsh/cqlsh-commands/describe-schema.adoc[]
+* xref:astra-db-serverless:cql:cqlsh/cqlsh-commands/describe-index.adoc[]
+* xref:astra-db-serverless:cql:cqlsh/cqlsh-commands/describe-keyspace.adoc[]
+* xref:astra-db-serverless:cql:cqlsh/cqlsh-commands/describe-table.adoc[]
+* xref:astra-db-serverless:cql:cqlsh/cqlsh-commands/describe-type.adoc[]
+* xref:astra-db-serverless:cql:cqlsh/cqlsh-commands/expand.adoc[]
+* xref:astra-db-serverless:cql:cqlsh/cqlsh-commands/exit.adoc[]
+* xref:astra-db-serverless:cql:cqlsh/cqlsh-commands/paging.adoc[]
+* xref:astra-db-serverless:cql:cqlsh/cqlsh-commands/show.adoc[]
+* xref:astra-db-serverless:cql:cqlsh/cqlsh-commands/source.adoc[]
+* xref:astra-db-serverless:cql:cqlsh/cqlsh-commands/timing.adoc[]
+* xref:astra-db-serverless:cql:cqlsh/cqlsh-commands/tracing.adoc[]
