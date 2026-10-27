@@ -10,7 +10,7 @@ The `cqlsh` utility isn't installed by default with the {product}.
 The first time you run an `astra db cqlsh` command, the {product} downloads and installs the `cqlsh` utility into the {product} home directory (`xref:ROOT:manage-cli.adoc#file-locations[~/.astra]`).
 
 [#prerequisites]
-== Install Python
+== Prerequisites
 
 //Might be up to 3.13?
 The `cqlsh` commands require Python 3.8 to 3.11.
@@ -52,7 +52,7 @@ For example, to override the {scb-short} and application token, use the `-b` and
 
 [source,shell,subs="+quotes"]
 ----
-astra db cqlsh start **DB_ID** -b path/to/scb --token @path/to/token/file
+astra db cqlsh start **DB_ID** -b **PATH/TO/SCB** --token @**PATH/TO/TOKEN/FILE**
 ----
 
 All `cqlsh` options can be specified on the command line with `astra db cqlsh` commands.
