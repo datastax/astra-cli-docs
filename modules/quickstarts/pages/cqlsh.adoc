@@ -49,7 +49,7 @@ There is no need to set these options again unless you want to override the inhe
 
 All `astra db cqlsh` commands require a database name or ID.
 The first time you connect to a specific database, {product} downloads the database's {scb} into the {product} home directory.
-`astra db cqlsh` commands connect to the specified database using the downloaded {scb-short} and the application token in the active xref:ROOT:manage-cql.adoc#manage-configuration-profiles[{product} configuration profile] or in the `--token` option.
+`astra db cqlsh` commands connect to the specified database using the downloaded {scb-short} and the application token in the active xref:ROOT:manage-cli.adoc#manage-configuration-profiles[{product} configuration profile] or in the `--token` option.
 
 To use different connection options, you can set options on the command line.
 For example, to use a different {scb-short} and application token, use the `-b` and `--token` options, such as:
