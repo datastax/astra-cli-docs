@@ -2574,87 +2574,6 @@ OPTIONS
             Database name (if unique) or Database identifier
 ----
 
-
-
-
-
-
-
-
-=== `db cqlsh` options
-
-.All db cqlsh options
-[source,console]
-----
-NAME
-        astra db cqlsh - Start Cqlsh
-
-SYNOPSIS
-        astra db cqlsh [ {-cf | --config-file} <CONFIG_FILE> ]
-                [ {-conf | --config} <CONFIG_SECTION> ]
-                [ --connect-timeout <TIMEOUT> ] [ --debug ]
-                [ {-e | --execute} <STATEMENT> ] [ --encoding <ENCODING> ]
-                [ --env <Environment> ] [ {-f | --file} <FILE> ]
-                [ {-k | --keyspace} <KEYSPACE> ] [ --no-color ]
-                [ {-o | --output} <FORMAT> ] [ --request-timeout <TIMEOUT> ]
-                [ --token <AUTH_TOKEN> ] [ {-v | --verbose} ] [ --version ]
-                [--] <DB>
-
-OPTIONS
-        -cf <CONFIG_FILE>, --config-file <CONFIG_FILE>
-            Configuration file (default = ~/.astrarc)
-
-        -conf <CONFIG_SECTION>, --config <CONFIG_SECTION>
-            Section in configuration file (default = ~/.astrarc)
-
-        --connect-timeout <TIMEOUT>
-            Connection timeout in seconds (default is 10
-
-        --debug
-            Show additional debugging information.
-
-        -e <STATEMENT>, --execute <STATEMENT>
-            Execute the statement and quit.
-
-        --encoding <ENCODING>
-            Output encoding. Default encoding: utf8.
-
-        --env <Environment>
-            Astra Environment to use
-
-        -f <FILE>, --file <FILE>
-            Execute commands from a CQL file, then exit.
-
-        -k <KEYSPACE>, --keyspace <KEYSPACE>
-            Authenticate to the given keyspace.
-
-        --no-color
-            Remove all colors in output
-
-        -o <FORMAT>, --output <FORMAT>
-            Output format, valid values are: human,json,csv
-
-        --request-timeout <TIMEOUT>
-            Request timeout in seconds (default is 20
-
-        --token <AUTH_TOKEN>
-            Key to use authenticate each call.
-
-        -v, --verbose
-            Verbose mode with log in console
-
-        --version
-            Display information of cqlsh.
-
-        --
-            This option can be used to separate command-line options from the
-            list of arguments (useful when arguments might be mistaken for
-            command-line options)
-
-        <DB>
-            Database name (if unique) or Database identifier
-----
-
 == Use {dsbulk}
 
 The https://github.com/datastax/dsbulk[{dsbulk}] lets you load, unload, and count data in your database tables.
@@ -3546,7 +3465,7 @@ https://api.astra.datastax.com/v2/streaming/tenants/cdc-demo-tenant
 [OK]    Tenant 'cdc-demo-tenant' has being created.
 ----
 
-. Use `xref:ROOT:managing.adoc#cqlsh[cqlsh]` to create a table with a primary key column in your database.
+. Use `xref:quickstarts:cqlsh.adoc[cqlsh]` to create a table with a primary key column in your database.
 +
 [source,bash]
 ----
