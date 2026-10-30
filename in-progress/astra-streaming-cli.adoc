@@ -880,7 +880,8 @@ key:[null], properties:[], content:hello
 
 CDC for {astra-db} automatically captures changes in real time, de-duplicates the changes, and then streams the clean set of changed data into xref:astra-streaming:ROOT:index.adoc[{astra-stream}] where it can be processed by client applications or sent to downstream systems.
 
-For more information about using the {product} to configure CDC, see xref:ROOT:managing.adoc#cdc[Configure Change Data Capture].
+For more information about using the {product} to configure CDC, see 
+//xref:ROOT:managing.adoc#cdc[Configure Change Data Capture].
 
 Use the `streaming list-cdc` command to list the CDC connections associated with a tenant:
 
